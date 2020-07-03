@@ -2,15 +2,25 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const cors = require('cors');
+const errorHandler = require('./middleware/errorHandler');
+
+const auth = require('./routes/api/auth')
+
 
 // Init app
 const app = express();
 
-// Package middlewares
+// Middlewares
+// Entry middlewares
 app.use(express.json());
 app.use (cors());
 
-// Models
+// App routes
+app.use('/api/auth', auth)
+
+// Exit middlewares
+app.use(errorHandler);
+
 
 // Create connection
 const port = process.env.PORT || 5000;
@@ -25,4 +35,4 @@ mongoose
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-
+mongoose.set('useCreateIndex', true)
