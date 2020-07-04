@@ -1,0 +1,9 @@
+$main-color: #486974;
+
+* {
+    direction: rtl;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+@import 'forms/input';
+@import 'layout/navbar';

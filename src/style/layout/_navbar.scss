@@ -1,0 +1,44 @@
+.navbar {
+    background-color: $main-color;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin: 0;
+    height: 50px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 10% 60% 40%;
+
+    .logo {
+        background-color: $main-color;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        position: relative;
+        float: right;
+    }
+
+    .links {
+        list-style-type: none;
+        display: inline-block;
+        margin: 0;
+        padding: 15px;
+
+        li {
+            margin: 8px;
+            display: inline;
+            padding: 7px;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #ffffff32;
+            }
+        }
+    }
+    
+    .left-section {
+        float: left;
+    }
+}
