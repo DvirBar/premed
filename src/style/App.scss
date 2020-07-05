@@ -5,5 +5,10 @@ $main-color: #486974;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+.content {
+    margin-top: 150px;
+}
+
 @import 'forms/input';
+@import 'forms/buttons';
 @import 'layout/navbar';

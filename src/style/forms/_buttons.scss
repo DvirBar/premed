@@ -1,0 +1,14 @@
+button {
+    background-color: #2759b4;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    border: 0;
+    height: 35px;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($color: #2759b4, $amount: 5%);
+    }
+}

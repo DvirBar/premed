@@ -1,6 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
+    const auth = useSelector(state => state.auth);
+    
     return (
         <nav className='navbar'>
             <span className='logo'>Logo</span>
@@ -12,7 +16,9 @@ function Navbar() {
             </ul>
             <span className='left-section'>
                 <input type='search' className='main-search' />
-                <span className='private-sec'>איזור אישי</span>
+                {auth.isAuthenticated
+                    ? <span className='private-sec'><Link to="/profile">איזור אישי</Link></span>
+                    : <button>התחבר</button>}
             </span>
         </nav>
     )
