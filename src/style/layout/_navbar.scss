@@ -9,6 +9,7 @@
     color: #fff;
     display: grid;
     grid-template-columns: 10% 60% 40%;
+    z-index: 1;
 
     .logo {
         background-color: $main-color;
@@ -24,6 +25,7 @@
         display: inline-block;
         margin: 0;
         padding: 15px;
+        overflow: hidden;
 
         li {
             margin: 8px;
@@ -32,8 +34,16 @@
             border-radius: 5px;
             cursor: pointer;
 
+            .sub-menu {
+                display: none;
+            }
+
             &:hover {
                 background-color: #ffffff32;
+            }
+
+            &:hover .sub-menu{
+                display: block;
             }
         }
     }

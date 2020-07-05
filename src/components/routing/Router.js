@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import AdminRoute from './AdminRoute';
 import Default from '../Default';
-import Profile from '../Profile/Profile';
-import AdminDefault from '../Admin/AdminDefault';
+import Profile from '../profile/Profile';
+import AdminDefault from '../admin/AdminDefault';
 
 const Router = () => {
     return ( 
