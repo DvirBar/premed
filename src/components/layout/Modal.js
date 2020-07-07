@@ -20,8 +20,8 @@ const Modal = props => {
         <div className="gen-modal" style={display ? displayed : notDisplayed}>
           <div className="modal-box">
             <div className="modal-header">
+                <span class="close-modal" onClick={() => closeModal()}>&times;</span><br/>
                 <span className="modal-title">{props.title}</span>
-              <span class="close-modal" onClick={() => closeModal()}>&times;</span>
             </div>
             <div className="modal-body">
               {props.children}

@@ -5,6 +5,8 @@ import Router from './components/routing/Router';
 import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
+import moment from 'moment';
+import 'moment/locale/he';
 
 function App() {
   const dispatch = useDispatch();
@@ -13,6 +15,8 @@ function App() {
   useEffect(() => {
     dispatch(getUser());
   }, []);
+
+  moment.locale('he');
 
   return (
     <BrowserRouter>

@@ -12,25 +12,25 @@
   }
   
   .modal-box {
-    color: #727272;
-    background-color: #e6e6e6;
+    background-color: #fff;
     margin-top: 5%;
-    margin-right: 35%;
+    margin-right: 25%;
     padding: 15px;
     padding-left: 20px;
     padding-bottom: 20px;
     border-radius: 5px;
-    width: 400px; 
+    width: 50%;
   }
 
   .modal-header {
     padding-right: 5px;
-    margin-bottom: 50px;
     text-align: center;
+    margin-bottom: 20px;
 
     .modal-title {
-      margin:10px;
-      font-size: 30px;
+      margin:30px;
+      margin-top:20px;
+      font-size: 20px;
       color: $main-color;
     }
   }
@@ -57,6 +57,3 @@
     width: 60%;
   }
 
-  .modal-body {
-    margin-right: 20%;
-  }

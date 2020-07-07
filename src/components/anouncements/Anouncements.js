@@ -19,7 +19,7 @@ function Anouncements() {
         setAncs(fetchedAncs)
     }, [fetchedAncs])
 
-    if(ancs) {
+    if(ancs) { 
         return (
             <div className="anc-list">
                 {ancs.map(anc =>
@@ -27,9 +27,12 @@ function Anouncements() {
             </div>
         )
     }
-
     else {
-        return <p>עדיין לא פורסמו עדכונים</p>
+        return  (
+            <div className="anc-list">
+                <p>עדיין לא פורסמו עדכונים</p>
+            </div>
+        )
     }
 }
 
