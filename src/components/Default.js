@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import Anouncements from './anouncements/Anouncements';
 
 function Default() {
     return (
         <div>
-            Default
+            <Anouncements />
         </div>
     )
 }
