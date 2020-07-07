@@ -28,7 +28,7 @@ const Register = () => {
             className={errors.email ? 'red-border' : ''}
             onChange={handleChange}
             /><br />
-            <p>
+            <p className="form-error">
                 {errors.email && errors.email}
             </p>
 
@@ -40,7 +40,7 @@ const Register = () => {
             className={errors.password ? 'red-border' : ''}
             onChange={handleChange}
             /><br />
-            <p>
+            <p className="form-error">
                 {errors.password && errors.password}
             </p>
 

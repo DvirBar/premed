@@ -5,7 +5,7 @@ export const getMessage = (msg, status) => {
     return {
         type: GET_MESSAGE,
         payload: {
-            msg: msg,
+            msg: msg.msg,
             status: status
         }
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { login } from '../../redux/actions/auth';
+import { useSelector } from 'react-redux';
 import useForm from '../../forms/useForm';
 
 const Login = () => {
@@ -9,15 +10,30 @@ const Login = () => {
         values,
         errors} = useForm(login);
 
-    const [disabled, setDisabled] = useState(true)
+    const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
         if(values.email && values.password)
             setDisabled(false)
     }, [values])
 
+    const selectedMsg = useSelector(state => state.messages);
+
+    const [message, setMessage] = useState({});
+
+    useEffect(() => {
+        setMessage({
+            msg: selectedMsg.msg, 
+            status: selectedMsg.status
+        });
+    }, [selectedMsg])
+
     return (
         <form onSubmit={handleSubmit} noValidate>
+
+            {message.msg &&
+            <p className="form-error">{message.msg}</p>}
+
             <input 
             type="email" 
             name="email"
@@ -26,7 +42,7 @@ const Login = () => {
             value={values.email || ''}
             onChange={handleChange}
             /><br />
-            <p>
+            <p className="form-error">
                 {errors.email && errors.email}
             </p>
 
@@ -39,7 +55,7 @@ const Login = () => {
             value={values.password || ''}
             onChange={handleChange}
             /><br />
-            <p>
+            <p className="form-error">
                 {errors.password && errors.password}
             </p>
 
