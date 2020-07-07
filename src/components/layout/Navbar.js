@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Modal from './Modal';
 import Login from '../auth/Login';
-import Register from '../auth/Register';
 
 function Navbar() {
     const auth = useSelector(state => state.auth);
@@ -46,8 +45,7 @@ function Navbar() {
                     )
                     : (
                         <Fragment>
-                            <button onClick={openModal}>התחבר</button>
-                            <Modal display={display} setDisplay={setDisplay} title={"התחברות"}><Login /></Modal>
+                            <Link to="/login"><button>התחבר</button></Link>
                         </Fragment>
                     )}
             </span>

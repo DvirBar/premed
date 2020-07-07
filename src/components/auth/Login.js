@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { login } from '../../redux/actions/auth';
 import { useSelector } from 'react-redux';
+import { Redirect, Link } from 'react-router-dom';
+import { login } from '../../redux/actions/auth';
 import useForm from '../../forms/useForm';
 
 const Login = () => {
@@ -15,7 +16,9 @@ const Login = () => {
     useEffect(() => {
         if(values.email && values.password)
             setDisabled(false)
-    }, [values])
+    }, [values]);
+
+    const auth = useSelector(state => state.auth);
 
     const selectedMsg = useSelector(state => state.messages);
 
@@ -28,8 +31,15 @@ const Login = () => {
         });
     }, [selectedMsg])
 
+    
+    if(auth.isAuthenticated)
+        return <Redirect to="/" />;
+
     return (
         <form onSubmit={handleSubmit} noValidate>
+            {auth.loading && <p>Loading...</p>}
+
+            <h1>התחברות</h1>
 
             {message.msg &&
             <p className="form-error">{message.msg}</p>}
@@ -61,7 +71,9 @@ const Login = () => {
 
             <button 
             type="submit"
-            disabled={disabled}>התחברות</button>
+            disabled={disabled}>התחברות</button><br />
+
+            <p>עדיין אין משתמש? <Link to="/register">הירשם</Link></p>
         </form>
     )
 }

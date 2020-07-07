@@ -60,7 +60,6 @@ export const getUser = () => dispatch => {
         .get('/api/auth/user')
         .then(res => dispatch(authSuccess(res.data)))
         .catch(err => {
-            // Get message
             dispatch(authError());
         })
 }
@@ -95,7 +94,7 @@ export const register = data => dispatch => {
         .post('/api/auth/register', body)
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
-            // Get message
             dispatch(authError())
+            dispatch(getMessage(err.response.data, err.response.status));
         })
 }
