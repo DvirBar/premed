@@ -78,7 +78,7 @@ export const login = data => dispatch => {
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
             dispatch(authError());
-            dispatch(getMessage(err.response.data, err.response.status))
+            dispatch(getError(err))
         })
 
 }
@@ -95,6 +95,6 @@ export const register = data => dispatch => {
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
             dispatch(authError())
-            dispatch(getMessage(err.response.data, err.response.status));
+            dispatch(getError(err));
         })
 }

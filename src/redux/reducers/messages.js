@@ -13,6 +13,14 @@ export default function(state = initialState, action) {
                 msg: action.payload.msg,
                 status: action.payload.status
             }
+
+        case GET_MESSAGE:
+            return {
+                ...state,
+                msg: action.payload.msg,
+                status: action.payload.status
+            }
+            
         default:
             return state;
     }

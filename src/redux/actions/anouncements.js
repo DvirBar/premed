@@ -16,10 +16,10 @@ export const ancLoad = () => {
     }
 }
 
-export const ancSuccess = res => {
+export const ancSuccess = ancs => {
     return {
         type: ANC_SUCCESS,
-        payload: res
+        payload: ancs
     }
 }
 
@@ -29,17 +29,17 @@ export const ancError = () => {
     }
 }
 
-export const ancAdd = res => {
+export const ancAdd = anc => {
     return {
         type: ANC_ADD,
-        payload: res
+        payload: anc
     }
 }
 
-export const ancUpdate = res => {
+export const ancUpdate = anc => {
     return {
         type: ANC_UPDATE,
-        payload: res
+        payload: anc
     }
 }
 
