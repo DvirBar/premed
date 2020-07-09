@@ -37,7 +37,7 @@ router.get('/user/:id', [auth, authAdmin], (req, res, next) => {
 // @access  Private
 router.get('/user', auth, (req, res, next) => {
     User.findById(res.locals.user.id)
-        .select('-password -isAdmin')
+        .select('-password')
         .then(user => res.json(user))
         .catch(next);
 })
@@ -75,8 +75,6 @@ router.post('/register', (req, res, next) => {
                                     token,
                                     user: { 
                                         id: user.id,
-                                        first_name: user.first_name,
-                                        last_name: user.last_name,
                                         email: user.email,
                                         isAdmin: user.isAdmin
                                     }
@@ -106,7 +104,7 @@ router.post('/login', (req, res, next) => {
             // Validate password
             bcrypt.compare(password, user.password)
                   .then(isMatch => {
-                    if(!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+                    if(!isMatch) return res.status(400).send({ msg: 'Invalid credentials' });
                     
                     // Create token and send it back
                     jwt.sign(

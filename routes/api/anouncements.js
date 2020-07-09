@@ -83,6 +83,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     })
                     .catch(next)
                 })
+              .catch(next);
 })
 
 // @route   DELETE api/anouncements/:id
@@ -92,16 +93,17 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
 
     const ancId = req.params.id;
 
-    Dictionary.findById(ancId)
+    Anouncement.findById(ancId)
               .then(anc => {
                 if(!anc) return res.status(404).send({ msg: 'Anouncement does not exist' });
 
                 anc.remove()
                     .then(() => {
-                        return res.json({ msg: 'Anouncement was successfully deleted' })
+                        return res.send({ msg: 'Anouncement was successfully deleted' })
                     })
                     .catch(next)
               })
+              .catch(next);
 })
 
 module.exports = router;

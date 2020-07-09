@@ -6,6 +6,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 const auth = require('./routes/api/auth')
 const anouncements = require('./routes/api/anouncements');
+const sections = require('./routes/api/sections');
 
 
 // Init app
@@ -19,6 +20,7 @@ app.use (cors());
 // App routes
 app.use('/api/auth', auth);
 app.use('/api/anouncements', anouncements);
+app.use('/api/sections', sections);
 
 // Exit middlewares
 app.use(errorHandler);
