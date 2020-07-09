@@ -5,13 +5,14 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Anouncement model
 const Anouncement = require('../../models/Anouncement');
-const modelName = 'anouncement'
+const modelName = 'anouncement';
 
 // @route   GET api/anouncements/:id
 // @desc    Get anouncement by id
 // @access  Public
 router.get('/:id', (req, res, next) => {
     Anouncement.findById(req.params.id)
+        .select("-userId")
         .then(anc => {
             if(!anc) return res.status(404).json({ msg: 'Anouncement does not exist' });
             
@@ -21,9 +22,19 @@ router.get('/:id', (req, res, next) => {
 })
 
 // @route   GET api/anouncements
-// @desc    Get all anouncements
+// @desc    Get all anouncements without author Id
 // @access  Public
-router.get('/', (req, res, next) => {
+router.get('/', (req, res, next) => { 
+    Anouncement.find()
+        .select("-userId")
+        .then(anc => res.json(anc))
+        .catch(next)
+})
+
+// @route   GET api/anouncements/all/extended
+// @desc    Get all anouncements with author Id
+// @access  Admin
+router.get('/all/extended', [auth, authAdmin], (req, res, next) => { 
     Anouncement.find()
         .then(anc => res.json(anc))
         .catch(next)
@@ -83,7 +94,11 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     })
                     .catch(next)
                 })
+<<<<<<< HEAD
               .catch(next);
+=======
+                .catch(next)
+>>>>>>> 497b1405846bf5c88a959f1a722bf6799cd7e272
 })
 
 // @route   DELETE api/anouncements/:id
