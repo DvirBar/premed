@@ -14,11 +14,11 @@ const initialState = {
     loading: false,
     sections:[]
 }
-
+//
 export default function(state = initialState, action) {
     const payload = action.payload
 
-    switch(action) {
+    switch(action.type) {
         case SEC_LOADING:
             return {
                 ...state,
@@ -42,7 +42,6 @@ export default function(state = initialState, action) {
         case SEC_ADD:
             return {
                 ...state,
-                loading: false,
                 sections: [...state.sections, payload]
             }
 

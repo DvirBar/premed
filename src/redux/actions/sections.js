@@ -84,12 +84,13 @@ export const getSections = () => dispatch => {
          });
 }
 
+// Create new section
 export const addSection = data => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
     axios.post('api/sections', body)
-         .then(res => dispatch(secSuccess(res.data)))
+         .then(res => dispatch(secAdd(res.data)))
          .catch(err => dispatch(getError(err)))
 }
 
@@ -104,7 +105,7 @@ export const editSection = (id, data) => dispatch => {
 
 export const deleteSection = id => dispatch => {
 
-    axios.delete(`api/sections/${id}`, body)
+    axios.delete(`api/sections/${id}`)
          .then(res => {
              dispatch(secDelete(id));
              dispatch(getMessage(res.data));

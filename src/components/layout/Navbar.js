@@ -14,7 +14,7 @@ function Navbar() {
 
     return (
         <nav className='navbar'>
-            <span className='logo'>Logo</span>
+            <Link to="/"><span className='logo'></span></Link>
             <ul className='links'>
                 <li>תהליך קבלה</li>
                 <li>

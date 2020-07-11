@@ -63,7 +63,6 @@ const Login = () => {
             className={errors.password ? 'red-border' : ''}
             onChange={handleChange}
             value={values.password || ''}
-            onChange={handleChange}
             /><br />
             <p className="form-error">
                 {errors.password && errors.password}

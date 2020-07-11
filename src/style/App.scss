@@ -5,6 +5,10 @@ $main-color: #486974;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+    background-color: #f9f9f9;
+}
+
 a {
     text-decoration: none;
 }
@@ -24,3 +28,4 @@ h1 {
 @import 'layout/navbar';
 @import 'layout/modal';
 @import 'models/anouncements';
+@import 'models/dashboard';

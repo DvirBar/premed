@@ -9,5 +9,8 @@ export const config = {
             isRequired: { message: 'דרושה סיסמה' },
             // isNotStrongPass: { message: 'הסיסמה חלשה מדי' }
         },
+        name: {
+            isRequired: { message: 'יש למלא שם' },
+        }
     }
 }

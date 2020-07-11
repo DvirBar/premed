@@ -6,7 +6,7 @@ import {
     LOGIN_SUCCESS,
     LOGOUT_SUCCESS
 } from './types';
-import { getMessage } from './messages';
+import { getError } from './messages';
 import axios from 'axios';
 
 
@@ -78,7 +78,7 @@ export const login = data => dispatch => {
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
             dispatch(authError());
-            dispatch(getError(err))
+            // dispatch(getError(err))
         })
 
 }
