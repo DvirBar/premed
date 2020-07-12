@@ -1,4 +1,5 @@
 import { 
+    INIT_MESSAGE,
     GET_MESSAGE,
     GET_ERROR 
 } from '../actions/types';
@@ -10,6 +11,9 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case INIT_MESSAGE:
+            return initialState;
+
         case GET_MESSAGE:
         case GET_ERROR:
             return {

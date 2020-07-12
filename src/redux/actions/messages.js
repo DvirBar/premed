@@ -1,8 +1,15 @@
 import { 
+    INIT_MESSAGE,
     GET_MESSAGE,
     GET_ERROR
 } from './types';
 
+
+export const initMessage = () => {
+    return {
+        type: INIT_MESSAGE
+    }
+}
 
 export const getMessage = msg => {
     return {

@@ -1,5 +1,7 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from './ProtectedRoute';
 import AdminRoute from './AdminRoute';
 import Default from '../Default';
@@ -9,6 +11,13 @@ import Profile from '../profile/Profile';
 import AdminDefault from '../admin/AdminDefault';
 
 const Router = () => {
+    const location = useLocation();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initMessage());
+    }, [location])
+
     return ( 
         <div className="router">
             <Switch>
