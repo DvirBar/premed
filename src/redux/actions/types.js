@@ -6,7 +6,7 @@ export const LOGIN_LOADING = 'LOGIN_LOADING';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-// Massages
+// Messages
 export const INIT_MESSAGE = 'INIT_MESSAGE';
 export const GET_MESSAGE = 'GET_MESSAGE';
 export const GET_ERROR = 'GET_ERROR';

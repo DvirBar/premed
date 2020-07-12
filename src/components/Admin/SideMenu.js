@@ -1,0 +1,21 @@
+import React from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
+
+function SideMenu() {
+    const { path } = useRouteMatch();
+
+    return (
+        <ul className="side-menu">
+            <Link to={`${path}/anouncements`}><li>פרסומים</li></Link>
+            <li>תהליך הקבלה</li>
+            <li>קוגנטיבי</li>
+            <li>אישיותי</li>
+            <li>סטטיסטיקות </li>
+            <li>הגדרות ומשתמשים</li>
+            <li>פניות</li>
+            <li>אבטחה</li>
+        </ul>
+    )
+}
+
+export default SideMenu

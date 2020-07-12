@@ -1,0 +1,9 @@
+$sidemenu-width: 150px;
+
+.admin-panel {
+    margin-right: 10%;
+    margin-left: 10%;
+    display: grid;
+    grid-template-columns: $sidemenu-width auto;
+    column-gap: 30px;
+}

@@ -25,7 +25,7 @@ const Router = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <ProtectedRoute exact path="/profile" component={Profile} />
-                <AdminRoute exact path="/admin" component={AdminDefault} />
+                <AdminRoute path="/admin" component={AdminDefault} />
             </Switch>
         </div>
     )
