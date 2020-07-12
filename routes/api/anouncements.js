@@ -7,6 +7,10 @@ const authAdmin = require('../../middleware/authAdmin');
 const Anouncement = require('../../models/Anouncement');
 const modelName = 'anouncement';
 
+// Errors
+const ancMessage = require('../../messages/anouncements');
+const { AncNotExist, SuccessDelete } = ancMessage;
+
 // @route   GET api/anouncements/:id
 // @desc    Get anouncement by id
 // @access  Public
@@ -14,7 +18,7 @@ router.get('/:id', (req, res, next) => {
     Anouncement.findById(req.params.id)
         .select("-userId")
         .then(anc => {
-            if(!anc) return res.status(404).json({ msg: 'Anouncement does not exist' });
+            if(!anc) return res.status(AncNotExist.status).json(AncNotExist.msg);
             
             return res.json(anc);
         })
@@ -82,7 +86,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
     Anouncement.findById(ancId)
               .then(anc => {
-                if(!anc) return res.status(404).send({ msg: 'Anouncement not found' })
+                if(!anc) return res.status(AncNotExist.status).send(AncNotExist.msg)
                     
                 anc.title = title;
                 anc.content = content;  
@@ -94,11 +98,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     })
                     .catch(next)
                 })
-<<<<<<< HEAD
               .catch(next);
-=======
-                .catch(next)
->>>>>>> 497b1405846bf5c88a959f1a722bf6799cd7e272
 })
 
 // @route   DELETE api/anouncements/:id
@@ -110,11 +110,11 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
 
     Anouncement.findById(ancId)
               .then(anc => {
-                if(!anc) return res.status(404).send({ msg: 'Anouncement does not exist' });
+                if(!anc) return res.status(AncNotExist.status).send(AncNotExist.msg);
 
                 anc.remove()
                     .then(() => {
-                        return res.send({ msg: 'Anouncement was successfully deleted' })
+                        return res.send(SuccessDelete.msg)
                     })
                     .catch(next)
               })

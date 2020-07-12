@@ -10,6 +10,10 @@ const authAdmin = require('../../middleware/authAdmin');
 const User = require('../../models/User');
 const modelName = 'user';
 
+// Errors
+const authMessages = require('../../messages/auth');
+const { InvalidCredentials, UserDoesNotExist, NotAuthorizedSelf, SuccessDelete } = authMessages;
+
 // @route   GET api/auth/users
 // @desc    Get all users
 // @access  Admin
@@ -25,7 +29,7 @@ router.get('/users', [auth, authAdmin], (req, res, next) => {
 router.get('/user/:id', [auth, authAdmin], (req, res, next) => {
     User.findById(req.params.id)
         .then(user => {
-            if(!user) return res.status(400).json({ msg: 'User does not exist' });
+            if(!user) return res.status(UserDoesNotExist.status).json(UserDoesNotExist.msg);
 
             return res.json(user);
         })
@@ -94,17 +98,17 @@ router.post('/login', (req, res, next) => {
     const { email, password } = req.body;
 
     if(!email || !password)
-            return res.status(400).json({ msg: 'Missing details'});
+            return res.status(UserDoesNotExist.status).json(UserDoesNotExist.msg);
 
     // Check for existing user
     User.findOne({ email })
         .then(user => {
-            if(!user) return res.status(400).json({ msg: 'User does not exist' });
+            if(!user) return res.status(InvalidCredentials.status).json(InvalidCredentials.msg);
 
             // Validate password
             bcrypt.compare(password, user.password)
                   .then(isMatch => {
-                    if(!isMatch) return res.status(400).send({ msg: 'Invalid credentials' });
+                    if(!isMatch) return res.status(InvalidCredentials.status).send(InvalidCredentials.msg);
                     
                     // Create token and send it back
                     jwt.sign(
@@ -155,15 +159,15 @@ router.put('/user', auth, (req, res, next) => {
 router.delete('/user/:id', [auth, authAdmin], (req, res, next) => {
     // If a user tries to delete himself
     if(res.locals.user.id === req.params.id)
-        return res.status(403).send({ msg: 'Users are not authorized to delete themselves' })
+        return res.status(NotAuthorizedSelf.status).send(NotAuthorizedSelf.msg)
 
     User.findById(req.params.id)
         .then(user => {
-            if(!user) return res.status(404).send({ msg: 'User does not exist' })
+            if(!user) return res.status(UserDoesNotExist.status).send(UserDoesNotExist.msg)
 
             user.remove()
                 .then(() => {
-                    res.send({ msg: 'User was successfully deleted' })
+                    res.send(SuccessDelete.msg)
                 })
                 .catch(next)
         })

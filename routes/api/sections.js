@@ -4,8 +4,7 @@ const auth = require('../../middleware/auth');
 
 // Section model
 const Section = require('../../models/Section');
-const { db } = require('../../models/Section');
-const modelName = 'section'
+const modelName = 'section';
 
 // @route   GET api/sections/:id
 // @desc    Get section by id
