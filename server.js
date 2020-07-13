@@ -4,8 +4,10 @@ const config = require('config');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 
-const auth = require('./routes/api/auth')
+const auth = require('./routes/api/auth');
+const paths = require('./routes/api/paths');
 const anouncements = require('./routes/api/anouncements');
+const ancgroups = require('./routes/api/anc-groups');
 const sections = require('./routes/api/sections');
 
 
@@ -19,7 +21,9 @@ app.use (cors());
 
 // App routes
 app.use('/api/auth', auth);
+app.use('/api/paths', paths);
 app.use('/api/anouncements', anouncements);
+app.use('/api/ancgroups', ancgroups);
 app.use('/api/sections', sections);
 
 // Exit middlewares
