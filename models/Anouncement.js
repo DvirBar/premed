@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./User');
+const AncGroup = require('./AncGroup');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // Create schema
@@ -21,6 +22,11 @@ const AnouncementSchema = new Schema({
         type: ObjectId,
         required: [true, 'User id is required'],
         ref: User
+    },
+    ancGroup: {
+        type: ObjectId,
+        required: [true, 'Anouncement group is required'],
+        ref: 'AncGroup'
     }
 })
 

@@ -27,7 +27,7 @@ const SectionSchema = new Schema({
     userId: {
         type: ObjectId,
         required: [true, 'User id is required'],
-        ref: User
+        ref: 'User'
     }   
 })
 
