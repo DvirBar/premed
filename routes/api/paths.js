@@ -3,9 +3,9 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const authAdmin = require('../../middleware/authAdmin');
 
-// Anouncement group model
+// Path model
 const Path = require('../../models/Path');
-const modelName = 'type';
+const modelName = 'path';
 
 // Errors
 const pathsMessage = require('../../messages/paths');
@@ -13,8 +13,8 @@ const { NotExist, SuccessDelete } = pathsMessage;
 
 // @route   GET api/paths/:id
 // @desc    Get path by id
-// @access  Admin
-router.get('/:id', [auth, authAdmin], (req, res, next) => {
+// @access  Public
+router.get('/:id', (req, res, next) => {
     Path.findById(req.params.id)
             .then(path => {
                 if(!path) return res.status(NotExist.status).json(NotExist.msg);
@@ -26,11 +26,11 @@ router.get('/:id', [auth, authAdmin], (req, res, next) => {
 
 // @route   GET api/paths
 // @desc    Get all paths
-// @access  Admin
-router.get('/', [auth, authAdmin], (req, res, next) => { 
+// @access  Public
+router.get('/', (req, res, next) => { 
     Path.find()
         .then(path => res.json(path))
-        .catch(next);
+        .catch(err => {throw err});
 })
  
 // @route   POST api/paths

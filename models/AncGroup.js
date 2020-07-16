@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const User = require('./User');
-const Path = require('./Path');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // Create schema
 const AncGroupSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'Name is required']
+        required: [true, 'Name is required'],
+        unique: true
+    },
+    path: {
+        type: ObjectId,
+        ref: 'Path'
     },
     subscribers: [{
         userId: {
@@ -16,10 +19,6 @@ const AncGroupSchema = new Schema({
             ref: 'User'
         }
     }],
-    pathId: {
-        type: ObjectId,
-        ref: 'Path'
-    }
 })
 
-module.exports = AncGroup = mongoose.model('ancgroup', AncGroupSchema);
+module.exports = mongoose.model('AncGroup', AncGroupSchema);

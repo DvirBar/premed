@@ -31,4 +31,4 @@ const SectionSchema = new Schema({
     }   
 })
 
-module.exports = Section = mongoose.model('section', SectionSchema);
+module.exports = mongoose.model('Section', SectionSchema);

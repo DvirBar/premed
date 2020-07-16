@@ -5,6 +5,7 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Anouncement group model
 const AncGroup = require('../../models/AncGroup');
+const Path = require('../../models/Path');
 const modelName = 'anouncement group';
 
 // Errors
@@ -27,23 +28,23 @@ router.get('/:id', auth, (req, res, next) => {
 })
 
 // @route   GET api/ancgroups
-// @desc    Get all anouncement groups without subscribers
+// @desc    Get all anouncement groups
 // @access  Private
 router.get('/', auth, (req, res, next) => { 
     AncGroup.find()
-        .select('-subscribers')
-        .then(group => res.json(group))
-        .catch(next)
+            .populate('path', 'name')
+            .then(group => res.json(group))
+            .catch(next)
 })
 
-// @route   GET api/ancgroups
-// @desc    Get all anouncement groups with subscribers
-// @access  Admin
-router.get('/', [auth, authAdmin], (req, res, next) => { 
-    AncGroup.find()
-        .then(group => res.json(group))
-        .catch(next)
-})
+// // @route   GET api/ancgroups
+// // @desc    Get all anouncement groups with subscribers
+// // @access  Admin
+// router.get('/', [auth, authAdmin], (req, res, next) => { 
+//     AncGroup.find()
+//         .then(group => res.json(group))
+//         .catch(next)
+// })
 
 
 // @route   GET api/ancgroups/:userId/subscribes
@@ -72,13 +73,11 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     // Create new anouncement group
     const newGroup = new AncGroup({
         name: name,
-        pathId: pathId
+        path: pathId
     })
 
     newGroup.save()
-            .then(group => {
-                return res.json(group)
-            })
+            .then(group => { return res.json(group) })
             .catch(next)
 })
 
@@ -100,7 +99,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                 if(!group) return res.status(NotExist.status).send(NotExist.msg)
                     
                 group.name = name;
-                group.pathId = pathId;
+                group.path = pathId;
 
                 group.save()
                     .then(group => {
@@ -114,12 +113,14 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 // @route   PUT api/ancgroups/:id/subscribe
 // @desc    Subscribe to group
 // @access  Private
-router.put('/api/ancgroups/:id/subscribe', auth, (req, res, next) => {
+router.put('/:id/subscribe', auth, (req, res, next) => {
     const userId = res.locals.user.id;
     const groupId = req.params.id
 
     AncGroup.findById(groupId)
             .then(group => {
+                if(!group) return res.status(NotExist.status).send(NotExist.msg);
+            
                 const isExist = group.subscribers.id(userId)
                 if(isExist)
                     return res.status(AlreadySubscribed.status).send(AlreadySubscribed.msg);
@@ -136,12 +137,14 @@ router.put('/api/ancgroups/:id/subscribe', auth, (req, res, next) => {
 // @route   PUT api/ancgroups/:id/unsubscribe
 // @desc    Unsubscribe to group
 // @access  Private
-router.put('/api/ancgroups/:id/unsubscribe', auth, (req, res, next) => {
+router.put('/:id/unsubscribe', auth, (req, res, next) => {
     const userId = res.locals.user.id;
     const groupId = req.params.id
 
     AncGroup.findById(groupId)
             .then(group => {
+                if(!group) return res.status(NotExist.status).send(NotExist.msg);
+
                 const delSub = group.subscribers.id(userId)
 
                 if(!delSub)
@@ -152,8 +155,33 @@ router.put('/api/ancgroups/:id/unsubscribe', auth, (req, res, next) => {
                         .then(() => res.send(SuccessUnsubscribe.msg))
                         .catch(next);
             })
-            .then(next);
+            .catch(next);
 }) 
+
+// @route   PUT api/ancgroups/:id
+// @desc    Add path
+// @access  Admin
+router.put('/:id/addpath', [auth, authAdmin], (req, res, next) => {
+    const { pathId } = req.body;
+
+    res.locals.model = modelName;
+
+    const groupId = req.params.id;
+
+    AncGroup.findById(groupId)
+              .then(group => {
+                if(!group) return res.status(NotExist.status).send(NotExist.msg)
+                    
+                group.path = pathId;
+
+                group.save()
+                    .then(group => {
+                        return res.json(group)              
+                    })
+                    .catch(next)
+                })
+              .catch(next);
+});
 
 
 // @route   DELETE api/ancgroups/:id

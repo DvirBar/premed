@@ -4,13 +4,6 @@ const config = require('config');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 
-const auth = require('./routes/api/auth');
-const paths = require('./routes/api/paths');
-const anouncements = require('./routes/api/anouncements');
-const ancgroups = require('./routes/api/anc-groups');
-const sections = require('./routes/api/sections');
-
-
 // Init app
 const app = express();
 
@@ -20,6 +13,12 @@ app.use(express.json());
 app.use (cors());
 
 // App routes
+const auth = require('./routes/api/auth');
+const paths = require('./routes/api/paths');
+const anouncements = require('./routes/api/anouncements');
+const ancgroups = require('./routes/api/anc-groups');
+const sections = require('./routes/api/sections');
+
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
 app.use('/api/anouncements', anouncements);

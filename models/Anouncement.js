@@ -21,7 +21,7 @@ const AnouncementSchema = new Schema({
     userId: {
         type: ObjectId,
         required: [true, 'User id is required'],
-        ref: User
+        ref: 'User'
     },
     ancGroup: {
         type: ObjectId,
@@ -30,4 +30,4 @@ const AnouncementSchema = new Schema({
     }
 })
 
-module.exports = Anouncement = mongoose.model('anouncement', AnouncementSchema);
+module.exports = mongoose.model('Anouncement', AnouncementSchema);
