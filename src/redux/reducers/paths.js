@@ -1,0 +1,63 @@
+import {
+    PATH_LOADING,
+    PATH_SUCCESS,
+    PATH_ERROR,
+    PATH_ADD,
+    PATH_UPDATE,
+    PATH_DELETE,
+} from '../actions/types';
+
+const initialState = {
+    loading: false,
+    paths: []
+}
+
+export default function(state = initialState, action) {
+    const payload = action.payload;
+
+    switch(action.type) {
+        case PATH_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case PATH_SUCCESS: 
+            return {
+                ...state,
+                loading: false,
+                paths: payload
+            }
+
+        case PATH_ERROR:
+            return {
+                ...state,
+                loading: false,
+                paths: []
+            }
+
+        case PATH_ADD:
+            return {
+                ...state,
+                loading: false,
+                paths: [...state.paths, payload]
+            }
+
+        case PATH_UPDATE:
+            return {
+                ...state,
+                loading: false,
+                paths: state.paths.map(path => path.id === payload.id ? path = payload : path)
+            }
+
+        case PATH_DELETE:
+            return {
+                ...state,
+                loading: false,
+                paths: state.paths.filter(path => path.id !== payload)
+            }
+
+        default:
+            return state;
+    }
+}

@@ -31,3 +31,10 @@ export const ITEM_ADD = 'ITEM_ADD';
 export const ITEM_UPDATE = 'ITEM_EDIT';
 export const ITEM_DELETE = 'ITEM_DELETE';
 
+// Paths
+export const PATH_LOADING = 'PATH_LOADING';
+export const PATH_SUCCESS = 'PATH_SUCCESS';
+export const PATH_ERROR = 'PATH_ERROR';
+export const PATH_ADD = 'PATH_ADD';
+export const PATH_UPDATE = 'PATH_UPDATE';
+export const PATH_DELETE = 'PATH_DELETE';
