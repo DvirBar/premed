@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
+const errorLogger = require('./middleware/errorLogger');
 
 // Init app
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/sections', sections);
 
 // Exit middlewares
 app.use(errorHandler);
+app.use(errorLogger);
 
 
 // Create connection
