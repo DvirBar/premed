@@ -6,6 +6,7 @@ function SideMenu() {
 
     return (
         <ul className="side-menu">
+            <Link to={`${path}`}><li>כללי</li></Link>
             <Link to={`${path}/anouncements`}><li>פרסומים</li></Link>
             <li>תהליך הקבלה</li>
             <li>קוגנטיבי</li>

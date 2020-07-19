@@ -6,7 +6,8 @@ import {
     useRouteMatch } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
 import AdminRoute from '../routing/AdminRoute';
-import AncAdmin from './AncAdmin';
+import AdminDefault from './default/AdminDefault';
+import AncAdmin from './anouncements/AncAdmin';
 
 
 const AdminRouter = () => {
@@ -20,6 +21,7 @@ const AdminRouter = () => {
 
     return ( 
             <Switch>
+                <AdminRoute exact path={`${path}`} component={AdminDefault} />
                 <AdminRoute path={`${path}/anouncements`} component={AncAdmin} />
             </Switch>
     )

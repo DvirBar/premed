@@ -8,7 +8,7 @@ import Default from '../Default';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Profile from '../profile/Profile';
-import AdminDefault from '../admin/AdminDefault';
+import Admin from '../admin/Admin';
 
 const Router = () => {
     const location = useLocation();
@@ -25,7 +25,7 @@ const Router = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <ProtectedRoute exact path="/profile" component={Profile} />
-                <AdminRoute path="/admin" component={AdminDefault} />
+                <AdminRoute path="/admin" component={Admin} />
             </Switch>
         </div>
     )

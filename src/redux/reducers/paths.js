@@ -47,14 +47,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                paths: state.paths.map(path => path.id === payload.id ? path = payload : path)
+                paths: state.paths.map(path => path._id === payload.id ? path = payload : path)
             }
 
         case PATH_DELETE:
             return {
                 ...state,
                 loading: false,
-                paths: state.paths.filter(path => path.id !== payload)
+                paths: state.paths.filter(path => path._id !== payload)
             }
 
         default:

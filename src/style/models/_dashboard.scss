@@ -15,10 +15,10 @@ $title-color: #525252;
         font-weight: 500;
 
         cursor: pointer;
-        color: #4e4e4e;
+        color: $key-color;
 
         &:hover {
-            color: #838383; 
+            color: $key-color-hover; 
         }
     }
 

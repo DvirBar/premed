@@ -57,13 +57,15 @@ export const getPaths = () => dispatch => {
     axios.get('api/paths')
          .then(res => dispatch(pathSuccess(res.data)))
          .catch(err => {
-             dispatch(secError());
+             dispatch(pathError());
              dispatch(getError(err));
          });
 }
 
 // Create new path
 export const addPath = data => dispatch => {
+    dispatch(pathLoad());
+
     // Request body
     const body = JSON.stringify(data);
 
@@ -73,6 +75,8 @@ export const addPath = data => dispatch => {
 }
 
 export const editPath = (id, data) => dispatch => {
+    dispatch(pathLoad());
+    
     // Request body
     const body = JSON.stringify(data);
 
@@ -82,6 +86,7 @@ export const editPath = (id, data) => dispatch => {
 }
 
 export const deletePath = id => dispatch => {
+    dispatch(pathLoad());
 
     axios.delete(`api/paths/${id}`)
          .then(res => {

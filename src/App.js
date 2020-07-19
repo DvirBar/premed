@@ -5,6 +5,7 @@ import Router from './components/routing/Router';
 import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
+import { getPaths } from './redux/actions/paths';
 import moment from 'moment';
 import 'moment/locale/he';
 
@@ -14,6 +15,7 @@ function App() {
   // Check if there is a logged in user
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getPaths());
   }, []);
 
   moment.locale('he');

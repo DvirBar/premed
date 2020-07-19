@@ -3,7 +3,7 @@ import SideMenu from './SideMenu';
 import Container from '../layout/Container';
 import AdminRouter from './AdminRouter';
 
-function AdminDefault() {
+function Admin() {
     return (
         <div className="admin-panel">
             <SideMenu />
@@ -14,4 +14,4 @@ function AdminDefault() {
     )
 }
 
-export default AdminDefault;
+export default Admin;
