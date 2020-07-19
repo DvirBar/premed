@@ -3,8 +3,9 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const authAdmin = require('../../middleware/authAdmin');
 
-// Path model
+// Models
 const Path = require('../../models/Path');
+const AncGroup = require('../../models/AncGroup');
 const modelName = 'path';
 
 // Errors
@@ -90,11 +91,22 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
               .then(path => {
                 if(!path) return res.status(NotExist.status).send(NotExist.msg);
 
-                path.remove()
-                    .then(() => {
-                        return res.send(SuccessDelete.msg)
-                    })
-                    .catch(next);
+                //Remove path from linked groups
+                AncGroup.find({ path: pathId })
+                        .then(groups => {
+                            
+                            groups.forEach(group => {
+                                group.path = undefined;
+                                group.save()
+                            })
+                            
+                            path.remove()
+                            .then(() => {
+                                return res.send(SuccessDelete.msg)
+                            })
+                            .catch(next);
+                        })
+                        .catch(next); 
               })
               .catch(next);
 })
