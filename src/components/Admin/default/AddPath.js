@@ -27,6 +27,11 @@ function AddPath() {
         }
     }
 
+    const exitAdd = () => {
+        setPath("");
+        setDisplay(false);
+    }
+
     return (
         <Fragment>
             {display &&
@@ -39,6 +44,10 @@ function AddPath() {
                     value={path}
                     onChange={e => setPath(e.target.value)}
                     onKeyPress={e => createPath(e)} />
+                    <span 
+                    className="exit-edit"
+                    onClick={exitAdd}
+                    >&times;</span>
                 </li>}
             <li className="add-path" onClick={showTextbox}>+</li>
         </Fragment>
