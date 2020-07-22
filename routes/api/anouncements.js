@@ -50,7 +50,8 @@ router.get('/all/extended', [auth, authAdmin], (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         title,
-        content
+        content,
+        groupId
     } = req.body;
 
     res.locals.model = modelName;
@@ -60,7 +61,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     newAnc = new Anouncement({
         title: title,
         content: content,
-        userId: userId
+        userId: userId,
+        group: groupId
     })
 
     newAnc.save()
@@ -76,7 +78,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const {
         title,
-        content
+        content,
+        groupId
     } = req.body;
 
     res.locals.model = modelName;
@@ -90,7 +93,8 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     
                 anc.title = title;
                 anc.content = content;  
-                anc.userId = userId;      
+                anc.userId = userId;
+                anc.group = groupId      
 
                 anc.save()
                     .then(anc => {

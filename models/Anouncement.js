@@ -23,7 +23,7 @@ const AnouncementSchema = new Schema({
         required: [true, 'User id is required'],
         ref: 'User'
     },
-    ancGroup: {
+    group: {
         type: ObjectId,
         required: [true, 'Anouncement group is required'],
         ref: 'AncGroup'

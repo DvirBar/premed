@@ -32,8 +32,7 @@ router.get('/:id', auth, (req, res, next) => {
 // @access  Private
 router.get('/', auth, (req, res, next) => { 
     AncGroup.find()
-            .populate('path', 'name')
-            .then(group => res.json(group))
+            .then(groups => res.json(groups))
             .catch(next)
 })
 
