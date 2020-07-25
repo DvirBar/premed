@@ -1,5 +1,7 @@
 button {
-    background-color: #2759b4;
+    background-color: $main-color;
+    font-family: inherit;
+    font-size: 1.5rem;
     border-radius: 5px;
     padding: 10px;
     color: white;

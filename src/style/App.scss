@@ -4,14 +4,25 @@ $default-shadow:
 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 $key-color: #4e4e4e;
 $key-color-hover: #838383;
+$header-color: #727272;
+$header-height: 5rem;
+$cover-height: 25rem;
 
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
     direction: rtl;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #f9f9f9;
+    background-color: #fff;
 }
 
 a {
@@ -23,23 +34,46 @@ h1 {
     font-weight: 450;
 }
 
-.content {
-    margin-top: 150px;
+ul {
+    list-style-type: none;
 }
+
+.cover-photo {
+    position: absolute;
+    top: $header-height;
+    z-index: 0;
+    width: 100%;
+    height: $cover-height;
+    background-image: url('../../assets/damir-spanic-DRzpEt8deC4-unsplash.jpg');
+    background-size: cover;
+    background-position-y: 30%;
+
+    .cover-top-layer {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(-45deg, rgba(34, 34, 34, 0.76) 0%, transparent 100%);
+        z-index: 1;
+    }
+} 
 
 .material-icons {
     cursor: pointer;
 }
 
+
+@import 'layout/navbar';
+@import 'layout/content';
+@import 'layout/modal';
+@import 'layout/container';
+@import 'common/dropdown';
 @import 'common/dropdownmenu';
 @import 'forms/main';
 @import 'forms/input';
 @import 'forms/buttons';
-@import 'layout/navbar';
-@import 'layout/modal';
-@import 'layout/container';
 @import 'models/anouncements';
 @import 'models/dashboard';
 @import 'admin/admin';
+@import 'admin/itemsList';
 @import 'admin/sidemenu';
 @import 'admin/paths';
+@import 'admin/anouncements';

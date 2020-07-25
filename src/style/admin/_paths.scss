@@ -8,29 +8,6 @@
 
     li {
         padding: 10px;
-
-        .material-icons {
-            color: $key-color;
-
-            &:hover {
-                color: $key-color-hover;
-            }
-            
-            &.more-list {
-                float: left;
-            }
-        }
-
-        .exit-edit {
-            color: $key-color;
-            float: left;
-            font-size: 20px;
-            cursor: pointer;
-
-            &:hover {
-                color: $key-color-hover;
-            }
-        }
     }
 
     .add-path {

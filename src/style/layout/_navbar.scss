@@ -1,68 +1,231 @@
-.navbar {
+header {
+    display: flex;
     background-color: $main-color;
     position: absolute;
     top: 0;
     right: 0;
     width: 100%;
-    margin: 0;
-    height: 50px;
+    height: $header-height;
     color: #fff;
-    display: grid;
-    grid-template-columns: 10% 60% 40%;
-    z-index: 1;
-    box-shadow: 
-    0 4px 8px 0 rgba(0, 0, 0, 0.3), 
-    0 6px 20px 0 rgba(0, 0, 0, 0.29);
+    z-index: 100;
+    box-shadow: $default-shadow;
 
-    .logo {
-        background-color: $main-color;
-        height: 100px;
-        width: 100px;
-        border-radius: 50%;
-        position: relative;
-        float: right;
-        box-shadow: 
-        0 2px 6px 0 rgba(0, 0, 0, 0.2), 
-        0 3px 10px 0 rgba(0, 0, 0, 0.19);
-
-        transition: box-shadow 0.5s;
+    .material-icons {
+        color: #fff;
+        font-size: 3rem;
+        align-self: center;
+        margin: 0 1rem;
 
         &:hover {
-            box-shadow: 
-            0 6px 12px 0 rgba(0, 0, 0, 0.2), 
-            0 9px 30px 0 rgba(0, 0, 0, 0.19);
+            color: #fff;
+            opacity: 0.8;
         }
+    }
+
+    .menu-icons {
+        display: none;
+    }
+
+    .search-mobile {
+        display: none;
+    }
+
+    .logo {
+        display: flex;
+        padding: 3rem;
+        background-color: $main-color;
+        height: 10rem;
+        width: 10rem;
+        border-radius: 50%;
+        position: relative;
+        box-shadow: $default-shadow;
+        z-index: 1;
+        margin-left: 2rem;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .navbar {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
     }
 
     .links {
-        list-style-type: none;
-        display: inline-block;
+        display: flex;
         margin: 0;
-        padding: 15px;
-        overflow: hidden;
+        font-size: 1.5rem;
+        width: 100%;
 
-        li {
-            margin: 8px;
-            display: inline;
-            padding: 7px;
-            border-radius: 5px;
-            cursor: pointer;
+       li {
+           padding: 1rem;
+           cursor: pointer;
+       }
 
-            .sub-menu {
-                display: none;
-            }
+       & > li {
+            line-height: $header-height/1.5;
 
-            &:hover {
-                background-color: #ffffff32;
-            }
-
-            &:hover .sub-menu{
+            &:hover > .sub-menu{
                 display: block;
             }
         }
+
+        .sub-menu {
+            overflow: hidden;
+            color: $main-color;
+            top: $header-height;
+            padding: 0;
+        }
+
+        .left-section {
+            margin: auto auto auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: $header-height;
+            cursor: initial;
+        }
     }
-    
-    .left-section {
-        float: left;
+
+    @media only screen and (min-width: 769px) {
+        .links > li:hover:not(.left-section) {
+            border-bottom: 0.3rem solid #eee;
+        }
+
+        .sub-menu {
+            display: none;
+            position: absolute;
+            top: $header-height;
+            width: 15rem;
+            background-color: #fff;
+            box-shadow: $default-shadow;
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+
+            li:hover {
+                background-color: #ddd;
+            }
+        }
+
+        #login-link {
+            display: flex;
+            width: 10rem;
+            justify-content: center;
+            align-items: center;
+            background-color: #ddd;
+            color: $main-color;
+            font-size: 1.6rem;
+            border-radius: 1rem;
+            transition: background-color 0.4s ease;
+            height: 4rem;
+
+            &:hover {
+                background-color: $main-color;
+                border: 0.2rem solid #ddd;
+                color: #ddd;
+                height: 4rem;
+            }
+
+        }
+    }
+
+}
+
+/* Tablet layout */
+@media only screen and (max-width:1000px) {
+}
+
+/* Mobile layout */
+@media only screen and (max-width:768px) {
+    header {
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        position: fixed;
+        align-items: center;
+
+        .menu-icons {
+            display: block;
+        }
+
+        .search-mobile {
+            display: flex;
+        }
+
+        .logo {
+            height: $header-height;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 1rem;
+            margin: auto;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+
+        .navbar {
+            width: auto;
+
+            .links {
+                display: none;
+                flex-direction: column;
+                justify-content: right;
+                align-items: flex-start;
+                padding: 0;
+                background-color: #eee;
+                color: $main-color;
+                top: $header-height;
+                position: absolute;
+                width: 30rem;
+                height: 100vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                z-index: 2;
+                padding: 0;
+
+                li {
+                    box-sizing: border-box;
+                    display: block;
+                    margin: 0;
+                    padding: 1rem;
+                    border-radius: 0;
+                    width: 100%;
+
+                    .sub-menu {
+                        border-right: 0.3rem solid $main-color;
+                        max-height: 0;
+                        transition: max-height 0.5s ease-out;
+
+                        li:hover {
+                            background-color: #ddd;
+                        }
+                    }
+
+                    &:hover > .sub-menu {
+                        max-height: 50rem;
+                        transition: max-height 0.25s ease-in;
+                    }
+                }
+
+                & > li:hover:not(.sub-menu) {
+                    color: #486974dc;
+                }
+
+
+
+                .left-section {
+                    margin-top: 2rem;
+                }
+
+                .search {
+                    display: none;
+                }
+
+                #login-link {
+                    background-color: inherit;
+                    color: inherit;
+                }
+            }
+        }
     }
 }
