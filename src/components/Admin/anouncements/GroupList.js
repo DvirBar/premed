@@ -1,34 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getGroups } from '../../../redux/actions/ancgroups';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import PathGroupItem from './PathGroupItem';
-import AddGroup from './AddGroup';
 
-function GroupList() {
-    const dispatch = useDispatch();
-    const [paths, setPaths] = useState([]);
-    const [groups, setGroups] = useState([]);
+function GroupList(props) {
+    const paths = props.paths;
+    const groups = props.groups;
+    const loadPaths = props.loadPaths;
+    const loadGroups = props.loadGroups;
 
-    useEffect(() => {
-        dispatch(getGroups());
-    }, [])
-
-    const selPaths = useSelector(state => state.paths);
-    const selGroups = useSelector(state => state.ancgroups);
-
-    const loadPaths = selPaths.loading;
-    const fetchedPaths = selPaths.paths;
-    const loadGroups = selGroups.loading;
-    const fetchedGroups = selGroups.groups;
-
-    useEffect(() => { // Bind selectors to local state
-        setPaths(fetchedPaths);
-        setGroups(fetchedGroups);
-    }, [fetchedPaths, fetchedGroups, groups])
+    if(loadPaths || loadGroups) {
+        return <p>Loading ...</p>
+    }
 
     return (
         <div className="ancgroups">
-            <ul className="paths-groups-list">
+            {paths && groups &&
+                <ul className="paths-groups-list">
                 {paths.map(path => (
                     <PathGroupItem
                     key={path._id} 
@@ -43,10 +30,20 @@ function GroupList() {
                     groups={groups.filter(group => !group.path)} 
                     />
                 )}
-            </ul>
+                </ul>
+            }
         </div>
     )
 }
+
+GroupList.propTypes = {
+    paths: PropTypes.array.isRequired,
+    groups: PropTypes.array.isRequired,
+    loadPaths: PropTypes.bool.isRequired,
+    loadGroups: PropTypes.bool.isRequired
+}
+
+
 
 export default GroupList;
 

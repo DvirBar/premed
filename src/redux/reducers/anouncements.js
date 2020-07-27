@@ -9,7 +9,7 @@ import {
 
 const initialState = {
     loading: false,
-    ancs: null
+    ancs: []
 }
 
 export default function(state = initialState, action) {
@@ -33,7 +33,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                ancs: null
             }
 
         case ANC_ADD:
@@ -47,14 +46,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                ancs: state.ancs.map(anc => anc.id === payload.id ? anc = payload : anc )
+                ancs: state.ancs.map(anc => anc._id === payload._id ? anc = payload : anc )
             }
 
         case ANC_DELETE:
             return {
                 ...state,
                 loading: false,
-                anc: state.ancs.filter(anc => anc.id !== payload)
+                ancs: state.ancs.filter(anc => anc._id !== payload)
             }
 
         default: 

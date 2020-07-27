@@ -7,6 +7,7 @@ import {
     ANC_DELETE
 } from './types';
 import axios from 'axios';
+import { getMessage, getError } from './messages';
 
 
 // Basic types
@@ -67,22 +68,22 @@ export const getAnc = () => dispatch => {
 // Add new anouncement
 export const addAnc = data => dispatch => {
     dispatch(ancLoad());
-
+    console.log(data)
     // Reuest body 
     const body = JSON.stringify(data);
 
     // Send request
     axios
         .post('/api/anouncements', body)
-        .then(res => dispatch(ancSuccess(res.data)))
+        .then(res => dispatch(ancAdd(res.data)))
         .catch(err => {
-            // Get message
-            console.log("Adding error")
+            dispatch(ancError());
+            dispatch(getError(err))
         })
 }
 
 // Edit anouncement
-export const editAnc = (data, id) => dispatch => {
+export const editAnc = (id, data) => dispatch => {
     dispatch(ancLoad());
 
     // Request body
@@ -90,7 +91,7 @@ export const editAnc = (data, id) => dispatch => {
 
     axios
         .put(`/api/anouncements/${id}`, body)
-        .then(res => dispatch(ancSuccess(res.data)))
+        .then(res => dispatch(ancUpdate(res.data)))
         .catch(err => {
             // Get message
             console.log("Error editing");

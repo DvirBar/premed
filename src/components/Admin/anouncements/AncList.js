@@ -1,38 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import AddAnc from './AddAnc';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AncItem from './AncItem'
 
-function AncList() {
-    const [ancs, setAncs] = useState([]);
+function AncList(props) {
+    const ancs = props.ancs;
+    const groups = props.groups;
+    const loadAncs = props.loadAncs;
+    const loadGroups = props.loadGroups;
 
-    const selAncs = useSelector(state => state.ancs)
-    const loading = selAncs.loading;
-    const fetchedAncs = selAncs.ancs;
-
-    useEffect(() => { // Bind selector to local state
-        setAncs(fetchedAncs);
-    }, [fetchedAncs])
- 
-
-    if(loading) {
+    if(loadAncs || loadGroups) {
         return <p>Loading...</p>;
     }
 
-    else {
-        return (
-            <div>
-                <div className="anclist-admin">
-                    {ancs.map(anc => (
-                        <AncItem
-                        key={anc._id}
-                        anc={anc}
-                        />
-                    ))}
-                </div>
+    return (
+        <div>
+            <div className="anclist-admin">
+                {ancs.map(anc => (
+                    <AncItem
+                    key={anc._id}
+                    anc={anc}
+                    groups={groups}
+                    />
+                ))}
             </div>
-        )
-    }
+        </div>
+    )
+}
+
+AncList.propTypes = {
+    ancs: PropTypes.array.isRequired,
+    groups: PropTypes.array.isRequired,
+    loadAncs: PropTypes.bool.isRequired,
+    loadGroups: PropTypes.bool.isRequired
 }
 
 export default AncList

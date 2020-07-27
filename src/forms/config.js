@@ -5,15 +5,23 @@ export const config = {
             isRequired: { message: 'דרוש דואר אלקטרוני' },
             isNotEmail: { message: 'כתובת דוא"ל לא תקינה' } 
         },
+        
         password: {
             isRequired: { message: 'דרושה סיסמה' },
             // isNotStrongPass: { message: 'הסיסמה חלשה מדי' }
         },
+
         name: {
             isRequired: { message: 'יש למלא שם' },
         },
 
-        pathId: { // No validation required
+        title: {
+            isRequired: { message: 'יש לבחור כותרת'}
+        },
+
+        groupId: {
+            isRequired: { message: 'יש לבחור קבוצה'}
         }
-    }
+    },
+    customEvents: ['groupId']
 }

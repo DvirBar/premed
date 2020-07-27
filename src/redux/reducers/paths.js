@@ -43,8 +43,6 @@ export default function(state = initialState, action) {
             }
 
         case PATH_UPDATE:
-            console.log(".\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n" + 
-            payload._id)
             return {
                 ...state,
                 loading: false,

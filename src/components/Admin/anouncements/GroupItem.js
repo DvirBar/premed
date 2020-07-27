@@ -57,8 +57,8 @@ function GroupItem(props) {
                )}
 
                 <DropdownMenu show={showMenu} setShow={setShowMenu}>
-                       <li onClick={enterEditMode}>ערוך קבוצה</li>
-                       <li onClick={openVerifyDelete}>מחק קבוצה</li>
+                    <li onClick={enterEditMode}>ערוך קבוצה</li>
+                    <li onClick={openVerifyDelete}>מחק קבוצה</li>
                 </DropdownMenu>
                 <VerifyDelete 
                 display={showVerifyDelete} 

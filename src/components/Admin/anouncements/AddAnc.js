@@ -1,61 +1,100 @@
-import React from 'react'
+import React, { useState, useEffect, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import useForm from '../../../forms/useForm';
+import { addAnc } from '../../../redux/actions/anouncements';
+import Modal from '../../layout/Modal';
+import Dropdown from '../../common/Dropdown';
 
-function AddAnc() {
-    // const [display, setDisplay] = useState(false);
+function AddAnc(props) {
+    const [display, setDisplay] = useState(false);
+    const groups = props.groups;
+    const loadGroups = props.loadGroups;
+    const [selected, setSelected] = useState({
+        name: "קבוצת פרסום",
+        value: undefined
+    })
+    const [options, setOptions] = useState([])
 
-    // const {
-    //     handleChange,
-    //     handleSubmit,
-    //     values,
-    //     errors
-    // } = useForm(addGroup)
+    const {
+        handleChange,
+        handleSubmit,
+        values,
+        errors
+    } = useForm(addAnc)
 
-    // const [disabled, setDisabled] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
-    // useEffect(() => {
-    //     if(values.name)
-    //         setDisabled(false);
-        
-    //     console.log(values);
-    // }, [values])
+    useEffect(() => {
+        if(values.title && values.groupId)
+            setDisabled(false);
+    }, [values])
 
-    // const [options, setOptions] = useState(
-    //     props.paths.map(path => ({
-    //         name: path.name,
-    //         value: path._id
-    //     })))
 
-    // const [selected, setSelected] = useState(options[0])
+    useEffect(() => {
+        setOptions(groups.map(group => ({
+            name: group.name,
+            value: group._id
+        })))
+    }, [groups])
+
+
+    if(loadGroups) {
+        return <p>loading...</p>
+    }
 
     return (
-        <button className="info">פרסם</button>
-            // <Modal display={display} setDisplay={setDisplay}>
-            //     <form onSubmit={handleSubmit} noValidate>
-            //         <input 
-            //         type="text"
-            //         name="name" 
-            //         placeholder="שם הקבוצה..."
-            //         value={values.name || ''}
-            //         onChange={handleChange}
-            //         /><br />
-            //         <p className="form-error">
-            //             {errors.name && errors.name}
-            //         </p><br />
-                    
-            //         <Dropdown 
-            //         selected={selected}
-            //         setSelected={setSelected}
-            //         options={options}
-            //         name={"pathId"}
-            //         onChange={handleChange}
-            //         />
+        <Fragment>
+            <button 
+            className="info"
+            onClick={() => setDisplay(true)}>פרסם</button>
+            { selected &&
+                <Modal display={display} setDisplay={setDisplay}>
+                    <form onSubmit={handleSubmit} noValidate>
+                        <input 
+                        type="text"
+                        name="title" 
+                        placeholder="כותרת..."
+                        value={values.title || ''}
+                        onChange={handleChange}
+                        /><br />
+                        <p className="form-error">
+                            {errors.title && errors.title}
+                        </p><br />
 
-            //         <button
-            //         type="submit"
-            //         disabled={disabled}>צור</button>
-            //     </form>
-            // </Modal>
+                        <input 
+                        type="textarea"
+                        name="content" 
+                        placeholder="תוכן הפרסום"
+                        value={values.content || ''}
+                        onChange={handleChange}
+                        /><br />
+                        
+                        <Dropdown 
+                        selected={selected}
+                        setSelected={setSelected}
+                        options={options}
+                        name={"groupId"}
+                        onChange={handleChange}
+                        /><p className="form-error">
+                        {errors.groupId && errors.groupId}
+                        </p><br />
+
+
+                        <button
+                        type="submit"
+                        disabled={disabled}>צור</button>
+                    </form>
+                </Modal>
+            }
+        </Fragment>
     )
+}
+
+AddAnc.propTypes = {
+    ancs: PropTypes.array.isRequired,
+    groups: PropTypes.array.isRequired,
+    loadAncs: PropTypes.bool.isRequired,
+    loadGroups: PropTypes.bool.isRequired
 }
 
 export default AddAnc

@@ -151,7 +151,6 @@ export const unsubscribeGroup = id => dispatch => {
         .catch(err => dispatch(getError(err)))
 }
 
-
 // Add path to group
 export const addGroupPath = (data, id) => dispatch => {
     dispatch(groupLoad());

@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import validateForm from './formValidator';
+import { config } from './config';
 
-const useForm = callback => {
+const useForm = (callback, defaultValues = {}, ...params) => {
     const dispatch = useDispatch();
-    const [ values, setValues ] = useState({});
+    const [ values, setValues ] = useState(defaultValues);
     const [ errors, setErrors ] = useState({});
-    const [ isSubmitting, setIsSubmitting ] = useState(false);
+    const [ isSubmitting, setIsSubmitting ] = useState(false)
 
     useEffect(() => {
         // If there are no errors and the form was submitted
         if(Object.keys(errors).length === 0 && isSubmitting)
-            dispatch(callback(values))
+            dispatch(callback(...params, values))
     }, [errors])
 
     const handleSubmit = event => {
@@ -23,16 +24,23 @@ const useForm = callback => {
     }
 
     const handleChange = event => {
-        if(event.target.name !== 'pathId')
+        if(!config.customEvents.find(item => item === event.target.name))
             event.persist();
+
         setValues(values => ({...values, [event.target.name]: event.target.value}));
+    }
+
+    const initValues = () => {
+        if(!isSubmitting)
+            setValues(defaultValues);
     }
 
     return {
         handleChange,
         handleSubmit,
         values,
-        errors
+        errors,
+        initValues
     }
  }
 
