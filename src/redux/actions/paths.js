@@ -93,6 +93,9 @@ export const deletePath = id => dispatch => {
              dispatch(pathDelete(id));
              dispatch(getMessage(res.data));
          })
-         .catch(err => dispatch(getError(err)))
+         .catch(err => {
+            dispatch(pathError())
+            dispatch(getError(err))
+         })
 }
 

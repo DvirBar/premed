@@ -75,8 +75,8 @@ export const groupDelete = id => {
     }
 }
 
-// Get group
-export const getGroup = () => dispatch => {
+// Get groups
+export const getGroups = () => dispatch => {
     dispatch(groupLoad());
 
     axios
@@ -89,7 +89,7 @@ export const getGroup = () => dispatch => {
 }
 
 // Get all user subscriptions
-export const getSubs = () => dipatch => {
+export const getSubs = () => dispatch => {
     dispatch(groupLoad());
 
     axios
@@ -99,7 +99,7 @@ export const getSubs = () => dipatch => {
 }
 
 // Add new group
-export const addAnc = data => dispatch => {
+export const addGroup = data => dispatch => {
     dispatch(groupLoad());
 
     // Reuest body 
@@ -113,7 +113,7 @@ export const addAnc = data => dispatch => {
 }
 
 // Edit group
-export const editGroup = (data, id) => dispatch => {
+export const editGroup = (id, data) => dispatch => {
     dispatch(groupLoad());
 
     // Request body
@@ -122,7 +122,7 @@ export const editGroup = (data, id) => dispatch => {
     axios
         .put(`/api/ancgroups/${id}`, body)
         .then(res => dispatch(groupUpdate(res.data)))
-        .catch(err => dipatch(getError(err)))
+        .catch(err => dispatch(getError(err)))
 }
 
 // Subscribe to a group
@@ -162,7 +162,7 @@ export const addGroupPath = (data, id) => dispatch => {
     axios
         .put(`/api/ancgroups/${id}/addpath`, body)
         .then(res => dispatch(groupUpdate(res.data)))
-        .catch(err => dipatch(getError(err)))
+        .catch(err => dispatch(getError(err)))
 }
 
 // Delete group
@@ -170,9 +170,9 @@ export const deleteGroup = id => dispatch => {
     dispatch(groupLoad());
 
     axios
-        .delete(`/api/groups/${id}`)
+        .delete(`/api/ancgroups/${id}`)
         .then(res => {
-            dispatch(ancDelete(id))
+            dispatch(groupDelete(id))
             dispatch(getMessage(res))
         })
         .catch(err => dispatch(getError(err)))

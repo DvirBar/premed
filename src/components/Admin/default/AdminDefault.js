@@ -3,7 +3,8 @@ import PathList from './PathList';
 
 function AdminDefault() {
     return (
-        <div>
+        <div className="admin-default">
+            <p className="admin-title">תמונות נושא</p>
             <div>שינוי תמונת דף הבית</div>
             <PathList />  
         </div>

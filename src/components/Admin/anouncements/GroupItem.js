@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import DropdownMenu from '../../common/DropdownMenu';
-import { editPath, deletePath } from '../../../redux/actions/paths';
+import { editGroup, deleteGroup } from '../../../redux/actions/ancgroups';
 import VerifyDelete from '../../common/VerifyDelete';
 
-
-function PathItem(props) {
+function GroupItem(props) {
     const dispatch = useDispatch();
-    const [path, setPath] = useState(props.path);
-    const [tempPath, setTempPath] = useState(path.name); // Used to save current path in case the user regrets editing
+    const [group, setGroup] = useState(props.group);
+    const [tempGroup, setTempGroup] = useState(group.name); // Used to save current group in case the user regrets editing
     const [showIcon, setShowIcon] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [showVerifyDelete, setShowVerifyDelete] = useState(false);
@@ -21,7 +21,7 @@ function PathItem(props) {
 
     const leaveEditMode = () => {
         setEditMode(false);
-        setPath({...path, name: tempPath});
+        setGroup({...group, name: tempGroup});
     }
 
     const openVerifyDelete = () => {
@@ -30,15 +30,16 @@ function PathItem(props) {
     }
 
     const handleKeyPress = e => {
-        // Update path
-        if(e.key === "Enter" && path.name !== "") {
+        // Update group
+        if(e.key === "Enter" && group.name !== "") {
             // Compose object 
             const data = {
-                name: path.name
+                name: group.name,
+                pathId: props.pathId
             }
 
-            dispatch(editPath(path._id, data));
-            setTempPath(path.name) // TODO: only if not error
+            dispatch(editGroup(group._id, data));
+            setTempGroup(group.name) // TODO: only if not error
             // Exit edit mode 
             setEditMode(false);
         }
@@ -47,7 +48,7 @@ function PathItem(props) {
     if(!editMode) {
         return (
             <li onMouseEnter={() => setShowIcon(true)} onMouseLeave={() => setShowIcon(false)}>
-               <span>{path.name} </span>
+               <span>{group.name} </span>
                {showIcon && (
                     <i 
                     className="material-icons more-list"
@@ -56,14 +57,14 @@ function PathItem(props) {
                )}
 
                 <DropdownMenu show={showMenu} setShow={setShowMenu}>
-                       <li onClick={enterEditMode}>ערוך מסלול</li>
-                       <li onClick={openVerifyDelete}>מחק מסלול</li>
+                       <li onClick={enterEditMode}>ערוך קבוצה</li>
+                       <li onClick={openVerifyDelete}>מחק קבוצה</li>
                 </DropdownMenu>
                 <VerifyDelete 
                 display={showVerifyDelete} 
                 setDisplay={setShowVerifyDelete}
-                callback={deletePath}
-                values={[path._id]}
+                callback={deleteGroup}
+                values={[group._id]}
                 />
             </li>
         )
@@ -74,8 +75,8 @@ function PathItem(props) {
             <li>
                 <input 
                 type="text"
-                value={path.name}
-                onChange={e => setPath({...path, name: e.target.value})}
+                value={group.name}
+                onChange={e => setGroup({...group, name: e.target.value})}
                 onKeyPress={e => handleKeyPress(e)}
                 />
 
@@ -88,4 +89,9 @@ function PathItem(props) {
     }
 }
 
-export default PathItem
+GroupItem.propTypes = {
+    name: PropTypes.string.isRequired,
+    pathId: PropTypes.string.isRequired
+}
+
+export default GroupItem

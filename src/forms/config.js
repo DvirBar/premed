@@ -11,6 +11,9 @@ export const config = {
         },
         name: {
             isRequired: { message: 'יש למלא שם' },
+        },
+
+        pathId: { // No validation required
         }
     }
 }

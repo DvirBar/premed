@@ -1,9 +1,53 @@
-$sidemenu-width: 150px;
+@media only screen and (min-width: 1000px) {
+    .admin-panel {
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        column-gap: 2rem;
+        position: absolute;
+        right: 0;
+        top: $header-height + $cover-height;
+        width: 95%;
+        height: 100%;
 
-.admin-panel {
-    margin-right: 10%;
-    margin-left: 10%;
-    display: grid;
-    grid-template-columns: $sidemenu-width auto;
-    column-gap: 30px;
+        .admin-content {
+            padding-top: 5rem;
+        }
+    }
+}
+
+.items-list {
+    border-radius: 0.5rem;
+    box-shadow: $default-shadow;
+    background-color: #fff;
+    width: 200px;
+    padding: 10px 0 0 0;
+    list-style-type: none;
+    margin: 2rem 0;
+
+    li {
+        padding: 10px;
+    }
+}
+
+.material-icons {
+    color: $key-color;
+
+    &:hover {
+        color: $key-color-hover;
+    }
+    
+    &.more-list {
+        float: left;
+    }
+}
+
+.exit-edit {
+    color: $key-color;
+    float: left;
+    font-size: 20px;
+    cursor: pointer;
+
+    &:hover {
+        color: $key-color-hover;
+    }
 }

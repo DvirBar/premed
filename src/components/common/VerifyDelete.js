@@ -16,7 +16,7 @@ const VerifyDelete = props => {
         <Modal display={display} setDisplay={setDisplay} title={"אישור מחיקה"}>
             אתה בטוח שאתה רוצה למחוק?
 
-            <button onClick={commitCallback}>מחק</button>
+            <button className="danger" onClick={commitCallback}>מחק</button>
             <button onClick={() => setDisplay(false)}>ביטול</button>
         </Modal>
     )

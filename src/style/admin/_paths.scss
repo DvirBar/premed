@@ -1,25 +1,12 @@
-.paths-list {
-    border-radius: 10px;
-    box-shadow: $default-shadow;
-    background-color: #fff;
-    width: 200px;
-    padding: 10px 0 0 0;
-    list-style-type: none;
+.add-path {
+    box-sizing: border-box;
+    color: $key-color;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
 
-    li {
-        padding: 10px;
-    }
-
-    .add-path {
-        box-sizing: border-box;
-        color: $key-color;
-        text-align: center;
-        font-size: 25px;
-        cursor: pointer;
-
-        &:hover {
-            color: $key-color-hover;
-            background-color: #dadada88;
-        }
+    &:hover {
+        color: $key-color-hover;
+        background-color: #dadada88;
     }
 }

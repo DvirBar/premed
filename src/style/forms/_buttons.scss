@@ -1,16 +1,52 @@
+$danger-color: #b33131;
+$info-color: #4760f0;
+
 button {
+    display: flex;
+    width: 12rem;
+    justify-content: center;
+    align-items: center;
     background-color: $main-color;
-    font-family: inherit;
-    font-size: 1.5rem;
-    border-radius: 5px;
-    padding: 10px;
-    color: white;
-    border: 0;
-    height: 35px;
+    color: #ddd;
+    font-size: 1.8rem;
+    border-radius: 1rem;
+    transition: background-color 0.4s ease;
+    height: 4.5rem;
+    border: none;
     outline: none;
     cursor: pointer;
 
+    .material-icons {
+        color: inherit;
+
+        &:hover {
+            color: inherit;
+        }
+    }
+
     &:hover {
-        background-color: lighten($color: #2759b4, $amount: 5%);
+        background-color: #ddd;
+        border: 0.2rem solid $main-color;
+        color: $main-color;
+    }
+}
+
+.danger {
+    background-color: $danger-color;
+
+    &:hover {
+        background-color: #ddd;
+        border: 0.2rem solid $danger-color;
+        color: $danger-color;
+    }
+}
+
+.info {
+    background-color: $info-color;
+
+    &:hover {
+        background-color: #ddd;
+        border: 0.2rem solid $info-color;
+        color: $info-color;
     }
 }

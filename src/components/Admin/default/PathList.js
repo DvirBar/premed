@@ -17,7 +17,7 @@ function PathList() {
     return (
         <div>
             <h2>מסלולים</h2>
-            <ul className="paths-list">
+            <ul className="items-list">
                 {loading && <p>Loading...</p>}
                 {paths 
                 ? (paths.map(path => (

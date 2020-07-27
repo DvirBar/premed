@@ -1,31 +1,102 @@
-.ancgroups {
-    .path-list {
-        list-style-type: none;
-        border-radius: 5px;
-        width: 150px;
-        box-shadow: $default-shadow;
-        padding: 15px;
+.anc-admin {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        .path-name {
-            color: $header-color;
-            font-weight: 500;
+        & > .material-icons {
+            font-size: 3rem;
         }
+    }
+}
 
+.ancgroups {
+    .paths-groups-list {
+        margin: 1.5rem 0.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+        row-gap: 4rem;
+        
+        .path-name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            background-color: $main-color;
+            padding: 0.7rem;
+            border-radius: 0.5rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
 
-        .group-list {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-
-            li {
-                padding: 5px 15px 5px 0;
-                border-radius: 5px;
-                cursor: pointer;
+            .material-icons {
+                color: inherit;
 
                 &:hover {
-                    background-color: #c0c0c0;
+                    opacity: 0.6;
                 }
             }
         }
-    } 
+
+        .group-list {
+            margin-right: 1rem;
+            border-right: 0.2rem solid $main-color;
+
+            li {
+                padding: 1rem;
+
+                &:hover:not(.add-group-input) {
+                    background-color: #eee;
+                }
+            }
+        }
+
+        .add-group-input {
+            border: none;
+        }
+    }
+}
+
+.anclist-admin {
+    margin-top: 2rem;
+
+    .anc-item {
+        border: 0.2rem solid $main-color;
+        margin-bottom: 3rem;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        transition: box-shadow 0.3s ease;
+    
+        .anc-title {
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        .anc-date {
+            color: #727272;
+            font-size: 1.5rem;
+        }
+
+        .anc-content {
+            background-color: #ddd;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0.5rem 0.5rem;
+            font-size: 1.7rem;
+            word-wrap: break-word;
+        }
+    
+        &:hover {
+            box-shadow: $default-shadow;
+        }
+    }
+}
+
+.group-ancs-list {
+    max-width: 70rem;
+
+    .group-name {
+        display: flex;
+        justify-content: space-between;
+    }
 }

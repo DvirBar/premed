@@ -23,7 +23,8 @@ const useForm = callback => {
     }
 
     const handleChange = event => {
-        event.persist();
+        if(event.target.name !== 'pathId')
+            event.persist();
         setValues(values => ({...values, [event.target.name]: event.target.value}));
     }
 

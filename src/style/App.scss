@@ -23,6 +23,7 @@ html {
 
 body {
     background-color: #fff;
+    font-size: 1.8rem;
 }
 
 a {
@@ -32,6 +33,25 @@ a {
 h1 {
     color: $main-color;
     font-weight: 450;
+}
+
+h2 {
+    display: block;
+    color: $main-color;
+    font-size: 2.5rem;
+    margin-bottom: 2rem; 
+    text-decoration: none;
+    font-weight: normal;
+    width: 100%;
+    border-bottom: 0.1rem solid $main-color;  
+}
+
+h4 {
+    display: inline;
+    text-decoration: none;
+    font-weight: normal;
+    color: #494949;
+    font-size: 2rem;
 }
 
 ul {
@@ -56,13 +76,23 @@ ul {
     }
 } 
 
+.content {
+    max-width: 900px;
+    margin: ($header-height + $cover-height + 5rem) auto;
+    z-index: 0;
+}
+
 .material-icons {
     cursor: pointer;
 }
 
+@media only screen and (max-width: 1000px) {
+    .content {
+        margin: ($header-height + $cover-height + 5rem) 2rem;
+    }
+}
 
 @import 'layout/navbar';
-@import 'layout/content';
 @import 'layout/modal';
 @import 'layout/container';
 @import 'common/dropdown';
@@ -73,7 +103,7 @@ ul {
 @import 'models/anouncements';
 @import 'models/dashboard';
 @import 'admin/admin';
-@import 'admin/itemsList';
+@import 'admin/default';
 @import 'admin/sidemenu';
 @import 'admin/paths';
 @import 'admin/anouncements';

@@ -33,7 +33,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                paths: []
             }
 
         case PATH_ADD:
@@ -44,10 +43,12 @@ export default function(state = initialState, action) {
             }
 
         case PATH_UPDATE:
+            console.log(".\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n" + 
+            payload._id)
             return {
                 ...state,
                 loading: false,
-                paths: state.paths.map(path => path._id === payload.id ? path = payload : path)
+                paths: state.paths.map(path => path._id === payload._id ? path = payload : path)
             }
 
         case PATH_DELETE:

@@ -8,12 +8,12 @@ import {
     GROUP_SUBSCRIBE,
     GROUP_UNSUBSCRIBE,
     GROUP_DELETE,
-} from './types';
+} from '../actions/types';
 
 const initialState = {
     loading: false,
     groups: [],
-    userSubscirbes: []
+    userSubs: []
 }
 
 export default function(state = initialState, action) {
@@ -60,7 +60,7 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 groups: state.groups.map(group => 
-                    group.id === payload.id ? group = payload : group)
+                    group._id === payload._id ? group = payload : group)
             }
 
         case GROUP_SUBSCRIBE:
@@ -83,5 +83,8 @@ export default function(state = initialState, action) {
                 loading: false,
                 groups: state.groups.filter(group => group._id !== payload)
             }
+        
+        default:
+            return state;
     }
 }
