@@ -18,26 +18,22 @@ const errorHandler = (err, req, res, next) => {
             return res.status(400).send({ msg: err.message }) 
 
         // Internal server error that shouldn't be sent to the client
-        const newError = new Error({
-            content: String(err.message),
-            user: res.locals.user.id,
-            fixed: false
-        });
+        // const newError = new Error({
+        //     content: String(err.message),
+        //     user: res.locals.user.id,
+        //     fixed: false
+        // });
 
-        newError.save()
-                .then(() => {return res.status(500).send({msg: "Internal server error"})})
-                .catch(() => {return res.status(500).send({msg: "Internal server error"})})
+        // newError.save()
+        //         .then(() => {return res.status(500).send({msg: "Internal server error"})})
+        //         .catch(() => {return res.status(500).send({msg: "Internal server error"})})
+
+        return res.status(500).send({msg: "Internal server error"})
+
 
     } catch (err) {
-        const newError = new Error({
-            content: String(err.message),
-            user: res.locals.user.id,
-            fixed: false
-        });
+        return res.status(500).send({msg: "Internal server error"})
 
-        newError.save()
-                .then(() => {return res.status(500).send({msg: "Internal server error"})})
-                .catch(() => {return res.status(500).send({msg: "Internal server error"})})
     }
 }
 
