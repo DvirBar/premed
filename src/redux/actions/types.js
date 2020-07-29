@@ -48,3 +48,12 @@ export const SEC_DELETE = 'SEC_DELETE';
 export const ITEM_ADD = 'ITEM_ADD';
 export const ITEM_UPDATE = 'ITEM_EDIT';
 export const ITEM_DELETE = 'ITEM_DELETE';
+
+// Steps
+export const STEP_LOADING = 'STEP_LOADING';
+export const STEP_SUCCESS = 'STEP_SUCCESS';
+export const STEP_ERROR = 'STEP_ERROR';
+export const STEP_ADD = 'STEP_ADD';
+export const STEP_UPDATE = 'STEP_UPDATE';
+export const STEP_DELETE = 'STEP_DELETE';
+

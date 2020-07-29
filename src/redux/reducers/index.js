@@ -5,12 +5,14 @@ import ancs from './anouncements';
 import sections from './sections';
 import paths from './paths';
 import ancgroups from './ancgroups';
+import steps from './steps';
 
 export default combineReducers({
     auth,
     messages,
+    paths,
+    ancgroups,
     ancs,
     sections,
-    paths,
-    ancgroups
+    steps
 });
