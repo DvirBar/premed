@@ -6,7 +6,7 @@ const pathMessages = {
         },
         status: 200
     },
-    NotExist: {
+    PathNotExist: {
         msg: {
             en: 'Path does not exist',
             he: 'המסלול לא קיים'

@@ -31,6 +31,7 @@ router.get('/:id', (req, res, next) => {
 router.get('/', (req, res, next) => { 
     Anouncement.find()
         .select("-userId")
+        .populate("group")
         .then(anc => res.json(anc))
         .catch(next)
 })
@@ -94,11 +95,15 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                 anc.title = title;
                 anc.content = content;  
                 anc.userId = userId;
-                anc.group = groupId      
+                anc.group = groupId  
 
                 anc.save()
                     .then(anc => {
-                        return res.json(anc)              
+                        async function populateAnc() {
+                            await anc.populate("group").execPopulate();
+                            return res.json(anc); 
+                        } 
+                        populateAnc();
                     })
                     .catch(next)
                 })

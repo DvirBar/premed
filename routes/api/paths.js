@@ -10,7 +10,7 @@ const modelName = 'path';
 
 // Errors
 const pathsMessage = require('../../messages/paths');
-const { NotExist, SuccessDelete } = pathsMessage;
+const { PathNotExist, SuccessDelete } = pathsMessage;
 
 // @route   GET api/paths/:id
 // @desc    Get path by id
@@ -18,7 +18,7 @@ const { NotExist, SuccessDelete } = pathsMessage;
 router.get('/:id', (req, res, next) => {
     Path.findById(req.params.id)
             .then(path => {
-                if(!path) return res.status(NotExist.status).json(NotExist.msg);
+                if(!path) return res.status(PathNotExist.status).json(PathNotExist.msg);
                 
                 return res.json(path);
             })
@@ -66,7 +66,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
     Path.findById(pathId)
               .then(path => {
-                if(!path) return res.status(NotExist.status).send(NotExist.msg)
+                if(!path) return res.status(PathNotExist.status).send(PathNotExist.msg)
                     
                 path.name = name;
 
@@ -89,7 +89,7 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
 
     Path.findById(pathId)
               .then(path => {
-                if(!path) return res.status(NotExist.status).send(NotExist.msg);
+                if(!path) return res.status(PathNotExist.status).send(PathNotExist.msg);
 
                 //Remove path from linked groups
                 AncGroup.find({ path: pathId })

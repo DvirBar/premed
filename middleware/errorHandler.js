@@ -28,12 +28,12 @@ const errorHandler = (err, req, res, next) => {
         //         .then(() => {return res.status(500).send({msg: "Internal server error"})})
         //         .catch(() => {return res.status(500).send({msg: "Internal server error"})})
 
-        return res.status(500).send({msg: "Internal server error"})
-
+        // return res.status(500).send({msg: "Internal server error"})
+        throw err;
 
     } catch (err) {
-        return res.status(500).send({msg: "Internal server error"})
-
+        throw err;
+        // return res.status(500).send({msg: "Internal server error"})
     }
 }
 
