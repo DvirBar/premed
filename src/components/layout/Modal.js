@@ -1,17 +1,33 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import PropTypes from 'prop-types';
+import useOnClickOutside from '../common/useOnClickOutside';
 
+const Modal = ({ display, toggleModal, children, title, subTitle })=> {
+    
+    // We'll use ref of modal box, so when clicking outside it'll close
+    const ref = useRef();
+    useOnClickOutside(ref, () => toggleModal(false))
 
-const Modal = ({ display, toggleModal, children, title })=> {
-  
+    // Overflow
+    if(display) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.scroll = "no"
+    }
+
+    else {
+      document.documentElement.style.overflow = 'auto';
+      document.body.scroll = "yes"
+    }
+
     return (
         <Fragment>
           {display && 
             <div className="gen-modal">
-              <div className="modal-box">
+              <div className="modal-box" ref={ref}>
                 <div className="modal-header">
                     <span class="close-modal" onClick={() => toggleModal(false)}>&times;</span><br/>
                     <span className="modal-title">{title}</span>
+                    <p className="modal-subtitle">{subTitle}</p>
                 </div>
                 <div className="modal-body">
                   {children}
@@ -27,7 +43,8 @@ Modal.propTypes = {
   display: PropTypes.bool.isRequired,
   toggleModal: PropTypes.func.isRequired,
   children: PropTypes.node,
-  title: PropTypes.string
+  title: PropTypes.string,
+  subTitle: PropTypes.string
 }
 
 export default Modal;

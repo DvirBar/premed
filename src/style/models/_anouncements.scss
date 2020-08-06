@@ -14,10 +14,10 @@
         
         .anc-date {
             text-align: center;
-            margin-left: 5px;
-            font-size: 20px;
-            width: 50px;
-            font-weight: 30px;
+            margin-left: 0.5rem;
+            font-size: 2rem;
+            width: 5rem;
+            font-weight: 3rem;
             color: $main-color;
         }
 
@@ -27,12 +27,6 @@
             &:hover {
                 opacity: 0.7;
             }
-        }
-
-        .anc-details-date {
-            text-align: center;
-            color: #727272;
-            font-size: 15px;
         }
     }
 }

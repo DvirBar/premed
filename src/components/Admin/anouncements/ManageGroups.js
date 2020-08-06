@@ -17,7 +17,10 @@ function ManageGroups(props) {
             title="Settings"
             onClick={() => toggleModal(true)}
             >settings</i>
-            <Modal display={displayModal} toggleModal={toggleModal} title="הגדרות פרסומים">
+            <Modal 
+            display={displayModal} 
+            toggleModal={toggleModal} 
+            title="הגדרות פרסומים">
                 <GroupList
                 paths = {props.paths}
                 groups = {props.groups}
