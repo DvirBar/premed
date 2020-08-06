@@ -43,7 +43,6 @@ router.get('/', (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        content,
         prevId,
         parentId,
         pathId
@@ -75,7 +74,6 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                         // Create new step
                         newStep = new Step({
                             name: name,
-                            content: content,
                             parent: parentId,
                             path: pathId,
                             author: userId

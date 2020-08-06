@@ -20,7 +20,7 @@ const auth = (req, res, next) => {
             })
             .catch(err => { return res.status(500).json({ msg: 'Internal server error' }) })
     } catch(e) {
-       return res.status(400).json({ msg: 'Token is invalid or expired' })
+       return res.status(400).json({ msg: 'Token is invalid or has been expired' })
     }
 }
 
