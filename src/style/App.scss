@@ -82,6 +82,24 @@ ul {
     z-index: 0;
 }
 
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding: 1rem;
+    width: 100%;
+    height: 5rem;
+    border-top: 0.1rem solid #aaa;
+    color: #777;
+
+    a {
+        color: inherit;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 .material-icons {
     cursor: pointer;
 }
@@ -92,18 +110,36 @@ ul {
     }
 }
 
+.no-resource-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5rem auto;
+    height: 100%;
+    font-size: 3rem;
+    color: #555;
+}
+
 @import 'layout/navbar';
 @import 'layout/modal';
 @import 'layout/container';
+
 @import 'common/dropdown';
 @import 'common/dropdownmenu';
+@import 'common/inlineselect';
+@import 'common/switch';
+@import 'common/selectBox';
+
 @import 'forms/main';
 @import 'forms/input';
 @import 'forms/buttons';
+
 @import 'models/anouncements';
 @import 'models/dashboard';
+
 @import 'admin/admin';
 @import 'admin/default';
 @import 'admin/sidemenu';
 @import 'admin/paths';
 @import 'admin/anouncements';
+@import 'admin/steps';

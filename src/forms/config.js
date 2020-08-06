@@ -21,7 +21,10 @@ export const config = {
 
         groupId: {
             isRequired: { message: 'יש לבחור קבוצה'}
+        },
+        
+        path: {
+            isRequired: { message: 'יש לבחור מסלול' }
         }
-    },
-    customEvents: ['groupId']
+    }
 }

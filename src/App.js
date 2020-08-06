@@ -6,8 +6,10 @@ import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
 import { getPaths } from './redux/actions/paths';
+import { getSteps } from './redux/actions/steps';
 import moment from 'moment';
 import 'moment/locale/he';
+import Footer from './components/layout/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ function App() {
   useEffect(() => {
     dispatch(getUser());
     dispatch(getPaths());
+    dispatch(getSteps());
   }, []);
 
   moment.locale('he');
@@ -30,6 +33,7 @@ function App() {
         <div className="content">
           <Router />
         </div>
+        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   );

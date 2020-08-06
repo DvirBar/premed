@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: [...state.setps, payload]
+                steps: [...state.steps, payload]
             }
 
         case STEP_UPDATE:
@@ -60,3 +60,10 @@ export default function(state = initialState, action) {
             return state;
     }
 }
+
+
+// export const selectPathSteps = (state, path) => {
+//     state.steps.filter(step => {
+//         step.path === path._id
+//     })
+// }

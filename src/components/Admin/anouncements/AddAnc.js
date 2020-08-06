@@ -6,27 +6,35 @@ import Modal from '../../layout/Modal';
 import Dropdown from '../../common/Dropdown';
 
 function AddAnc(props) {
-    const [display, setDisplay] = useState(false);
+    const [defaultValues, setDefaultValues] = useState({})
+    const [displayModal, setDisplayModal] = useState(false);
     const groups = props.groups;
     const loadGroups = props.loadGroups;
-    const [selected, setSelected] = useState({
-        name: "קבוצת פרסום",
-        value: undefined
-    })
+    const [selected, setSelected] = useState({})
     const [options, setOptions] = useState([])
+
+    useEffect(() => {
+        setDefaultValues({
+            title: '',
+            content: '',
+            groupId: undefined
+        })
+    }, [])
 
     const {
         handleChange,
         handleSubmit,
         values,
         errors
-    } = useForm(addAnc)
+    } = useForm(addAnc, defaultValues)
 
     const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
         if(values.title && values.groupId)
             setDisabled(false);
+        
+        console.log(values)
     }, [values])
 
 
@@ -37,6 +45,14 @@ function AddAnc(props) {
         })))
     }, [groups])
 
+    const changeSelected = (event, selectedName) => {
+        handleChange(event);
+        setSelected({name: selectedName, value: event.target.value})
+    }
+
+    const toggleModal = open => {
+        setDisplayModal(open)
+    }
 
     if(loadGroups) {
         return <p>loading...</p>
@@ -46,9 +62,9 @@ function AddAnc(props) {
         <Fragment>
             <button 
             className="info"
-            onClick={() => setDisplay(true)}>פרסם</button>
+            onClick={() => toggleModal(true)}>פרסם</button>
             { selected &&
-                <Modal display={display} setDisplay={setDisplay}>
+                <Modal display={displayModal} toggleModal={toggleModal}>
                     <form onSubmit={handleSubmit} noValidate>
                         <input 
                         type="text"
@@ -71,10 +87,10 @@ function AddAnc(props) {
                         
                         <Dropdown 
                         selected={selected}
-                        setSelected={setSelected}
                         options={options}
                         name={"groupId"}
-                        onChange={handleChange}
+                        title={"קבוצת פרסום"}
+                        onChange={changeSelected}
                         /><p className="form-error">
                         {errors.groupId && errors.groupId}
                         </p><br />

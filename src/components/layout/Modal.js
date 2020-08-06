@@ -1,34 +1,33 @@
-import React from 'react'
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 
-const Modal = props => {
-  const [display, setDisplay] = [props.display, props.setDisplay];
-
-  const notDisplayed = {
-    display: "none"
-  };
-
-  const displayed = {
-    display: "block"
-  };
-
-  const closeModal = () => {
-    setDisplay(false);
-  };
-
+const Modal = ({ display, toggleModal, children, title })=> {
+  
     return (
-        <div className="gen-modal" style={display ? displayed : notDisplayed}>
-          <div className="modal-box">
-            <div className="modal-header">
-                <span class="close-modal" onClick={() => closeModal()}>&times;</span><br/>
-                <span className="modal-title">{props.title}</span>
+        <Fragment>
+          {display && 
+            <div className="gen-modal">
+              <div className="modal-box">
+                <div className="modal-header">
+                    <span class="close-modal" onClick={() => toggleModal(false)}>&times;</span><br/>
+                    <span className="modal-title">{title}</span>
+                </div>
+                <div className="modal-body">
+                  {children}
+                </div>
+              </div>
             </div>
-            <div className="modal-body">
-              {props.children}
-            </div>
-          </div>
-        </div>
+          }
+        </Fragment>
     )
+}
+
+Modal.propTypes = {
+  display: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  title: PropTypes.string
 }
 
 export default Modal;

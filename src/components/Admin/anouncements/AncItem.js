@@ -16,6 +16,10 @@ function AncItem(props) {
     const [showVerifyDelete, setShowVerifyDelete] = useState(false);
     const [editMode, setEditMode] = useState(false)
 
+    const toggleModal = open => {
+        setDisplayModal(open)
+    }
+
     return (
         <div 
         className="anc-item"
@@ -34,7 +38,7 @@ function AncItem(props) {
             <p className="anc-content">{anc.content}</p>
 
             <DropdownMenu show={showMenu} setShow={setShowMenu}>
-                <li onClick={() => setDisplayModal(true)}>ערוך פרסום</li>
+                <li onClick={() => toggleModal(true)}>ערוך פרסום</li>
                 <li onClick={() => setShowVerifyDelete(true)}>מחק פרסום</li>
             </DropdownMenu>
 
@@ -49,7 +53,7 @@ function AncItem(props) {
                 anc={anc} 
                 groups={groups}
                 display={displayModal}
-                setDisplay={setDisplayModal} /> 
+                toggleModal={toggleModal} /> 
         </div>
     )
 }

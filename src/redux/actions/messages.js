@@ -23,11 +23,19 @@ export const getMessage = msg => {
 
 
 export const getError = error => {
-    return {
-        type: GET_ERROR,
-        payload: {
-            msg: error.response.data.he,
-            status: error.response.status
+    if(error.response) {
+        return {
+            type: GET_ERROR,
+            payload: {
+                msg: error.response.data.he,
+                status: error.response.status
+            }
+        }
+    }
+
+    else {
+        return {
+            type: GET_ERROR
         }
     }
 }

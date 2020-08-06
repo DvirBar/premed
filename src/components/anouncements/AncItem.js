@@ -7,21 +7,21 @@ function AncItem(props) {
     const anc = props.anc;
     const [display, setDisplay] = useState(false);
 
-    const openModal = () => {
-        setDisplay(true)
+    const toggleModal = open => {
+        setDisplay(open)
     }
 
     return (
-        <p className="anc-item">
+        <div className="anc-item">
             <span className="anc-date">
                 {moment(anc.date).format("D בMMMM")}
             </span><br/>
-            <span className="anc-title" onClick={openModal}>{anc.title}</span>
+            <span className="anc-title" onClick={() => toggleModal(true)}>{anc.title}</span>
 
-            <Modal display={display} setDisplay={setDisplay} title={anc.title}>
+            <Modal display={display} toggleModal={toggleModal} >
                 <AncDetails anc={anc} />
             </Modal>
-        </p>
+        </div>
     )
 }
 

@@ -4,16 +4,20 @@ import Modal from '../../layout/Modal';
 import GroupList from './GroupList';
 
 function ManageGroups(props) {
-    const [display, setDisplay] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
+
+    const toggleModal = open => {
+        setDisplayModal(open)
+    }
 
     return (
         <Fragment>
             <i 
             className="material-icons" 
             title="Settings"
-            onClick={() => setDisplay(true)}
+            onClick={() => toggleModal(true)}
             >settings</i>
-            <Modal display={display} setDisplay={setDisplay} title="הגדרות פרסומים">
+            <Modal display={displayModal} toggleModal={toggleModal} title="הגדרות פרסומים">
                 <GroupList
                 paths = {props.paths}
                 groups = {props.groups}

@@ -24,7 +24,7 @@ export default function(state = initialState, action) {
             }
 
         case GET_ERROR:
-            if(payload.msg) {
+            if(payload) {
                 return {
                     ...state,
                     msg: payload.msg,
@@ -35,7 +35,7 @@ export default function(state = initialState, action) {
                 return {
                     ...state,
                     msg: "נראה שמשהו השתבש. לא יכולנו להשלים את הפעולה.",
-                    status: payload.status
+                    status: 500
                 }
             }
             

@@ -5,20 +5,20 @@ import PropTypes from 'prop-types';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
 
-function EditAnc(props) {
-    const groups = props.groups;
-    const anc = props.anc;
-    const [display, setDisplay] = [props.display, props.setDisplay]
+function EditAnc({ groups, anc, display, toggleModal }) {
+    const [defaultValues, setDefaultValues] = useState({})
     const [selected, setSelected] = useState({
         name: anc.group.name,
         value: anc.group._id
     })
 
-    const defaultValues = {
-        title: anc.title,
-        content: anc.content,
-        groupId: anc.group._id
-    }
+    useEffect(() => {
+        setDefaultValues({
+            title: anc.title,
+            content: anc.content,
+            groupId: anc.group._id 
+        })
+    }, [])
 
     const options = groups.map(group => ({
         name: group.name,
@@ -42,7 +42,7 @@ function EditAnc(props) {
     }, [display])
 
     return (
-        <Modal display={display} setDisplay={setDisplay}>
+        <Modal display={display} toggleModal={toggleModal}>
             <form onSubmit={handleSubmit} noValidate>
                 <input 
                 type="text"
@@ -82,7 +82,7 @@ EditAnc.propTypes = {
     anc: PropTypes.object.isRequired,
     groups: PropTypes.array.isRequired,
     display: PropTypes.bool.isRequired,
-    setDisplay: PropTypes.func.isRequired
+    toggleModal: PropTypes.func.isRequired
 }
 
 export default EditAnc

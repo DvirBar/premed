@@ -65,13 +65,17 @@ export const getSteps = () => dispatch => {
 // Create new step
 export const addStep = data => dispatch => {
     dispatch(stepLoad());
+    console.log(data)
 
     // Request body
     const body = JSON.stringify(data);
 
     axios.post('api/steps', body)
          .then(res => dispatch(stepAdd(res.data)))
-         .catch(err => dispatch(getError(err)))
+         .catch(err => {
+            dispatch(stepError())
+            dispatch(getError(err))
+         })
 }
 
 export const editStep = (id, data) => dispatch => {
