@@ -25,10 +25,13 @@ body {
     background-color: #fff;
     font-size: 1.8rem;
     line-height: 1.5em;
+    outline: none;
+    overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 h1 {

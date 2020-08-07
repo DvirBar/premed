@@ -66,7 +66,8 @@ header {
             line-height: $header-height/1.5;
 
             &:hover > .sub-menu{
-                display: block;
+                max-height: 50rem;
+                transition: max-height 0.5s ease-in;
             }
         }
 
@@ -74,26 +75,25 @@ header {
             overflow: hidden;
             color: $main-color;
             top: $header-height;
+            right: 0;
+            width: 100%;
             padding: 0;
-        }
-
-        .left-section {
-            margin: auto auto auto 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: $header-height;
-            cursor: initial;
         }
     }
 
     @media only screen and (min-width: 769px) {
-        .links > li:hover:not(.left-section) {
+        .links > li:hover:not(.left-section), .user-links:hover {
             border-bottom: 0.3rem solid #eee;
         }
 
+        .links > li, .user-links{
+            border-bottom: 0.3rem solid #eeeeee00;
+            position: relative;
+            transition: border-color 0.3s linear;
+        }
+
         .sub-menu {
-            display: none;
+            display: block;
             position: absolute;
             top: $header-height;
             width: 15rem;
@@ -101,11 +101,17 @@ header {
             box-shadow: $default-shadow;
             border-bottom-left-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
+            max-height: 0;
+            transition: max-height 0.25s ease-out;
 
             li:hover {
                 background-color: #ddd;
             }
         }
+
+        // .left-section > li > .sub-menu{
+        //     left:0;
+        // }
 
         #login-link {
             display: flex;
@@ -126,6 +132,57 @@ header {
                 height: 4rem;
             }
 
+        }
+
+        .left-section {
+            position: relative;
+            left: 1rem;
+            margin: auto auto auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            align-content: center;
+            justify-items: center;
+            height: $header-height;
+
+            & > li {
+                height: 5rem;
+
+                .material-icons {
+                    font-size: 2.8rem;
+                }
+            }
+
+            .user-links {
+                position: relative;
+                & > span {
+                    display: flex;
+                }
+
+                .material-icons {
+                    font-size: 2.5rem;
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+
+                .sub-menu {
+                    .material-icons {
+                        color: $main-color;
+                    }
+
+                    & > li {
+                        display: flex;
+                        align-items: center;
+                        justify-items: center;
+                    }
+                }
+
+                &:hover > .sub-menu {
+                    max-height: 50rem;
+                    transition: max-height 0.5s ease-in;
+                }
+            } 
         }
     }
 
@@ -161,6 +218,7 @@ header {
 
         .navbar {
             width: auto;
+            overflow: auto;
 
             .links {
                 display: none;
@@ -173,7 +231,7 @@ header {
                 top: $header-height;
                 position: absolute;
                 width: 30rem;
-                height: 100vh;
+                min-height: 100vh;
                 overflow-y: auto;
                 overflow-x: hidden;
                 z-index: 2;
@@ -207,10 +265,17 @@ header {
                     color: #486974dc;
                 }
 
-
-
                 .left-section {
-                    margin-top: 2rem;
+                    .material-icons {
+                        display: inline;
+                        font-size: 1.8rem;
+                        color:inherit;
+                        margin: 0;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+                    }
                 }
 
                 .search {

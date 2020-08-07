@@ -1,10 +1,10 @@
 import React, { Fragment, useState }from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Modal from './Modal';
-import Login from '../auth/Login';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { logout } from '../../redux/actions/auth';
 
 function Navbar() {
+    const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
     const [display, setDisplay] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -23,6 +23,10 @@ function Navbar() {
 
     const hideMenuStyle = {
     };
+
+    const logoutUser = () => {
+        dispatch(logout())
+    }
 
     return (
         <header>
@@ -51,27 +55,49 @@ function Navbar() {
                         </ul>
                     </li>
                     <li>
-                        <p>מיונים אישיותיים</p>
+                        <span>מיונים אישיותיים</span>
                         <ul className="sub-menu">
                             <li>מו"ר/מרק"ם</li>
                             <li>מיוני באר שבע</li>
                         </ul>
                     </li>
                     <li>נתונים</li>
-                    <li className="left-section">
-                        <i className="material-icons search">search</i>
+                    <ul className="left-section">
+                        <li className="search">
+                            <i className="material-icons search">search</i>
+                        </li>
                         {auth.isAuthenticated
                             ? (
-                                <Fragment>
-                                    <span className='private-sec'><Link to="/profile">א</Link></span>
-                                    {auth.user.isAdmin && 
-                                    <span className="admin-sec"><Link to="/admin">ב</Link></span>}
-                                </Fragment>
+                                <li className="user-links">
+                                    <span>
+                                        <i className="material-icons">account_circle</i>
+                                        <span>משתמש</span>
+                                    </span>
+                                    <ul className="sub-menu">
+                                        <Link to="/profile">
+                                            <li>
+                                                פרופיל
+                                            </li>
+                                        </Link>
+                                        {auth.user.isAdmin && 
+                                            <Link to="/admin">
+                                                <li>
+                                                    <i className="material-icons">admin_panel_settings</i>
+                                                    <span>ניהול</span>
+                                                </li>
+                                            </Link>
+                                        }
+                                        <li onClick={() => logoutUser()}>
+                                            <i className="material-icons">power_settings_new</i>
+                                            <span>התנתק</span>
+                                        </li>
+                                    </ul>
+                                </li>
                             )
                             : (
                                 <Link to="/login" id="login-link">התחבר</Link>
                             )}
-                    </li>
+                    </ul>
                 </ul>
             </nav>
         </header>
