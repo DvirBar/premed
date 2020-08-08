@@ -1,7 +1,12 @@
 $main-color: #486974;
+
 $default-shadow: 
 0 2px 6px 0 rgba(0, 0, 0, 0.2), 
 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+$default-shadow-hover:
+0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 $key-color: #4e4e4e;
 $key-color-hover: #838383;
 $header-color: #727272;
@@ -19,6 +24,7 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 10px;
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {

@@ -91,6 +91,7 @@ function AddAnc(props) {
                         name={"groupId"}
                         title={"קבוצת פרסום"}
                         onChange={changeSelected}
+                        id={"new-ancgroup"}
                         /><p className="form-error">
                         {errors.groupId && errors.groupId}
                         </p><br />

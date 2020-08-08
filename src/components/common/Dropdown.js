@@ -18,19 +18,32 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
         event.target.value = option.value;
         onChange(event, option.name)
         setDisplay(false)
-    }  
+    }
+
+    useEffect(() => {
+        selectData(options[0])
+    }, [])
 
     return (
         <div className="dropdown">
-            <span>{selected.name || title}</span>
-            <span className="dropdown_toggler" onClick={() => toggleDrop()}>&gt;</span>
-            {display &&
-                <ul className="dropdown_select">
-                {options.map(option => 
-                    <li onClick={() => selectData(option)}>{option.name}</li>
-                    )}
-                </ul>
-            }
+            <p className="dropdown-main" onClick={() => toggleDrop()}>
+                <span className="dropdown-top">{title}</span>
+                <span className="dropdown-toggler">
+                    <span className={display ? "arrow arrow-down" : "arrow"}></span>
+                </span>
+                <span className="dropdown-selected">{selected.name || ''}</span>
+            </p>
+            <ul className="dropdown-select" id={display && "open"}>
+            {options.map(option => 
+                <li 
+                onClick={() => selectData(option)}
+                id={option.value === selected.value ? "selected" : ""}>
+                    <span>{option.name}</span>
+                    <i className="material-icons">done</i>
+                </li>
+                )}
+            </ul>
+         
         </div>
     )
 }
@@ -40,7 +53,7 @@ Dropdown.propTypes = {
     options: PropTypes.array.isRequired,
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
 }
 
 export default Dropdown

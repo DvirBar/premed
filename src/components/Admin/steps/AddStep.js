@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
@@ -13,7 +13,6 @@ function AddStep({ path, steps }) {
     const [siblings, setSiblings] = useState([])
     const [parentOptions, setParentOptions] = useState([])
     const [prevOptions, setPrevOptions] = useState([])
-
     const title = "צור שלב עבור " + path.name;
 
     const toggleModal = open => {
@@ -49,10 +48,10 @@ function AddStep({ path, steps }) {
 
     // Parents dropdown
     useEffect(() => {
-    setParentOptions(steps.map(step => ({
+    setParentOptions([{name: 'ללא שיוך', value: undefined}, ...steps.map(step => ({
         name: step.name,
         value: step._id
-    })))
+    }))])
     }, [steps])
 
     const changeSelParent = (event, selectedName) => {
@@ -70,8 +69,8 @@ function AddStep({ path, steps }) {
         }, [siblings])
 
     useEffect(() => {
-        console.log(values)
-    }, [values])
+        setSelPrev(prevOptions[0])
+    }, [prevOptions])
 
     
     const changeSelPrev = (event, selectedName) => {
@@ -110,6 +109,7 @@ function AddStep({ path, steps }) {
                             name={"parentId"}
                             title={"שייך ל"}
                             onChange={changeSelParent}
+                            id={"select-parent"}
                             /><p className="form-error">
                             {errors.parent && errors.parent}
                             </p><br />
@@ -124,6 +124,7 @@ function AddStep({ path, steps }) {
                             name={"prevId"}
                             title={"ממשיך את השלב"}
                             onChange={changeSelPrev}
+                            id={"select-prev"}
                             /><p className="form-error">
                             {errors.parent && errors.parent}
                             </p><br />
