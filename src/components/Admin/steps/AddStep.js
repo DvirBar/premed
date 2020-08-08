@@ -4,6 +4,7 @@ import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import { addStep } from '../../../redux/actions/steps';
 import Dropdown from '../../common/Dropdown';
+import FormInput from '../../common/FormInput';
 
 function AddStep({ path, steps }) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -31,8 +32,14 @@ function AddStep({ path, steps }) {
         handleChange,
         handleSubmit,
         values,
-        errors
+        errors,
+        initValues
     } = useForm(addStep, defaultValues)
+
+    useEffect(() => {
+        initValues()
+        console.log(errors)
+    }, [defaultValues, path])
 
 
     // Get siblings on parent change - TODO: might need to move it upflow
@@ -74,7 +81,6 @@ function AddStep({ path, steps }) {
 
     
     const changeSelPrev = (event, selectedName) => {
-        console.log(event.target.value)
         handleChange(event);
         setSelPrev({name: selectedName, value: event.target.value})
     }
@@ -90,16 +96,12 @@ function AddStep({ path, steps }) {
             title={title}
             >
                 <form onSubmit={handleSubmit} noValidate>
-                    <input 
-                    type="text"
-                    name="name" 
-                    placeholder="שם"
-                    value={values.name || ''}
+                    <FormInput
+                    label="שם"
+                    name={"name"}
+                    value={values.name}
                     onChange={handleChange}
-                    /><br />
-                    <p className="form-error">
-                        {errors.name && errors.name}
-                    </p><br />
+                    error={errors.name} />
 
                     {steps.length !== 0 &&
                         <Fragment>

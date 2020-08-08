@@ -2,6 +2,7 @@ $dropdown_width: 18rem;
 $dropdown_height: 4rem;
 
 .dropdown {
+    line-height: 1.5em;
     box-sizing: border-box;
     position: relative;
     background-color: #fff;
@@ -30,7 +31,7 @@ $dropdown_height: 4rem;
 
     &-top {
         position: absolute;
-        top: -32%;
+        top: -30%;
         right: 7%;
         padding: 0 0.2rem;
         font-size: 1.1rem;

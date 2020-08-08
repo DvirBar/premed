@@ -12,6 +12,8 @@ $key-color-hover: #838383;
 $header-color: #727272;
 $header-height: 5rem;
 $cover-height: 25rem;
+$text-size: 1.8rem;
+$line-height: 1.5em;
 
 * {
     margin: 0;
@@ -29,8 +31,8 @@ html {
 
 body {
     background-color: #fff;
-    font-size: 1.8rem;
-    line-height: 1.5em;
+    font-size: $text-size;
+    line-height: $line-height;
     outline: none;
     overflow-x: hidden;
 }

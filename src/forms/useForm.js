@@ -17,14 +17,19 @@ const useForm = (callback, defaultValues, ...params) => {
         // If there are no errors and the form was submitted
         if(Object.keys(errors).length === 0 && isSubmitting)
             dispatch(callback(...params, values))
+
+        // If there are no errors cancel submit
+        if(errors)
+            setIsSubmitting(false)
+
     }, [errors])
 
     const handleSubmit = event => {
         if(event)
             event.preventDefault();
         
-        setErrors(validateForm(values)); 
         setIsSubmitting(true);
+        setErrors(validateForm(values)); 
     }
 
     const handleChange = event => {
@@ -35,8 +40,11 @@ const useForm = (callback, defaultValues, ...params) => {
     }
 
     const initValues = () => {
-        if(!isSubmitting)
+        if(!isSubmitting) {
             setValues(defaultValues);
+            setErrors({});
+        }
+            
     }
 
     return {
