@@ -12,12 +12,33 @@ const VerifyDelete = props => {
         setDisplay(false);
     }
 
-    return (
-        <Modal display={display} setDisplay={setDisplay} title={"אישור מחיקה"}>
-            אתה בטוח שאתה רוצה למחוק?
+    const toggleModal = open => {
+        setDisplay(open)
+    }
 
-            <button className="danger" onClick={commitCallback}>מחק</button>
-            <button onClick={() => setDisplay(false)}>ביטול</button>
+    const buttonStyle = {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+    }
+
+    return (
+        <Modal 
+        style={buttonStyle}
+        display={display} 
+        toggleModal={toggleModal}
+        title={"אישור מחיקה"}>
+            <p>אתה בטוח שאתה רוצה למחוק?</p>
+            <p className="modal-buttons">
+                <button 
+                style={{display: "inline-block"}}
+                className="danger"
+                onClick={commitCallback}>מחק</button>
+
+                <button 
+                style={{display: "inline-block"}}
+                onClick={() => setDisplay(false)}>ביטול</button>
+            </p>
         </Modal>
     )
 }

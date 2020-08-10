@@ -3,26 +3,23 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import useForm from '../../forms/useForm';
 import { register } from '../../redux/actions/auth';
+import FormInput from '../common/FormInput';
 
 const Register = () => {
+    const [defaultValues, setDefaultValues] = useState({
+        email: '',
+        password: ''
+    });
+
     const {
         handleSubmit,
         handleChange,
         values,
-        errors } = useForm(register);
-
-    const [disabled, setDisabled] = useState(true);
-
-    useEffect(() => {
-        if( values.email &&
-            values.password)
-            setDisabled(false);
-    }, [values]);
+        errors } = useForm(register, defaultValues);
 
     const auth = useSelector(state => state.auth);
     
     const selectedMsg = useSelector(state => state.messages);
-
     const [message, setMessage] = useState({});
 
     useEffect(() => {
@@ -36,7 +33,6 @@ const Register = () => {
     if(auth.isAuthenticated)
         return <Redirect to="/" />;
 
-
     else {
         return (
             <form className="register-form" onSubmit={handleSubmit} noValidate>
@@ -47,36 +43,23 @@ const Register = () => {
                 {message.msg &&
                 <p className="form-error">{message.msg}</p>}
 
-                <input
+                <FormInput
                 type="email"
+                label='דואר אלקטרוני' 
                 name="email"
-                id="email"
-                placeholder="אימייל"
-                value={values.email || ''}
-                className="form-field"
+                value={values.email}
                 onChange={handleChange}
-                />
-                <br />
-                <p className="form-error">
-                    {errors.email && errors.email}
-                </p>
-    
-                <input
+                error={errors.email} />
+
+                <FormInput
                 type="password"
+                label="סיסמה"
                 name="password"
-                placeholder="סיסמה"
-                value={values.password || ''}
-                className={errors.password ? 'red-border' : ''}
+                value={values.password}
                 onChange={handleChange}
-                /><br />
-                <p className="form-error">
-                    {errors.password && errors.password}
-                </p>
+                error={errors.password} />
     
-                <button 
-                type="submit"
-                disabled={disabled}
-                >הירשם</button>
+                <button type="submit">הירשם</button>
             </form>
         )
     }

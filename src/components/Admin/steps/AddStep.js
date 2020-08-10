@@ -3,24 +3,25 @@ import PropTypes from 'prop-types';
 import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import { addStep } from '../../../redux/actions/steps';
-import Dropdown from '../../common/Dropdown';
 import FormInput from '../../common/FormInput';
+import Dropdown from '../../common/Dropdown';
 
 function AddStep({ path, steps }) {
     const [defaultValues, setDefaultValues] = useState({})
-    const [selParent, setSelParent] = useState({})
-    const [selPrev, setSelPrev] = useState({})
     const [displayModal, setDisplayModal] = useState(false)
-    const [siblings, setSiblings] = useState([])
     const [parentOptions, setParentOptions] = useState([])
+    const [selParent, setSelParent] = useState({})
+    const [siblings, setSiblings] = useState([])
     const [prevOptions, setPrevOptions] = useState([])
+    const [selPrev, setSelPrev] = useState({})
+
     const title = "צור שלב עבור " + path.name;
 
     const toggleModal = open => {
         setDisplayModal(open)
     }
 
-    // Set form
+    // Form
     useEffect(() => {
         setDefaultValues ({
             name: '',
@@ -36,54 +37,75 @@ function AddStep({ path, steps }) {
         initValues
     } = useForm(addStep, defaultValues)
 
+    // Init values and errors when switching path
     useEffect(() => {
         initValues()
-        console.log(errors)
     }, [defaultValues, path])
 
 
-    // Get siblings on parent change - TODO: might need to move it upflow
-    useEffect(() => { 
-        setSiblings(steps.filter(step => step.parent === selParent.value))
-    }, [selParent, steps]) 
-
-    useEffect(() => { 
-        if(siblings.length === 0 && steps.length !== 0)
-            setSiblings(steps.filter(step => !step.parent))
-    }, [steps, siblings]) 
-
-
-    // Parents dropdown
+    //// Parent
+    // Dropdown options
     useEffect(() => {
-    setParentOptions([{name: 'ללא שיוך', value: undefined}, ...steps.map(step => ({
-        name: step.name,
-        value: step._id
-    }))])
+        setParentOptions([{name: 'ללא שיוך', value: undefined}, ...steps.map(step => ({
+            name: step.name,
+            value: step._id
+        }))])
     }, [steps])
 
-    const changeSelParent = (event, selectedName) => {
-        console.log(event.target.value)
-        handleChange(event);
-        setSelParent({name: selectedName, value: event.target.value})
-    }
+        // Selected option
+    useEffect(() => { // Binds the values to selected option
+        const parent = values.parentId
 
-    // Previous step dropdown
+        if(parent) {
+            const option = parentOptions.find(option => 
+                option.value === parent)
+
+            setSelParent({
+                name: option.name,
+                value: parent
+            })}
+        // if selected parent is undefined
+        else
+            setSelParent(parentOptions[0])
+    }, [values, parentOptions])
+
+
+    //// Prev 
+        // Get siblings
     useEffect(() => {
-        setPrevOptions([{name: 'ללא', value: undefined}, ...siblings.map(sibling => ({
-            name: sibling.name,
-            value: sibling._id
-        }))])
+        if(selParent)
+            setSiblings(steps.filter(step => 
+            step.parent === selParent.value))
+    }, [selParent, steps]) 
+
+        // Dropdown options
+    useEffect(() => {
+        if(siblings.length !== 0)
+            setPrevOptions([{name: 'ללא', value: undefined}, ...siblings.map(step => ({
+                name: step.name,
+                value: step._id
+            }))])
         }, [siblings])
 
-    useEffect(() => {
-        setSelPrev(prevOptions[0])
-    }, [prevOptions])
-
+        // Selected option
+        useEffect(() => { // Binds the values to selected option
+            const prev = values.prevId
     
-    const changeSelPrev = (event, selectedName) => {
-        handleChange(event);
-        setSelPrev({name: selectedName, value: event.target.value})
-    }
+            if(prev) {
+                const option = prevOptions.find(option => 
+                    option.value === prev)
+    
+                setSelPrev({
+                    name: option.name,
+                    value: prev
+                })}
+            // if selected prev is undefined
+            else
+                setSelPrev(prevOptions[0])
+        }, [values, prevOptions])
+        useEffect(() => {
+            console.log(values)
+        }, [values])
 
     return (
         <Fragment>
@@ -93,46 +115,36 @@ function AddStep({ path, steps }) {
             <Modal 
             display={displayModal} 
             toggleModal={toggleModal}
-            title={title}
-            >
+            title={title}>
                 <form onSubmit={handleSubmit} noValidate>
                     <FormInput
+                    type="text"
                     label="שם"
-                    name={"name"}
+                    name="name"
                     value={values.name}
                     onChange={handleChange}
                     error={errors.name} />
 
-                    {steps.length !== 0 &&
-                        <Fragment>
-                            <Dropdown
-                            selected={selParent}
-                            options={parentOptions}
-                            name={"parentId"}
-                            title={"שייך ל"}
-                            onChange={changeSelParent}
-                            id={"select-parent"}
-                            /><p className="form-error">
-                            {errors.parent && errors.parent}
-                            </p><br />
-                        </Fragment>
+                    {parentOptions.length !== 0 && selParent &&
+                        <Dropdown
+                        selected={selParent}
+                        options={parentOptions}
+                        name={"parentId"}
+                        title={"שייך ל"}
+                        onChange={handleChange}
+                        />
                     }
-
-                    {siblings.length !== 0 &&
-                        <Fragment>
-                            <Dropdown
-                            selected={selPrev}
-                            options={prevOptions}
-                            name={"prevId"}
-                            title={"ממשיך את השלב"}
-                            onChange={changeSelPrev}
-                            id={"select-prev"}
-                            /><p className="form-error">
-                            {errors.parent && errors.parent}
-                            </p><br />
-                        </Fragment>
+                        
+                    {siblings.length !== 0 && selPrev && 
+                        <Dropdown
+                        selected={selPrev}
+                        options={prevOptions}
+                        name={"prevId"}
+                        title={"שלב קודם"}
+                        onChange={handleChange}
+                        />
                     }
-    
+                  
                     <button type="submit">צור שלב</button>
                 </form>
             </Modal>

@@ -4,6 +4,7 @@ import useForm from '../../../forms/useForm';
 import { addAnc } from '../../../redux/actions/anouncements';
 import Modal from '../../layout/Modal';
 import Dropdown from '../../common/Dropdown';
+import FormInput from '../../common/FormInput';
 
 function AddAnc(props) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -27,16 +28,6 @@ function AddAnc(props) {
         values,
         errors
     } = useForm(addAnc, defaultValues)
-
-    const [disabled, setDisabled] = useState(true);
-
-    useEffect(() => {
-        if(values.title && values.groupId)
-            setDisabled(false);
-        
-        console.log(values)
-    }, [values])
-
 
     useEffect(() => {
         setOptions(groups.map(group => ({
@@ -64,26 +55,27 @@ function AddAnc(props) {
             className="info"
             onClick={() => toggleModal(true)}>פרסם</button>
             { selected &&
-                <Modal display={displayModal} toggleModal={toggleModal}>
+                <Modal 
+                display={displayModal} 
+                toggleModal={toggleModal}
+                title="פרסום חדש">
                     <form onSubmit={handleSubmit} noValidate>
-                        <input 
-                        type="text"
-                        name="title" 
-                        placeholder="כותרת..."
-                        value={values.title || ''}
-                        onChange={handleChange}
-                        /><br />
-                        <p className="form-error">
-                            {errors.title && errors.title}
-                        </p><br />
 
-                        <input 
-                        type="textarea"
-                        name="content" 
-                        placeholder="תוכן הפרסום"
-                        value={values.content || ''}
+                        <FormInput
+                        type="text"
+                        label="כותרת"
+                        name="title"
+                        value={values.title}
                         onChange={handleChange}
-                        /><br />
+                        error={errors.title} />
+
+                        <FormInput
+                        type="textarea"
+                        label="תוכן הפרסום"
+                        name="content"
+                        value={values.content}
+                        onChange={handleChange}
+                        error={errors.content} />
                         
                         <Dropdown 
                         selected={selected}
@@ -96,10 +88,7 @@ function AddAnc(props) {
                         {errors.groupId && errors.groupId}
                         </p><br />
 
-
-                        <button
-                        type="submit"
-                        disabled={disabled}>צור</button>
+                        <button type="submit">צור</button>
                     </form>
                 </Modal>
             }

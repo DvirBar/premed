@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TreeNode from './TreeNode';
 
-function StepsTree({ steps }) {
+function StepsTree({ steps, selectStep }) {
     const parents = steps.filter(step => !step.parent)
 
     if(steps.length === 0) {
@@ -18,7 +18,8 @@ function StepsTree({ steps }) {
                 {parents.map(parent => (
                         <TreeNode
                         step={parent}
-                        steps={steps} />
+                        steps={steps}
+                        selectStep={selectStep} />
                     ))}
             </ul>
         </div>
@@ -26,7 +27,8 @@ function StepsTree({ steps }) {
 }
 
 StepsTree.propTypes = {
-    steps: PropTypes.array.isRequired
+    steps: PropTypes.array.isRequired,
+    selectStep: PropTypes.func.isRequired
 }
 
 export default StepsTree

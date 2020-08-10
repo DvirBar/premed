@@ -46,7 +46,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                paths: state.steps.map(step => step._id === payload._id ? step = payload : step)
+                steps: state.steps.map(step => step._id === payload._id ? step = payload : step)
             }
 
         case STEP_DELETE:

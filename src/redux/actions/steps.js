@@ -86,7 +86,10 @@ export const editStep = (id, data) => dispatch => {
 
     axios.put(`api/steps/${id}`, body)
          .then(res => dispatch(stepUpdate(res.data)))
-         .catch(err => dispatch(getError(err)))
+         .catch(err => {
+            dispatch(getError(err))
+            dispatch(stepError())
+         })
 }
 
 export const deleteStep = id => dispatch => {
@@ -98,8 +101,8 @@ export const deleteStep = id => dispatch => {
              dispatch(getMessage(res.data));
          })
          .catch(err => {
-            dispatch(stepError())
             dispatch(getError(err))
+            dispatch(stepError())
          })
 }
 

@@ -16,24 +16,31 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
         dispatchEvent(event);
         event.target.name = name;
         event.target.value = option.value;
-        onChange(event, option.name)
+        onChange(event)
         setDisplay(false)
     }
 
-    useEffect(() => {
-        selectData(options[0])
-    }, [])
+    const paddingSelect = {
+        padding: "0.5rem 0"
+    }
+
+    const defaultStyle = {}
 
     return (
         <div className="dropdown">
-            <p className="dropdown-main" onClick={() => toggleDrop()}>
+            <p 
+            className="dropdown-main"
+            onClick={() => toggleDrop()}>
                 <span className="dropdown-top">{title}</span>
                 <span className="dropdown-toggler">
                     <span className={display ? "arrow arrow-down" : "arrow"}></span>
                 </span>
                 <span className="dropdown-selected">{selected.name || ''}</span>
             </p>
-            <ul className="dropdown-select" id={display && "open"}>
+            <ul 
+            style={display ? paddingSelect : defaultStyle}
+            className="dropdown-select" 
+            id={display && "open"}>
             {options.map(option => 
                 <li 
                 onClick={() => selectData(option)}
@@ -43,7 +50,6 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
                 </li>
                 )}
             </ul>
-         
         </div>
     )
 }

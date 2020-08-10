@@ -3,25 +3,23 @@ import { useSelector } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { login } from '../../redux/actions/auth';
 import useForm from '../../forms/useForm';
+import FormInput from '../common/FormInput';
 
 const Login = () => {
+    const [defaultValues, setDefaultValues] = useState({
+        email: '',
+        password: ''
+    });
+
     const {
         handleChange,
         handleSubmit,
         values,
-        errors} = useForm(login);
-
-    const [disabled, setDisabled] = useState(true);
-
-    useEffect(() => {
-        if(values.email && values.password)
-            setDisabled(false)
-    }, [values]);
+        errors} = useForm(login, defaultValues);
 
     const auth = useSelector(state => state.auth);
 
     const selectedMsg = useSelector(state => state.messages);
-
     const [message, setMessage] = useState({});
 
     useEffect(() => {
@@ -44,33 +42,23 @@ const Login = () => {
             {message.msg &&
             <p className="form-error">{message.msg}</p>}
 
-            <input 
-            type="email" 
+            <FormInput
+            type="email"
+            label="דואר אלקטרוני" 
             name="email"
-            placeholder='דוא"ל'
-            className={errors.email ? 'red-border' : ''}
-            value={values.email || ''}
+            value={values.email}
             onChange={handleChange}
-            /><br />
-            <p className="form-error">
-                {errors.email && errors.email}
-            </p>
+            error={errors.email} />
 
-            <input 
+            <FormInput
             type="password"
+            label="סיסמה"
             name="password"
-            placeholder="סיסמה"
-            className={errors.password ? 'red-border' : ''}
+            value={values.password}
             onChange={handleChange}
-            value={values.password || ''}
-            /><br />
-            <p className="form-error">
-                {errors.password && errors.password}
-            </p>
+            error={errors.password} />
 
-            <button 
-            type="submit"
-            disabled={disabled}>התחברות</button><br />
+            <button type="submit">התחברות</button><br />
 
             <p>עדיין אין משתמש? <Link to="/register">הירשם</Link></p>
         </form>

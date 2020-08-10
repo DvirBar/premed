@@ -1,10 +1,10 @@
-$input-width: 18rem;
+$input-width: 25rem;
 $error-color: #be1b1b;
 
 .form-text-input {
     line-height: 1.5em;
     position: relative;
-    margin: 2rem 1rem;
+    margin: 2rem 0;
 
     .label {
         position: absolute;
@@ -17,7 +17,8 @@ $error-color: #be1b1b;
     }
 
     .text-input {
-        outline: none;
+        background-color: transparent;
+        outline: 0;
         border:none;
         border-bottom: 2px solid #999;
         font-size: $text-size;
@@ -34,15 +35,16 @@ $error-color: #be1b1b;
             cursor: text;
             top: 0;
         }
+    }
 
-        &:focus  {
-            border-bottom-color: $main-color;
+    .text-input:focus {
+        border-bottom-color: $main-color;
 
-            ~ .label {
-                top: -2rem;
-                font-size: 1.2rem;
-                color: $main-color
-            }
+        ~ .label {
+            position: absolute;
+            top: -2rem;
+            font-size: 1.2rem;
+            color: $main-color;
         }
     }
 
@@ -58,6 +60,12 @@ $error-color: #be1b1b;
         .error {
             font-size: 1.4rem;
             color: $error-color;
+        }
+    }
+
+    @media only screen and(max-width: 768px) {
+        .text-input {
+            width: 100%;
         }
     }
 }

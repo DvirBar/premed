@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux';
 import InlineSelect from '../../common/InlineSelect';
 import AddStep from './AddStep';
 import StepsTree from './StepsTree';
+import EditStep from './EditStep';
 
 function StepsAdmin() {
+    // Local state
     const [paths, setPaths] = useState([]);
     const [steps, setSteps] = useState([]);
-    const [selected, setSelected] = useState({})
+    const [selPath, setSelPath] = useState({})
     const [selPathSteps, setSelPathSteps] = useState([])
+    const [selStep, setSelStep] = useState({})
 
+    // Load state from redux
     const selPaths = useSelector(state => state.paths);
     const selSteps = useSelector(state => state.steps);
     const loadPaths = selPaths.loading;
@@ -25,15 +29,24 @@ function StepsAdmin() {
     // Create default selected path
     useEffect(() => {
         if(paths.length !== 0) 
-            setSelected({ name: paths[0].name, value: paths[0]._id })
+            setSelPath({ name: paths[0].name, value: paths[0]._id })
     }, [paths])
 
-    // Listen to selected and change steps when selected is change
+    // Listen to selected path and change steps and init selected step
     useEffect(() => {
         setSelPathSteps(steps.filter(step => (
-            step.path === selected.value
+            step.path === selPath.value
         )))
-    }, [selected, steps])
+    }, [selPath, steps])
+
+    useEffect(() => {
+        setSelStep({})
+    }, [selPath])
+
+    // Select step 
+    const selectStep = step => {
+        setSelStep(step)
+    }
 
 
     if(paths.length === 0)
@@ -51,19 +64,25 @@ function StepsAdmin() {
             <p className="path-select">
                 <InlineSelect 
                 options={paths}
-                selected={selected}
-                setSelected={setSelected} />
+                selected={selPath}
+                setSelected={setSelPath} />
             </p>
             <div className="steps-block">
-                {selected.value &&
+                {selPath.value &&
                     <AddStep 
-                    path={selected}
+                    path={selPath}
                     steps={selPathSteps} />
                 }
                 
                 <StepsTree 
-                steps={selPathSteps} />
+                steps={selPathSteps}
+                selectStep={selectStep} />
             </div>
+            {Object.keys(selStep).length !== 0 &&
+                <EditStep
+                selStep={selStep}
+                steps={selPathSteps} />
+            }
         </div>
     )
 }

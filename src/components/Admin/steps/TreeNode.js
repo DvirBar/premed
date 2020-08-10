@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TreeNode({ step, steps }) {
+function TreeNode({ step, steps, selectStep }) {
     const children = steps.filter(child => child.parent === step._id)
 
     const topLayer = {
@@ -16,14 +16,19 @@ function TreeNode({ step, steps }) {
 
     return (
         <li className="tree-node">
-            {children.length === 0 && <span className="node"></span> }
-            <span style={children.length !== 0 ? topLayer : defaultStyle}>{step.name}</span>
+            <span 
+            className="node-container"
+            onClick={() => selectStep(step)}>
+                {children.length === 0 && <span className="node"></span> }
+                <span style={children.length !== 0 ? topLayer : defaultStyle}>{step.name}</span>
+            </span>
             {children.length !== 0 && // Base case
                 <ul className="family-container">
                     {children.map(child => 
                         <TreeNode
                         step={child}
-                        steps={steps} />
+                        steps={steps}
+                        selectStep={selectStep} />
                     )}
                 </ul>
             }
@@ -33,7 +38,8 @@ function TreeNode({ step, steps }) {
 
 TreeNode.propTypes = {
     step: PropTypes.object.isRequired,
-    steps: PropTypes.array.isRequired
+    steps: PropTypes.array.isRequired,
+    selectStep: PropTypes.func.isRequired
 }
 
 export default TreeNode
