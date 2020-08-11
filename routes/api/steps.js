@@ -74,6 +74,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                         // Create new step
                         newStep = new Step({
                             name: name,
+                            prev: prevId,
                             parent: parentId,
                             path: pathId,
                             author: userId
@@ -112,6 +113,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         .then(step => {
             if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
 
+
             Step.findById(parentId)
             .then(parent => {
                 if(!parent && parentId) return res.status(ParentNotExist.status).send(ParentNotExist.msg);
@@ -122,10 +124,11 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                             if(!prevStep) 
                                 return res.status(PrevStepNotExist.status).send(PrevStepNotExist.msg)
 
-                            if((parentId && prevStep.parent != parentId) || 
-                               (step.parent && prevStep.parent !== step.parent) ||
-                               (prevStep.path !== step.path))
-                            // Check that the linked step has the same parent and path
+                            if(!step.path.equals(prevStep.path) || 
+                                prevStep.parent != parentId)
+                            // Check that prev has the same parent
+                            // If step is orphan, check that prev is also orphan
+                            // Check same path
                                 return res.status(StrangerLinking.status).send(StrangerLinking.msg)
                         }
 
