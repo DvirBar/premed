@@ -23,7 +23,7 @@ function EditStep({ selStep, steps }) {
             prevId: selStep.prev || undefined,
             content: selStep.content || undefined
         })
-    }, [selStep])
+    }, [selStep, steps])
 
     const {
         handleChange,
@@ -70,7 +70,7 @@ function EditStep({ selStep, steps }) {
              setSiblings(steps.filter(step => 
                 step.parent === selParent.value && step._id !== stepId))
         } 
-    }, [selParent, steps, values]) 
+    }, [selParent, steps, values, selStep]) 
 
         // Dropdown options
     useEffect(() => {
@@ -85,24 +85,21 @@ function EditStep({ selStep, steps }) {
         useEffect(() => { // Binds the values to selected option
             const prev = values.prevId
     
-            if(prev) {
-                const option = prevOptions.find(option => 
-                    option.value === prev)
+            if(prev && prevOptions) {
+                const prevStep = steps.find(step => 
+                    step._id === prev)
     
                 setSelPrev({
-                    name: option.name,
+                    name: prevStep.name,
                     value: prev
                 })}
             // if selected prev is undefined
             else
                 setSelPrev(prevOptions[0])
-        }, [values, prevOptions])
-        useEffect(() => {
-            console.log(values)
-        }, [values])
+        }, [values, steps])
         
     return (
-        <form className="edit-step" onSubmit={handleSubmit}>
+        <form className="edit-step" onSubmit={handleSubmit} noValidate>
             <FormInput
             type="text"
             label="שם"

@@ -38,6 +38,7 @@ function StepsAdmin() {
         setSelPathSteps(steps.filter(step => (
             step.path === selPath.value
         )))
+        setSelStep({})
     }, [selPath, steps])
 
     useEffect(() => {
@@ -48,7 +49,6 @@ function StepsAdmin() {
     const selectStep = step => {
         setSelStep(step)
     }
-
 
     if(paths.length === 0)
         return (
