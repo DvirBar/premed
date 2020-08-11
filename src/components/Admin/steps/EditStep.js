@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { editStep } from '../../../redux/actions/steps';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
-import SelectParentPrev from './SelectParentPrev';
 import Dropdown from '../../common/Dropdown';
 
 function EditStep({ selStep, steps }) {
@@ -61,7 +60,6 @@ function EditStep({ selStep, steps }) {
         else
             setSelParent(parentOptions[0])
     }, [values, parentOptions])
-
 
 
     //// Prev 
@@ -138,8 +136,10 @@ function EditStep({ selStep, steps }) {
             name="content"
             value={values.content || ''}
             onChange={handleChange} />
-
-            <button type="submit">עדכן</button>
+            
+            <button 
+            className="info"
+            type="submit">עדכן</button>
         </form>
     )
 }

@@ -1,19 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Modal from '../layout/Modal';
 
-const VerifyDelete = props => {
+function VerifyDelete({ callback, value, display, toggleModal }) {
     const dispatch = useDispatch()
-    const callback = props.callback;
-    const [display, setDisplay] = [props.display, props.setDisplay]
 
     const commitCallback = () => {
-        dispatch(callback(...props.values));
-        setDisplay(false);
-    }
-
-    const toggleModal = open => {
-        setDisplay(open)
+        dispatch(callback(value));
+        toggleModal(false);
     }
 
     const buttonStyle = {
@@ -37,10 +32,17 @@ const VerifyDelete = props => {
 
                 <button 
                 style={{display: "inline-block"}}
-                onClick={() => setDisplay(false)}>ביטול</button>
+                onClick={() => toggleModal(false)}>ביטול</button>
             </p>
         </Modal>
     )
+}
+
+VerifyDelete.propTypes ={
+    callback: PropTypes.func.isRequired,
+    values: PropTypes.string.isRequired,
+    display: PropTypes.bool.isRequired,
+    toggleModal: PropTypes.func.isRequired
 }
 
 export default VerifyDelete;

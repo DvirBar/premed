@@ -4,6 +4,7 @@ import InlineSelect from '../../common/InlineSelect';
 import AddStep from './AddStep';
 import StepsTree from './StepsTree';
 import EditStep from './EditStep';
+import DeleteStep from './DeleteStep';
 
 function StepsAdmin() {
     // Local state
@@ -79,9 +80,12 @@ function StepsAdmin() {
                 selectStep={selectStep} />
             </div>
             {Object.keys(selStep).length !== 0 &&
-                <EditStep
-                selStep={selStep}
-                steps={selPathSteps} />
+                <div>
+                    <EditStep
+                    selStep={selStep}
+                    steps={selPathSteps} />
+                    <DeleteStep stepId={selStep._id} />
+                </div>
             }
         </div>
     )

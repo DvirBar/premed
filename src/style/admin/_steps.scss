@@ -88,5 +88,9 @@
             width: 100%;
             overflow: hidden;
         }
+
+        .edit-del-buttons > button {
+            display: inline;
+        }
     }
 }
