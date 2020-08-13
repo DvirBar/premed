@@ -20,6 +20,7 @@ const anouncements = require('./routes/api/anouncements');
 const ancgroups = require('./routes/api/anc-groups');
 const sections = require('./routes/api/sections');
 const steps = require('./routes/api/steps');
+const pages = require('./routes/api/pages');
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -27,6 +28,7 @@ app.use('/api/anouncements', anouncements);
 app.use('/api/ancgroups', ancgroups);
 app.use('/api/sections', sections);
 app.use('/api/steps', steps);
+app.use('/api/pages', pages)
 
 // Exit middlewares
 app.use(errorHandler);
