@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import InlineSelect from '../../common/InlineSelect';
 import AddStep from './AddStep';
-import StepsTree from './StepsTree';
+import StepsTree from '../../steps/StepsTree';
 import EditStep from './EditStep';
 import DeleteStep from './DeleteStep';
 

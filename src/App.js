@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Router from './components/routing/Router';
 import './style/css/App.css';
@@ -23,10 +23,19 @@ function App() {
 
   moment.locale('he');
 
+  const [paths, setPaths] = useState([])
+  const selPaths = useSelector(state => state.paths);
+  const fetchedPaths = selPaths.paths;
+  const loadPaths = selPaths.loading;
+  
+  useEffect(() => { // Bind selector to local state
+    setPaths(fetchedPaths)
+  }, [fetchedPaths])
+
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar />
+        <Navbar paths={paths}/>
         <div className="cover-photo">
           <div className="cover-top-layer"></div>
         </div>

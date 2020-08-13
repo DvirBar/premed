@@ -58,8 +58,14 @@ header {
         width: 100%;
 
        li {
-           padding: 1rem;
            cursor: pointer;
+           
+           span {
+               padding: 1rem;
+               height: 100%;
+               width: 100%;
+               display: block;
+           }
        }
 
        & > li {
@@ -141,9 +147,12 @@ header {
             justify-items: center;
             height: $header-height;
 
-            & > li {
-                height: 5rem;
+            li {
+                padding: 1rem;
+            }
 
+            & > li {
+                line-height: $header-height/1.5;
                 .material-icons {
                     font-size: 2.8rem;
                 }
@@ -163,6 +172,7 @@ header {
                 }
 
                 .sub-menu {
+                    top: $header-height;
                     .material-icons {
                         color: $main-color;
                     }

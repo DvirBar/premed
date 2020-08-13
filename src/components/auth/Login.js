@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { login } from '../../redux/actions/auth';
@@ -63,6 +64,10 @@ const Login = () => {
             <p>עדיין אין משתמש? <Link to="/register">הירשם</Link></p>
         </form>
     )
+}
+
+Login.propTypes = {
+    title: PropTypes.string
 }
 
 export default Login;

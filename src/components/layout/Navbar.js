@@ -1,11 +1,13 @@
-import React, { Fragment, useState }from 'react';
+import React, { useState }from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { logout } from '../../redux/actions/auth';
 
-function Navbar() {
+function Navbar({ paths }) {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
+
     const [display, setDisplay] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
 
@@ -46,25 +48,53 @@ function Navbar() {
                     }
                 </span>
                 <ul className='links' style={showMenu ? showMenuStyle : hideMenuStyle}>
-                    <li>תהליך קבלה</li>
+                    <li>
+                        <span>
+                            תהליך הקבלה
+                        </span>
+                        <ul className="sub-menu">
+                            {paths?.map(path => (
+                                <li key={path._id}>
+                                    <Link to={`/steps/${path._id}`}>
+                                        <span>{path.name}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
                     <li>
                         <span>פסיכומטרי ובגרויות</span>
                         <ul className="sub-menu">
-                            <li>בגרויות</li>
-                            <li>פסיכומטרי</li>
+                            <li>
+                                <span>בגרויות</span>
+                            </li>
+                            <li>
+                                <span>פסיכומטרי</span>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <span>מיונים אישיותיים</span>
                         <ul className="sub-menu">
-                            <li>מו"ר/מרק"ם</li>
-                            <li>מיוני באר שבע</li>
+                            <li>
+                                <span>מו"ר/מרק"ם</span>
+                            </li>
+                            <li>
+                                <span>מיוני באר שבע</span>
+                            </li>
                         </ul>
                     </li>
-                    <li>נתונים</li>
+                    <li>
+                        <span>
+                           נתונים  
+                        </span>
+                    </li>
                     <ul className="left-section">
                         <li className="search">
+                            <span>
                             <i className="material-icons search">search</i>
+                            </span>
+                          
                         </li>
                         {auth.isAuthenticated
                             ? (
@@ -102,6 +132,10 @@ function Navbar() {
             </nav>
         </header>
     )
+}
+
+Navbar.propTypes = {
+    paths: PropTypes.array.isRequired
 }
 
 export default Navbar;

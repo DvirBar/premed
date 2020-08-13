@@ -7,7 +7,7 @@ function TreeNode({ step, steps, selectStep }) {
     const topLayer = {
         position: "relative", 
         bottom: -12,
-        backgroundColor: "#eee",
+        backgroundColor: "#fff",
         padding: "0 0.2rem",
         cursor: "pointer"
     }
