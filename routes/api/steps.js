@@ -158,16 +158,24 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
     const stepId = req.params.id;
 
     Step.findById(stepId)
-              .then(step => {
-                if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
+        .then(step => {
+        if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
 
-                step.remove()
+        step.remove()
+            .then(() => {
+                Step.updateMany({ prev: stepId }, { prev: undefined })
                     .then(() => {
-                        return res.send(SuccessDelete.msg)
+                        Step.updateMany({ parent: stepId }, { parent: undefined })
+                            .then(() => {
+                                return res.send(SuccessDelete.msg)
+                            })
+                            .catch(next);
                     })
-                    .catch(next)
-              })
-              .catch(next);
+                    .catch(next);
+            })
+            .catch(next);
+        })
+        .catch(next);
 })
 
 module.exports = router;
