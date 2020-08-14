@@ -6,6 +6,7 @@ import sections from './sections';
 import paths from './paths';
 import ancgroups from './ancgroups';
 import steps from './steps';
+import pages from './pages';
 
 export default combineReducers({
     auth,
@@ -14,5 +15,6 @@ export default combineReducers({
     ancgroups,
     ancs,
     sections,
-    steps
+    steps,
+    pages
 });

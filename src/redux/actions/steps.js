@@ -98,6 +98,7 @@ export const deleteStep = id => dispatch => {
     axios.delete(`api/steps/${id}`)
          .then(res => {
              dispatch(stepDelete(id));
+             dispatch(getSteps());
              dispatch(getMessage(res.data));
          })
          .catch(err => {

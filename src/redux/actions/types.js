@@ -57,3 +57,11 @@ export const STEP_ADD = 'STEP_ADD';
 export const STEP_UPDATE = 'STEP_UPDATE';
 export const STEP_DELETE = 'STEP_DELETE';
 
+// Pages
+export const PAGE_LOADING = 'PAGE_LOADING';
+export const PAGE_SUCCESS = 'PAGE_SUCCESS';
+export const PAGE_ERROR = 'PAGE_ERROR';
+export const PAGE_ADD = 'PAGE_ADD';
+export const PAGE_UPDATE = 'PAGE_UPDATE';
+export const PAGE_DELETE = 'PAGE_DELETE';
+

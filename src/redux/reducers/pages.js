@@ -1,69 +1,62 @@
 import {
-    STEP_LOADING,
-    STEP_SUCCESS,
-    STEP_ERROR,
-    STEP_ADD,
-    STEP_UPDATE,
-    STEP_DELETE
+    PAGE_LOADING,
+    PAGE_SUCCESS,
+    PAGE_ERROR,
+    PAGE_ADD,
+    PAGE_UPDATE,
+    PAGE_DELETE,
 } from '../actions/types';
 
 const initialState = {
     loading: false,
-    steps: []
+    pages: []
 }
 
 export default function(state = initialState, action) {
     const payload = action.payload;
 
     switch(action.type) {
-        case STEP_LOADING:
+        case PAGE_LOADING:
             return {
                 ...state,
                 loading: true
             }
 
-        case STEP_SUCCESS: 
+        case PAGE_SUCCESS: 
             return {
                 ...state,
                 loading: false,
-                steps: payload
+                pages: payload
             }
 
-        case STEP_ERROR:
+        case PAGE_ERROR:
             return {
                 ...state,
                 loading: false,
             }
 
-        case STEP_ADD:
+        case PAGE_ADD:
             return {
                 ...state,
                 loading: false,
-                steps: [...state.steps, payload]
+                pages: [...state.pages, payload]
             }
 
-        case STEP_UPDATE:
+        case PAGE_UPDATE:
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => step._id === payload._id ? step = payload : step)
+                pages: state.pages.map(page => page._id === payload._id ? page = payload : page)
             }
 
-        case STEP_DELETE:
-            // Waits for get steps
+        case PAGE_DELETE:
             return {
                 ...state,
-                steps: state.steps.filter(step => step._id !== payload)
+                loading: false,
+                pages: state.pages.filter(page => page._id !== payload)
             }
 
         default:
             return state;
     }
 }
-
-
-// export const selectPathSteps = (state, path) => {
-//     state.steps.filter(step => {
-//         step.path === path._id
-//     })
-// }
