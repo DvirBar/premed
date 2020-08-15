@@ -64,4 +64,7 @@ export const PAGE_ERROR = 'PAGE_ERROR';
 export const PAGE_ADD = 'PAGE_ADD';
 export const PAGE_UPDATE = 'PAGE_UPDATE';
 export const PAGE_DELETE = 'PAGE_DELETE';
+export const SUBPAGE_ADD = 'SUBPAGE_ADD';
+export const SUBPAGE_UPDATE = 'SUBPAGE_EDIT';
+export const SUBPAGE_DELETE = 'SUBPAGE_DELETE';
 

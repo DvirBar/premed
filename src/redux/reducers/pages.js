@@ -5,6 +5,9 @@ import {
     PAGE_ADD,
     PAGE_UPDATE,
     PAGE_DELETE,
+    SUBPAGE_ADD,
+    SUBPAGE_UPDATE,
+    SUBPAGE_DELETE
 } from '../actions/types';
 
 const initialState = {
@@ -43,6 +46,9 @@ export default function(state = initialState, action) {
             }
 
         case PAGE_UPDATE:
+        case SUBPAGE_ADD:
+        case SUBPAGE_UPDATE:
+        case SUBPAGE_DELETE:
             return {
                 ...state,
                 loading: false,

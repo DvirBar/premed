@@ -5,6 +5,9 @@ import {
     PAGE_ADD,
     PAGE_UPDATE,
     PAGE_DELETE,
+    SUBPAGE_ADD,
+    SUBPAGE_UPDATE,
+    SUBPAGE_DELETE
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -49,6 +52,27 @@ export const pageDelete = id => {
         payload: id
     }
 }
+
+export const subpageAdd = subpage => {
+    return {
+        type: SUBPAGE_ADD,
+        payload: subpage
+    }
+}
+
+export const subpageUpdate = subpage => {
+    return {
+        type: SUBPAGE_UPDATE,
+        payload: subpage
+    }
+}
+export const subpageDelete = subpage => {
+    return {
+        type: SUBPAGE_DELETE,
+        payload: subpage
+    }
+}
+
 
 // Get all pages
 export const getPages = () => dispatch => {
@@ -98,4 +122,32 @@ export const deletePage = id => dispatch => {
             dispatch(getError(err))
          })
 }
+
+
+// Subpages
+export const addSubpage = (pageId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put(`api/pages/${pageId}/subpage`, body)
+         .then(res => dispatch(subpageAdd(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
+
+export const editSubpage = (pageId, subpageId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put(`api/pages/${pageId}/subpage/${subpageId}`, body)
+         .then(res => dispatch(subpageUpdate(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
+
+export const deletesubpage = (pageId, subpageId) => dispatch => {
+
+    axios.put(`api/pages/${pageId}/subpage/${subpageId}/remove`)
+         .then(res => dispatch(subpageDelete(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
+
 
