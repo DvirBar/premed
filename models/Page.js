@@ -8,18 +8,25 @@ const PageSchema = new Schema({
         required: [true, 'Name is required'],
         unique: true
     },
-    links: [{
+    subPages: [{
         name: {
             type: String
+            // Unique only for own page
         },
+        links: [{
+            name: {
+                type: String
+            },
+            url: {
+                type: String
+            }
+        }],
         url: {
-            type: String
+            type: String,
+            required: [true, 'Url is required']
+            // Unique only for own page
         }
     }],
-    navParent: {
-        type: String,
-        unique: true
-    },
     url: {
         type: String,
         required: [true, 'Url is required'],
