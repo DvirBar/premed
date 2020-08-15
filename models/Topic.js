@@ -40,6 +40,10 @@ const TopicSchema = new Schema({
     url: {
         type: String
     },
+    parent: {
+        type: ObjectId,
+        ref: "Topic"
+    },
     page: {
         type: ObjectId,
         required: [true, 'Page is required'],

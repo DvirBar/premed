@@ -107,18 +107,18 @@ router.put('/:id/subpage', [auth, authAdmin], (req, res, next) => {
             if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
             
             // Check that subpage name and url are unique for that page
-            const found = page.subPages.find(subPage => 
-                subPage.name === name || subPage.url === url)
+            const found = page.subpages.find(subpage => 
+                subpage.name === name || subpage.url === url)
             
             if(found)
                 return res.status(SubpageDetailsNotUnique.status).send(SubpageDetailsNotUnique.msg)
 
-            const newSubPage = {
+            const newSubpage = {
                 name: name,
                 url: url
             }
 
-            page.subPages.push(newSubPage)
+            page.subpages.push(newSubpage)
             page.save()
                 .then(page => {
                     return res.send(page)
@@ -150,23 +150,23 @@ router.put('/:id/:subpageId', [auth, authAdmin], (req, res, next) => {
             if(!page) return res.status(PageNotExist.status)
                                 .send(PageNotExist.msg)
             
-            const subpage = page.subPages.id(subpageId)
+            const subPage = page.subpages.id(subpageId)
 
-            if(!subpage)
+            if(!subPage)
                 return res.status(SubpageNotExist.status)
                           .send(SubpageNotExist.msg)
 
             // Check that subpage name and url are unique for that page
-            const found = page.subPages.find(subPage => 
-                subPage._id !== subpageId &&
-                (subPage.name === name || subPage.url === url) 
+            const found = page.subpages.find(subpage => 
+                subpage._id !== subpageId &&
+                (subpage.name === name || subpage.url === url) 
             )
             
             if(found)
                 return res.status(SubpageDetailsNotUnique.status)
                           .send(SubpageDetailsNotUnique.msg)
 
-            subpage.set({
+            subPage.set({
                 name: name,
                 url: url
             })
@@ -193,13 +193,13 @@ router.put('/:id/:subpageId/remove', [auth, authAdmin], (req, res, next) => {
             if(!page) return res.status(PageNotExist.status)
                                 .send(PageNotExist.msg)
             
-            const subpage = page.subPages.id(subpageId)
+            const subPage = page.subpages.id(subpageId)
 
-            if(!subpage)
+            if(!subPage)
                 return res.status(SubpageNotExist.status)
                           .send(SubpageNotExist.msg)
 
-            subpage.remove();
+            subPage.remove();
             page.save()
                 .then(page => {
                     return res.send(page)

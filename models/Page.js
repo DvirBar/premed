@@ -8,7 +8,7 @@ const PageSchema = new Schema({
         required: [true, 'Name is required'],
         unique: true
     },
-    subPages: [{
+    subpages: [{
         name: {
             type: String
             // Unique only for own page

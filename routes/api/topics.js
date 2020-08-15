@@ -47,6 +47,7 @@ router.post('/', [auth,authAdmin], (req, res, next) => {
         name,
         description,
         url,
+        parentId,
         pageId
     } = req.body;
 
@@ -59,18 +60,26 @@ router.post('/', [auth,authAdmin], (req, res, next) => {
         .then(page => {
             if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
 
-            newTopic = new Topic({
-                name: name,
-                description: description,
-                url: url,
-                page: pageId
-            })
+            Topic.findById(parentId)
+                 .then(topic => {
+                    if(!topic) 
+                        return res.status(TopicNotExist.status).send(TopicNotExist.msg)
 
-            newTopic.save()
-                    .then(topic => {
-                        return res.send(topic)
+                    newTopic = new Topic({
+                        name: name,
+                        description: description,
+                        url: url,
+                        parent: parentId,
+                        page: pageId
                     })
-                    .catch(next)
+        
+                    newTopic.save()
+                            .then(topic => {
+                                return res.send(topic)
+                            })
+                            .catch(next)
+                    })
+                    .catch(next);
         })
         .catch(next)
 })
@@ -83,35 +92,44 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         name,
         description,
         url,
+        parentId,
         pageId } = req.body;
 
     res.locals.model = modelName;
 
     const topicId = req.params.id;
-    const userId = res.locals.user.id;
     
     if(!pageId) return res.status(PageRequired.status).send(PageRequired.msg)
 
     Topic.findById(topicId)
          .then(topic => {
-            if(!topic) return res.status(TopicNotExist.status).send(TopicNotExist.msg)
-        
-            Page.findById(pageId)
-                .then(page => {
-                    if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
+            if(!topic) 
+                return res.status(TopicNotExist.status).send(TopicNotExist.msg)
+            
+            Topic.findById(parentId)
+                 .then(parentTopic => {
+                    if(!parentTopic)
+                      return res.status(TopicNotExist.status).send(TopicNotExist.msg)
+                    
+                      Page.findById(pageId)
+                        .then(page => {
+                            if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
 
-                    topic.name = name;
-                    topic.description = description;
-                    topic.url = url,
-                    topic.page = pageId
+                            topic.name = name;
+                            topic.description = description;
+                            topic.url = url,
+                            topic.parent = parentId
+                            topic.page = pageId
 
-                    topic.save()
-                         .then(topic => {
-                             return res.send(topic);
-                         })
-                         .catch(next);
-                })
-                .catch(next);
+                            topic.save()
+                                .then(topic => {
+                                    return res.send(topic);
+                                })
+                                .catch(next);
+                        })
+                        .catch(next);
+                 })
+                 .catch(next);
          })
          .catch(next);
 })
@@ -279,6 +297,7 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
         .then(topic => {
             if(!topic) return res.status(TopicNotExist.status).send(TopicNotExist.msg);
 
+            // Delete ref from children
             topic.remove()
                  .then(() => {
                      res.send(SuccessDelete.msg)
