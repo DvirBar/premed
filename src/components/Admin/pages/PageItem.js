@@ -4,6 +4,9 @@ import SubpageItem from './SubpageItem'
 import DropdownMenu from '../../common/DropdownMenu';
 import Modal from '../../layout/Modal';
 import AddSubPage from './AddSubPage';
+import EditPage from './EditPage';
+import VerifyDelete from '../../common/VerifyDelete';
+import { deletePage } from '../../../redux/actions/pages';
 
 function PageItem({ subpages, page }) {
     const [displayMenu, setDisplayMenu] = useState(false);
@@ -34,11 +37,11 @@ function PageItem({ subpages, page }) {
         },
         {
             name: "ערוך עמוד",
-            action: () => console.log("edit page")
+            action: () => toggleEdit(true)
         },
         {
             name: "מחק עמוד",
-            action: () => console.log("delete page")
+            action: () => toggleVer(true)
         }
     ]
 
@@ -75,7 +78,19 @@ function PageItem({ subpages, page }) {
             title={"הוסף דף"}>
                 <AddSubPage 
                 pageId={page._id} />
-            </Modal>       
+            </Modal>
+            <Modal
+            display={displayEdit}
+            toggleModal={toggleEdit}
+            title={"ערוך עמוד"}>
+                <EditPage
+                page={page} />
+            </Modal>   
+            <VerifyDelete 
+            callback={deletePage}
+            value={page._id}
+            display={displayVer}
+            toggleModal={toggleVer} />
         </div>
     )
 }

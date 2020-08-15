@@ -143,7 +143,7 @@ export const editSubpage = (pageId, subpageId, data) => dispatch => {
          .catch(err => dispatch(getError(err)))
 }
 
-export const deletesubpage = (pageId, subpageId) => dispatch => {
+export const deleteSubpage = (pageId, subpageId) => dispatch => {
 
     axios.put(`api/pages/${pageId}/subpage/${subpageId}/remove`)
          .then(res => dispatch(subpageDelete(res.data)))
