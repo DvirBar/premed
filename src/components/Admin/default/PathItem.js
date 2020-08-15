@@ -54,11 +54,11 @@ function PathItem(props) {
                     onClick={() => setShowMenu(!showMenu)}
                     >more_vert</i>
                )}
-
+{/* 
                 <DropdownMenu show={showMenu} setShow={setShowMenu}>
                        <li onClick={enterEditMode}>ערוך מסלול</li>
                        <li onClick={openVerifyDelete}>מחק מסלול</li>
-                </DropdownMenu>
+                </DropdownMenu> */}
                 <VerifyDelete 
                 display={showVerifyDelete} 
                 setDisplay={setShowVerifyDelete}

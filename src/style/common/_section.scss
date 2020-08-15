@@ -1,0 +1,31 @@
+.section-header {
+    padding: 1rem;
+    font-size: 2rem;
+    color: #646464;
+    border-bottom: 0.5px solid #aaa;
+    
+    .section-title {
+        transition: opacity 0.25s ease;
+        cursor: pointer;
+        width: 100%;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.section-content {
+    max-height: 0;
+    transition: max-height 0.25s ease;
+    overflow: hidden;
+
+    &.open {
+        max-height: 100rem;
+        transition: max-height 0.25s ease;
+    }
+
+    &-holder {
+        padding: 2rem;
+    }
+}

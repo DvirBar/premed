@@ -1,19 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-function DropdownMenu(props) {
-    const [show, setShow] = [props.show, props.setShow]
+function DropdownMenu({ display, toggleMenu, options}) {
+
+    const clickItem = callback => {
+        toggleMenu(false)
+        callback()
+    }
 
     return (
-        <Fragment>
-            {show &&
-                <ul 
-                className="dropdown-menu"
-                onBlur={() => setShow(false)}
-                >
-                    {props.children}
-                </ul>
-            }
-        </Fragment>
+        <ul className={display
+            ? "dropdown-menu open"
+            : "dropdown-menu"}>
+            {options.map(option => 
+                <li onClick={() => clickItem(option.action)}>
+                    {option.name}
+                </li>
+            )}
+        </ul>
     )
 }
 

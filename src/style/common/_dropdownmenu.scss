@@ -1,18 +1,26 @@
 .dropdown-menu {
-    box-sizing: border-box;
+    padding: 0;
     z-index: 2;
     box-shadow: $default-shadow;
-    width: 120px;
+    width: 12rem;
     color: $main-color;
-    padding: 0;
-    list-style-type: none;
+    background-color: #fff;
+    font-size: 1.8rem;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.25s ease-in;
+
+    &.open {
+        max-height: 15rem;
+        transition: max-height 0.25s ease-out;
+    }
 
     li {
         cursor: pointer;
         padding: 5px;
 
         &:hover {
-            background-color: #c5c5c5;
+            background-color: #ececec;
         }
     }
 }

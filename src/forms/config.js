@@ -12,19 +12,23 @@ export const config = {
         },
 
         name: {
-            isRequired: { message: 'יש למלא שם' },
+            isRequired: { message: 'יש להזין שם' },
         },
 
         title: {
-            isRequired: { message: 'יש לבחור כותרת'}
+            isRequired: { message: 'יש להזין כותרת'}
         },
 
         groupId: {
-            isRequired: { message: 'יש לבחור קבוצה'}
+            isRequired: { message: 'יש להזין קבוצה'}
+        },
+
+        path: {
+            isRequired: { message: 'יש להזין מסלול' }
         },
         
-        path: {
-            isRequired: { message: 'יש לבחור מסלול' }
+        url: {
+            isRequired: { message: 'יש להזין כתובת'}
         }
     }
 }

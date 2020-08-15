@@ -1,0 +1,26 @@
+.block-title {
+    padding: 1.5rem;
+    font-size: 2.8rem;
+    position: relative;
+    
+    .page-menu {
+        display: none;
+        position: absolute;
+        font-size: 2.8rem;
+        top: 18px;
+    }
+
+    .page-title {
+        color: $main-color;
+    }
+
+    &:hover > .page-menu {
+        display: inline;
+    }
+}
+
+.block-content {
+    padding: 2rem;
+    background-color: #f0f0f0;
+    border-radius: 0.5rem;
+}

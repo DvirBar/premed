@@ -37,10 +37,10 @@ function AncItem(props) {
             <p className="anc-date">{moment(anc.date).format("פורסם ביום dddd ה-D בMMMM, YYYY")}</p>
             <p className="anc-content">{anc.content}</p>
 
-            <DropdownMenu show={showMenu} setShow={setShowMenu}>
+            {/* <DropdownMenu show={showMenu} setShow={setShowMenu}>
                 <li onClick={() => toggleModal(true)}>ערוך פרסום</li>
                 <li onClick={() => setShowVerifyDelete(true)}>מחק פרסום</li>
-            </DropdownMenu>
+            </DropdownMenu> */}
 
             <VerifyDelete 
                 display={showVerifyDelete} 
