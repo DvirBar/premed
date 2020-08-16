@@ -23,4 +23,20 @@
     padding: 2rem;
     background-color: #f0f0f0;
     border-radius: 0.5rem;
+    position: relative;
+
+    .section-header {
+        position: relative;
+
+        .subpage-menu {
+            display: none;
+            position: absolute;
+            font-size: 2.8rem;
+            top: 13px;
+        }
+
+        &:hover > .subpage-menu {
+            display: inline;
+        }
+    }
 }

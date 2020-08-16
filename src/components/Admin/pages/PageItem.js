@@ -47,18 +47,18 @@ function PageItem({ subpages, page }) {
 
     return (
         <div>
-            <p className="block-title" 
+            <div className="block-title" 
             onMouseLeave={() => toggleMenu(false)}>
                 <span className="page-title">{page.name}</span>
-                <span className="page-menu">
+                <div className="page-menu">
                     <i className="material-icons"
                     onClick={() => toggleMenu(!displayMenu)}>more_vert</i>
                     <DropdownMenu
                     display={displayMenu}
                     toggleMenu={toggleMenu}
                     options={options} />
-                </span>
-            </p>
+                </div>
+            </div>
 
             <div className="block-content">
                 {subpages.length !== 0
@@ -79,13 +79,15 @@ function PageItem({ subpages, page }) {
                 <AddSubPage 
                 pageId={page._id} />
             </Modal>
+
             <Modal
             display={displayEdit}
             toggleModal={toggleEdit}
             title={"ערוך עמוד"}>
                 <EditPage
                 page={page} />
-            </Modal>   
+            </Modal>  
+
             <VerifyDelete 
             callback={deletePage}
             value={page._id}

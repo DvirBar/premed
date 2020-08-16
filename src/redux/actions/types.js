@@ -68,3 +68,15 @@ export const SUBPAGE_ADD = 'SUBPAGE_ADD';
 export const SUBPAGE_UPDATE = 'SUBPAGE_EDIT';
 export const SUBPAGE_DELETE = 'SUBPAGE_DELETE';
 
+// Topics
+export const TOPIC_LOADING = 'TOPIC_LOADING';
+export const TOPIC_SUCCESS = 'TOPIC_SUCCESS';
+export const TOPIC_ERROR = 'TOPIC_ERROR';
+export const TOPIC_ADD = 'TOPIC_ADD';
+export const TOPIC_UPDATE = 'TOPIC_UPDATE';
+export const TOPIC_DELETE = 'TOPIC_DELETE';
+export const ITEM_ADD = 'ITEM_ADD';
+export const ITEM_UPDATE = 'ITEM_EDIT';
+export const ITEM_TOGGLE_LIKE = 'ITEM_TOGGLE_LIKE';
+export const ITEM_DELETE = 'ITEM_DELETE';
+
