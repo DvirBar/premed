@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import Modal from '../layout/Modal';
 
-function VerifyDelete({ callback, value, display, toggleModal }) {
+function VerifyDelete({ callback, values, display, toggleModal }) {
     const dispatch = useDispatch()
 
     const commitCallback = () => {
-        dispatch(callback(value));
+        dispatch(callback(...values));
         toggleModal(false);
     }
 
@@ -40,7 +40,7 @@ function VerifyDelete({ callback, value, display, toggleModal }) {
 
 VerifyDelete.propTypes ={
     callback: PropTypes.func.isRequired,
-    values: PropTypes.string.isRequired,
+    values: PropTypes.array.isRequired,
     display: PropTypes.bool.isRequired,
     toggleModal: PropTypes.func.isRequired
 }

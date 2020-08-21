@@ -1,0 +1,33 @@
+.topics-list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+
+    .topic-item {
+        background-color: #f9f9f9;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        cursor: pointer;
+        box-shadow: $default-shadow;
+        transition: box-shadow 0.5s ease;
+
+        &:hover {
+            box-shadow: $default-shadow-hover;
+        }
+    }
+}
+
+.topic-content {
+    .topic-headers {
+        display: flex;
+        align-items: center;
+
+        & > * {
+            margin-left: 1rem;
+        }
+    }
+    .form-edit-topic {
+        border-bottom: 1px solid #ddd;
+    }
+}

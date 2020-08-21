@@ -88,24 +88,25 @@ function AddStep({ path, steps }) {
         }, [siblings])
 
         // Selected option
-        useEffect(() => { // Binds the values to selected option
-            const prev = values.prevId
-    
-            if(prev) {
-                const option = prevOptions.find(option => 
-                    option.value === prev)
-    
-                setSelPrev({
-                    name: option.name,
-                    value: prev
-                })}
-            // if selected prev is undefined
-            else
-                setSelPrev(prevOptions[0])
-        }, [values, prevOptions])
-        useEffect(() => {
-            console.log(values)
-        }, [values])
+    useEffect(() => { // Binds the values to selected option
+        const prev = values.prevId
+
+        if(prev) {
+            const option = prevOptions.find(option => 
+                option.value === prev)
+
+            setSelPrev({
+                name: option.name,
+                value: prev
+            })}
+        // if selected prev is undefined
+        else
+            setSelPrev(prevOptions[0])
+    }, [values, prevOptions])
+        
+    useEffect(() => {
+        console.log(values);
+    }, [values])
 
     return (
         <Fragment>

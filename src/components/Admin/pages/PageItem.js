@@ -64,6 +64,7 @@ function PageItem({ subpages, page }) {
                 {subpages.length !== 0
                 ?   subpages.map(subpage => (
                         <SubpageItem
+                        pageId={page._id}
                         subpage={subpage} />
                     ))
             
@@ -90,7 +91,7 @@ function PageItem({ subpages, page }) {
 
             <VerifyDelete 
             callback={deletePage}
-            value={page._id}
+            values={[page._id]}
             display={displayVer}
             toggleModal={toggleVer} />
         </div>

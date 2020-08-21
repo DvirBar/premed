@@ -33,10 +33,15 @@ const useForm = (callback, defaultValues, ...params) => {
     }
 
     const handleChange = event => {
-        if(typeof event.persist !== "undefined")
-            event.persist();
+        if(event.target) {
+            if(typeof event.persist !== "undefined")
+                event.persist();
 
-        setValues(values => ({...values, [event.target.name]: event.target.value}));
+            setValues(values => ({...values, [event.target.name]: event.target.value}));
+        }
+        else {
+            setValues(values => ({...values, [event.name]: event.value}));
+        }
     }
 
     const initValues = () => {

@@ -8,15 +8,12 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
         setDisplay(!display)
     }
 
-    const event = new CustomEvent('changeSelected', {
-         target: { name: name, value: selected.value }
-        })
-
     const selectData = option => { // Assign selected option and close dropdown
-        dispatchEvent(event);
-        event.target.name = name;
-        event.target.value = option.value;
-        onChange(event)
+        const data = {
+            name: name,
+            value: option.value
+        }    
+        onChange(data)
         setDisplay(false)
     }
 

@@ -80,3 +80,19 @@ input[type=search] {
     outline: none;
     padding: 5px;
 }
+
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+    resize: none;
+    border: none;
+    border-radius: 1rem;
+    outline: none;
+    padding: 1rem;
+    color: #aaa;
+    transition: color 0.5s ease;
+    
+    &:focus {
+        color: #000;
+    }
+}

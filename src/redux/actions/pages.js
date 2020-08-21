@@ -138,14 +138,14 @@ export const editSubpage = (pageId, subpageId, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
-    axios.put(`api/pages/${pageId}/subpage/${subpageId}`, body)
+    axios.put(`api/pages/${pageId}/${subpageId}`, body)
          .then(res => dispatch(subpageUpdate(res.data)))
          .catch(err => dispatch(getError(err)))
 }
 
 export const deleteSubpage = (pageId, subpageId) => dispatch => {
 
-    axios.put(`api/pages/${pageId}/subpage/${subpageId}/remove`)
+    axios.put(`api/pages/${pageId}/${subpageId}/remove`)
          .then(res => dispatch(subpageDelete(res.data)))
          .catch(err => dispatch(getError(err)))
 }

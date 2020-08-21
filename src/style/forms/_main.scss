@@ -3,3 +3,12 @@
     color: #af2d2d;
     font-weight: 500;
 }
+
+.form-buttons {
+    display: flex;
+    align-items: center;
+
+    & > * {
+        margin-left: 0.1rem;
+    }
+}

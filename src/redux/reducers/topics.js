@@ -5,10 +5,10 @@ import {
     TOPIC_ADD,
     TOPIC_UPDATE,
     TOPIC_DELETE,
-    ITEM_ADD,
-    ITEM_UPDATE,
-    ITEM_TOGGLE_LIKE,
-    ITEM_DELETE
+    TOPIC_ITEM_ADD,
+    TOPIC_ITEM_UPDATE,
+    TOPIC_ITEM_TOGGLE_LIKE,
+    TOPIC_ITEM_DELETE
 } from '../actions/types';
 
 const initialState = {
@@ -47,22 +47,22 @@ export default function(state = initialState, action) {
             }
 
         case TOPIC_UPDATE:
-        case ITEM_ADD:
-        case ITEM_UPDATE:
-        case ITEM_TOGGLE_LIKE:
-        case ITEM_DELETE:
+        case TOPIC_ITEM_ADD:
+        case TOPIC_ITEM_UPDATE:
+        case TOPIC_ITEM_TOGGLE_LIKE:
+        case TOPIC_ITEM_DELETE:
             return {
                 ...state,
                 loading: false,
                 topics: state.topics.map(topic => 
-                    topic.id === payload.id ? topic = payload : topic)
+                    topic._id === payload._id ? topic = payload : topic)
             }
 
         case TOPIC_DELETE: 
             return {
                 ...state,
                 loading: false,
-                topics: state.topics.filter(topic => topic.id !== payload)
+                topics: state.topics.filter(topic => topic._id !== payload)
             }
 
         default: 

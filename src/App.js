@@ -8,6 +8,7 @@ import { getUser } from './redux/actions/auth';
 import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
+import { getTopics } from './redux/actions/topics';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
@@ -21,6 +22,7 @@ function App() {
     dispatch(getPaths());
     dispatch(getSteps());
     dispatch(getPages());
+    dispatch(getTopics());
   }, []);
 
   moment.locale('he');

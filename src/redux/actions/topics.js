@@ -5,10 +5,10 @@ import {
     TOPIC_ADD,
     TOPIC_UPDATE,
     TOPIC_DELETE,
-    ITEM_ADD,
-    ITEM_UPDATE,
-    ITEM_DELETE,
-    ITEM_TOGGLE_LIKE
+    TOPIC_ITEM_ADD,
+    TOPIC_ITEM_UPDATE,
+    TOPIC_ITEM_TOGGLE_LIKE,
+    TOPIC_ITEM_DELETE
 } from '../actions/types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -56,28 +56,28 @@ export const topicDelete = id => {
 
 export const itemAdd = topic => {
     return {
-        type: ITEM_ADD,
+        type: TOPIC_ITEM_ADD,
         payload: topic
     }
 }
 
 export const itemUpdate = topic => {
     return {
-        type: ITEM_UPDATE,
+        type: TOPIC_ITEM_UPDATE,
         payload: topic
     }
 }
 
 export const itemToggleLike = topic => {
     return {
-        type: ITEM_TOGGLE_LIKE,
+        type: TOPIC_ITEM_TOGGLE_LIKE,
         payload: topic
     }
 }
 
 export const itemDelete = topic => {
     return {
-        type: ITEM_DELETE,
+        type: TOPIC_ITEM_DELETE,
         payload: topic
     }
 }
@@ -107,6 +107,7 @@ export const addTopic = data => dispatch => {
 export const editTopic = (id, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
+    console.log(body)
 
     axios.put(`api/topics/${id}`, body)
          .then(res => dispatch(topicUpdate(res.data)))

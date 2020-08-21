@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import useForm from '../../../forms/useForm';
-import { editPage } from '../../../redux/actions/pages';
+import { editSubpage } from '../../../redux/actions/pages';
 import FormInput from '../../common/FormInput';
 
-function EditPage({ page }) {
+function EditSubpage({ pageId, subpage }) {
     const [defaultValues, setDefaultValues] = useState({
-        name: page.name,
-        url: page.url
+        name: subpage.name,
+        url: subpage.url
     })
 
     const {
@@ -14,8 +15,8 @@ function EditPage({ page }) {
         handleSubmit,
         values,
         errors
-    } = useForm(editPage, defaultValues, page._id)
-    
+    } = useForm(editSubpage, defaultValues, pageId, subpage._id)
+
     return (
         <form onSubmit={handleSubmit} noValidate>
             <FormInput
@@ -39,4 +40,9 @@ function EditPage({ page }) {
     )
 }
 
-export default EditPage
+EditSubpage.propTypes = {
+    pageId: PropTypes.object.isRequired,
+    subpage: PropTypes.object.isRequired
+}
+
+export default EditSubpage
