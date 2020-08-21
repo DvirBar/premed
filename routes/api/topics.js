@@ -11,9 +11,9 @@ const modelName = 'topic';
 const topicMessages = require('../../messages/topics');
 const pageMessages = require('../../messages/pages');
 const authAdmin = require('../../middleware/authAdmin');
-const { SuccessDelete, PageRequired, ItemDetailsRequired, 
+const { SuccessDelete, SubpageRequired, ItemDetailsRequired, 
     LinkDetailsRequired, TopicNotExist, ItemNotExist } = topicMessages;
-const { PageNotExist } = pageMessages;
+const { PageNotExist, SubpageNotExist } = pageMessages;
 
 // @route   GET api/topics/:id
 // @desc    Get topic by id
@@ -48,21 +48,21 @@ router.post('/', [auth,authAdmin], (req, res, next) => {
         description,
         url,
         parentId,
-        pageId
+        subpageId
     } = req.body;
 
     res.locals.model = modelName;
 
-    if(!pageId) return res.status(PageRequired.status).send(PageRequired.msg)
+    if(!subpageId) return res.status(SubpageRequired.status).send(SubpageRequired.msg)
 
-    // Check that page assigned exists
-    Page.findById(pageId)
-        .then(page => {
-            if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
+    // Check that subpage assigned exists
+    Page.find({ subpages: {_id: subpageId }})
+        .then(subpage => {
+            if(!subpage) return res.status(SubpageNotExist.status).send(SubpageNotExist.msg)
 
             Topic.findById(parentId)
                  .then(topic => {
-                    if(!topic) 
+                    if(!topic && parentId) 
                         return res.status(TopicNotExist.status).send(TopicNotExist.msg)
 
                     newTopic = new Topic({
@@ -70,7 +70,7 @@ router.post('/', [auth,authAdmin], (req, res, next) => {
                         description: description,
                         url: url,
                         parent: parentId,
-                        page: pageId
+                        subpage: subpageId
                     })
         
                     newTopic.save()
@@ -92,14 +92,11 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         name,
         description,
         url,
-        parentId,
-        pageId } = req.body;
+        parentId } = req.body;
 
     res.locals.model = modelName;
 
     const topicId = req.params.id;
-    
-    if(!pageId) return res.status(PageRequired.status).send(PageRequired.msg)
 
     Topic.findById(topicId)
          .then(topic => {
@@ -108,24 +105,17 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             
             Topic.findById(parentId)
                  .then(parentTopic => {
-                    if(!parentTopic)
+                    if(!parentTopic && parentId)
                       return res.status(TopicNotExist.status).send(TopicNotExist.msg)
-                    
-                      Page.findById(pageId)
-                        .then(page => {
-                            if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
+              
+                    topic.name = name;
+                    topic.description = description;
+                    topic.url = url,
+                    topic.parent = parentId
 
-                            topic.name = name;
-                            topic.description = description;
-                            topic.url = url,
-                            topic.parent = parentId
-                            topic.page = pageId
-
-                            topic.save()
-                                .then(topic => {
-                                    return res.send(topic);
-                                })
-                                .catch(next);
+                    topic.save()
+                        .then(topic => {
+                            return res.send(topic);
                         })
                         .catch(next);
                  })
