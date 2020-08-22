@@ -11,13 +11,17 @@ function TopicContent({ topic, topics }) {
     const [parentOptions, setParentOptions] = useState([])
     const [selParent, setSelParent] = useState({})
     const [showVer, setShowVer] = useState(false)
-    
-    const [defaultValues, setDefaultValues] = useState({
-        name: topic.name,
-        description: topic.description,
-        url: topic.url,
-        parentId: topic.parent
-    })
+    const [dropDefault, setDropDefault] = useState({})
+    const [defaultValues, setDefaultValues] = useState({})
+
+    useEffect(() => {
+        setDefaultValues({
+            name: topic.name,
+            description: topic.description,
+            url: topic.url,
+            parentId: topic.parent
+        })
+    }, [topic, topics])
 
     const {
         handleChange,
@@ -28,30 +32,21 @@ function TopicContent({ topic, topics }) {
 
     // Parent options 
     useEffect(() => {
+        const filtTopics = topics.filter(curTopic => 
+            curTopic._id !== topic._id)
+
         setParentOptions([{name: 'ללא שיוך', value: undefined}, 
-        ...topics.map(topic => ({
+        ...filtTopics.map(topic => ({
             name: topic.name,
             value: topic._id
         }))])
-    }, [topics])
+    }, [topics, topic])
 
     // Selected option
-    useEffect(() => { // Binds the values to selected option
-        const parent = values.parentId
-
-        if(parent) {
-            const option = parentOptions.find(option => 
-                option.value === parent)
-
-            setSelParent({
-                name: option.name,
-                value: parent
-            })}
-
-        // if selected parent is undefined
-        else
-            setSelParent(parentOptions[0])
-    }, [values, parentOptions])
+    useEffect(() => { // Binds values to selected option
+        setDropDefault(parentOptions.find(option => 
+            option.value === topic.parent))
+    }, [topic, parentOptions])
 
     const toggleVer = open => {
         setShowVer(open)
@@ -82,8 +77,8 @@ function TopicContent({ topic, topics }) {
 
                     {parentOptions.length !== 0 && selParent &&
                         <Dropdown
-                        selected={selParent}
                         options={parentOptions}
+                        defaultOption={dropDefault}
                         name={"parentId"}
                         title={"שייך ל"}
                         onChange={handleChange}

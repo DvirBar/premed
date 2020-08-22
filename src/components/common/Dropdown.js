@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Dropdown = ({ selected, options, name, title, onChange }) => {
+const Dropdown = ({ options, defaultOption, name, title, onChange, placeholder }) => {
     const [display, setDisplay] = useState(false);
-
+    const [selected, setSelected] = useState({})
     const toggleDrop = () => {
         setDisplay(!display)
     }
 
+    // Set initial dropdown values, only is selected is empty object
+    useEffect(() => { 
+        if(Object.keys(selected).length === 0)
+            setSelected(placeholder || defaultOption || options[0])
+    }, [placeholder, defaultOption, options])
+
     const selectData = option => { // Assign selected option and close dropdown
+        setSelected(option)
         const data = {
             name: name,
             value: option.value
@@ -32,16 +39,17 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
                 <span className="dropdown-toggler">
                     <span className={display ? "arrow arrow-down" : "arrow"}></span>
                 </span>
-                <span className="dropdown-selected">{selected.name || ''}</span>
+                <span className="dropdown-selected">{selected?.name || ''}</span>
             </p>
             <ul 
             style={display ? paddingSelect : defaultStyle}
             className="dropdown-select" 
             id={display && "open"}>
             {options.map(option => 
-                <li 
+                <li
+                key={option.value}
                 onClick={() => selectData(option)}
-                id={option.value === selected.value ? "selected" : ""}>
+                id={selected && option.value === selected.value ? "selected" : ""}>
                     <span>{option.name}</span>
                     <i className="material-icons">done</i>
                 </li>
@@ -52,11 +60,12 @@ const Dropdown = ({ selected, options, name, title, onChange }) => {
 }
 
 Dropdown.propTypes = {
-    selected: PropTypes.object.isRequired,
     options: PropTypes.array.isRequired,
+    defaultOption: PropTypes.object,
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    placeholder: PropTypes.string
 }
 
 export default Dropdown

@@ -2,8 +2,12 @@ import React, { Fragment, useEffect, useState } from 'react'
 import TopicItem from './TopicItem'
 
 function TopicList({ topics, selTopic, selectTopic }) {
-    const topTopics = topics.filter(topic => !topic.parent)
+    const [topTopics, setTopTopics] = useState([])
 
+    useEffect(() => {
+        setTopTopics(topics.filter(topic => !topic.parent))
+    }, [topics])
+    
     if(topics.length === 0)
         return (
             <div className="no-resource-error">

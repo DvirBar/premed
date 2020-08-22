@@ -10,10 +10,8 @@ function AddStep({ path, steps }) {
     const [defaultValues, setDefaultValues] = useState({})
     const [displayModal, setDisplayModal] = useState(false)
     const [parentOptions, setParentOptions] = useState([])
-    const [selParent, setSelParent] = useState({})
     const [siblings, setSiblings] = useState([])
     const [prevOptions, setPrevOptions] = useState([])
-    const [selPrev, setSelPrev] = useState({})
 
     const title = "צור שלב עבור " + path.name;
 
@@ -52,31 +50,13 @@ function AddStep({ path, steps }) {
         }))])
     }, [steps])
 
-        // Selected option
-    useEffect(() => { // Binds the values to selected option
-        const parent = values.parentId
-
-        if(parent) {
-            const option = parentOptions.find(option => 
-                option.value === parent)
-
-            setSelParent({
-                name: option.name,
-                value: parent
-            })}
-        // if selected parent is undefined
-        else
-            setSelParent(parentOptions[0])
-    }, [values, parentOptions])
-
-
     //// Prev 
         // Get siblings
     useEffect(() => {
-        if(selParent)
+        if(values) 
             setSiblings(steps.filter(step => 
-            step.parent === selParent.value))
-    }, [selParent, steps]) 
+            step.parent === values.parentId))
+    }, [values.parentId, steps]) 
 
         // Dropdown options
     useEffect(() => {
@@ -86,24 +66,7 @@ function AddStep({ path, steps }) {
                 value: step._id
             }))])
         }, [siblings])
-
-        // Selected option
-    useEffect(() => { // Binds the values to selected option
-        const prev = values.prevId
-
-        if(prev) {
-            const option = prevOptions.find(option => 
-                option.value === prev)
-
-            setSelPrev({
-                name: option.name,
-                value: prev
-            })}
-        // if selected prev is undefined
-        else
-            setSelPrev(prevOptions[0])
-    }, [values, prevOptions])
-        
+       
     useEffect(() => {
         console.log(values);
     }, [values])
@@ -126,9 +89,8 @@ function AddStep({ path, steps }) {
                     onChange={handleChange}
                     error={errors.name} />
 
-                    {parentOptions.length !== 0 && selParent &&
+                    {parentOptions.length !== 0 && 
                         <Dropdown
-                        selected={selParent}
                         options={parentOptions}
                         name={"parentId"}
                         title={"שייך ל"}
@@ -136,9 +98,8 @@ function AddStep({ path, steps }) {
                         />
                     }
                         
-                    {siblings.length !== 0 && selPrev && 
+                    {siblings.length !== 0 && 
                         <Dropdown
-                        selected={selPrev}
                         options={prevOptions}
                         name={"prevId"}
                         title={"שלב קודם"}

@@ -4,9 +4,10 @@ import useForm from '../../../forms/useForm';
 import { addTopic } from '../../../redux/actions/topics';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
+import Modal from '../../layout/Modal';
 
 
-function AddTopic({ subpageId, topics }) {
+function AddTopic({ subpageId, topics, display, toggle, title }) {
     const [parentOptions, setParentOptions] = useState([])
     const [selParent, setSelParent] = useState({})
     
@@ -52,40 +53,45 @@ function AddTopic({ subpageId, topics }) {
     }, [values, parentOptions])
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            <FormInput
-            label={"שם"}
-            type={"text"}
-            name={"name"}
-            value={values.name}
-            onChange={handleChange}
-            error={errors.name} />
-
-            <FormInput
-            label={"כתובת"}
-            type={"text"}
-            name={"url"}
-            value={values.url}
-            onChange={handleChange}
-            error={errors.url} />
-            
-            {parentOptions.length !== 0 && selParent &&
-                <Dropdown
-                selected={selParent}
-                options={parentOptions}
-                name={"parentId"}
-                title={"שייך ל"}
+        <Modal display={display} toggleModal={toggle} title={title}>
+            <form onSubmit={handleSubmit} noValidate>
+                <FormInput
+                label={"שם"}
+                type={"text"}
+                name={"name"}
+                value={values.name}
                 onChange={handleChange}
-                />
-            }
-            <button type="submit">צור</button>
-        </form>
+                error={errors.name} />
+
+                <FormInput
+                label={"כתובת"}
+                type={"text"}
+                name={"url"}
+                value={values.url}
+                onChange={handleChange}
+                error={errors.url} />
+                
+                {parentOptions.length !== 0 && selParent &&
+                    <Dropdown
+                    selected={selParent}
+                    options={parentOptions}
+                    name={"parentId"}
+                    title={"שייך ל"}
+                    onChange={handleChange}
+                    />
+                }
+                <button type="submit">צור</button>
+            </form>
+        </Modal>
     )
 }
 
 AddTopic.propTypes = {
     pageId: PropTypes.string.isRequired,
-    topics: PropTypes.array.isRequired
+    topics: PropTypes.array.isRequired,
+    display: PropTypes.bool.isRequired,
+    toggle: PropTypes.func.isRequired,
+    title: PropTypes.string
 }
 
 export default AddTopic

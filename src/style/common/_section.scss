@@ -19,9 +19,10 @@
     max-height: 0;
     transition: max-height 0.25s ease;
     overflow: hidden;
+    position: relative;
 
     &.open {
         max-height: 100rem;
-        transition: max-height 0.25s ease;
+        transition: max-height 0.25s linear;
     }
 }

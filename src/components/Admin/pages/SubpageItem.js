@@ -69,21 +69,20 @@ function SubpageItem({ pageId, subpage }) {
                     options={options} />
                 </div>
             </div>
-            <div className={displayMenu
+            <div className={displaySection
                 ? "section-content open" 
                 : "section-content"}>
                 <div className="section-content-holder">
                     <SubpageTopics topics={topics} />
                 </div>
             </div>
-            <Modal
+            
+            <AddTopic
+            subpageId={subpage._id}
+            topics={topics} 
             display={displayAdd}
-            toggleModal={toggleAdd}
-            title={"הוסף נושא"}>
-                <AddTopic
-                subpageId={subpage._id}
-                topics={topics} />
-            </Modal>  
+            toggle={toggleAdd}
+            title={"הוסף נושא"}/> 
 
             <Modal
             display={displayEdit}

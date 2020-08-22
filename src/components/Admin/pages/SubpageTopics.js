@@ -7,8 +7,10 @@ function SubpageTopics({ topics }) {
 
     const selectTopic = topic => {
         setSelTopic(topic);
-        console.log(topic)
     }
+
+    if(topics.length === 0)
+        return <div className="no-resource-error">אין נושאים</div>
 
     return (
         <div>
