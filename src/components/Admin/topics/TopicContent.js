@@ -54,7 +54,7 @@ function TopicContent({ topic, topics }) {
 
     return (
         <div className="topic-content">
-            <form 
+                  <form 
             onSubmit={handleSubmit}
             className="form-edit-topic" 
             noValidate>

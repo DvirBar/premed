@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../../common/DropdownMenu';
@@ -17,9 +17,14 @@ function SubpageItem({ pageId, subpage }) {
     const [displayEdit, setDisplayEdit] = useState(false);
     const [displayVer, setDisplayVer] = useState(false)
 
-    const topics = useSelector(state => 
-        state.topics.topics.filter(topic => topic.subpage === subpage._id))
-    const loadTopics =  useSelector(state => state.topics.loadTopics)
+    const [topics, setTopics] = useState([])
+    const selTopics = useSelector(state => state.topics)
+    const loadTopics = selTopics.loading;
+
+    useEffect(() => { // Bind selector to local state
+        setTopics(selTopics.topics.filter(topic => 
+            topic.subpage === subpage._id))
+    }, [selTopics])
 
     const toggleMenu = open => {
         setDisplayMenu(open)
@@ -73,7 +78,9 @@ function SubpageItem({ pageId, subpage }) {
                 ? "section-content open" 
                 : "section-content"}>
                 <div className="section-content-holder">
-                    <SubpageTopics topics={topics} />
+                    <SubpageTopics 
+                    loading={loadTopics}
+                    topics={topics} />
                 </div>
             </div>
             

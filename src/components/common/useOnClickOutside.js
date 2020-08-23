@@ -10,10 +10,12 @@ function useOnClickOutside(ref, callback) {
             callback(event);
         };
 
+        // For mice
         document.addEventListener('mousedown', listener);
-        document.addEventListener('touchstart', listener)
+        // For touch screens
+        document.addEventListener('touchstart', listener); 
         
-        return () => { // cleanup
+        return () => { // Cleanup
             document.removeEventListener('mousedown', listener)
             document.removeEventListener('touchstart', listener)
         }

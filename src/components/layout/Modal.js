@@ -19,10 +19,18 @@ const Modal = ({ display, toggleModal, children, title, subTitle })=> {
       document.body.scroll = "yes"
     }
 
+    const escapeModal = event => {
+      if(event.key === "Escape") {
+          toggleModal(false)
+      }
+    }
+
     return (
         <Fragment>
           {display && 
-            <div className="gen-modal">
+            <div 
+            className="gen-modal" 
+            onKeyPress={event => escapeModal(event)}>
               <div className="modal-box" ref={ref}>
                 <div className="modal-header">
                     <span class="close-modal" onClick={() => toggleModal(false)}>&times;</span><br/>

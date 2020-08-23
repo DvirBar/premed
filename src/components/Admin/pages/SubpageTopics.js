@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, Fragment} from 'react'
 import TopicList from '../topics/TopicList';
 import TopicContent from '../topics/TopicContent';
+import TopicItems from '../topics/TopicItems';
 
-function SubpageTopics({ topics }) {
+function SubpageTopics({ topics, loading }) {
     const [selTopic, setSelTopic] = useState({})
 
     const selectTopic = topic => {
@@ -20,9 +21,12 @@ function SubpageTopics({ topics }) {
             selectTopic={selectTopic} />
             
             {Object.keys(selTopic).length !== 0 &&
-                <TopicContent 
-                topic={selTopic}
-                topics={topics} />
+                <Fragment>
+                    <TopicContent 
+                    topic={selTopic}
+                    topics={topics} />
+                    <TopicItems topic={selTopic} />
+                </Fragment>
             }
         </div>
     )
