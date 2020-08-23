@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState, Fragment }from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { logout } from '../../redux/actions/auth';
 function Navbar({ paths }) {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
+    const pages = useSelector(state => state.pages.pages)
 
     const [display, setDisplay] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -62,28 +63,26 @@ function Navbar({ paths }) {
                             ))}
                         </ul>
                     </li>
-                    <li>
-                        <span>פסיכומטרי ובגרויות</span>
-                        <ul className="sub-menu">
-                            <li>
-                                <span>בגרויות</span>
-                            </li>
-                            <li>
-                                <span>פסיכומטרי</span>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span>מיונים אישיותיים</span>
-                        <ul className="sub-menu">
-                            <li>
-                                <span>מו"ר/מרק"ם</span>
-                            </li>
-                            <li>
-                                <span>מיוני באר שבע</span>
-                            </li>
-                        </ul>
-                    </li>
+                    <Fragment>
+                        {pages && pages.length !== 0 &&
+                            pages.map(page => (
+                                <li key={page._id}>
+                                    <span>
+                                        {page.name}
+                                    </span>
+                                    <ul className="sub-menu">
+                                    {page.subpages.map(subpage => (
+                                        <li key={subpage._id}>
+                                            <Link to={`/${page.url}/${subpage.url}`}>
+                                                <span>{subpage.name}</span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                    </ul>
+                                </li>
+                            ))
+                        }
+                    </Fragment>
                     <li>
                         <span>
                            נתונים  
