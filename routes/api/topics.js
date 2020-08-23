@@ -140,9 +140,6 @@ router.put('/:id/item', [auth, authAdmin], (req, res, next) => {
     if(!name)
         return res.status(ItemDetailsRequired.status).send(ItemDetailsRequired.msg)
 
-    if(link && (!link.name || !link.url))
-        return res.status(LinkDetailsRequired.status).send(LinkDetailsRequired.msg)
-    
     Topic.findById(topicId)
          .then(topic => {
              if(!topic) return res.status(TopicNotExist.status).send(TopicNotExist.msg)
@@ -181,9 +178,6 @@ router.put('/:id/:itemId', [auth, authAdmin], (req, res, next) => {
     if(!name)
         return res.status(ItemDetailsRequired.status).send(ItemDetailsRequired.msg)
 
-    if(link && (!link.name || !link.url))
-        return res.status(LinkDetailsRequired.status).send(LinkDetailsRequired.msg)
-
     Topic.findById(topicId)
          .then(topic => {
             if(!topic) return res.status(TopicNotExist.status).send(TopicNotExist.msg)
@@ -195,10 +189,7 @@ router.put('/:id/:itemId', [auth, authAdmin], (req, res, next) => {
             item.set({
                 name: name,
                 content: content,
-                link: {
-                    name: link.name,
-                    url: link.url
-                }
+                link: link
             })
 
             topic.save()

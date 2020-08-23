@@ -19,12 +19,7 @@ const TopicSchema = new Schema({
             type: String
         },
         link: {
-            name: {
-                type: String
-            },
-            url: {
-                type: String
-            }
+            type: String
         },
         likes: {
             count: {
