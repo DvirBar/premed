@@ -98,7 +98,7 @@ function AddStep({ path, steps }) {
                         />
                     }
                         
-                    {siblings.length !== 0 && 
+                    {prevOptions.length !== 0 && 
                         <Dropdown
                         options={prevOptions}
                         name={"prevId"}

@@ -44,24 +44,6 @@ function EditStep({ selStep, steps }) {
         }))])
     }, [steps])
 
-        // Selected option
-    useEffect(() => { // Binds the values to selected option
-        const parent = values.parentId
-
-        if(parent) {
-            const option = parentOptions.find(option => 
-                option.value === parent)
-
-            setSelParent({
-                name: option.name,
-                value: parent
-            })}
-        // if selected parent is undefined
-        else
-            setSelParent(parentOptions[0])
-    }, [values, parentOptions])
-
-
     //// Prev 
         // Get siblings
     useEffect(() => {
@@ -81,22 +63,6 @@ function EditStep({ selStep, steps }) {
             }))])
         }, [siblings])
 
-        // Selected option
-        useEffect(() => { // Binds the values to selected option
-            const prev = values.prevId
-    
-            if(prev && prevOptions) {
-                const prevStep = steps.find(step => 
-                    step._id === prev)
-    
-                setSelPrev({
-                    name: prevStep.name,
-                    value: prev
-                })}
-            // if selected prev is undefined
-            else
-                setSelPrev(prevOptions[0])
-        }, [values, steps])
         
     return (
         <form className="edit-step" onSubmit={handleSubmit} noValidate>
@@ -108,20 +74,22 @@ function EditStep({ selStep, steps }) {
             onChange={handleChange}
             error={errors.name} />
 
-            {parentOptions.length !== 0 && selParent &&
+            {parentOptions.length !== 0 &&
                 <Dropdown
-                selected={selParent}
                 options={parentOptions}
+                defaultOption={parentOptions.find(option => 
+                    values.parentId === option.value)}
                 name={"parentId"}
                 title={"שייך ל"}
                 onChange={handleChange}
                 />
             }
 
-            {siblings.length !== 0 && selPrev && 
+            {prevOptions.length !== 0 &&
                 <Dropdown
-                selected={selPrev}
                 options={prevOptions}
+                defaultOption={prevOptions.find(option => 
+                    values.prevId === option.value)}
                 name={"prevId"}
                 title={"שלב קודם"}
                 onChange={handleChange}

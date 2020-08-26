@@ -32,7 +32,7 @@ header {
 
     .logo {
         display: flex;
-        padding: 3rem;
+        padding: 2.5rem;
         background-color: $main-color;
         height: 10rem;
         width: 10rem;
@@ -43,6 +43,13 @@ header {
         margin-left: 2rem;
         align-content: center;
         justify-content: center;
+        fill: #fff;
+        color: #fff;
+
+        .logo-color {
+            fill: #fff;
+            color: #fff;   
+        }
     }
 
     .navbar {

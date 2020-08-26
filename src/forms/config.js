@@ -29,6 +29,10 @@ export const config = {
         
         url: {
             isRequired: { message: 'יש להזין כתובת'}
+        },
+
+        link: {
+            isRequired: { message: 'יש להזין קישור'}
         }
     }
 }

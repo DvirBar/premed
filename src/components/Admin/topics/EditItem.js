@@ -4,6 +4,7 @@ import useForm from '../../../forms/useForm';
 import { editItem, deleteItem } from '../../../redux/actions/topics';
 import { Link } from 'react-router-dom';
 import FormInput from '../../common/FormInput';
+import IconsSelect from './IconsSelect';
 import Modal from '../../layout/Modal';
 import VerifyDelete from '../../common/VerifyDelete';
 
@@ -11,7 +12,7 @@ function EditItem({ displayModal, toggleModal, topicId, item }) {
     const [displayVer, setDisplayVer] = useState(false)
     const [defaultValues, setDefaultValues] = useState({
         name: item.name,
-        content: item.content,
+        icon: item.icon,
         link: item.link
     })
 
@@ -40,14 +41,10 @@ function EditItem({ displayModal, toggleModal, topicId, item }) {
                 onChange={handleChange}
                 error={errors.name} />
 
-                <textarea
-                name="content"
-                cols="40" rows="5"
-                value={values.content}
-                onChange={handleChange}
-                error={errors.content}
-                placeholder="תוכן" />
-                
+                <IconsSelect 
+                value={values.icon}
+                onChange={handleChange} />
+
                 <div className="drive-link">
                     <FormInput
                     label={"קישור"}

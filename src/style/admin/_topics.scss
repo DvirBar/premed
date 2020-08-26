@@ -35,9 +35,9 @@
 .topic-items-list {
     padding: 2rem;
     margin: auto;
-    width: 66rem;
+    width: 69rem;
     display: grid;
-    grid-template-columns: repeat(2, 30rem);
+    grid-template-columns: repeat(3, 20rem);
     column-gap: 3rem;
     row-gap: 3rem;
     overflow-y: auto;
@@ -47,9 +47,8 @@
         background-color: #fff;
         box-shadow: $default-shadow;
         border-radius: 1rem;
-        height: 25rem;
+        height: 20rem;
         transition: box-shadow 0.5s ease;
-        display: flex;
         align-items: center;
         cursor: pointer;
 
@@ -60,31 +59,67 @@
         .item-title {
             text-align: center;
             color: #616161;
-            font-size: 2rem;
             border-bottom: 1rem;
         }
 
-        .item-title-only {
-            color: #616161;
-            font-size: 2.5rem;
-            text-align: center;
-            margin: auto;
-        }
-    }
+        .item-icon {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            bottom: 0;
+            height: 100%;
 
-    .drive-link {   
-        display: flex;
-        align-items: center;
-
-        a {
-            color: #1439b4;
-            margin-right: 1rem;
-            transition: opacity 0.5s ease;
-
-            &:hover {
-                opacity: 0.6;
+            > img {
+                position: absolute;
+                height: 50%;
+                width: 50%;
+                bottom: 30%;   
             }
         }
     }
+}
 
+.drive-link {   
+    display: flex;
+    align-items: center;
+
+    a {
+        color: #1439b4;
+        margin-right: 1rem;
+        transition: opacity 0.5s ease;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.icons-select {
+    width: 33rem;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+
+    .icon-item {
+        box-shadow: $default-shadow;
+        background-color: #fff;
+        border-radius: 1rem;
+        transition: all 0.25s ease;
+        width: 10rem;
+        height: 10rem;
+        margin-left: 1.5rem;
+
+        > img {
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            box-shadow: $default-shadow-hover;
+        }
+
+        &.selected {
+            border: 2px solid $main-color
+        }
+    }
 }

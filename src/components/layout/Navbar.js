@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../redux/actions/auth';
+import logo from '../../assets/logo.svg';
 
 function Navbar({ paths }) {
     const dispatch = useDispatch();
@@ -34,7 +35,11 @@ function Navbar({ paths }) {
     return (
         <header>
             <i className="material-icons search-mobile">search</i>
-            <Link to="/"><span className='logo'>Logo</span></Link>
+            <Link to="/">
+                <span className='logo'>
+                    <img className="logo-color" src={logo} alt='Logo' />
+                </span>
+            </Link>
             <nav className='navbar'>
                 <span className="menu-icons">
                     {!showMenu

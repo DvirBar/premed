@@ -4,9 +4,10 @@ import useForm from '../../../forms/useForm';
 import { addItem } from '../../../redux/actions/topics';
 import FormInput from '../../common/FormInput';
 import Modal from '../../layout/Modal';
+import IconsSelect from './IconsSelect';
 
 function AddItem({ topic }) {
-    const [displayModal, setDisplayModal] = useState(false)
+    const [displayModal, setDisplayModal] = useState(false);
     const [defaultValues, setDefaultValues] = useState({
         name: '',
     })
@@ -41,21 +42,26 @@ function AddItem({ topic }) {
                     onChange={handleChange}
                     error={errors.name} />
 
-                    <textarea
-                    name="content"
-                    cols="40" rows="5"
-                    value={values.content}
-                    onChange={handleChange}
-                    error={errors.content}
-                    placeholder="תוכן" />
-                    
-                    <FormInput
-                    label={"קישור"}
-                    type={"text"}
-                    name={"link"}
-                    value={values.link}
-                    onChange={handleChange}
-                    error={errors.link} />
+                    <IconsSelect 
+                    value={values.icon || ''}
+                    onChange={handleChange} />
+
+                    <div className="drive-link">
+                        <FormInput
+                        label={"קישור"}
+                        type={"text"}
+                        name={"link"}
+                        value={values.link}
+                        onChange={handleChange}
+                        error={errors.link} />
+
+                        {values.link && values.link !== 0 &&
+                            <a 
+                            href={values.link} 
+                            target="_blank"
+                            rel="noopener noreferrer">בדוק קישור</a>
+                        }   
+                    </div>
 
                     <button type="submit">צור</button>
                 </form>

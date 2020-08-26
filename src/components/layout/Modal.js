@@ -6,7 +6,7 @@ const Modal = ({ display, toggleModal, children, title, subTitle })=> {
     
     // We'll use ref of modal box, so when clicking outside it'll close
     const ref = useRef();
-    useOnClickOutside(ref, () => toggleModal(false))
+    useOnClickOutside(ref, display, () => toggleModal(false))
 
     // Overflow
     if(display) {
@@ -25,13 +25,25 @@ const Modal = ({ display, toggleModal, children, title, subTitle })=> {
       }
     }
 
+    const showOpacity = {
+      opacity: 1,
+      visibility: 'visible' 
+    }
+    
+    const hideOpacity = {
+      opacity: 0,
+      visibility: 'hidden'
+    }
+
     return (
         <Fragment>
-          {display && 
             <div 
             className="gen-modal" 
+            style={display ? showOpacity : hideOpacity} 
             onKeyPress={event => escapeModal(event)}>
-              <div className="modal-box" ref={ref}>
+              <div 
+              className="modal-box" 
+              ref={ref}>
                 <div className="modal-header">
                     <span class="close-modal" onClick={() => toggleModal(false)}>&times;</span><br/>
                     <span className="modal-title">{title}</span>
@@ -42,7 +54,6 @@ const Modal = ({ display, toggleModal, children, title, subTitle })=> {
                 </div>
               </div>
             </div>
-          }
         </Fragment>
     )
 }
