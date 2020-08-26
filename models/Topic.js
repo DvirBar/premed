@@ -15,7 +15,7 @@ const TopicSchema = new Schema({
         name: {
             type: String
         },
-        content: {
+        icon: {
             type: String
         },
         link: {

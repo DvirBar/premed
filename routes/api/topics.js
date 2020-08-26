@@ -130,7 +130,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 router.put('/:id/item', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        content,
+        icon,
         link
     } = req.body;
 
@@ -146,7 +146,7 @@ router.put('/:id/item', [auth, authAdmin], (req, res, next) => {
 
              const newItem = {
                  name: name,
-                 content: content,
+                 icon: icon,
                  link: link
              }
 
@@ -167,7 +167,7 @@ router.put('/:id/item', [auth, authAdmin], (req, res, next) => {
 router.put('/:id/:itemId', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        content,
+        icon,
         link 
     } = req.body;
 
@@ -188,7 +188,7 @@ router.put('/:id/:itemId', [auth, authAdmin], (req, res, next) => {
             
             item.set({
                 name: name,
-                content: content,
+                icon: icon,
                 link: link
             })
 
