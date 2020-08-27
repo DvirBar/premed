@@ -15,7 +15,7 @@ const { PageNotExist,SubpageDetailsRequired,
 // @route   GET api/pages/:id
 // @desc    Get page by id
 // @access  Private
-router.get('/:id', auth, (req, res, next) => {
+router.get('/:id', (req, res, next) => {
     Page.findById(req.params.id)
             .then(page => {
                 if(!page) return res.status(PageNotExist.status).json(PageNotExist.msg);
@@ -28,7 +28,7 @@ router.get('/:id', auth, (req, res, next) => {
 // @route   GET api/pages
 // @desc    Get all pages
 // @access  Private
-router.get('/', auth, (req, res, next) => { 
+router.get('/', (req, res, next) => { 
     Page.find()
         .then(page => res.json(page))
         .catch(next);
