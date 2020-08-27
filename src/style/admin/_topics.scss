@@ -1,4 +1,4 @@
-.topics-list {
+.admin-topics-list {
     width: 100%;
     display: flex;
     align-items: center;
@@ -41,40 +41,41 @@
     column-gap: 3rem;
     row-gap: 3rem;
     overflow-y: auto;
+    text-align: center;
+}
 
-    .material-item {
-        padding: 1rem;
-        background-color: #fff;
-        box-shadow: $default-shadow;
-        border-radius: 1rem;
-        height: 20rem;
-        transition: box-shadow 0.5s ease;
-        align-items: center;
-        cursor: pointer;
+.material-item {
+    padding: 1rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 1rem;
+    height: 20rem;
+    transition: box-shadow 0.5s ease;
+    align-items: center;
+    cursor: pointer;
 
-        &:hover {
-            box-shadow: $default-shadow-hover;
-        }
+    &:hover {
+        box-shadow: $default-shadow-hover;
+    }
 
-        .item-title {
-            text-align: center;
-            color: #616161;
-            border-bottom: 1rem;
-        }
+    .item-title {
+        text-align: center;
+        color: #616161;
+        border-bottom: 1rem;
+    }
 
-        .item-icon {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            bottom: 0;
-            height: 100%;
+    .item-icon {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        bottom: 0;
+        height: 100%;
 
-            > img {
-                position: absolute;
-                height: 50%;
-                width: 50%;
-                bottom: 30%;   
-            }
+        > img {
+            position: absolute;
+            height: 50%;
+            width: 50%;
+            bottom: 30%;   
         }
     }
 }

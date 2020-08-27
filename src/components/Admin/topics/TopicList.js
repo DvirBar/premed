@@ -18,7 +18,7 @@ function TopicList({ topics, selTopic, selectTopic }) {
     return (
         <Fragment>
             {topTopics &&
-                <div className="topics-list"> 
+                <div className="admin-topics-list"> 
                     <TopicItem 
                     siblings={topTopics}
                     topics={topics}

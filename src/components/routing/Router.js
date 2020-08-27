@@ -11,6 +11,8 @@ import Profile from '../profile/Profile';
 import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
 import StepItem from '../steps/StepItem';
+import Subpage from '../topics/Subpage';
+import TopicContent from '../topics/TopicContent';
 
 const Router = () => {
     const location = useLocation();
@@ -30,7 +32,9 @@ const Router = () => {
                 <ProtectedRoute exact path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route exact path="/steps/:pathId" component={Steps} />
-                <Route exact path="/steps/:pathId/:stepId" component={StepItem} />
+                <ProtectedRoute exact path="/steps/:pathId/:stepId" component={StepItem} />
+                <ProtectedRoute exact path="/:pageUrl/:subpageUrl" component={Subpage} />
+                <ProtectedRoute path="/:pageUrl/:subpageUrl/:topicUrl" component={TopicContent} />
             </Switch>
         </div>
     )
