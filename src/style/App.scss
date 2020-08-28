@@ -11,7 +11,7 @@ $key-color: #4e4e4e;
 $key-color-hover: #838383;
 $header-color: #727272;
 $header-height: 5rem;
-$cover-height: 25rem;
+$cover-height: 20rem;
 $text-size: 1.8rem;
 $line-height: 1.5em;
 
@@ -76,9 +76,9 @@ ul {
     z-index: 0;
     width: 100%;
     height: $cover-height;
-    background-image: url('../../assets/damir-spanic-DRzpEt8deC4-unsplash.jpg');
+    background-image: url('../../assets/giorgio-trovato-v_bri4iVuiM-unsplash.jpg');
     background-size: cover;
-    background-position-y: 30%;
+    background-position-y: 55%;
 
     .cover-top-layer {
         width: 100%;

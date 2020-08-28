@@ -26,9 +26,7 @@ function AddItem({ topic }) {
     return (
         <Fragment>
             <button
-            onClick={() => setDisplayModal(true)}>
-                הוסף חומר
-            </button>
+            onClick={() => toggleModal(true)}>הוסף חומר</button>
             <Modal 
             display={displayModal} 
             toggleModal={toggleModal} 
@@ -55,7 +53,7 @@ function AddItem({ topic }) {
                         onChange={handleChange}
                         error={errors.link} />
 
-                        {values.link && values.link !== 0 &&
+                        {values.link &&
                             <a 
                             href={values.link} 
                             target="_blank"
@@ -66,7 +64,7 @@ function AddItem({ topic }) {
                     <button type="submit">צור</button>
                 </form>
             </Modal>
-        </Fragment>
+        </Fragment> 
     )
 }
 

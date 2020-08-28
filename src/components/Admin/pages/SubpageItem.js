@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../../common/DropdownMenu';
-import TopicItem from '../topics/TopicItem';
 import Modal from '../../layout/Modal';
 import AddTopic from '../topics/AddTopic';
 import EditSubpage from './EditSubpage';
 import VerifyDelete from '../../common/VerifyDelete';
 import { deleteSubpage } from '../../../redux/actions/pages';
 import SubpageTopics from './SubpageTopics';
+import LinksList from './LinksList';
 
 function SubpageItem({ pageId, subpage }) {
     const [displaySection, setDisplaySection] = useState(false);
@@ -78,6 +78,10 @@ function SubpageItem({ pageId, subpage }) {
                 ? "section-content open" 
                 : "section-content"}>
                 <div className="section-content-holder">
+                    <LinksList 
+                    subpage={subpage}
+                    pageId={pageId} />
+
                     <SubpageTopics 
                     loading={loadTopics}
                     topics={topics} />

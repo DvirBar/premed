@@ -5,12 +5,14 @@ import { editTopic, deleteTopic } from '../../../redux/actions/topics';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import VerifyDelete from '../../common/VerifyDelete';
+import Modal from '../../layout/Modal';
 
 
 function TopicContent({ topic, topics }) {
     const [parentOptions, setParentOptions] = useState([])
     const [selParent, setSelParent] = useState({})
     const [showVer, setShowVer] = useState(false)
+    const [displayModal, setDisplayModal] = useState(false)
     const [dropDefault, setDropDefault] = useState({})
     const [defaultValues, setDefaultValues] = useState({})
 
@@ -52,60 +54,71 @@ function TopicContent({ topic, topics }) {
         setShowVer(open)
     }
 
+    const toggleModal = open => {
+        setDisplayModal(open)
+    }
+
     return (
-        <div className="topic-content">
-                  <form 
-            onSubmit={handleSubmit}
-            className="form-edit-topic" 
-            noValidate>
-                <div className="topic-headers">
-                    <FormInput
-                    label={"שם"}
-                    type={"text"}
-                    name={"name"}
-                    value={values.name}
-                    onChange={handleChange}
-                    error={errors.name} />
-
-                    <FormInput
-                    label={"כתובת"}
-                    type={"text"}
-                    name={"url"}
-                    value={values.url}
-                    onChange={handleChange}
-                    error={errors.url} />
-
-                    {parentOptions.length !== 0 && selParent &&
-                        <Dropdown
-                        options={parentOptions}
-                        defaultOption={dropDefault}
-                        name={"parentId"}
-                        title={"שייך ל"}
+        <Fragment>
+            <button
+            onClick={() => setDisplayModal(true)}>עריכה</button>
+            <Modal
+            display={displayModal}
+            toggleModal={toggleModal}
+            title="ערוך נושא">
+                <form 
+                onSubmit={handleSubmit}
+                className="form-edit-topic" 
+                noValidate>
+                    <div className="topic-headers">
+                        <FormInput
+                        label={"שם"}
+                        type={"text"}
+                        name={"name"}
+                        value={values.name}
                         onChange={handleChange}
-                        />
-                    }
-                </div>
+                        error={errors.name} />
 
-                <textarea 
-                cols="80" rows="5"
-                placeholder="תיאור"
-                name="description"
-                value={values.description || ''}
-                onChange={handleChange} />
+                        <FormInput
+                        label={"כתובת"}
+                        type={"text"}
+                        name={"url"}
+                        value={values.url}
+                        onChange={handleChange}
+                        error={errors.url} />
 
-                <div className="form-buttons">
-                    <button type="submit">עדכן</button>
-                    <button 
-                    className="danger"
-                    onClick={() => toggleVer(true)}>מחק</button>
-                </div>
-            </form>
-            <VerifyDelete
-            callback={deleteTopic}
-            values={[topic._id]}
-            display={showVer}
-            toggleModal={setShowVer} />
-        </div>
+                        {parentOptions.length !== 0 && selParent &&
+                            <Dropdown
+                            options={parentOptions}
+                            defaultOption={dropDefault}
+                            name={"parentId"}
+                            title={"שייך ל"}
+                            onChange={handleChange}
+                            />
+                        }
+                    </div>
+
+                    <textarea 
+                    cols="80" rows="5"
+                    placeholder="תיאור"
+                    name="description"
+                    value={values.description || ''}
+                    onChange={handleChange} />
+
+                    <div className="form-buttons">
+                        <button type="submit">עדכן</button>
+                        <button 
+                        className="danger"
+                        onClick={() => toggleVer(true)}>מחק</button>
+                    </div>
+                </form>
+                <VerifyDelete
+                callback={deleteTopic}
+                values={[topic._id]}
+                display={showVer}
+                toggleModal={setShowVer} />
+            </Modal>
+        </Fragment>
     )
 }
 

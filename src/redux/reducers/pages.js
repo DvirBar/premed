@@ -7,7 +7,10 @@ import {
     PAGE_DELETE,
     SUBPAGE_ADD,
     SUBPAGE_UPDATE,
-    SUBPAGE_DELETE
+    SUBPAGE_DELETE,
+    SUBPAGE_LINK_ADD,
+    SUBPAGE_LINK_UPDATE,
+    SUBPAGE_LINK_DELETE
 } from '../actions/types';
 
 const initialState = {
@@ -49,6 +52,9 @@ export default function(state = initialState, action) {
         case SUBPAGE_ADD:
         case SUBPAGE_UPDATE:
         case SUBPAGE_DELETE:
+        case SUBPAGE_LINK_ADD:
+        case SUBPAGE_LINK_UPDATE:
+        case SUBPAGE_LINK_DELETE:
             return {
                 ...state,
                 loading: false,

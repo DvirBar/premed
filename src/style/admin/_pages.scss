@@ -40,3 +40,67 @@
         }
     }
 }
+
+.links-list {
+    width: 30rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    text-align: center;
+    color: #505050;
+    margin: 1rem;
+
+    & > * {
+        padding: 1rem;
+    }
+
+    .link-item {   
+        display: flex;
+        justify-content: space-between;     
+
+        & > a {
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s ease-in-out;
+            margin-right: 1rem;
+            color: #505050;
+    
+            &:hover {
+                border-color: inherit;
+            }
+        }
+
+        .link-menu {
+            display: none;
+            font-size: 2.8rem;
+        }
+
+        &:hover > .link-menu {
+            display: inline;
+        }
+    }
+
+    .add-subpage-link {
+        font-size: 3rem;
+        transition: background-color 0.5s ease;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ddd
+        } 
+    }
+}
+
+.link-entry {
+    display: flex;
+    align-items: center;
+
+    & > a {
+        border-bottom: 1px solid transparent;
+        transition: all 0.25s ease-in-out;
+        margin-right: 1rem;
+        color: #505050;
+            
+        &:hover {
+            border-color: inherit;
+        }
+    }
+}

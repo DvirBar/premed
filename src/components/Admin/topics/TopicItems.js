@@ -6,7 +6,7 @@ import TopicItemsList from './TopicItemsList';
 function TopicItems({ topic }) {
     return (
         <div>
-            <AddItem topic={topic} />
+
             <TopicItemsList topic={topic} />
         </div>
     )

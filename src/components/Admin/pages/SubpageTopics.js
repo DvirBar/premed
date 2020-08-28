@@ -1,13 +1,19 @@
 import React, { useState, Fragment} from 'react'
 import TopicList from '../topics/TopicList';
 import TopicContent from '../topics/TopicContent';
-import TopicItems from '../topics/TopicItems';
+import AddItem from '../topics/AddItem';
+import TopicItemsList from '../topics/TopicItemsList';
 
 function SubpageTopics({ topics, loading }) {
     const [selTopic, setSelTopic] = useState({})
+    const [displayEditModal, setDisplayEditModal] = useState(false);
 
     const selectTopic = topic => {
         setSelTopic(topic);
+    }
+
+    const toggleEditModal = open => {
+        setDisplayEditModal(open)
     }
 
     if(topics.length === 0)
@@ -22,10 +28,13 @@ function SubpageTopics({ topics, loading }) {
             
             {Object.keys(selTopic).length !== 0 &&
                 <Fragment>
-                    <TopicContent 
-                    topic={selTopic}
-                    topics={topics} />
-                    <TopicItems topic={selTopic} />
+                        <div className="topic-modify">
+                            <TopicContent 
+                            topic={selTopic}
+                            topics={topics} />
+                            <AddItem topic={selTopic} />
+                        </div>
+                        <TopicItemsList topic={selTopic} />
                 </Fragment>
             }
         </div>

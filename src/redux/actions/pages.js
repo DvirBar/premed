@@ -7,7 +7,10 @@ import {
     PAGE_DELETE,
     SUBPAGE_ADD,
     SUBPAGE_UPDATE,
-    SUBPAGE_DELETE
+    SUBPAGE_DELETE,
+    SUBPAGE_LINK_ADD,
+    SUBPAGE_LINK_UPDATE,
+    SUBPAGE_LINK_DELETE
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -53,23 +56,45 @@ export const pageDelete = id => {
     }
 }
 
-export const subpageAdd = subpage => {
+export const subpageAdd = page => {
     return {
         type: SUBPAGE_ADD,
-        payload: subpage
+        payload: page
     }
 }
 
-export const subpageUpdate = subpage => {
+export const subpageUpdate = page => {
     return {
         type: SUBPAGE_UPDATE,
-        payload: subpage
+        payload: page
     }
 }
-export const subpageDelete = subpage => {
+
+export const subpageDelete = page => {
     return {
         type: SUBPAGE_DELETE,
-        payload: subpage
+        payload: page
+    }
+}
+
+export const subpageLinkAdd = page => {
+    return {
+        type: SUBPAGE_LINK_ADD,
+        payload: page
+    }
+}
+
+export const subpageLinkUpdate = page => {
+    return {
+        type: SUBPAGE_LINK_UPDATE,
+        payload: page
+    }
+}
+
+export const subpageLinkDelete = page => {
+    return {
+        type: SUBPAGE_LINK_DELETE,
+        payload: page
     }
 }
 
@@ -151,3 +176,28 @@ export const deleteSubpage = (pageId, subpageId) => dispatch => {
 }
 
 
+// Links
+export const addSubpageLink = (pageId, subpageId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put(`api/pages/${pageId}/${subpageId}/addLink`, body)
+         .then(res => dispatch(subpageLinkAdd(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
+
+export const editSubpageLink = (pageId, subpageId, linkId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put(`api/pages/${pageId}/${subpageId}/${linkId}`, body)
+         .then(res => dispatch(subpageLinkUpdate(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
+
+export const deleteSubpageLink = (pageId, subpageId, linkId) => dispatch => {
+
+    axios.put(`api/pages/${pageId}/${subpageId}/${linkId}/remove`)
+         .then(res => dispatch(subpageLinkDelete(res.data)))
+         .catch(err => dispatch(getError(err)))
+}
