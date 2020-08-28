@@ -10,7 +10,8 @@ const modelName = 'page';
 // Errors
 const pageMessages = require('../../messages/pages');
 const { PageNotExist,SubpageDetailsRequired,
-     SubpageDetailsNotUnique, SubpageNotExist, SuccessDelete } = pageMessages;
+     SubpageDetailsNotUnique, SubpageNotExist, 
+     LinkDetailsRequired, LinkNotExist, SuccessDelete } = pageMessages;
 
 // @route   GET api/pages/:id
 // @desc    Get page by id
@@ -179,6 +180,137 @@ router.put('/:id/:subpageId', [auth, authAdmin], (req, res, next) => {
          })
          .catch(next);
 })
+
+// @route   PUT api/pages/:id/:subpageId/addlink
+// @desc    Add new link
+// @access  Admin
+router.put('/:id/:subpageId/addlink', [auth, authAdmin], (req, res, next) => {
+    const { 
+        name,
+        url
+    } = req.body;
+
+    res.locals.model = modelName;
+    const pageId = req.params.id;
+    const subpageId = req.params.subpageId;
+
+    if(!name || !url)
+        return res.status(LinkDetailsRequired.status).send(LinkDetailsRequired.msg)
+    
+    Page.findById(pageId)
+         .then(page => {
+            if(!page) return res.status(PageNotExist.status)
+                                .send(PageNotExist.msg)
+            
+            const subPage = page.subpages.id(subpageId)
+
+            if(!subPage)
+                return res.status(SubpageNotExist.status)
+                          .send(SubpageNotExist.msg)
+
+            const newLink = {
+                name: name,
+                url: url
+            }
+
+            subPage.links.push(newLink)
+
+            page.save()
+                .then(page => {
+                    return res.send(page)
+                })
+                .catch(next);
+         })
+         .catch(next);
+})
+
+// @route   PUT api/pages/:id/:subpageId/:linkId
+// @desc    Edit link
+// @access  Admin
+router.put('/:id/:subpageId/:linkId', [auth, authAdmin], (req, res, next) => {
+    const { 
+        name,
+        url
+    } = req.body;
+
+    res.locals.model = modelName;
+    const pageId = req.params.id;
+    const subpageId = req.params.subpageId;
+    const linkId = req.params.linkId
+
+    if(!name || !url)
+        return res.status(LinkDetailsRequired.status).send(LinkDetailsRequired.msg)
+    
+    Page.findById(pageId)
+         .then(page => {
+            // Chekc that page exists
+            if(!page) return res.status(PageNotExist.status)
+                                .send(PageNotExist.msg)
+            
+            // Check that subpage exists
+            const subPage = page.subpages.id(subpageId)
+            if(!subPage)
+                return res.status(SubpageNotExist.status)
+                          .send(SubpageNotExist.msg)
+
+            // Check that link exists              
+            const link = subPage.links.id(linkId)
+            if(!link)
+                return res.status(LinkNotExist.status)
+                          .send(LinkNotExist.msg)
+
+            link.set({
+                name: name,
+                url: url
+            })
+            
+            page.save()
+                .then(page => {
+                    return res.send(page)
+                })
+                .catch(next);
+         })
+         .catch(next);
+})
+
+// @route   PUT api/pages/:id/:subpageId/:linkId/remove
+// @desc    Remove link
+// @access  Admin
+router.put('/:id/:subpageId/:linkId/remove', [auth, authAdmin], (req, res, next) => {
+    res.locals.model = modelName;
+    const pageId = req.params.id;
+    const subpageId = req.params.subpageId;
+    const linkId = req.params.linkId
+
+    Page.findById(pageId)
+         .then(page => {
+            // Chekc that page exists
+            if(!page) return res.status(PageNotExist.status)
+                                .send(PageNotExist.msg)
+            
+            // Check that subpage exists
+            const subPage = page.subpages.id(subpageId)
+            if(!subPage)
+                return res.status(SubpageNotExist.status)
+                          .send(SubpageNotExist.msg)
+
+            // Check that link exists              
+            const link = subPage.links.id(linkId)
+            if(!link)
+                return res.status(LinkNotExist.status)
+                          .send(LinkNotExist.msg)
+
+            link.remove()
+            
+            page.save()
+                .then(page => {
+                    return res.send(page)
+                })
+                .catch(next);
+         })
+         .catch(next);
+})
+
 
 // @route   PUT api/pages/:id/:subpageId/remove
 // @desc    Remove subpage
