@@ -95,31 +95,25 @@ function Navbar({ paths }) {
                     </li>
                     <ul className="left-section">
                         <li className="search">
-                            <span>
                             <i className="material-icons search">search</i>
-                            </span>
-                          
                         </li>
                         {auth.isAuthenticated
                             ? (
                                 <li className="user-links">
-                                    <span>
-                                        <i className="material-icons">account_circle</i>
-                                        <span>משתמש</span>
-                                    </span>
+                                    <span>משתמש</span>
                                     <ul className="sub-menu">
-                                        <Link to="/profile">
-                                            <li>
-                                                פרופיל
-                                            </li>
-                                        </Link>
+                                        <li>
+                                            <Link to="/profile"> 
+                                                <span>פרופיל</span>
+                                            </Link>
+                                        </li>
                                         {auth.user.isAdmin && 
-                                            <Link to="/admin">
-                                                <li>
+                                            <li>
+                                                <Link to="/admin">
                                                     <i className="material-icons">admin_panel_settings</i>
                                                     <span>ניהול</span>
-                                                </li>
-                                            </Link>
+                                                </Link>
+                                            </li>
                                         }
                                         <li onClick={() => logoutUser()}>
                                             <i className="material-icons">power_settings_new</i>
