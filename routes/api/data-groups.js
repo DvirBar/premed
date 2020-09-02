@@ -11,7 +11,7 @@ const modelName = 'data group';
 // Errors
 const pathsMessages = require('../../messages/paths');
 const dataGroupMessages = require('../../messages/data-group');
-const { SuccessDelete, NotExist } = dataGroupMessages;
+const { DataGroupSuccessDelete, DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathsMessages;
 
 // @route   GET api/datagroups/:id
@@ -115,12 +115,13 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
     DataGroup.findById(groupId)
               .then(group => {
                 if(!group) 
-                    return res.status(NotExist.status).send(NotExist.msg);
+                    return res.status(DataGroupNotExist.status)
+                              .send(DataGroupNotExist.msg);
 
                 // TODO: Remove data group from related fields                            
-                path.remove()
+                group.remove()
                 .then(() => {
-                    return res.send(SuccessDelete.msg)
+                    return res.send(DataGroupSuccessDelete.msg)
                 })
                 .catch(next);
             })
