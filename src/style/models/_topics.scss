@@ -1,7 +1,13 @@
+.subpage {
+    display: flex;
+}
+
 .topics-list {
     display: grid;
-    grid-template-columns: repeat(3, 25rem);
+    width: 500;
+    grid-template-columns: repeat(2, 25rem);
     column-gap: 3rem;
+    margin: auto;
 
     .topic {
         box-shadow: $default-shadow;
@@ -57,3 +63,94 @@
     padding: 1.5rem;
 }
 
+.subpage-links-list {
+    position: absolute;
+    width: 20rem;
+    right: 0;
+    top: $header-height + $cover-height;
+    background-color: #eee;
+    height: 100%;
+
+    & > li {
+        padding: 1.5rem;
+
+        & > a {
+            border-bottom: 1px solid transparent;
+            transition: border 0.25s ease-in-out;
+            color: #505050;
+    
+            &:hover {
+                border-color: inherit;
+            }
+        }
+    }
+    
+    .list-header {
+        text-align: center;
+        font-size: 2rem;
+        color: $main-color;
+    }
+}
+
+.links-list-mobile {
+    position: fixed;
+    width: 7rem;
+    height: 7rem;
+    bottom: 3rem;
+    right: 3rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: box-shadow 0.5s ease;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: $default-shadow-hover;
+    }
+    
+    & > i {
+        color: $main-color;
+        font-size: 3rem;
+
+        &:hover {
+            color: $main-color;
+        }
+    }
+}    
+
+@media only screen and (max-width: 1000px) {
+    .subpage-links-list {
+        min-height: 0;
+        visibility: hidden;
+        background-color: #fff;
+        box-shadow: $default-shadow;
+        position: fixed;
+        bottom: 20rem;
+        right: 3rem;
+        height: auto;
+
+        &.open {
+            display: block;
+            min-height: 10rem;
+            visibility: visible;
+        }
+    }
+
+    .links-list-mobile { 
+        display: flex;
+    }   
+}
+
+@media only screen and (max-width: 768px) {
+    .topics-list {
+        display: block;
+
+        .topic {
+            width: 25rem;
+            margin: 2rem;
+        }
+    }
+}
