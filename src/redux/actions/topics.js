@@ -142,12 +142,9 @@ export const editItem = (topicId, itemId, data) => dispatch => {
          .catch(err => dispatch(getError(err)))
 }
 
-export const toggleLike = (topicId, itemId, data) => dispatch => {
-    // Request body
-    const body = JSON.stringify(data);
-
-    axios.put(`api/topics/${topicId}/${itemId}/toggleLike`, body)
-         .then(res => dispatch(itemUpdate(res.data)))
+export const toggleLike = (topicId, itemId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/toggleLike`)
+         .then(res => dispatch(itemToggleLike(res.data)))
          .catch(err => dispatch(getError(err)))
 }
 

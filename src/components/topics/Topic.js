@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Topic({ topic }) {
     let location = useLocation()

@@ -144,6 +144,33 @@
     }   
 }
 
+.item-footer {
+    display: flex;
+    flex-direction: row-reverse;
+    color: $main-color;
+
+    .item-likes {
+        display: flex;
+        align-items: center;
+
+        .material-icons {
+            transition: all 0.5s ease;
+            color: $main-color;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                transition: all 0.5s ease;
+                opacity: 0.6;
+            }
+        }
+
+        & > * {
+            margin-left: 0.5rem;
+        }
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .topics-list {
         display: block;
@@ -154,3 +181,4 @@
         }
     }
 }
+

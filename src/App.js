@@ -22,8 +22,15 @@ function App() {
     dispatch(getPaths());
     dispatch(getSteps());
     dispatch(getPages());
-    dispatch(getTopics());
   }, []);
+
+  const auth = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if(auth) {
+      dispatch(getTopics());
+    }
+  }, [auth])
 
   moment.locale('he');
 

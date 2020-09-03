@@ -29,18 +29,6 @@
     }
 }
 
-.material-icons {
-    color: $key-color;
-
-    &:hover {
-        color: $key-color-hover;
-    }
-    
-    &.more-list {
-        float: left;
-    }
-}
-
 .exit-edit {
     color: $key-color;
     float: left;
