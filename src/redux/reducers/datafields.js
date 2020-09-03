@@ -1,0 +1,70 @@
+import {
+    DATA_FIELD_LOADING,
+    DATA_FIELD_SUCCESS,
+    DATA_FIELD_ERROR,
+    DATA_FIELD_ADD,
+    DATA_FIELD_UPDATE,
+    DATA_FIELD_DELETE,
+    DATA_FIELD_VALID_ADD,
+    DATA_FIELD_VALID_UPDATE,
+    DATA_FIELD_VALID_DELETE
+} from '../actions/types';
+
+const initialState = {
+    loading: false,
+    fields:[]
+}
+
+export default function(state = initialState, action) {
+    const payload = action.payload
+
+    switch(action.type) {
+        case DATA_FIELD_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DATA_FIELD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                fields: payload
+            }
+
+        case DATA_FIELD_ERROR: 
+            return {
+                ...state,
+                loading: false,
+                fields: []
+            }
+
+        case DATA_FIELDS_ADD:
+            return {
+                ...state,
+                fields: [...state.fields, payload]
+            }
+
+        case DATA_FIELD_UPDATE:
+        case DATA_FIELD_VALID_ADD:
+        case DATA_FIELD_VALID_UPDATE:
+        case DATA_FIELD_VALID_TOGGLE_LIKE:
+        case DATA_FIELD_VALID_DELETE:
+            return {
+                ...state,
+                loading: false,
+                fields: state.fields.map(field => 
+                    field._id === payload._id ? field = payload : field)
+            }
+
+        case DATA_FIELD_DELETE: 
+            return {
+                ...state,
+                loading: false,
+                fields: state.fields.filter(field => field._id !== payload)
+            }
+
+        default: 
+            return state;
+    }
+}

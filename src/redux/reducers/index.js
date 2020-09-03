@@ -9,6 +9,7 @@ import steps from './steps';
 import pages from './pages';
 import topics from './topics';
 import datagroups from './datagroups';
+import datafields from './datafields';
 
 export default combineReducers({
     auth,
@@ -20,5 +21,5 @@ export default combineReducers({
     steps,
     pages,
     topics,
-    datagroups
+    datagroups,
 });
