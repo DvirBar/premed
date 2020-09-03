@@ -8,6 +8,7 @@ import ancgroups from './ancgroups';
 import steps from './steps';
 import pages from './pages';
 import topics from './topics';
+import datagroups from './datagroups';
 
 export default combineReducers({
     auth,
@@ -18,5 +19,6 @@ export default combineReducers({
     sections,
     steps,
     pages,
-    topics
+    topics,
+    datagroups
 });
