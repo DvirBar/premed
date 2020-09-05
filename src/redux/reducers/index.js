@@ -10,6 +10,8 @@ import pages from './pages';
 import topics from './topics';
 import datagroups from './datagroups';
 import datafields from './datafields';
+import unis from './universities';
+import calcs from './calculations';
 
 export default combineReducers({
     auth,
@@ -22,5 +24,7 @@ export default combineReducers({
     pages,
     topics,
     datagroups,
-    datafields
+    datafields,
+    unis,
+    calcs
 });

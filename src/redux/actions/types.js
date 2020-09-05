@@ -103,3 +103,20 @@ export const DATA_FIELD_VALID_ADD = 'DATA_FIELD_VALID_ADD';
 export const DATA_FIELD_VALID_UPDATE = 'DATA_FIELD_VALID_EDIT';
 export const DATA_FIELD_VALID_DELETE = 'DATA_FIELD_VALID_DELETE';
 
+// Universities
+export const UNI_LOADING = 'UNI_LOADING';
+export const UNI_SUCCESS = 'UNI_SUCCESS';
+export const UNI_ERROR = 'UNI_ERROR';
+export const UNI_ADD = 'UNI_ADD';
+export const UNI_UPDATE = 'UNI_UPDATE';
+export const UNI_DELETE = 'UNI_DELETE';
+
+// Calcualtions
+export const CALC_LOADING = 'CALC_LOADING';
+export const CALC_SUCCESS = 'CALC_SUCCESS';
+export const CALC_ERROR = 'CALC_ERROR';
+export const CALC_ADD = 'CALC_ADD';
+export const CALC_UPDATE = 'CALC_UPDATE';
+export const CALC_DELETE = 'CALC_DELETE';
+
+
