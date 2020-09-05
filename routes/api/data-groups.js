@@ -6,13 +6,17 @@ const authAdmin = require('../../middleware/authAdmin');
 // Models
 const DataGroup = require('../../models/DataGroup');
 const Path = require('../../models/Path');
+const University = require('../../models/University');
 const modelName = 'data group';
 
 // Errors
 const pathsMessages = require('../../messages/paths');
-const dataGroupMessages = require('../../messages/data-group');
+const dataGroupMessages = require('../../messages/data-groups');
+const uniMessages = require('../../messages/universities');
+
 const { DataGroupSuccessDelete, DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathsMessages;
+const { UniNotExist } = uniMessages;
 
 // @route   GET api/datagroups/:id
 // @desc    Get data group by id
@@ -42,7 +46,9 @@ router.get('/', auth, (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name, 
-        pathId 
+        pathId,
+        uniId,
+        calc  
     } = req.body;
 
     res.locals.model = modelName;
@@ -50,20 +56,33 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     Path.findById(pathId)
         .then(path => {
             // Check that assigned path exists
-            if(!path) return res.status(PathNotExist.status).send(PathNotExist.msg)
+            if(!path) 
+                return res.status(PathNotExist.status).send(PathNotExist.msg)
 
-            // Create new path
-            const newGroup = new DataGroup({
-                name: name,
-                path: pathId
-            })
+            University.findById(uniId)
+                      .then(uni => {
+                        if(!uni && uniId)
+                            return res.status(UniNotExist.status)
+                                      .send(UniNotExist.msg)
+                        // Create new path
+                        const newGroup = new DataGroup({
+                            name: name,
+                            path: pathId,
+                            university: {
+                                university: uniId,
+                                calc: calc
+                            }
+                        })
 
-            newGroup.save()
-                    .then(group => {
-                        return res.json(group)
-                    })
-                    .catch(next);
+                        newGroup.save()
+                                .then(group => {
+                                    return res.json(group)
+                                })
+                                .catch(next); // Save group
+                      })
+                      .catch(next); // Find university
         })
+        .catch(next) // Find path
 })
 
 // @route   PUT api/datagroups/:id
@@ -72,7 +91,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        pathId 
+        uniId,
+        calc 
     } = req.body;
 
     res.locals.model = modelName;
@@ -85,23 +105,25 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                 if(!group) 
                     return res.status(NotExist.status).send(NotExist.msg)
             
-                Path.findById(pathId)
-                .then(path => {
-                    // Check that assigned path exists
-                    if(!path) 
-                        return res.status(PathNotExist.status).send(PathNotExist.msg)
-                        
-                    group.name = name;
-                    group.path = pathId;
+                University.findById(uniId)
+                          .then(uni => {
+                            if(!uni && uniId)
+                                return res.status(UniNotExist.status)
+                                          .send(UniNotExist.msg)
 
-                    group.save()
-                        .then(group => {
-                            return res.json(group)              
-                        })
-                        .catch(next);
+                            group.name = name;
+                            group.university.university = uniId;
+                            group.university.calc = calc
+        
+                            group.save()
+                                .then(group => {
+                                    return res.json(group)              
+                                })
+                                .catch(next); // Save group
                     })
-                .catch(next);
+                    .catch(next); // Find university
             })
+            .catch(next); // Find data group
 });
 
 

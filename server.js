@@ -24,6 +24,7 @@ const pages = require('./routes/api/pages');
 const topics = require('./routes/api/topics');
 const datagroups = require('./routes/api/data-groups');
 const datafields = require('./routes/api/data-fields');
+const univeristies = require('./routes/api/universities');
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -35,6 +36,7 @@ app.use('/api/pages', pages);
 app.use('/api/topics', topics);
 app.use('/api/datagroups', datagroups);
 app.use('/api/datafields', datafields);
+app.use('/api/universities', univeristies);
 
 // Exit middlewares
 app.use(errorHandler);

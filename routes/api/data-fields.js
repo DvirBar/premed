@@ -7,22 +7,33 @@ const authAdmin = require('../../middleware/authAdmin');
 const DataField = require('../../models/DataField');
 const DataGroup = require('../../models/DataGroup');
 const Path = require('../../models/Path');
+const University = require('../../models/University');
 const modelName = 'data field';
 
 // Utilities
 const allowedTypes = require('../../utils/allowedTypes');
+const types = allowedTypes.types
 
 // Errors
 const dataGroupMessages = require('../../messages/data-groups');
 const dataFieldMessages = require('../../messages/data-fields');
 const pathMessages = require('../../messages/paths');
+const uniMessages = require('../../messages/universities')
 
 const { DataFieldSuccessDelete, DataFieldNotExist, 
     InvalidFieldType, InvalidValidatorType, 
-    ValidatorTypeRequired, ValidatorNotExist } = dataFieldMessages;
-const { DataGroupSuccessDelete, DataGroupNotExist } = dataGroupMessages;
+    ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist } = dataFieldMessages;
+const { DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathMessages; 
+const { UniNotExist } = uniMessages;
 
+
+// @route   GET api/datafields/allowedTypes
+// @desc    Get allowed types
+// @access  Admin
+router.get('/allowedTypes', [auth, authAdmin], (req, res, next) => {
+    res.send(types);
+})
 
 // @route   GET api/datafields/:id
 // @desc    Get data group by id
@@ -46,6 +57,7 @@ router.get('/', (req, res, next) => {
         .then(field => res.send(field))
         .catch(next);
 })
+
  
 // @route   POST api/datafields
 // @desc    Create new data field
@@ -53,15 +65,16 @@ router.get('/', (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        type,
+        fieldType,
         pathId,
         groupId,
+        uniId
     } = req.body;
 
     res.locals.model = modelName;
 
     // Check that field type is valid
-    if(!allowedTypes.isType(type, allowedTypes.fieldTypes))
+    if(!allowedTypes.isType(fieldType, types.fieldTypes))
         return res.status(InvalidFieldType.status)
                   .send(InvalidFieldType.msg)
 
@@ -80,44 +93,33 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                         if(!group && groupId)
                             return res.status(DataGroupNotExist.status)
                                       .send(DataGroupNotExist.msg)
+                        
+                        University.findById(uniId)
+                                  .then(uni => {
+                                    if(!uni && uniId)
+                                        return res.status(UniNotExist.status)
+                                                  .send(UniNotExist.msg)
                                     
-                        // Create new field
-                        const newField = new DataField({
-                            name: name,
-                            type: type,
-                            path: pathId,
-                            group: groupId
-                        })
+                                    // Create new field
+                                    const newField = new DataField({
+                                        name: name,
+                                        fieldType: fieldType,
+                                        path: pathId,
+                                        group: groupId
+                                    })
 
-                        newField.save()
-                                .then(field => {
-                                    return res.send(field)
-                                })
-                                .catch(next); // Saving field
+                                    newField.save()
+                                            .then(field => {
+                                                return res.send(field)
+                                            })
+                                            .catch(next); // Saving field
+                                  })
+                                  .catch(next); // Find university
                         })
                         .catch(next); // Find data group
         })
         .catch(next); // Find path
 })
-
-
-//  // Check that ratio sum does not exceed 100% 
-//  DataGroup.aggregate([
-//     { $match: { 'parent.group': groupId }},
-//     { $group: { _id: 'parent.group', sum: { $sum: '$ratio' }}}
-// ]).then(sumGroup => {
-//     const ratioSum = sumGroup + groupRatio;
-
-//     if(groupRatio) {
-//         // Check that ratio is between 0 and 100
-//         if(groupRatio <= 0 || groupRatio > 100 )
-//             return res.status(RatioExceeds.status)
-//                 .send(RatioExceeds.msg)
-
-//     if(ratioSum > 100)
-//         return res.status(RatioSumExceeds.status)
-//                 .send(RatioSumExceeds.msg)
-//     }
     
 
 // @route   PUT api/datafields/:id
@@ -126,9 +128,9 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        type,
-        pathId,
-        groupId
+        fieldType,
+        groupId,
+        uniId
     } = req.body;
 
     res.locals.model = modelName;
@@ -136,47 +138,45 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const fieldId = req.params.id;
 
     // Check that field type is valid
-    if(!allowedTypes.isType(type, allowedTypes.fieldTypes))
+    if(!allowedTypes.isType(fieldType, types.fieldTypes))
         return res.status(InvalidFieldType.status)
                   .send(InvalidFieldType.msg)
+  
+    DataGroup.findById(groupId)
+                .then(group => {
 
-    Path.findById(pathId)
-        .then(path => {
-            // Check that if assigned, path exists
-            if(!path && pathId)
-                return res.status(PathNotExist.status)
-                          .send(PathNotExist.msg)
-            
-            DataGroup.findById(groupId)
-                     .then(group => {
-
-                        // Check that if assigned, group exists
-                        if(!group && groupId)
-                            return res.status(DataGroupNotExist.status)
-                                      .send(DataGroupNotExist.msg)
-                                    
-                        DataField.findById(fieldId)
-                                 .then(field => {
-                                    if(!field)
-                                        return res.status(DataFieldNotExist.status)
-                                                  .send(DataFieldNotExist.msg)
-                                    
-                                    field.name = name,
-                                    field.type = type,
-                                    field.pathId = pathId,
-                                    field.groupId = groupId,
-                                    
-                                    field.save()
-                                            .then(field => {
-                                                return res.send(field)
-                                            })
-                                            .catch(next); // Saving field
-                                 })
-                                 .catch(next); // Find data field
-                        })
-                        .catch(next); // Find data group
-        })
-        .catch(next); // Find path
+                // Check that if assigned, group exists
+                if(!group && groupId)
+                    return res.status(DataGroupNotExist.status)
+                                .send(DataGroupNotExist.msg)
+                            
+                DataField.findById(fieldId)
+                            .then(field => {
+                            if(!field)
+                                return res.status(DataFieldNotExist.status)
+                                            .send(DataFieldNotExist.msg)
+                            
+                            University.findById(uniId)
+                                      .then(uni => {
+                                        if(!uni && uniId)
+                                            return res.status(UniNotExist.status)
+                                                      .send(UniNotExist.msg)
+                                            
+                                        field.name = name,
+                                        field.fieldType = fieldType,
+                                        field.groupId = groupId,
+                                        
+                                        field.save()
+                                                .then(field => {
+                                                    return res.send(field)
+                                                })
+                                                .catch(next); // Saving field
+                                      })
+                                      .catch(next);
+                            })
+                            .catch(next); // Find data field
+                })
+                .catch(next); // Find data group
 });
 
 // @route   PUT api/datafields/:id/addValid
@@ -184,7 +184,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 // @access  Admin
 router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
     const { 
-        type,
+        validType,
         min,
         max
     } = req.body;
@@ -192,16 +192,21 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
     res.locals.model = modelName;
 
     const fieldId = req.params.id;
+    
 
     // Check that user entered a validator type
-    if(!type)
+    if(!validType)
         return res.status(ValidatorTypeRequired.status)
                   .msg(ValidatorTypeRequired.msg)
 
     // Check that field type is valid
-    if(!allowedTypes.isType(type, allowedTypes.validationTypes))
+    if(!allowedTypes.isType(type, types.validationTypes))
         return res.status(InvalidValidatorType.status)
                   .send(InvalidValidatorType.msg)
+    
+    if(validType === "numRange" && (!min || !max))
+        return res.status(MinMaxRequired.status)
+                  .send(MinMaxRequired.msg)
 
     DataField.findById(fieldId)
              .then(field => {
@@ -248,7 +253,7 @@ router.put('/:id/:validId', [auth, authAdmin], (req, res, next) => {
                   .msg(ValidatorTypeRequired.msg)
 
     // Check that field type is valid
-    if(!allowedTypes.isType(type, allowedTypes.validationTypes))
+    if(!allowedTypes.isType(type, types.validationTypes))
         return res.status(InvalidValidatorType.status)
                   .send(InvalidValidatorType.msg)
 
@@ -317,7 +322,7 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
 
     const fieldId = req.params.id;
 
-    DataField.findById(groupId)
+    DataField.findById(fieldId)
               .then(field => {
                 if(!field) 
                     return res.status(DataFieldNotExist.status)

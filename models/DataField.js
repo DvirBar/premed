@@ -30,10 +30,18 @@ const DataFieldSchema = new Schema({
             type: String
         }
     }],
+    path: {
+        type: ObjectId,
+        ref: 'Path'
+    },
     group: {
         type: ObjectId,
-        ref: 'DataGroup'
+        ref: 'DataGroup' 
     },
+    university: {
+        type: ObjectId,
+        ref: 'University'
+    }
 })
 
 module.exports = mongoose.model('DataField', DataFieldSchema);

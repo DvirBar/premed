@@ -26,7 +26,14 @@ const dataFieldMessages = {
             he: 'סוג בודק תקינות נדרש'
         },
         status: 400
-    },    
+    },
+    MinMaxRequired: {
+        msg: {
+            en: "Min and max values are required for num range validator",
+            he: "ערכים מינימיליים ומקסימליים נדרשים בבדיקת טווח ערכים"
+        },
+        status: 400
+    },   
     // RatioExceeds: {
     //     msg: {
     //         en: 'Ratio is invalid, should be between 0 to 100',
@@ -51,7 +58,7 @@ const dataFieldMessages = {
     DataFieldNotExist: {
         msg: {
             en: 'Data field does not exist',
-            he: 'שדה הנתונים לא קיימת'
+            he: 'שדה הנתונים לא קיים'
         },
         status: 404
     }

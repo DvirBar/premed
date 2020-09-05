@@ -11,6 +11,19 @@ const DataGroupSchema = new Schema({
     path: {
         type: ObjectId,
         ref: 'Path'
+    },
+    parent: {
+        type: ObjectId,
+        ref: 'Group'
+    },
+    university: {
+        university: {
+            type: ObjectId,
+            ref: 'University'
+        },
+        calc: { // Seperate calculation with &, announce id with 'id:'
+            type: String
+        }
     }
 })
 
