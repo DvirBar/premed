@@ -1,0 +1,45 @@
+.select-path {
+    display: inline-block;
+}
+
+.data-fields-admin {
+    .data-field {
+        margin: 3rem;
+        padding: 1.5rem;
+        background-color: #eee;
+        border-radius: 0.5rem;
+        
+        .field-title {
+            margin-bottom: 2rem;
+            position: relative;
+            
+            .field-name {
+                color: $main-color;
+                font-weight: 500;
+                font-size: 2rem;
+                margin-left: 0.5rem;
+            }
+
+            .field-type {
+                font-size: 1.6rem; 
+                color: #707070;
+            }
+
+            .field-menu {
+                position: absolute;
+                bottom: -15%;
+                display: none;
+
+                .material-icons {
+                    &:hover {
+                        opacity: 0.6;
+                    }
+                }
+            }
+
+            &:hover > .field-menu {
+                display: inline;
+            }
+        }
+    }
+}

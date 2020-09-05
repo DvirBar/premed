@@ -2,6 +2,7 @@ import {
     DATA_FIELD_LOADING,
     DATA_FIELD_SUCCESS,
     DATA_FIELD_ERROR,
+    ALLOWED_TYPES_GET,
     DATA_FIELD_ADD,
     DATA_FIELD_UPDATE,
     DATA_FIELD_DELETE,
@@ -32,6 +33,13 @@ export const dataFieldError = () => {
     }
 }
 
+export const allowedTypesGet = types => {
+    return {
+        type: ALLOWED_TYPES_GET,
+        payload: types
+    }
+}
+
 export const dataFieldAdd = field => {
     return {
         type: DATA_FIELD_ADD,
@@ -46,7 +54,7 @@ export const dataFieldUpdate = field => {
     }
 }
 
-export const datafieldDelete = id => {
+export const dataFieldDelete = id => {
     return {
         type: DATA_FIELD_DELETE,
         payload: id
@@ -87,6 +95,16 @@ export const getDataFields = () => dispatch => {
          });
 }
 
+export const getAllowedTypes = () => dispatch => {
+    dispatch(dataFieldLoad);
+
+    axios.get('api/datafields/allowedTypes')
+         .then(res => dispatch(allowedTypesGet(res.data)))
+         .catch(() => {
+             dispatch(dataFieldError());
+         })
+}
+
 // Create new data field
 export const addDataField = data => dispatch => {
     // Request body
@@ -100,6 +118,8 @@ export const addDataField = data => dispatch => {
 export const editDataField = (id, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
+
+    console.log(data);
 
     axios.put(`api/datafields/${id}`, body)
          .then(res => dispatch(dataFieldUpdate(res.data)))

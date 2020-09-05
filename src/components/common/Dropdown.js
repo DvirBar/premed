@@ -13,7 +13,6 @@ const Dropdown = ({ options, defaultOption, name, title, onChange, placeholder }
         if(selected && 
             (Object.keys(selected).length === 0 || defaultOption)) {
             setSelected(placeholder || defaultOption || options[0])
-            console.log(defaultOption);
         }
     }, [placeholder, defaultOption, options])
 

@@ -11,7 +11,7 @@ function SideMenu() {
             <Link to={`${path}/anouncements`}><li>פרסומים</li></Link>
             <Link to={`${path}/steps`}><li>תהליך הקבלה</li></Link>
             <Link to={`${path}/pages`}><li>עמודים</li></Link>            
-            <li>סטטיסטיקות </li>
+            <Link to={`${path}/stats`}><li>סטטיסטיקות </li></Link>
             <li>הגדרות ומשתמשים</li>
             <li>פניות</li>
             <li>אבטחה</li>

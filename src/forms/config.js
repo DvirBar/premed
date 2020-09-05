@@ -19,10 +19,6 @@ export const config = {
             isRequired: { message: 'יש להזין כותרת'}
         },
 
-        groupId: {
-            isRequired: { message: 'יש להזין קבוצה'}
-        },
-
         path: {
             isRequired: { message: 'יש להזין מסלול' }
         },
@@ -33,6 +29,10 @@ export const config = {
 
         link: {
             isRequired: { message: 'יש להזין קישור'}
+        },
+
+        fieldType: {
+            isRequired: { message: 'יש להזין סוג' }
         }
     }
 }

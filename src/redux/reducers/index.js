@@ -22,4 +22,5 @@ export default combineReducers({
     pages,
     topics,
     datagroups,
+    datafields
 });

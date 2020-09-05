@@ -18,7 +18,7 @@ const useForm = (callback, defaultValues, ...params) => {
         if(Object.keys(errors).length === 0 && isSubmitting)
             dispatch(callback(...params, values))
 
-        // If there are no errors cancel submit
+        // If there are errors cancel submit
         if(errors)
             setIsSubmitting(false)
 

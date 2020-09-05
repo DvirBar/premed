@@ -2,6 +2,7 @@ import {
     DATA_FIELD_LOADING,
     DATA_FIELD_SUCCESS,
     DATA_FIELD_ERROR,
+    ALLOWED_TYPES_GET,
     DATA_FIELD_ADD,
     DATA_FIELD_UPDATE,
     DATA_FIELD_DELETE,
@@ -12,7 +13,8 @@ import {
 
 const initialState = {
     loading: false,
-    fields:[]
+    fields:[],
+    types: {}
 }
 
 export default function(state = initialState, action) {
@@ -39,7 +41,14 @@ export default function(state = initialState, action) {
                 fields: []
             }
 
-        case DATA_FIELDS_ADD:
+        case ALLOWED_TYPES_GET:
+            return {
+                ...state,
+                loading: false,
+                types: payload
+            }
+
+        case DATA_FIELD_ADD:
             return {
                 ...state,
                 fields: [...state.fields, payload]
@@ -48,7 +57,6 @@ export default function(state = initialState, action) {
         case DATA_FIELD_UPDATE:
         case DATA_FIELD_VALID_ADD:
         case DATA_FIELD_VALID_UPDATE:
-        case DATA_FIELD_VALID_TOGGLE_LIKE:
         case DATA_FIELD_VALID_DELETE:
             return {
                 ...state,

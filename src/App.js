@@ -9,6 +9,8 @@ import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getTopics } from './redux/actions/topics';
+import { getDataGroups } from './redux/actions/datagroups';
+import { getDataFields } from './redux/actions/datafields';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
@@ -29,6 +31,8 @@ function App() {
   useEffect(() => {
     if(auth) {
       dispatch(getTopics());
+      dispatch(getDataGroups());
+      dispatch(getDataFields());
     }
   }, [auth])
 
