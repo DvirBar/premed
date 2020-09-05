@@ -47,8 +47,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name, 
         pathId,
-        uniId,
-        calc  
+        parentId
     } = req.body;
 
     res.locals.model = modelName;
@@ -59,19 +58,17 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
             if(!path) 
                 return res.status(PathNotExist.status).send(PathNotExist.msg)
 
-            University.findById(uniId)
-                      .then(uni => {
-                        if(!uni && uniId)
-                            return res.status(UniNotExist.status)
-                                      .send(UniNotExist.msg)
+            DataGroup.findById(parentId)
+                      .then(group => {
+                        if(!group && uniId)
+                            return res.status(DataGroupNotExist.status)
+                                      .send(DataGroupNotExist.msg)
+
                         // Create new path
                         const newGroup = new DataGroup({
                             name: name,
                             path: pathId,
-                            university: {
-                                university: uniId,
-                                calc: calc
-                            }
+                            parent: parentId
                         })
 
                         newGroup.save()
@@ -80,7 +77,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                                 })
                                 .catch(next); // Save group
                       })
-                      .catch(next); // Find university
+                      .catch(next); // Find parent data group
         })
         .catch(next) // Find path
 })
@@ -91,8 +88,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        uniId,
-        calc 
+        parentId
     } = req.body;
 
     res.locals.model = modelName;
@@ -103,25 +99,25 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             .then(group => {
             // Check that group exists
                 if(!group) 
-                    return res.status(NotExist.status).send(NotExist.msg)
-            
-                University.findById(uniId)
-                          .then(uni => {
-                            if(!uni && uniId)
-                                return res.status(UniNotExist.status)
-                                          .send(UniNotExist.msg)
+                    return res.status(DataGroupNotExist.status)
+                              .send(DataGroupNotExist.msg)
 
-                            group.name = name;
-                            group.university.university = uniId;
-                            group.university.calc = calc
-        
-                            group.save()
-                                .then(group => {
-                                    return res.json(group)              
-                                })
-                                .catch(next); // Save group
-                    })
-                    .catch(next); // Find university
+                    DataGroup.findById(parentId)
+                             .then(parent => {
+                                if(!parent && parentId)
+                                    return res.status(DataGroupNotExist.status)
+                                              .send(DataGroupNotExist.msg)
+                                
+                                group.name = name;
+                                group.parent = parentId;
+
+                                group.save()
+                                    .then(group => {
+                                        return res.json(group)              
+                                    })
+                                    .catch(next); // Save group
+                             })
+                             .catch(next); // Find parent data group
             })
             .catch(next); // Find data group
 });

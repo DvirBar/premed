@@ -25,6 +25,7 @@ const topics = require('./routes/api/topics');
 const datagroups = require('./routes/api/data-groups');
 const datafields = require('./routes/api/data-fields');
 const univeristies = require('./routes/api/universities');
+const calculations = require('./routes/api/calculations');
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -37,6 +38,7 @@ app.use('/api/topics', topics);
 app.use('/api/datagroups', datagroups);
 app.use('/api/datafields', datafields);
 app.use('/api/universities', univeristies);
+app.use('/api/calculations', calculations);
 
 // Exit middlewares
 app.use(errorHandler);
@@ -52,8 +54,10 @@ const db = config.get('mongoURI');
 
 // Connect to MongoDB
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(db, { 
+        useNewUrlParser: true, 
+        useUnifiedTopology: true, 
+        useCreateIndex: true 
+    })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
-
-mongoose.set('useCreateIndex', true)

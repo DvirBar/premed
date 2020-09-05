@@ -134,7 +134,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             .catch(next); // Find university
 });
 
-// @route   PUT api/universities/:id/:pathId/remove
+// @route   PUT api/universities/:id/:pathId/removePath
 // @desc    Remove path from university
 // @access  Admin
 router.put('/:id/:pathId/remove', [auth, authAdmin], (req, res, next) => {
