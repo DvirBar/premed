@@ -2,9 +2,14 @@
     display: inline-block;
 }
 
+.stats-add-buttons {
+    display: flex;
+}
+
 .data-fields-admin {
     .data-field {
-        margin: 3rem;
+        margin: 2rem;
+        margin-top: 0;
         padding: 1.5rem;
         background-color: #eee;
         border-radius: 0.5rem;
@@ -40,6 +45,37 @@
             &:hover > .field-menu {
                 display: inline;
             }
+        }
+    }
+    .group-item {
+        .group-title {
+            position: relative;
+            border-bottom: 1px solid #ddd;
+            padding-right: 1rem;
+
+            .group-name {
+                font-size: 2rem;
+            }
+
+            .group-menu {
+                position: absolute;
+                bottom: -15%;
+                display: none;
+
+                .material-icons {
+                    &:hover {
+                        opacity: 0.6;
+                    }
+                }
+            }
+
+            &:hover > .group-menu {
+                display: inline;
+            }
+        }
+        .group-content {
+            padding: 3rem;
+            padding-right: 3rem;
         }
     }
 }

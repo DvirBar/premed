@@ -4,11 +4,16 @@ import { getAllowedTypes } from '../../../redux/actions/datafields';
 import InlineSelect from '../../common/InlineSelect';
 import AddDataField from './AddDataField';
 import DataFieldsList from './DataFieldsList';
+import AddDataGroup from './AddDataGroup';
 
 function Stats() {
     const dispatch = useDispatch();
-    const [selPath, setSelPath] = useState({})
-    const [pathOptions, setPathOptions] = useState([])
+    const [selPath, setSelPath] = useState({});
+    const [pathOptions, setPathOptions] = useState([]);
+    // Groups filtered by path
+    const [pathGroups, setPathGroups] = useState([]); 
+    // Fields filtered by path
+    const [pathFields, setPathFields] = useState([]);  
 
     useEffect(() => {
         dispatch(getAllowedTypes())
@@ -45,6 +50,21 @@ function Stats() {
         }))])
     }, [paths])
 
+    useEffect(() => {
+        if(groups) {
+            let filtGroups = groups.filter(field => 
+                field.path === selPath.value) 
+            
+            setPathGroups(filtGroups)
+        }
+        if(fields) {
+            let filtFields = fields.filter(field =>
+                field.path === selPath.value)
+            setPathFields(filtFields)
+        }
+    }, [selPath, fields, groups])
+
+    
     if(paths && paths.length === 0)
         return <p className="no-resource-error">יש להוסיף מסלולים תחילה</p>
 
@@ -58,15 +78,23 @@ function Stats() {
                 selected={selPath}
                 selectOption={selectOption}
                 options={pathOptions} />
-            </p>            
-            <AddDataField 
-            path={selPath}
-            groups={groups}
-            fieldTypes={types.fieldTypes} />            
+            </p>    
 
+            <p className="stats-add-buttons"> 
+                <AddDataField 
+                path={selPath}
+                groups={pathGroups}
+                fieldTypes={types.fieldTypes} /> 
+
+                <AddDataGroup 
+                path={selPath}
+                groups={pathGroups} />
+            </p>
+    
             <DataFieldsList 
             pathId={selPath.value}
-            fields={fields}
+            fields={pathFields}
+            groups={pathGroups}
             types={types} />
         </div>
     )

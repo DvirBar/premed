@@ -1,19 +1,19 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../../../forms/useForm';
-import { addDataField } from '../../../redux/actions/datafields';
+import { addDataGroup } from '../../../redux/actions/datagroups';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
 
-function AddDataField({ path, groups, fieldTypes }) {
+function AddDataGroup({ path, groups }) {
     const [displayModal, setDisplayModal] = useState(false)
     const [defaultValues, setDefaultValues] = useState({})
+    const [groupOptions, setGroupOptions] = useState([])
 
     useEffect(() => {
         setDefaultValues({
             name: '',
-            fieldType: '',
             pathId: path.value
         })
     }, [path])
@@ -23,41 +23,29 @@ function AddDataField({ path, groups, fieldTypes }) {
         handleSubmit,
         values,
         errors
-    } = useForm(addDataField, defaultValues)
-
-    const [typeOptions, setTypeOptions] = useState([]);
-    const [groupOptions, setGroupOptions] = useState([]);
-        
-    useEffect(() => {
-        if(fieldTypes && fieldTypes.length !== 0) 
-            setTypeOptions(fieldTypes.map(type => ({
-                name: type.name,
-                value: type.value
-            })))
-    }, [fieldTypes])  
+    } = useForm(addDataGroup, defaultValues)
 
     useEffect(() => {
-        setGroupOptions([{ name: 'ללא', value: undefined },
+        setGroupOptions([{ name: 'ללא', value: undefined }, 
         ...groups.map(group => ({
             name: group.name,
             value: group._id
         }))])
     }, [groups]) 
-
+        
     const toggleModal = open => {
         setDisplayModal(open)
     }
 
     return (
-        <Fragment>
+            <Fragment>
             <button onClick={() => toggleModal(true)}>
-                הוסף שדה
+                הוסף קבוצה
             </button>
             <Modal
             display={displayModal}
             toggleModal={toggleModal}
-            title={"הוסף שדה נתונים"}>
-
+            title={"הוסף קבוצת נתונים"}>
                 <form onSubmit={handleSubmit}>
                     <FormInput 
                     label="שם"
@@ -67,22 +55,13 @@ function AddDataField({ path, groups, fieldTypes }) {
                     onChange={handleChange}
                     error={errors.name} />
 
-                    {typeOptions.length !== 0 &&
-                        <Dropdown
-                        options={typeOptions}
-                        name="fieldType"
-                        placeholder={{name:"בחר"}}
-                        title="סוג שדה"
-                        onChange={handleChange} />
-                    }
-
                     {groupOptions.length !== 0 &&
                         <Dropdown
                         options={groupOptions}
-                        name="groupId"
+                        name="parentId"
                         title="קבוצת נתונים"
                         onChange={handleChange} />
-                    }
+                    }           
 
                     <button type="submit">הוסף</button>
                 </form>
@@ -91,10 +70,9 @@ function AddDataField({ path, groups, fieldTypes }) {
     )
 }
 
-AddDataField.propTypes = {
+AddDataGroup.propTypes = {
     path: PropTypes.object.isRequired,
-    groups: PropTypes.array.isRequired,
-    fieldTypes: PropTypes.array.isRequired
+    groups: PropTypes.array.isRequired
 }
 
-export default AddDataField
+export default AddDataGroup

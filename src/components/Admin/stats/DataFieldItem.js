@@ -7,7 +7,7 @@ import VerifyDelete from '../../common/VerifyDelete';
 import { deleteDataField } from '../../../redux/actions/datafields';
 
 function DataFieldItem({ field, types }) {
-    const typeName = types.fieldTypes.find(type =>
+    const typeName = types?.fieldTypes?.find(type =>
         type.value === field.fieldType).name
     
     const [displayMenu, setDisplayMenu] = useState(false);
@@ -50,7 +50,7 @@ function DataFieldItem({ field, types }) {
                     <span className="field-type">
                         {typeName}
                     </span>
-                    <span className="field-menu">
+                    <div className="field-menu">
                         <i 
                         className="material-icons"
                         onClick={() => toggleMenu(!displayMenu)}>
@@ -60,7 +60,7 @@ function DataFieldItem({ field, types }) {
                         display={displayMenu}
                         toggleMenu={toggleMenu}
                         options={options} />
-                    </span>
+                    </div>
                 </p>
             </div>
             <EditDataField 

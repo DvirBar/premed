@@ -69,7 +69,7 @@ export const addDataGroup = data => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
-    axios.post('api/dataGroups', body)
+    axios.post('api/datagroups', body)
          .then(res => dispatch(dataGroupAdd(res.data)))
          .catch(err => dispatch(getError(err)))
 }
