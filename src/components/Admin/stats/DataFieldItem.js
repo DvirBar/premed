@@ -5,12 +5,20 @@ import DropdownMenu from '../../common/DropdownMenu';
 import EditDataField from './EditDataField';
 import VerifyDelete from '../../common/VerifyDelete';
 import { deleteDataField } from '../../../redux/actions/datafields';
+import ValidItem from './ValidItem'
+
+import AddValid from './AddValid';
+import ValidModal from './ValidModal';
 
 function DataFieldItem({ field, types }) {
-    const typeName = types?.fieldTypes?.find(type =>
-        type.value === field.fieldType).name
+    const dataTypeName = types?.dataTypes?.find(type => 
+        type.value === field.dataType).name;
+
+    const fieldTypeName = types?.fieldTypes?.find(type =>
+        type.value === field.fieldType).name;
     
     const [displayMenu, setDisplayMenu] = useState(false);
+    const [displayValDetails, setDisplayValDetails] = useState(false);
     const [displayEdit, setDisplayEdit] = useState(false);
     const [displayVer, setDisplayVer] = useState(false);
 
@@ -19,6 +27,10 @@ function DataFieldItem({ field, types }) {
 
     const toggleMenu = open => {
         setDisplayMenu(open)
+    }
+
+    const toggleValDetails = open => {
+        setDisplayValDetails(open)
     }
 
     const toggleEdit = open => {
@@ -43,12 +55,13 @@ function DataFieldItem({ field, types }) {
     return (
         <Fragment>
             <div className="data-field">
-                <p className="field-title">
+                <div className="field-title">
                     <span className="field-name">
                         {field.name}
                     </span>
                     <span className="field-type">
-                        {typeName}
+                        {dataTypeName}, &nbsp;
+                        {fieldTypeName}
                     </span>
                     <div className="field-menu">
                         <i 
@@ -61,8 +74,27 @@ function DataFieldItem({ field, types }) {
                         toggleMenu={toggleMenu}
                         options={options} />
                     </div>
-                </p>
+                </div>
+                <div className="field-body">
+                    <p className="valid-list-title">
+                        <span>מאמתים:</span>
+                        <i 
+                        className="material-icons"
+                        onClick={() => toggleValDetails(true)}>
+                            create
+                        </i>
+                    </p>
+                    <div className="valid-short">
+                        {field.validators?.map(valid => 
+                            <ValidItem 
+                            key={valid._id}
+                            valid={valid}
+                            validTypes={types.validationTypes}
+                            />)}
+                    </div>
+                </div>
             </div>
+            
             <EditDataField 
             display={displayEdit}
             toggleModal={toggleEdit}
@@ -75,6 +107,14 @@ function DataFieldItem({ field, types }) {
             values={[field._id]}
             display={displayVer}
             toggleModal={toggleVer} />
+
+            <ValidModal
+            display={displayValDetails}
+            toggleModal={toggleValDetails}
+            field={field}
+            types={types} />
+            
+
         </Fragment>
     )
 }

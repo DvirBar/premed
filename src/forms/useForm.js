@@ -49,8 +49,7 @@ const useForm = (callback, defaultValues, ...params) => {
         if(!isSubmitting) {
             setValues(defaultValues);
             setErrors({});
-        }
-            
+        } 
     }
 
     return {

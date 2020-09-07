@@ -32,7 +32,15 @@ export const config = {
         },
 
         fieldType: {
-            isRequired: { message: 'יש להזין סוג' }
+            isRequired: { message: 'יש לבחור סוג שדה' }
+        },
+
+        dataType: {
+            isRequired: { message: 'יש לבחור סוג נתונים' } 
+        },
+
+        validType: {
+            isRequired: { message: 'יש לבחור סוג מאמת' }
         }
     }
 }

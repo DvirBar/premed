@@ -159,7 +159,7 @@ export const editValid = (fieldId, validId, data) => dispatch => {
 // Remove validator
 export const deleteValid = (fieldId, validId) => dispatch => {
 
-    axios.put(`api/topics/${fieldId}/${validId}/remove`)
+    axios.put(`api/datafields/${fieldId}/${validId}/remove`)
          .then(res => dispatch(validDelete(res.data)))
          .catch(err => dispatch(getError(err)))
 }

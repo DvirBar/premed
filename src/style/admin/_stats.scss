@@ -7,6 +7,8 @@
 }
 
 .data-fields-admin {
+    margin: 5rem 0;
+
     .data-field {
         margin: 2rem;
         margin-top: 0;
@@ -15,7 +17,7 @@
         border-radius: 0.5rem;
         
         .field-title {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             position: relative;
             
             .field-name {
@@ -46,7 +48,98 @@
                 display: inline;
             }
         }
+
+        .field-body {
+            padding-right: 1rem;
+
+            .valid-list-title {
+                margin-top: 1rem;
+                color: #707070;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .valid-short {
+                display: flex;
+                font-size: 1.6rem;
+
+                .valid-item {
+                    margin-left: 2rem;
+                }
+            }
     }
+}
+
+.valid-list-title {
+
+    &:hover > .material-icons {
+        display: inline-block;
+    }
+
+    .material-icons {
+        display: none;
+        color: #707070;
+        font-size: 1.6rem;
+        margin-right: 0.5rem;
+        
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.add-valid {
+    display: flex;
+    align-items: center;
+}
+
+.valid-list {
+    .valid-details {
+        padding: 2rem;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+
+        &:hover > .material-icons {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .material-icons {
+            position: relative;
+            top: 50%;
+            color: #707070;
+            margin-left: 1rem;
+            opacity: 0;
+            visibility: hidden;
+
+            &:hover {
+                color: #c52828;
+            }
+        }
+    
+        .valid-name {
+            margin-left: 1rem;
+        }
+    
+        .valid-desc {
+            font-size: 1.5rem;
+            font-style: italic;
+            opacity: 0.6;
+        }
+    
+        .min-max-value {
+            display: flex;
+            font-size: 1.5rem;
+            padding: 1rem;
+            
+            & > span {
+                margin-left: 1.5rem;
+            }
+        }
+    }
+}
+
+
     .group-item {
         .group-title {
             position: relative;

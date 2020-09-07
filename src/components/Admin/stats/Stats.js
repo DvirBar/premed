@@ -84,7 +84,7 @@ function Stats() {
                 <AddDataField 
                 path={selPath}
                 groups={pathGroups}
-                fieldTypes={types.fieldTypes} /> 
+                types={types} /> 
 
                 <AddDataGroup 
                 path={selPath}

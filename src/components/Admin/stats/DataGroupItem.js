@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../../common/DropdownMenu';
 import DataFieldItem from './DataFieldItem';
 import VerifyDelete from '../../common/VerifyDelete';
 import { deleteDataGroup } from '../../../redux/actions/datagroups';
 import EditDataGroup from './EditDataGroup';
+import AddSubGroup from './AddSubGroup';
+import AddFieldToGroup from './AddFieldToGroup';
 
 function DataGroupItem({ group, groups, fields, types }) {
     const children = groups.filter(curGroup => 
@@ -13,11 +15,21 @@ function DataGroupItem({ group, groups, fields, types }) {
     const thisGroupFields = fields.filter(field => field.group === group._id) 
     
     const [displayMenu, setDisplayMenu] = useState(false)
+    const [displayAddField, setDisplayAddField] = useState(false)
+    const [displayAddGroup, setDisplayAddGroup] = useState(false)
     const [displayEdit, setDisplayEdit] = useState(false)
     const [displayVer, setDisplayVer] = useState(false)
 
     const toggleMenu = open => {
         setDisplayMenu(open)
+    }
+
+    const toggleAddField = open => {
+        setDisplayAddField(open)
+    }
+
+    const toggleAddGroup = open => {
+        setDisplayAddGroup(open)
     }
 
     const toggleEdit = open => {
@@ -30,6 +42,14 @@ function DataGroupItem({ group, groups, fields, types }) {
 
     const options = [
         {
+            name: "הוסף שדה",
+            action: () => toggleAddField(true)
+        },
+        {
+            name: "הוסף קבוצה",
+            action: () => toggleAddGroup(true)
+        },
+        {
             name: "ערוך קבוצה",
             action: () => toggleEdit(true)
         },
@@ -38,7 +58,6 @@ function DataGroupItem({ group, groups, fields, types }) {
             action: () => toggleVer(true)
         }
     ]
-
 
     return (
             <div className="group-item">
@@ -88,6 +107,17 @@ function DataGroupItem({ group, groups, fields, types }) {
                     </div>
                 )}
             </div>
+            
+            <AddFieldToGroup
+            group={group}
+            types={types}
+            display={displayAddField}
+            toggleModal={toggleAddField} />
+
+            <AddSubGroup
+            parentGroup={group}
+            display={displayAddGroup}
+            toggleModal={toggleAddGroup} />
         
             <EditDataGroup
             display={displayEdit}

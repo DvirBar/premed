@@ -6,7 +6,7 @@ import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
 
-function AddDataField({ path, groups, fieldTypes }) {
+function AddDataField({ path, groups, types }) {
     const [displayModal, setDisplayModal] = useState(false)
     const [defaultValues, setDefaultValues] = useState({})
 
@@ -14,6 +14,7 @@ function AddDataField({ path, groups, fieldTypes }) {
         setDefaultValues({
             name: '',
             fieldType: '',
+            dataType: '',
             pathId: path.value
         })
     }, [path])
@@ -25,16 +26,32 @@ function AddDataField({ path, groups, fieldTypes }) {
         errors
     } = useForm(addDataField, defaultValues)
 
-    const [typeOptions, setTypeOptions] = useState([]);
+    const fieldTypes = types?.fieldTypes;
+    const [fieldTypeOptions, setFieldTypeOptions] = useState([]);
+    const dataTypes = types?.dataTypes;
+    const [dataTypeOptions, setDataTypeOptions] = useState([]);
     const [groupOptions, setGroupOptions] = useState([]);
+
         
     useEffect(() => {
-        if(fieldTypes && fieldTypes.length !== 0) 
-            setTypeOptions(fieldTypes.map(type => ({
+        if(fieldTypes && fieldTypes.length !== 0) {
+            setFieldTypeOptions(fieldTypes.map(type => ({
                 name: type.name,
                 value: type.value
             })))
+        }
     }, [fieldTypes])  
+
+    useEffect(() => {
+        if(dataTypes && dataTypes.length !== 0) {
+            setDataTypeOptions(dataTypes.map(type => ({
+                name: type.name,
+                value: type.value
+            })))
+        }
+    }, [dataTypes])  
+
+    
 
     useEffect(() => {
         setGroupOptions([{ name: 'ללא', value: undefined },
@@ -67,9 +84,18 @@ function AddDataField({ path, groups, fieldTypes }) {
                     onChange={handleChange}
                     error={errors.name} />
 
-                    {typeOptions.length !== 0 &&
+                    {dataTypeOptions.length !== 0 &&
                         <Dropdown
-                        options={typeOptions}
+                        options={dataTypeOptions}
+                        name="dataType"
+                        placeholder={{name:"בחר"}}
+                        title="סוג נתונים"
+                        onChange={handleChange} />
+                    }   
+
+                    {fieldTypeOptions.length !== 0 &&
+                        <Dropdown
+                        options={fieldTypeOptions}
                         name="fieldType"
                         placeholder={{name:"בחר"}}
                         title="סוג שדה"
@@ -94,7 +120,7 @@ function AddDataField({ path, groups, fieldTypes }) {
 AddDataField.propTypes = {
     path: PropTypes.object.isRequired,
     groups: PropTypes.array.isRequired,
-    fieldTypes: PropTypes.array.isRequired
+    types: PropTypes.array.isRequired
 }
 
 export default AddDataField

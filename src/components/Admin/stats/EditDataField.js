@@ -61,7 +61,8 @@ function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
                     <Dropdown
                     options={typeOptions}
                     name="fieldType"
-                    placeholder={{name:"בחר"}}
+                    defaultOption={fieldTypes.find(type => 
+                        type.value === field.fieldType)}
                     title="סוג שדה"
                     onChange={handleChange} />
                 }
