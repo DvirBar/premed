@@ -6,6 +6,13 @@ const uniMessages = {
         },
         status: 200
     },
+    PathsNotFound: {
+        msg: {
+            en: 'Could not find all path ids assigned',
+            he: 'לא הצלחנו למצוא את כל המסלולים שיוחסו'
+        },
+        status: 400
+    },
     UniNotExist: {
         msg: {
             en: 'University does not exist',

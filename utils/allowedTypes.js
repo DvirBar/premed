@@ -14,6 +14,21 @@ const allowedTypes = {
                 value: "select"
             }
         ],
+        dataTypes: [
+            {
+                name: "מספר",
+                value: 'num',
+                defVal: 'isPosNum'
+            },
+            {
+                name: 'מחרוזת',
+                value: 'str'
+            },
+            {
+                name: 'בוליאני',
+                value: 'bool'
+            }
+        ],
         validationTypes: [
             {
                 name: "שדה דרוש",
@@ -26,9 +41,9 @@ const allowedTypes = {
                 description: "בודק שהערך שמולא הוא גם מספר וגם חיובי"
             },
             {
-                name: "מספר חיובי שלם",
-                value: "isPosInt",
-                description: "בודק שהערך שמולא הוא מספר, חיובי ושלם"
+                name: "מספר שלם",
+                value: "isInt",
+                description: "בודק שהערך שמולא הוא מספר שלם"
             },
             {
                 name: "טווח מספרים",
@@ -55,8 +70,7 @@ const allowedTypes = {
     
     isType: (keyName, validArr) => {
         const found = validArr.find(item =>
-            item.value === keyName 
-        )
+            item.value === keyName)
         
         if(found)
             return true;

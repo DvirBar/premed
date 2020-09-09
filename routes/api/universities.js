@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -11,8 +13,9 @@ const modelName = 'university';
 // Errors
 const uniMessages = require('../../messages/universities');
 const pathsMessages = require('../../messages/paths');
+const { json } = require('express');
 
-const { UniNotExist } = uniMessages;
+const { UniNotExist, PathsNotFound, UniSuccessDelete } = uniMessages;
 const { PathNotExist } = pathsMessages;
 
 // @route   GET api/universitiess/:id
@@ -35,6 +38,7 @@ router.get('/:id', auth, (req, res, next) => {
 // @access  Private
 router.get('/', auth, (req, res, next) => { 
     University.find()
+              .populate('paths')
               .then(uni => res.send(uni))
               .catch(next);
 })
@@ -45,21 +49,26 @@ router.get('/', auth, (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
+        pathIds,
         color
     } = req.body;
 
     res.locals.model = modelName;
-
     const newUni = new University({
         name: name,
+        paths: [...pathIds],
         color: color
     })
 
     newUni.save()
-          .then(uni => {
-                return res.send(uni)
-            })
-          .catch(next);  
+        .then(uni => {
+            async function populateUni() {
+                await uni.populate("paths").execPopulate();
+                return res.send(uni)              
+            } 
+            populateUni();
+        })
+        .catch(next); 
 })
 
 // @route   PUT api/universities/:id
@@ -68,6 +77,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
+        pathIds,
         color
     } = req.body;
 
@@ -81,95 +91,23 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                 if(!uni) 
                     return res.status(UniNotExist.status)
                               .send(UniNotExist.msg)
-            
-            
+
                 uni.name = name;
+                uni.paths = [...pathIds];
                 uni.color = color;
 
                 uni.save()
-                   .then(uni => {
-                        return res.send(uni)              
-                    })
-                    .catch(next); // Save university
-            })
-            .catch(next); // Find university
-});
-
-// @route   PUT api/universities/:id/addPath
-// @desc    Add path to university
-// @access  Admin
-router.put('/:id', [auth, authAdmin], (req, res, next) => {
-    const { 
-        pathId
-    } = req.body;
-
-    res.locals.model = modelName;
-
-    const uniId = req.params.id;
-
-    University.findById(uniId)
-            .then(uni => {
-                // Check that university exists
-                if(!uni) 
-                    return res.status(UniNotExist.status)
-                              .send(UniNotExist.msg)
-                
-                Path.findById(pathId)
                     .then(uni => {
-                        if(!uni)
-                            return res.status(PathNotExist.status)
-                                      .send(PathNotExist.msg)
-                        
-                        uni.paths.push(pathId)
-
-                        uni.save()
-                            .then(uni => {
-                                return res.send(uni)              
-                            })
-                            .catch(next); // Save university                      
+                        async function populateUni() {
+                            await uni.populate("paths").execPopulate();
+                            return res.send(uni)              
+                        } 
+                        populateUni();
                     })
-                    .catch(next); // Find path
-            
+                    .catch(next); // Save university             
             })
             .catch(next); // Find university
 });
-
-// @route   PUT api/universities/:id/:pathId/removePath
-// @desc    Remove path from university
-// @access  Admin
-router.put('/:id/:pathId/remove', [auth, authAdmin], (req, res, next) => {
-    const uniId = req.params.id;
-    const pathId = req.params.id;
-    
-    University.findById(uniId)
-            .then(uni => {
-                // Check that university exists
-                if(!uni) 
-                    return res.status(UniNotExist.status)
-                              .send(UniNotExist.msg)
-                
-                Path.findById(pathId)
-                    .then(uni => {
-                        // Check that path exists
-                        if(!uni)
-                            return res.status(PathNotExist.status)
-                                      .send(PathNotExist.msg)
-                        
-                        const delPath = uni.paths.find(pathId)
-                        delPath.remove()
-                        
-                        uni.save()
-                            .then(uni => {
-                                return res.send(uni)              
-                            })
-                            .catch(next); // Save university                      
-                    })
-                    .catch(next); // Find path
-            
-            })
-            .catch(next); // Find university
-});
-
 
 // @route   DELETE api/universities/:id
 // @desc    Delete university
@@ -187,7 +125,7 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
                 // TODO: Remove university from related groups and fields                            
                 uni.remove()
                    .then(() => {
-                        return res.send(DataGroupSuccessDelete.msg)
+                        return res.send(UniSuccessDelete.msg)
                     })
                    .catch(next); // Remove university
             })

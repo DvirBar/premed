@@ -57,7 +57,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         uniId,
         prevCalIds,
         fieldIds,
-        calc
+        calc,
+        isExternal
     } = req.body;
 
     res.locals.model = modelName;
@@ -103,7 +104,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                                       university: uniId,
                                       prevCals: prevCalIds,
                                       fields: fieldIds,
-                                      calc: calc
+                                      calc: calc,
+                                      isExternal: isExternal
                                   })
           
                                   newCalc.save()
@@ -129,7 +131,8 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         name, 
         prevCalIds,
         fieldIds,
-        calc
+        calc,
+        isExternal
     } = req.body;
 
     res.locals.model = modelName;
@@ -165,14 +168,17 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                                 return res.status(fieldsNotFound.status)
                                           .send(fieldsNotFound.msg)
                                 
-                                group.name = name;
-                                group.parent = parentId;
+                                calc.name = name;
+                                calc.prevCals = prevCalIds;
+                                calc.fields = fieldIds;
+                                calc.calc = calc;
+                                calc.isExternal = isExternal;
 
-                                group.save()
-                                    .then(group => {
-                                        return res.json(group)              
+                                calc.save()
+                                    .then(calc => {
+                                        return res.send(calc)              
                                     })
-                                    .catch(next); // Save group
+                                    .catch(calc); // Save calc
                         })
                         .catch(next); // Find used fields
                     })

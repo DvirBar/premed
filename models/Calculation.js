@@ -25,6 +25,9 @@ const CalculationSchema = new Schema({
     },
     calc: {
         type: String
+    },
+    isExternal: {
+        type: Boolean
     }
 })
 

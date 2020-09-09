@@ -19,8 +19,13 @@ const DataFieldSchema = new Schema({
             type: Number
         }
     }],
+    dataType: {
+        type: String,
+        required: true
+    },
     fieldType: {
-        type: String
+        type: String,
+        required: true
     },
     fieldOptions: [{
         name: {

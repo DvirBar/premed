@@ -55,12 +55,12 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     Path.findById(pathId)
         .then(path => {
             // Check that assigned path exists
-            if(!path) 
+            if(!path && pathId) 
                 return res.status(PathNotExist.status).send(PathNotExist.msg)
 
             DataGroup.findById(parentId)
                       .then(group => {
-                        if(!group && uniId)
+                        if(!group && parentId)
                             return res.status(DataGroupNotExist.status)
                                       .send(DataGroupNotExist.msg)
 
@@ -73,7 +73,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 
                         newGroup.save()
                                 .then(group => {
-                                    return res.json(group)
+                                    return res.send(group)
                                 })
                                 .catch(next); // Save group
                       })

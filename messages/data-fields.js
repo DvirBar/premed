@@ -13,6 +13,13 @@ const dataFieldMessages = {
         },
         status: 400
     },
+    InvalidDataType: {
+        msg: {
+            en: 'Data type is invalid',
+            he: 'סוג הנתונים לא תקין'
+        },
+        status: 400
+    },
     InvalidValidatorType: {
         msg: {
             en: 'Validator type is invalid',
@@ -34,20 +41,6 @@ const dataFieldMessages = {
         },
         status: 400
     },   
-    // RatioExceeds: {
-    //     msg: {
-    //         en: 'Ratio is invalid, should be between 0 to 100',
-    //         he: 'היחס לא תקין, ערכו צריך להיות בין 0 ל-100'
-    //     },
-    //     status: 400
-    // },
-    // RatioSumExceeds: {
-    //     msg: {
-    //         en: 'Ratio is invalid, it causes the sum of all other ratios in group to exceed 100%',
-    //         he: 'היחס לא תקין, הסכום ביחד עם שאר הערכים בקבוצה עולים על 100%'
-    //     },
-    //     status: 400
-    // },
     ValidatorNotExist: {
         msg: {
             en: 'Validator not exist',

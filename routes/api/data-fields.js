@@ -21,7 +21,7 @@ const pathMessages = require('../../messages/paths');
 const uniMessages = require('../../messages/universities')
 
 const { DataFieldSuccessDelete, DataFieldNotExist, 
-    InvalidFieldType, InvalidValidatorType, 
+    InvalidFieldType, InvalidDataType, InvalidValidatorType, 
     ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist } = dataFieldMessages;
 const { DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathMessages; 
@@ -66,6 +66,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
         fieldType,
+        dataType,
         pathId,
         groupId,
         uniId
@@ -77,6 +78,11 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     if(!allowedTypes.isType(fieldType, types.fieldTypes))
         return res.status(InvalidFieldType.status)
                   .send(InvalidFieldType.msg)
+
+    // Check that data type is valid
+    if(!allowedTypes.isType(dataType, types.dataTypes))
+        return res.status(InvalidDataType.status)
+                  .send(InvalidDataType.msg)
 
     Path.findById(pathId)
         .then(path => {
@@ -100,12 +106,20 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                                         return res.status(UniNotExist.status)
                                                   .send(UniNotExist.msg)
                                     
+                                    const dataObj = types.dataTypes.find(type =>
+                                        type.value === dataType)
+                                    
                                     // Create new field
                                     const newField = new DataField({
                                         name: name,
                                         fieldType: fieldType,
+                                        dataType: dataType,
                                         path: pathId,
-                                        group: groupId
+                                        group: groupId,
+                                        validators: {
+                                            validType: dataObj.defVal
+                                        },
+                                        university: uniId 
                                     })
 
                                     newField.save()
@@ -137,6 +151,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
     const fieldId = req.params.id;
 
+
     // Check that field type is valid
     if(!allowedTypes.isType(fieldType, types.fieldTypes))
         return res.status(InvalidFieldType.status)
@@ -164,8 +179,9 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                                             
                                         field.name = name,
                                         field.fieldType = fieldType,
-                                        field.groupId = groupId,
-                                        
+                                        field.group = groupId,
+                                        field.uni = uniId
+
                                         field.save()
                                                 .then(field => {
                                                     return res.send(field)
@@ -192,7 +208,6 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
     res.locals.model = modelName;
 
     const fieldId = req.params.id;
-    
 
     // Check that user entered a validator type
     if(!validType)
@@ -200,7 +215,7 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
                   .msg(ValidatorTypeRequired.msg)
 
     // Check that field type is valid
-    if(!allowedTypes.isType(type, types.validationTypes))
+    if(!allowedTypes.isType(validType, types.validationTypes))
         return res.status(InvalidValidatorType.status)
                   .send(InvalidValidatorType.msg)
     
@@ -215,7 +230,7 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
                               .send(DataFieldNotExist.msg)
                 
                 const newValidator = {
-                    validType: type,
+                    validType: validType,
                     min: min,
                     max: max
                 }
