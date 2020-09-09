@@ -102,7 +102,6 @@ function Stats() {
             <p className="stats-add-buttons"> 
                 <AddDataField 
                 path={selPath}
-                groups={pathGroups}
                 types={types}
                 unis={unis} /> 
 

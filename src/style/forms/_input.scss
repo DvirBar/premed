@@ -1,6 +1,19 @@
 $input-width: 25rem;
 $error-color: #be1b1b;
 
+.form-default {
+    padding: 1rem;
+    font-size: inherit;
+    border-radius: 1rem;
+    outline: none;
+    border: 1.5px solid #ddd;
+    transition: border-color 0.5s ease;
+
+    &:focus {
+        border-color: $main-color;
+    }
+}
+
 .form-text-input {
     line-height: 1.5em;
     position: relative;

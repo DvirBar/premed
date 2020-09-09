@@ -33,6 +33,8 @@ const useForm = (callback, defaultValues, ...params) => {
     }
 
     const handleChange = event => {
+
+        // If not custom field
         if(event.target) {
             if(typeof event.persist !== "undefined")
                 event.persist();
@@ -56,8 +58,31 @@ const useForm = (callback, defaultValues, ...params) => {
                     [event.target.name]: event.target.value}));
             }
         }
+
+        // If custom field
         else {
-            setValues(values => ({...values, [event.name]: event.value}));
+            if(event.type === 'multiValue') {
+                const name = event.name;
+                const value = event.value;
+                let valArr = values[name]
+
+                if(!valArr)
+                    valArr = []
+
+                // If value does not exist in array, add it
+                if(!valArr.find(val => val === value))
+                    setValues(values => ({...values,
+                    [name]: [...valArr, value]}))
+                
+                // If value exists in array, remove it 
+                else
+                    setValues(values => ({...values,
+                    [name]: [...valArr.filter(val =>
+                        val !== value)]}))    
+            }
+            else {  
+                setValues(values => ({...values, [event.name]: event.value}));
+            }
         }
     }
 

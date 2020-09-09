@@ -5,6 +5,7 @@ import { addDataField } from '../../../redux/actions/datafields';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
+import FieldOptionsList from './data-fields/FieldOptionsList';
 
 function AddFieldToGroup({ group, types, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -54,34 +55,48 @@ function AddFieldToGroup({ group, types, display, toggleModal }) {
         display={display}
         toggleModal={toggleModal}
         title={"הוסף שדה נתונים ל" + group.name}>
-            <form onSubmit={handleSubmit}>
-                <FormInput 
-                label="שם"
-                type="text"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                error={errors.name} />
 
-                {dataTypeOptions.length !== 0 &&
-                    <Dropdown
-                    options={dataTypeOptions}
-                    name="dataType"
-                    placeholder={{name:"בחר"}}
-                    title="סוג נתונים"
-                    onChange={handleChange} />
-                }   
+            <form  
+            className="add-data-field"
+            onSubmit={handleSubmit}
+            onKeyPress={e => e.key === "Enter" && e.preventDefault()}>
+                <div>
+                    <FormInput 
+                    label="שם"
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    error={errors.name} />
 
-                {fieldTypeOptions.length !== 0 &&
-                    <Dropdown
-                    options={fieldTypeOptions}
-                    name="fieldType"
-                    placeholder={{name:"בחר"}}
-                    title="סוג שדה"
-                    onChange={handleChange} />
+                    {dataTypeOptions.length !== 0 &&
+                        <Dropdown
+                        options={dataTypeOptions}
+                        name="dataType"
+                        placeholder={{name:"בחר"}}
+                        title="סוג נתונים"
+                        onChange={handleChange} />
+                    }   
+
+                    {fieldTypeOptions.length !== 0 &&
+                        <Dropdown
+                        options={fieldTypeOptions}
+                        name="fieldType"
+                        placeholder={{name:"בחר"}}
+                        title="סוג שדה"
+                        onChange={handleChange} />
+                    }
+                    <button type="submit">הוסף</button>
+                </div>
+
+                {values.fieldType === 'select' &&
+                    <div>
+                        <FieldOptionsList
+                        onChange={handleChange}
+                        values={values.fieldOptions}
+                        name="fieldOptions" />
+                    </div>
                 }
-
-                <button type="submit">הוסף</button>
             </form>
         </Modal>
     )

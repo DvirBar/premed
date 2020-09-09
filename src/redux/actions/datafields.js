@@ -8,7 +8,9 @@ import {
     DATA_FIELD_DELETE,
     DATA_FIELD_VALID_ADD,
     DATA_FIELD_VALID_UPDATE,
-    DATA_FIELD_VALID_DELETE
+    DATA_FIELD_VALID_DELETE,
+    DATA_FIELD_OPTION_ADD,
+    DATA_FIELD_OPTION_DELETE
 } from '../actions/types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -159,9 +161,27 @@ export const editValid = (fieldId, validId, data) => dispatch => {
 // Remove validator
 export const deleteValid = (fieldId, validId) => dispatch => {
 
-    axios.put(`api/datafields/${fieldId}/${validId}/remove`)
+    axios.put(`api/datafields/${fieldId}/${validId}/removeValid`)
          .then(res => dispatch(validDelete(res.data)))
          .catch(err => dispatch(getError(err)))
 }
 
+export const addOption = (fieldId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
 
+    axios.put(`/api/datafields/${fieldId}/addOption`, body)
+         .then(res => dispatch({
+             type: DATA_FIELD_OPTION_ADD,
+             payload: res.data
+         }))
+}
+
+export const deleteOption = (fieldId, optionId) => dispatch => {
+
+    axios.put(`/api/datafields/${fieldId}/${optionId}/removeOption`)
+         .then(res => dispatch({
+             type: DATA_FIELD_OPTION_DELETE,
+             payload: res.data
+         }))    
+}

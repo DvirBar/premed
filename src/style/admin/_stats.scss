@@ -10,6 +10,44 @@
     }
 }
 
+.add-data-field {
+    display: flex;
+    column-gap: 5rem;
+
+    .field-options-list {
+        width: 20rem;
+        background-color: #fff;
+        box-shadow: $default-shadow;
+        border-radius: 5px;
+        font-size: 1.6rem;
+
+        li {
+            padding: 1rem;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            justify-content: space-between;
+
+            .material-icons {
+                transition: color 0.5s ease;
+                color: #707070;
+                
+                &:hover {
+                    color: #c52828;
+                }
+            }
+
+            .form-default {
+                width: 18rem;
+            }
+        }
+
+        .no-options {
+            color: #ddd;
+        }
+    }
+}
+
 .data-fields-admin {
     margin: 5rem 0;
 

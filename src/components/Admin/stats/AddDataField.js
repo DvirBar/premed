@@ -5,8 +5,9 @@ import { addDataField } from '../../../redux/actions/datafields';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
+import FieldOptionsList from './data-fields/FieldOptionsList';
 
-function AddDataField({ path, groups, types, unis }) {
+function AddDataField({ path, types, unis }) {
     const [displayModal, setDisplayModal] = useState(false)
     const [defaultValues, setDefaultValues] = useState({})
 
@@ -30,7 +31,6 @@ function AddDataField({ path, groups, types, unis }) {
     const [fieldTypeOptions, setFieldTypeOptions] = useState([]);
     const dataTypes = types?.dataTypes;
     const [dataTypeOptions, setDataTypeOptions] = useState([]);
-    const [groupOptions, setGroupOptions] = useState([]);
     const [uniOptions, setUniOptions] = useState([])
         
     useEffect(() => {
@@ -63,15 +63,6 @@ function AddDataField({ path, groups, types, unis }) {
         }))])
     }, [unis, path])
     
-
-    useEffect(() => {
-        setGroupOptions([{ name: 'ללא', value: undefined },
-        ...groups.map(group => ({
-            name: group.name,
-            value: group._id
-        }))])
-    }, [groups]) 
-
     const toggleModal = open => {
         setDisplayModal(open)
     }
@@ -86,50 +77,58 @@ function AddDataField({ path, groups, types, unis }) {
             toggleModal={toggleModal}
             title={"הוסף שדה נתונים"}>
 
-                <form onSubmit={handleSubmit}>
-                    <FormInput 
-                    label="שם"
-                    type="text"
-                    name="name"
-                    value={values.name}
-                    onChange={handleChange}
-                    error={errors.name} />
+                <form 
+                className="add-data-field"
+                onSubmit={handleSubmit}
+                onKeyPress={e => e.key === "Enter" && e.preventDefault()}>
+                    <div>
+                        <FormInput 
+                        label="שם"
+                        type="text"
+                        name="name"
+                        value={values.name}
+                        onChange={handleChange}
+                        error={errors.name} />
 
-                    {dataTypeOptions.length !== 0 &&
-                        <Dropdown
-                        options={dataTypeOptions}
-                        name="dataType"
-                        placeholder={{name:"בחר"}}
-                        title="סוג נתונים"
-                        onChange={handleChange} />
-                    }   
+                        {fieldTypeOptions.length !== 0 &&
+                            <Dropdown
+                            options={fieldTypeOptions}
+                            name="fieldType"
+                            placeholder={{name:"בחר"}}
+                            title="סוג שדה"
+                            onChange={handleChange} />
+                        }
 
-                    {fieldTypeOptions.length !== 0 &&
-                        <Dropdown
-                        options={fieldTypeOptions}
-                        name="fieldType"
-                        placeholder={{name:"בחר"}}
-                        title="סוג שדה"
-                        onChange={handleChange} />
+                        {dataTypeOptions.length !== 0 && 
+                        values.fieldType &&
+                        values.fieldType !== 'checkbox' &&
+                            <Dropdown
+                            options={dataTypeOptions}
+                            name="dataType"
+                            placeholder={{name:"בחר"}}
+                            title="סוג נתונים"
+                            onChange={handleChange} />
+                        }   
+
+                        {path.value && uniOptions.length !== 0 &&
+                            <Dropdown
+                            options={uniOptions}
+                            name="uniId"
+                            title="אוניברסיטה"
+                            onChange={handleChange} />
+                        }
+
+                        <button type="submit">הוסף</button>
+                    </div>
+
+                    {values.fieldType === 'select' &&
+                        <div>
+                            <FieldOptionsList
+                            onChange={handleChange}
+                            values={values.fieldOptions}
+                            name="fieldOptions" />
+                        </div>
                     }
-
-                    {groupOptions.length !== 0 &&
-                        <Dropdown
-                        options={groupOptions}
-                        name="groupId"
-                        title="קבוצת נתונים"
-                        onChange={handleChange} />
-                    }
-
-                    {path.value && uniOptions.length !== 0 &&
-                        <Dropdown
-                        options={uniOptions}
-                        name="uniId"
-                        title="אוניברסיטה"
-                        onChange={handleChange} />
-                    }
-
-                    <button type="submit">הוסף</button>
                 </form>
             </Modal>
         </Fragment>

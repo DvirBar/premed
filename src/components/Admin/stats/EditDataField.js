@@ -5,6 +5,7 @@ import { editDataField } from '../../../redux/actions/datafields';
 import Modal from '../../layout/Modal';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
+import FieldOptionsList from './data-fields/FieldOptionsList';
 
 function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -14,7 +15,8 @@ function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
             name: field.name,
             fieldType: field.fieldType,
             pathId: field.path,
-            groupId: field.group
+            groupId: field.group,
+            fieldOptions: field.fieldOptions
         })
     }, [field])
 
@@ -48,34 +50,47 @@ function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
         display={display}
         toggleModal={toggleModal}
         title="ערוך שדה">
-            <form onSubmit={handleSubmit}>
-                <FormInput 
-                label="שם"
-                type="text"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                error={errors.name} />
+            <form 
+            className="add-data-field"
+            onSubmit={handleSubmit}
+            onKeyPress={e => e.key === "Enter" && e.preventDefault()}>
+                <div>
+                    <FormInput 
+                    label="שם"
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    error={errors.name} />
 
-                {typeOptions.length !== 0 &&
-                    <Dropdown
-                    options={typeOptions}
-                    name="fieldType"
-                    defaultOption={fieldTypes.find(type => 
-                        type.value === field.fieldType)}
-                    title="סוג שדה"
-                    onChange={handleChange} />
+                    {typeOptions.length !== 0 &&
+                        <Dropdown
+                        options={typeOptions}
+                        name="fieldType"
+                        defaultOption={fieldTypes.find(type => 
+                            type.value === field.fieldType)}
+                        title="סוג שדה"
+                        onChange={handleChange} />
+                    }
+
+                    {groupOptions.length !== 0 &&
+                        <Dropdown
+                        options={groupOptions}
+                        name="groupId"
+                        title="קבוצת נתונים"
+                        onChange={handleChange} />
+                    }
+
+                    <button type="submit">ערוך</button>
+                </div>
+                {values.fieldType === 'select' &&
+                    <div>
+                        <FieldOptionsList
+                        onChange={handleChange}
+                        values={values.fieldOptions}
+                        name="fieldOptions" />
+                    </div>
                 }
-
-                {groupOptions.length !== 0 &&
-                    <Dropdown
-                    options={groupOptions}
-                    name="groupId"
-                    title="קבוצת נתונים"
-                    onChange={handleChange} />
-                }
-
-                <button type="submit">ערוך</button>
             </form>
         </Modal>
     )

@@ -8,7 +8,9 @@ import {
     DATA_FIELD_DELETE,
     DATA_FIELD_VALID_ADD,
     DATA_FIELD_VALID_UPDATE,
-    DATA_FIELD_VALID_DELETE
+    DATA_FIELD_VALID_DELETE,
+    DATA_FIELD_OPTION_ADD,
+    DATA_FIELD_OPTION_DELETE,
 } from '../actions/types';
 
 const initialState = {
@@ -58,6 +60,8 @@ export default function(state = initialState, action) {
         case DATA_FIELD_VALID_ADD:
         case DATA_FIELD_VALID_UPDATE:
         case DATA_FIELD_VALID_DELETE:
+        case DATA_FIELD_OPTION_ADD:
+        case DATA_FIELD_OPTION_DELETE:
             return {
                 ...state,
                 loading: false,
