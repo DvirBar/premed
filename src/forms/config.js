@@ -41,6 +41,10 @@ export const config = {
 
         validType: {
             isRequired: { message: 'יש לבחור סוג מאמת' }
+        },
+
+        pathIds: {
+            isRequiredArray: {message: 'יש לבחור לפחות מסלול אחד' }
         }
     }
 }

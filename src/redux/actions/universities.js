@@ -58,7 +58,7 @@ export const addUni = data => dispatch => {
 }
 
 export const editUni = (id, data) => dispatch => {
-    dispatch(calcLoad());
+    dispatch(uniLoad());
     
     // Request body
     const body = JSON.stringify(data);

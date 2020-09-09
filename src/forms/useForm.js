@@ -37,8 +37,24 @@ const useForm = (callback, defaultValues, ...params) => {
             if(typeof event.persist !== "undefined")
                 event.persist();
 
-            setValues(values => ({...values, 
-                [event.target.name]: event.target.value}));
+            if(event.target.type === 'checkbox') {
+                const name = event.target.name;
+                const value = event.target.value;
+                const valArr = values[name]
+
+                if(!valArr.find(val => val === value))
+                    setValues(values => ({...values,
+                    [name]: [...valArr, value]}))
+                
+                else
+                    setValues(values => ({...values,
+                    [name]: [...valArr.filter(val =>
+                        val !== value)]}))    
+            }
+            else {
+                setValues(values => ({...values, 
+                    [event.target.name]: event.target.value}));
+            }
         }
         else {
             setValues(values => ({...values, [event.name]: event.value}));
