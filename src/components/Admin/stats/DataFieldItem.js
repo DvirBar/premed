@@ -6,8 +6,6 @@ import EditDataField from './EditDataField';
 import VerifyDelete from '../../common/VerifyDelete';
 import { deleteDataField } from '../../../redux/actions/datafields';
 import ValidItem from './ValidItem'
-
-import AddValid from './AddValid';
 import ValidModal from './ValidModal';
 
 function DataFieldItem({ field, types }) {

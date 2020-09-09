@@ -6,7 +6,7 @@ import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
 
-function AddDataField({ path, groups, types }) {
+function AddDataField({ path, groups, types, unis }) {
     const [displayModal, setDisplayModal] = useState(false)
     const [defaultValues, setDefaultValues] = useState({})
 
@@ -31,7 +31,7 @@ function AddDataField({ path, groups, types }) {
     const dataTypes = types?.dataTypes;
     const [dataTypeOptions, setDataTypeOptions] = useState([]);
     const [groupOptions, setGroupOptions] = useState([]);
-
+    const [uniOptions, setUniOptions] = useState([])
         
     useEffect(() => {
         if(fieldTypes && fieldTypes.length !== 0) {
@@ -51,6 +51,17 @@ function AddDataField({ path, groups, types }) {
         }
     }, [dataTypes])  
 
+
+    useEffect(() => {
+        const filtPaths = unis.filter(uni => 
+            uni.paths.find(curPath => curPath._id === path.value))
+
+        setUniOptions([{name: 'ללא', value: undefined},
+        ...filtPaths.map(uni => ({
+            name: uni.name,
+            value: uni._id
+        }))])
+    }, [unis, path])
     
 
     useEffect(() => {
@@ -107,6 +118,14 @@ function AddDataField({ path, groups, types }) {
                         options={groupOptions}
                         name="groupId"
                         title="קבוצת נתונים"
+                        onChange={handleChange} />
+                    }
+
+                    {path.value && uniOptions.length !== 0 &&
+                        <Dropdown
+                        options={uniOptions}
+                        name="uniId"
+                        title="אוניברסיטה"
                         onChange={handleChange} />
                     }
 

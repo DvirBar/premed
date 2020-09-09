@@ -4,6 +4,10 @@
 
 .stats-add-buttons {
     display: flex;
+
+    & > .dropdown {
+        margin: 1rem;    
+    }
 }
 
 .data-fields-admin {
