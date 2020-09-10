@@ -23,10 +23,6 @@ const allowedTypes = {
             {
                 name: 'מחרוזת',
                 value: 'str'
-            },
-            {
-                name: 'בוליאני',
-                value: 'bool'
             }
         ],
         validationTypes: [

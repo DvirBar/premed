@@ -22,7 +22,8 @@ const uniMessages = require('../../messages/universities')
 
 const { DataFieldSuccessDelete, DataFieldNotExist, 
     InvalidFieldType, InvalidDataType, InvalidValidatorType, 
-    ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist } = dataFieldMessages;
+    ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist,
+    OptionNotExist } = dataFieldMessages;
 const { DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathMessages; 
 const { UniNotExist } = uniMessages;
@@ -69,7 +70,8 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         dataType,
         pathId,
         groupId,
-        uniId
+        uniId,
+        fieldOptions
     } = req.body;
 
     res.locals.model = modelName;
@@ -119,8 +121,12 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                                         validators: {
                                             validType: dataObj.defVal
                                         },
-                                        university: uniId 
+                                        university: uniId,
                                     })
+
+                                    // Only insert options if field type is select
+                                    if(fieldType === 'select') 
+                                        newField.fieldOptions = fieldOptions
 
                                     newField.save()
                                             .then(field => {
@@ -144,7 +150,8 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         name,
         fieldType,
         groupId,
-        uniId
+        uniId,
+        fieldOptions
     } = req.body;
 
     res.locals.model = modelName;
@@ -181,6 +188,10 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                                         field.fieldType = fieldType,
                                         field.group = groupId,
                                         field.uni = uniId
+
+                                        // Only insert options if field type is select
+                                        if(fieldType === 'select') 
+                                            field.fieldOptions = fieldOptions
 
                                         field.save()
                                                 .then(field => {
@@ -246,6 +257,42 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
              .catch(next); // Find data field
 });
 
+// @route   PUT api/datafields/:id/addOption
+// @desc    Add options
+// @access  Admin
+// router.put('/:id/addOption', [auth, authAdmin], (req, res, next) => {
+//     const { 
+//         name,
+//         value
+//     } = req.body;
+
+//     res.locals.model = modelName;
+
+//     const fieldId = req.params.id;
+
+
+//     DataField.findById(fieldId)
+//              .then(field => {
+//                 if(!field)
+//                     return res.status(DataFieldNotExist.status)
+//                               .send(DataFieldNotExist.msg)
+                
+//                 const newOption = {
+//                     name,
+//                     value
+//                 }
+
+//                 field.fieldOptions.push(newOption)
+
+//                 field.save()
+//                      .then(field => {
+//                          return res.send(field)
+//                      })
+//                      .catch(next); // Saving field
+//              })
+//              .catch(next); // Find data field
+// });
+
 
 // @route   PUT api/datafields/:id/:validId
 // @desc    Edit validator
@@ -299,10 +346,11 @@ router.put('/:id/:validId', [auth, authAdmin], (req, res, next) => {
              .catch(next); // Find data field
 });
 
-// @route   PUT api/datafields/:id/:validId/remove
+
+// @route   PUT api/datafields/:id/:validId/removeValid
 // @desc    Remove validator
 // @access  Admin
-router.put('/:id/:validId/remove', [auth, authAdmin], (req, res, next) => {
+router.put('/:id/:validId/removeValid', [auth, authAdmin], (req, res, next) => {
     const fieldId = req.params.id;
     const validId = req.params.validId;
 
@@ -328,6 +376,40 @@ router.put('/:id/:validId/remove', [auth, authAdmin], (req, res, next) => {
              })
              .catch(next); // Saving field
 });
+
+// @route   PUT api/datafields/:id/:optionId/removeOption
+// @desc    Remove option
+// @access  Admin
+// router.put('/:id/:optionId/removeOption', [auth, authAdmin], (req, res, next) => {
+//     const fieldId = req.params.id;
+//     const optionId = req.params.optionId;
+
+//     DataField.findById(fieldId)
+//              .then(field => {
+//                  // Check that field exists
+//                  if(!field) 
+//                     return res.status(DataFieldNotExist.status)
+//                               .send(DataFieldNotExist.msg)
+                  
+//                 // Find field option by ID              
+//                 const fieldOption = field.fieldOptions.id(optionId)
+                
+//                 // Check that option exists
+//                 if(!fieldOption)
+//                     return res.status(OptionNotExist.status)
+//                               .send(OptionNotExist.msg)
+
+//                 fieldOption.remove()
+
+//                 // Save field after removing option and return it
+//                 field.save()
+//                      .then(field => {
+//                          return res.send(field)
+//                      })
+//                      .catch(next); // Saving field
+//              })
+//              .catch(next); // Saving field
+// });
 
 
 // @route   DELETE api/datafields/:id

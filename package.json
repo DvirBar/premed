@@ -2,10 +2,10 @@
   "name": "premed_api",
   "version": "1.0.0",
   "description": "Api for premed apps",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node src/index.js",
+    "server": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,10 @@
     "mongoose": "^5.9.20"
   },
   "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
     "nodemon": "^2.0.4"
   }
 }

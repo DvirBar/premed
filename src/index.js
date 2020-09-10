@@ -1,9 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const config = require('config');
-const cors = require('cors');
-const errorHandler = require('./middleware/errorHandler');
-const errorLogger = require('./middleware/errorLogger');
+import express from 'express'
+import mongoose from 'mongoose'
+import config from 'config'
+import cors from 'cors'
+import errorHandler from  '../middleware/errorHandler';
+import errorLogger from '../middleware/errorLogger';
 
 // Init app
 const app = express();
@@ -14,18 +14,18 @@ app.use(express.json());
 app.use (cors());
 
 // App routes
-const auth = require('./routes/api/auth');
-const paths = require('./routes/api/paths');
-const anouncements = require('./routes/api/anouncements');
-const ancgroups = require('./routes/api/anc-groups');
-const sections = require('./routes/api/sections');
-const steps = require('./routes/api/steps');
-const pages = require('./routes/api/pages');
-const topics = require('./routes/api/topics');
-const datagroups = require('./routes/api/data-groups');
-const datafields = require('./routes/api/data-fields');
-const univeristies = require('./routes/api/universities');
-const calculations = require('./routes/api/calculations');
+import auth from '../routes/api/auth';
+import paths from '../routes/api/paths';
+import anouncements from '../routes/api/anouncements';
+import ancgroups from '../routes/api/anc-groups';
+import sections from '../routes/api/sections';
+import steps from '../routes/api/steps';
+import pages from '../routes/api/pages';
+import topics from '../routes/api/topics';
+import datagroups from '../routes/api/data-groups';
+import datafields from '../routes/api/data-fields';
+import univeristies from '../routes/api/universities';
+import calculations from '../routes/api/calculations';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);

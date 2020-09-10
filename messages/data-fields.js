@@ -48,6 +48,13 @@ const dataFieldMessages = {
         },
         status: 404
     },
+    OptionNotExist: {
+        msg: {
+            en: 'Option not exist',
+            he: 'האפשרות לא קיימת'
+        },
+        status: 404
+    },
     DataFieldNotExist: {
         msg: {
             en: 'Data field does not exist',

@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -18,10 +16,13 @@ const dataFieldMessages = require('../../messages/data-fields');
 const pathsMessages = require('../../messages/paths');
 const uniMessages = require('../../messages/universities');
 
-const { CalcNotExist, calcsNotFound, fieldsNotFound, calcSuccessDelete } = calcMessages;
+const { CalcNotExist, SuggestionRequired,
+    StoredCalcNotExist, CalcSuccessDelete } = calcMessages;
 const { DataFieldNotExist } = dataFieldMessages;
 const { PathNotExist } = pathsMessages;
 const { UniNotExist } = uniMessages;
+
+import storedCalcs from '../../utils/calcsIndex';
 
 // @route   GET api/calculations/:id
 // @desc    Get calculation by id
@@ -55,13 +56,17 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         name, 
         pathId,
         uniId,
-        prevCalIds,
-        fieldIds,
-        calc,
-        isExternal
+        calcFieldsIds,
+        outputFieldId,
+        isSuggestion,
+        storedCalcId
     } = req.body;
 
     res.locals.model = modelName;
+
+    if(outputFieldId && typeof isSuggestion === "undefined")
+        return res.status(SuggestionRequired.status)
+                  .send(SuggestionRequired.msg)
 
     Path.findById(pathId)
         .then(path => {
@@ -75,50 +80,39 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                             return res.status(UniNotExist.status)
                                       .send(UniNotExist.msg)
 
-                        Calculation.count({ 
-                            _id: { $in: [
-                                prevCalIds.map(id =>
-                                    ObjectId(id))
-                            ]}
-                        })
-                        .then(count => {
-                            if(count !== prevCalIds.length)
-                                return res.status(calcsNotFound.status)
-                                          .send(calcsNotFound.msg)
+                      DataField.findById(outputFieldId)
+                               .then(field => {
+                                   if(!field && outputFieldId)
+                                        return res.status(DataFieldNotExist.status)
+                                                  .send(DataFieldNotExist.msg)
+                                    
+                                    // Check that assigned calc is a stored procedure
+                                    if(!storedCalcs.find(calc => calc.id === storedCalcId))
+                                        return res.status(StoredCalcNotExist.status)
+                                                  .then(StoredCalcNotExist.msg)
 
-                            DataField.count({
-                                _id: { $in: [
-                                    fieldIds.map(id =>
-                                        ObjectId(id))
-                                ]}
+                                    // Create new calculation
+                                    const newCalc = new Calculation({
+                                        name: name,
+                                        path: pathId,
+                                        university: uniId,
+                                        fields: calcFieldsIds,
+                                        outputField: {
+                                            field: outputFieldId,
+                                            isSuggestion: isSuggestion
+                                        },
+                                        calc: storedCalcId
+                                    })
+
+                                    newCalc.save()
+                                            .then(calc => {
+                                                return res.json(calc)
+                                            })
+                                            .catch(next); // Save calc
                             })
-                            .then(count => {
-                                if(count !== prevCalIds.length)
-                                    return res.status(fieldsNotFound.status)
-                                              .send(fieldsNotFound.msg)
-                                              
-                                  // Create new calculation
-                                  const newCalc = new Calculation({
-                                      name: name,
-                                      path: pathId,
-                                      university: uniId,
-                                      prevCals: prevCalIds,
-                                      fields: fieldIds,
-                                      calc: calc,
-                                      isExternal: isExternal
-                                  })
-          
-                                  newCalc.save()
-                                          .then(calc => {
-                                              return res.json(calc)
-                                          })
-                                          .catch(next); // Save calc
-                            })
-                            .catch(next); // Find all used fields
-                        })
-                        .catch(next); // Find all previous calculations
+                            .catch(next); // Find output data field
                       })
-                      .catch(next); // Find parent data group
+                      .catch(next); // Find parent university
         })
         .catch(next) // Find path
 })
@@ -129,15 +123,20 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name, 
-        prevCalIds,
-        fieldIds,
-        calc,
-        isExternal
+        calcFieldsIds,
+        outputFieldId,
+        isSuggestion,
+        storedCalcId
     } = req.body;
 
     res.locals.model = modelName;
 
     const calcId = req.params.id;
+
+    // If output field was assigned but suggestion was not specified
+    if(outputFieldId && typeof isSuggestion === "undefined")
+        return res.status(SuggestionRequired.status)
+                  .send(SuggestionRequired.msg)
 
     Calculation.findById(calcId)
             .then(calc => {
@@ -146,43 +145,33 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     return res.status(CalcNotExist.status)
                               .send(CalcNotExist.msg)
 
-                    Calculation.count({ 
-                        _id: { $in: [
-                            prevCalIds.map(id =>
-                                ObjectId(id))
-                        ]}
-                    })
-                    .then(count => {
-                        if(count !== prevCalIds.length)
-                            return res.status(calcsNotFound.status)
-                                        .send(calcsNotFound.msg)
+                DataField.findById(outputFieldId)
+                         .then(field =>{
+                            if(!field && outputFieldId)
+                                return res.status(DataFieldNotExist.status)
+                                          .send(DataFieldNotExist.msg)
+                         
+                            // Check that assigned calc is a stored procedure
+                            if(!storedCalcs.find(calc => calc.id === storedCalcId))
+                                return res.status(StoredCalcNotExist.status)
+                                        .then(StoredCalcNotExist.msg)
+                           
+                            calc.name = name;
+                            calc.fields = calcFieldsIds;
+                            calc.outputField = {
+                                field: outputFieldId,
+                                isSuggestion: isSuggestion
+                            };
+                            calc.calc = storedCalcId
 
-                        DataField.count({
-                            _id: { $in: [
-                                fieldIds.map(id =>
-                                    ObjectId(id))
-                            ]}
+                            calc.save()
+                                .then(calc => {
+                                    return res.send(calc)              
+                                })
+                                .catch(next); // Save calc    
                         })
-                        .then(count => {
-                            if(count !== prevCalIds.length)
-                                return res.status(fieldsNotFound.status)
-                                          .send(fieldsNotFound.msg)
-                                
-                                calc.name = name;
-                                calc.prevCals = prevCalIds;
-                                calc.fields = fieldIds;
-                                calc.calc = calc;
-                                calc.isExternal = isExternal;
+                        .catch(next); // Find output data field
 
-                                calc.save()
-                                    .then(calc => {
-                                        return res.send(calc)              
-                                    })
-                                    .catch(calc); // Save calc
-                        })
-                        .catch(next); // Find used fields
-                    })
-                    .catch(next); // Find previous calculations
             })
             .catch(next); // Find data group
 });
@@ -204,7 +193,7 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
                 // TODO: Do not allow deleting calc or fields if use in calc                            
                 calc.remove()
                      .then(() => {
-                        return res.send(calcSuccessDelete.msg)
+                        return res.send(CalcSuccessDelete.msg)
                      })
                      .catch(next);
             })

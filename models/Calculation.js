@@ -7,10 +7,6 @@ const CalculationSchema = new Schema({
     name: {
         type: String
     },
-    prevCals: [{
-        type: ObjectId,
-        ref: 'Calculation'
-    }],
     fields: [{
         type: ObjectId,
         ref: 'DataField'
@@ -26,8 +22,14 @@ const CalculationSchema = new Schema({
     calc: {
         type: String
     },
-    isExternal: {
-        type: Boolean
+    outputField: {
+        field: {
+            type: ObjectId,
+            ref: 'DataField'
+        },
+        isSuggestion: {
+            type: Boolean
+        } 
     }
 })
 
