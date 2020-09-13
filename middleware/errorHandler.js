@@ -29,7 +29,8 @@ const errorHandler = (err, req, res, next) => {
         //         .catch(() => {return res.status(500).send({msg: "Internal server error"})})
 
         // return res.status(500).send({msg: "Internal server error"})
-        throw err;
+        console.log(err);
+        return res.status(500).send({ msg: "Internal server error" })
 
     } catch (err) {
         throw err;

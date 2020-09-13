@@ -1,4 +1,10 @@
-export const hujiFinal = (psycho, bagrut, mor) => {
+export const hujiFinal = params => {
+    const {
+        'bagrut': bagrut,
+        'psycho': psycho,
+        'mor': mor
+    } = params
+    
     // Standard bagrut grade
     const B = 3.9630 * bagrut - 20.0621;
 

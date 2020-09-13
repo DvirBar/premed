@@ -41,6 +41,13 @@ const DataFieldSchema = new Schema({
     university: {
         type: ObjectId,
         ref: 'University'
+    },
+    role: {
+        type: String
+    },
+    calcOutput: {
+        type: ObjectId,
+        ref: 'Calculation'
     }
 })
 

@@ -11,6 +11,14 @@ const CalculationSchema = new Schema({
         type: ObjectId,
         ref: 'DataField'
     }],
+    groups: [{
+        type: ObjectId,
+        ref: 'DataGroup'
+    }],
+    prevCalcs: [{
+        type: ObjectId,
+        ref: 'Calculation'
+    }],
     university: {
         type: ObjectId,
         ref: 'University'
@@ -22,15 +30,13 @@ const CalculationSchema = new Schema({
     calc: {
         type: String
     },
-    outputField: {
-        field: {
-            type: ObjectId,
-            ref: 'DataField'
-        },
-        isSuggestion: {
-            type: Boolean
-        } 
+    isSuggestion: {
+        type: Boolean
+    },
+    role: {
+        type: String
     }
+
 })
 
 module.exports = mongoose.model('Calculation', CalculationSchema);

@@ -10,11 +10,16 @@ const Path = require('../../models/Path');
 const University = require('../../models/University');
 const modelName = 'calculation';
 
+// Utilities
+const allowedTypes = require('../../utils/allowedTypes');
+const types = allowedTypes.types
+
 // Errors
 const calcMessages = require('../../messages/calculations');
 const dataFieldMessages = require('../../messages/data-fields');
 const pathsMessages = require('../../messages/paths');
 const uniMessages = require('../../messages/universities');
+
 
 const { CalcNotExist, SuggestionRequired,
     StoredCalcNotExist, CalcSuccessDelete } = calcMessages;
@@ -23,6 +28,10 @@ const { PathNotExist } = pathsMessages;
 const { UniNotExist } = uniMessages;
 
 import storedCalcs from '../../utils/calcsIndex';
+
+router.get('/storedCalcs', [auth, authAdmin], (req, res, next) => {
+    return res.send(storedCalcs);
+})
 
 // @route   GET api/calculations/:id
 // @desc    Get calculation by id
@@ -56,22 +65,16 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         name, 
         pathId,
         uniId,
-        calcFieldsIds,
-        outputFieldId,
         isSuggestion,
         storedCalcId
     } = req.body;
 
     res.locals.model = modelName;
 
-    if(outputFieldId && typeof isSuggestion === "undefined")
-        return res.status(SuggestionRequired.status)
-                  .send(SuggestionRequired.msg)
-
     Path.findById(pathId)
         .then(path => {
             // Check that assigned path exists
-            if(!path) 
+            if(!path && pathId) 
                 return res.status(PathNotExist.status).send(PathNotExist.msg)
 
             University.findById(uniId)
@@ -79,38 +82,45 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                         if(!uni && uniId)
                             return res.status(UniNotExist.status)
                                       .send(UniNotExist.msg)
+                
+                        // Check that assigned calc is a stored procedure
+                        if(!storedCalcs.find(calc => calc.id == storedCalcId))
+                            return res.status(StoredCalcNotExist.status)
+                                        .send(StoredCalcNotExist.msg)
 
-                      DataField.findById(outputFieldId)
-                               .then(field => {
-                                   if(!field && outputFieldId)
-                                        return res.status(DataFieldNotExist.status)
-                                                  .send(DataFieldNotExist.msg)
-                                    
-                                    // Check that assigned calc is a stored procedure
-                                    if(!storedCalcs.find(calc => calc.id === storedCalcId))
-                                        return res.status(StoredCalcNotExist.status)
-                                                  .then(StoredCalcNotExist.msg)
+                        // Create new calculation
+                        const newCalc = new Calculation({
+                            name: name,
+                            path: pathId,
+                            university: uniId,
+                            outputField: isSuggestion,
+                            calc: storedCalcId
+                        })
 
-                                    // Create new calculation
-                                    const newCalc = new Calculation({
+                        newCalc.save()
+                                .then(calc => {
+                                    const dataObj = types.dataTypes.find(type =>
+                                        type.value === dataType)
+
+                                    const newOutputField = new DataField({
                                         name: name,
                                         path: pathId,
                                         university: uniId,
-                                        fields: calcFieldsIds,
-                                        outputField: {
-                                            field: outputFieldId,
-                                            isSuggestion: isSuggestion
+                                        dataType: 'num',
+                                        fieldType: 'textbox',
+                                        validators: {
+                                            validType: dataObj.defVal
                                         },
-                                        calc: storedCalcId
+                                        calcOutput: calc._id
                                     })
 
-                                    newCalc.save()
-                                            .then(calc => {
-                                                return res.json(calc)
-                                            })
-                                            .catch(next); // Save calc
-                            })
-                            .catch(next); // Find output data field
+                                    newOutputField.save()
+                                        .then(() => {
+                                            return res.send(calc)
+                                        })         
+                                    .catch(next); // Save outputField
+                                })
+                                .catch(next); // Save calc
                       })
                       .catch(next); // Find parent university
         })
@@ -123,8 +133,6 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name, 
-        calcFieldsIds,
-        outputFieldId,
         isSuggestion,
         storedCalcId
     } = req.body;
@@ -145,36 +153,69 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     return res.status(CalcNotExist.status)
                               .send(CalcNotExist.msg)
 
-                DataField.findById(outputFieldId)
-                         .then(field =>{
-                            if(!field && outputFieldId)
-                                return res.status(DataFieldNotExist.status)
-                                          .send(DataFieldNotExist.msg)
+
                          
-                            // Check that assigned calc is a stored procedure
-                            if(!storedCalcs.find(calc => calc.id === storedCalcId))
-                                return res.status(StoredCalcNotExist.status)
-                                        .then(StoredCalcNotExist.msg)
-                           
-                            calc.name = name;
-                            calc.fields = calcFieldsIds;
-                            calc.outputField = {
-                                field: outputFieldId,
-                                isSuggestion: isSuggestion
-                            };
-                            calc.calc = storedCalcId
+                // Check that assigned calc is a stored procedure
+                if(!storedCalcs.find(calc => calc.id === storedCalcId))
+                    return res.status(StoredCalcNotExist.status)
+                            .then(StoredCalcNotExist.msg)
+                
+                calc.name = name;
+                calc.isSuggestion = isSuggestion;
+                calc.calc = storedCalcId;
 
-                            calc.save()
-                                .then(calc => {
-                                    return res.send(calc)              
-                                })
-                                .catch(next); // Save calc    
-                        })
-                        .catch(next); // Find output data field
-
+                calc.save()
+                    .then(calc => {
+                        return res.send(calc)              
+                    })
+                    .catch(next); // Save calc    
             })
             .catch(next); // Find data group
 });
+
+// @route   PUT api/calculations/:id/assignRole
+// @desc    Assign role to calculation
+// @access  Admin
+router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
+    const role = req.body.role
+    const calcId = req.params.id
+
+    Calculation.findById(calcId)
+               .then(calc => {
+                   if(!calc && calcId)
+                        return res.status(CalcNotExist.status)
+                                  .send(CalcNotExist.msg)
+
+                   calc.role = role
+
+                   calc.save()
+                       .then(calc => {  
+    // Find if there is calc with the same role and unassign it
+                           Calculation.find({ $and: 
+                            [{_id: { $ne: calc._id}}, 
+                                {role: { $ne: undefined} }]})
+                            .then(prevCalc => {
+                                if(prevCalc) {
+                                    prevCalc.role = undefined
+                                    prevCalc.save()
+                                        .then(() => {
+                                            const returnArr = [
+                                                prevCalc,
+                                                calc
+                                            ]
+                                            return res.send(returnArr)
+                                        })
+                                        .catch(next); // Save prev calc
+                                }
+                                
+                                return res.send(calc)
+                            })
+                            .catch(next); // Find calc
+                       })
+                       .catch(next); // Save clac
+               })
+               .catch(next); // Find calc
+})
 
 
 // @route   DELETE api/calculations/:id

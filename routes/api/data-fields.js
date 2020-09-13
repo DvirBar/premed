@@ -257,41 +257,49 @@ router.put('/:id/addValid', [auth, authAdmin], (req, res, next) => {
              .catch(next); // Find data field
 });
 
-// @route   PUT api/datafields/:id/addOption
-// @desc    Add options
+// @route   PUT api/datafields/:id/assignRole
+// @desc    Assign role to data field
 // @access  Admin
-// router.put('/:id/addOption', [auth, authAdmin], (req, res, next) => {
-//     const { 
-//         name,
-//         value
-//     } = req.body;
+router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
+    const role = req.body.role
+    const fieldId = req.params.id
 
-//     res.locals.model = modelName;
+    DataField.findById(fieldId)
+               .then(field => {
+                   if(!field && fieldId)
+                        return res.status(DataFieldNotExist.status)
+                                  .send(DataFieldNotExist.msg)
 
-//     const fieldId = req.params.id;
+                   field.role = role
 
+                   field.save()
+                       .then(field => {
+        // Find if there is field with the same role and unassign it
+                            DataField.find({ $and: 
+                                [{_id: { $ne: field._id}}, 
+                                    {role: { $ne: undefined} }]})
+                                .then(prevField => {
+                                    if(prevField) {
+                                        prevField.role = undefined
+                                        prevField.save()
+                                            .then(() => {
+                                                const returnArr = [
+                                                    prevField,
+                                                    field
+                                                ]
+                                                return res.send(returnArr)
+                                            })
+                                            .catch(next); // Save prev field
+                                    }
 
-//     DataField.findById(fieldId)
-//              .then(field => {
-//                 if(!field)
-//                     return res.status(DataFieldNotExist.status)
-//                               .send(DataFieldNotExist.msg)
-                
-//                 const newOption = {
-//                     name,
-//                     value
-//                 }
-
-//                 field.fieldOptions.push(newOption)
-
-//                 field.save()
-//                      .then(field => {
-//                          return res.send(field)
-//                      })
-//                      .catch(next); // Saving field
-//              })
-//              .catch(next); // Find data field
-// });
+                                    return res.send(calc)
+                                })
+                                .catch(next); // Find field
+                       })
+                       .catch(next); // Save field
+               })
+               .catch(next); // Find field
+})
 
 
 // @route   PUT api/datafields/:id/:validId
@@ -376,40 +384,6 @@ router.put('/:id/:validId/removeValid', [auth, authAdmin], (req, res, next) => {
              })
              .catch(next); // Saving field
 });
-
-// @route   PUT api/datafields/:id/:optionId/removeOption
-// @desc    Remove option
-// @access  Admin
-// router.put('/:id/:optionId/removeOption', [auth, authAdmin], (req, res, next) => {
-//     const fieldId = req.params.id;
-//     const optionId = req.params.optionId;
-
-//     DataField.findById(fieldId)
-//              .then(field => {
-//                  // Check that field exists
-//                  if(!field) 
-//                     return res.status(DataFieldNotExist.status)
-//                               .send(DataFieldNotExist.msg)
-                  
-//                 // Find field option by ID              
-//                 const fieldOption = field.fieldOptions.id(optionId)
-                
-//                 // Check that option exists
-//                 if(!fieldOption)
-//                     return res.status(OptionNotExist.status)
-//                               .send(OptionNotExist.msg)
-
-//                 fieldOption.remove()
-
-//                 // Save field after removing option and return it
-//                 field.save()
-//                      .then(field => {
-//                          return res.send(field)
-//                      })
-//                      .catch(next); // Saving field
-//              })
-//              .catch(next); // Saving field
-// });
 
 
 // @route   DELETE api/datafields/:id

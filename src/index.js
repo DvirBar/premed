@@ -42,7 +42,6 @@ app.use('/api/calculations', calculations);
 
 // Exit middlewares
 app.use(errorHandler);
-app.use(errorLogger);
 
 
 // Create connection

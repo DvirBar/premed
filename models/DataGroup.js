@@ -15,6 +15,9 @@ const DataGroupSchema = new Schema({
     parent: {
         type: ObjectId,
         ref: 'Group'
+    },
+    role: {
+        type: String
     }
 })
 

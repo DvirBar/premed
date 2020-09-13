@@ -123,6 +123,53 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 });
 
 
+// @route   PUT api/datagroups/:id/assignRole
+// @desc    Assign role to data group
+// @access  Admin
+router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
+    const role = req.body.role
+    const groupId = req.params.id
+
+    DataGroup.findById(groupId)
+               .then(group => {
+                   if(!group && groupId)
+                        return res.status(DataGroupNotExist.status)
+                                  .send(DataGroupNotExist.msg)
+
+                   group.role = role
+
+                   group.save()
+                       .then(group => {
+            // Find if there is group with the same role and unassign it
+                            DataGroup.find({ $and: 
+                                [{_id: { $ne: group._id}}, 
+                                    {role: role}]})
+                                .then(prevGroup => {
+                                    if(prevGroup) {
+                                        const saveGroup = prevGroup[0]
+                                        saveGroup.role = undefined
+                                        saveGroup.save()
+                                            .then(() => {
+                                                const returnArr = [
+                                                    saveGroup,
+                                                    group
+                                                ]
+                                                return res.send(returnArr)
+                                            })
+                                            .catch(next); // Save prev field
+                                        }
+                                    else {
+                                        return res.send(group)
+                                    }
+                                })
+                                .catch(next); // Find group
+                        })
+                       .catch(next); // Save group
+               })
+               .catch(next); // Find group
+})
+
+
 // @route   DELETE api/datagroups/:id
 // @desc    Delete data group
 // @access  Admin
