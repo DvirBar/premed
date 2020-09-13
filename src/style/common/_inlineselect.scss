@@ -1,43 +1,45 @@
 $container-radius: 1rem;
 
-.inline-select {
-    display: flex;
-    border: 0.1rem solid $main-color; 
-    border-radius: $container-radius;
-    color: $main-color;
-    overflow: hidden;
-    margin: auto;
-
-    li {
-        padding: 2rem;
-        cursor: pointer;
-
-        &:hover:not(#selected) {
-            background-color: #eee;
-        }
-    }
-
-    li:first-child {
-        border-top-right-radius: $container-radius;
-        border-bottom-right-radius: $container-radius;
-    }
-
-    li:last-child {
-        border-top-left-radius: $container-radius;
-        border-bottom-left-radius: $container-radius;
-    }
-
-    li:only-child {
+.inline-select-wrapper {
+    .inline-select {
+        display: flex;
+        border: 0.1rem solid $main-color; 
         border-radius: $container-radius;
+        color: $main-color;
+        overflow: hidden;
+        margin: auto;
+    
+        li {
+            padding: 2rem;
+            cursor: pointer;
+    
+            &:hover:not(#selected) {
+                background-color: #eee;
+            }
+        }
+    
+        li:first-child {
+            border-top-right-radius: $container-radius;
+            border-bottom-right-radius: $container-radius;
+        }
+    
+        li:last-child {
+            border-top-left-radius: $container-radius;
+            border-bottom-left-radius: $container-radius;
+        }
+    
+        li:only-child {
+            border-radius: $container-radius;
+        }
+    
+        li:not(:last-child) {
+            border-left: 0.1rem solid $main-color; 
+        }
+    
+        #selected {
+            background-color: $main-color;
+            color: #fff;;
+        }
+    
     }
-
-    li:not(:last-child) {
-        border-left: 0.1rem solid $main-color; 
-    }
-
-    #selected {
-        background-color: $main-color;
-        color: #fff;;
-    }
-
 }

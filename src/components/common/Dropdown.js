@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Dropdown = ({ options, defaultOption, name, title, onChange, placeholder }) => {
+const Dropdown = ({ options, defaultOption, name, title, 
+    onChange, placeholder, uniqueListKey }) => {
     const [display, setDisplay] = useState(false);
     const [selected, setSelected] = useState({})
     const toggleDrop = () => {
@@ -12,18 +13,22 @@ const Dropdown = ({ options, defaultOption, name, title, onChange, placeholder }
     useEffect(() => { 
         if(selected && 
             (Object.keys(selected).length === 0 || defaultOption)) {
-            setSelected(placeholder || defaultOption || options[0])
+            setSelected( defaultOption || placeholder || options[0])
         }
     }, [placeholder, defaultOption, options])
 
     const selectData = option => { // Assign selected option and close dropdown
-        setSelected(option)
-        const data = {
-            name: name,
-            value: option.value
-        }    
-        onChange(data)
-        setDisplay(false)
+        if(!option.forbidden) {
+            setSelected(option)
+            const data = {
+                name: name,
+                value: option.value,
+                type: option.type,
+                key: uniqueListKey
+            }    
+            onChange(data)
+            setDisplay(false)
+        }
     }
 
     const paddingSelect = {
@@ -51,6 +56,7 @@ const Dropdown = ({ options, defaultOption, name, title, onChange, placeholder }
                 <li
                 key={option.value}
                 onClick={() => selectData(option)}
+                className={option.forbidden && "forbidden-option"}
                 id={selected && option.value === selected.value ? "selected" : ""}>
                     <span>{option.name}</span>
                     <i className="material-icons">done</i>
@@ -67,7 +73,8 @@ Dropdown.propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    uniqueListKey: PropTypes.string
 }
 
 export default Dropdown

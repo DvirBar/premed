@@ -1,0 +1,34 @@
+.multi-select {
+    width: 15rem;
+    box-shadow: $default-shadow;
+
+    .title {
+        padding: 1rem;
+        text-align: center;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        transition: border-color 0.5s ease;
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+
+        &:hover {
+            border-color: $main-color;
+        }
+    }
+
+    .options-list {
+        background-color: #eee;
+        max-width: 0;
+        transition: max-height 0.25s ease-out;
+
+        &.open {
+            max-width: 20rem;
+            transition: max-height 0.25s ease-out;
+        }
+    }
+
+    .footer {
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+    }
+}

@@ -10,16 +10,18 @@ function InlineSelect({ selected, selectOption, options}) {
     }, [options])
 
     return (
-        <ul className="inline-select">
-            {options.map(option => (
-                <li 
-                className="select-item"
-                id={selected.value === option.value ? "selected" : ""} 
-                onClick={() => selectOption(option)}>
-                    {option.name}
-                </li>
-            ))}
-        </ul>
+        <div className="inline-select-wrapper">
+            <ul className="inline-select">
+                {options.map(option => (
+                    <li 
+                    className="select-item"
+                    id={selected.value === option.value ? "selected" : ""} 
+                    onClick={() => selectOption(option)}>
+                        {option.name}
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 

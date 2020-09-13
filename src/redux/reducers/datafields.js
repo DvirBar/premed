@@ -11,6 +11,7 @@ import {
     DATA_FIELD_VALID_DELETE,
     DATA_FIELD_OPTION_ADD,
     DATA_FIELD_OPTION_DELETE,
+    DATA_FIELD_ASSIGN_ROLE
 } from '../actions/types';
 
 const initialState = {
@@ -67,6 +68,18 @@ export default function(state = initialState, action) {
                 loading: false,
                 fields: state.fields.map(field => 
                     field._id === payload._id ? field = payload : field)
+            }
+
+        case DATA_FIELD_ASSIGN_ROLE:
+            return {
+                ...state,
+                loading: false,
+                fields: state.fields.map(field => {
+                    let tempField = payload.find(curField => 
+                        curField._id === field._id)
+                    
+                    return tempField ? field = tempField : field
+                })
             }
 
         case DATA_FIELD_DELETE: 

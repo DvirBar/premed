@@ -24,11 +24,11 @@ function UniItem({ uni }) {
 
     const options = [
         {
-            name: "ערוך אוניברסיטה",
+            name: "ערוך",
             action: () => toggleEdit(true)
         },
         {
-            name: "מחק אוניברסיטה",
+            name: "מחק",
             action: () => toggleVer(true)
         }
     ]

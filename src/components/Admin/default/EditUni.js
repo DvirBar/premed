@@ -40,10 +40,6 @@ function EditUni({ display, toggleModal, uni }) {
         handleChange(colorObj)
     }
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
     return (
         <Modal
         display={display}

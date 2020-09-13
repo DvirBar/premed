@@ -108,6 +108,11 @@ $unfocus_color: #888;
             }
         }
 
+        .forbidden-option {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+
         &::-webkit-scrollbar {
             width: 0.5rem;
             opacity: 0;

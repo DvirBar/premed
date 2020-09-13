@@ -5,11 +5,14 @@ import {
     CALC_ADD,
     CALC_UPDATE,
     CALC_DELETE,
+    STORED_CALCS_GET,
+    CALC_ASSIGN_ROLE
 } from '../actions/types';
 
 const initialState = {
     loading: false,
-    calcs: []
+    calcs: [],
+    storedCalcs: []
 }
 
 export default function(state = initialState, action) {
@@ -46,7 +49,20 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                calcs: state.calcs.map(calc => calc._id === payload._id ? calc = payload : calc)
+                calcs: state.calcs.map(calc => calc._id === payload._id 
+                    ? calc = payload : calc)
+            }
+
+        case CALC_ASSIGN_ROLE:
+            return {
+                ...state,
+                loading: false,
+                calcs: state.calcs.map(calc => {
+                    let tempCalc = payload.find(curCalc => 
+                        curCalc._id === calc._id)
+                    
+                    return tempCalc ? calc = tempCalc : calc
+                })
             }
 
         case CALC_DELETE:
@@ -54,6 +70,13 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 calcs: state.calcs.filter(calc => calc._id !== payload)
+            }
+        
+        case STORED_CALCS_GET: 
+            return {
+                ...state,
+                loading: false,
+                storedCalcs: payload
             }
 
         default:

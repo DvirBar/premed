@@ -40,8 +40,7 @@ const useForm = (callback, defaultValues, ...params) => {
                 event.persist();
 
             if(event.target.type === 'checkbox') {
-                const name = event.target.name;
-                const value = event.target.value;
+                const { name, value } = event.target;
                 const valArr = values[name]
 
                 if(!valArr.find(val => val === value))

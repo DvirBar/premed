@@ -10,7 +10,8 @@ import {
     DATA_FIELD_VALID_UPDATE,
     DATA_FIELD_VALID_DELETE,
     DATA_FIELD_OPTION_ADD,
-    DATA_FIELD_OPTION_DELETE
+    DATA_FIELD_OPTION_DELETE,
+    DATA_FIELD_ASSIGN_ROLE
 } from '../actions/types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -121,11 +122,24 @@ export const editDataField = (id, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
-    console.log(data);
-
     axios.put(`api/datafields/${id}`, body)
          .then(res => dispatch(dataFieldUpdate(res.data)))
          .catch(err => dispatch(getError(err)))
+}
+
+export const dataFieldAssignRole = (id, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
+
+    axios.put(`api/datafields/${id}/assignRole`, body)
+         .then(res => dispatch({
+             type: DATA_FIELD_ASSIGN_ROLE,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataFieldError())
+             dispatch(getMessage(err))
+         })
 }
 
 export const deleteDataField = id => dispatch => {
@@ -185,3 +199,5 @@ export const deleteOption = (fieldId, optionId) => dispatch => {
              payload: res.data
          }))    
 }
+
+

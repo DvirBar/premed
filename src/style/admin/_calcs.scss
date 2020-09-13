@@ -1,0 +1,31 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .arg-block {
+        .role-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 1rem;
+
+            &.not-assigned {
+                border: 2px solid #cf1414;
+            }
+        }
+        .dropdown {
+            margin: 0;
+        }
+    }
+
+    .material-icons {
+        margin-left: 10rem;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}

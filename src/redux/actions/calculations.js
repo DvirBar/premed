@@ -5,6 +5,8 @@ import {
     CALC_ADD,
     CALC_UPDATE,
     CALC_DELETE,
+    STORED_CALCS_GET,
+    CALC_ASSIGN_ROLE
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -40,8 +42,6 @@ export const getCalcs = () => dispatch => {
 
 // Create new calculation
 export const addCalc = data => dispatch => {
-    dispatch(calcLoad());
-
     // Request body
     const body = JSON.stringify(data);
 
@@ -91,4 +91,30 @@ export const deleteCalc = id => dispatch => {
             dispatch(getError(err))
          })
 }
+
+export const getStoredCalcs = () => dispatch => {
+    dispatch(calcLoad());
+    
+    axios.get('api/calculations/storedCalcs')
+         .then(res => dispatch({
+             type: STORED_CALCS_GET,
+             payload: res.data
+         }))
+}
+
+export const calcAssignRole = (id, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
+
+    axios.put(`api/calculations/${id}/assignRole`, body)
+         .then(res => dispatch({
+             type: CALC_ASSIGN_ROLE,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(calcError())
+             dispatch(getMessage(err))
+         })
+}
+
 

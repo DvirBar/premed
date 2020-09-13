@@ -5,6 +5,7 @@ import {
     DATA_GROUP_ADD,
     DATA_GROUP_UPDATE,
     DATA_GROUP_DELETE,
+    DATA_GROUP_ASSIGN_ROLE
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -83,6 +84,21 @@ export const editDataGroup = (id, data) => dispatch => {
     axios.put(`api/datagroups/${id}`, body)
          .then(res => dispatch(dataGroupUpdate(res.data)))
          .catch(err => dispatch(getError(err)))
+}
+
+export const dataGroupAssignRole = (id, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
+
+    axios.put(`api/datagroups/${id}/assignRole`, body)
+         .then(res => dispatch({
+             type: DATA_GROUP_ASSIGN_ROLE,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataGroupError())
+             dispatch(getMessage(err))
+         })
 }
 
 export const deleteDataGroup = id => dispatch => {

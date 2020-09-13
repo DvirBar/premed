@@ -1,3 +1,29 @@
+.choose-stats {
+    display: flex;
+    column-gap: 5rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: 9%;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 25rem;
+        width: 25rem;
+        padding: 4rem;
+        color: #888;
+        border: 2px solid #ddd;
+        border-radius: 1rem;
+        transition: all 0.5s ease;
+
+        &:hover {
+            border-color: $main-color;
+            color: $main-color;
+        }   
+    }
+}
+
 .select-path {
     display: inline-block;
 }

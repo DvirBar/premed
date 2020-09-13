@@ -45,6 +45,10 @@ export const config = {
 
         pathIds: {
             isRequiredArray: {message: 'יש לבחור לפחות מסלול אחד' }
+        },
+
+        storedCalcId: {
+            isRequired: { message: 'יש לבחור שקלול' }
         }
     }
 }

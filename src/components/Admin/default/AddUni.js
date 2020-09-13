@@ -22,14 +22,6 @@ function AddUni({ paths }) {
         setDisplay(open)
     }
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors])
-
     const colors = [
         '#ffc65c',
         '#ff5c5c',

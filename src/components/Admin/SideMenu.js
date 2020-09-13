@@ -1,20 +1,54 @@
 import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useRouteMatch, useLocation } from 'react-router-dom'
 import Pages from './pages/Pages';
 
 function SideMenu() {
     const { path } = useRouteMatch();
+    let { pathname } = useLocation();
+
+    const linksList = [
+        {
+            url: path,
+            name: 'כללי'
+        },
+        {
+            url: `${path}/anouncements`,
+            name: 'פרסומים' 
+        },
+        {
+            url: `${path}/paths`,
+            name: 'תהליך הקבלה' 
+        },
+        {
+            url: `${path}/pages`,
+            name: 'עמודים' 
+        },
+        {
+            url: `${path}/stats`,
+            name: 'סטטיסטיקות' 
+        }
+        // {
+        //     url: `${path}/anouncements`,
+        //     name: 'פניות' 
+        // },
+        // {
+        //     url: `${path}/anouncements`,
+        //     name: 'הגדרות ומשתמשים' 
+        // }
+    ]
 
     return (
         <ul className="side-menu">
-            <Link to={`${path}`}><li>כללי</li></Link>
-            <Link to={`${path}/anouncements`}><li>פרסומים</li></Link>
-            <Link to={`${path}/steps`}><li>תהליך הקבלה</li></Link>
-            <Link to={`${path}/pages`}><li>עמודים</li></Link>            
-            <Link to={`${path}/stats`}><li>סטטיסטיקות </li></Link>
-            <li>הגדרות ומשתמשים</li>
-            <li>פניות</li>
-            <li>אבטחה</li>
+            {linksList.map(link =>
+                <li
+                key={link.url} 
+                className={link.url === pathname
+                ? "link-item current"
+                : "link-item"}>
+                    <Link to={link.url}>
+                        <span>{link.name}</span>
+                    </Link>
+                </li>)}
         </ul>
     )
 }

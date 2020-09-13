@@ -4,7 +4,8 @@ import {
     DATA_GROUP_ERROR,
     DATA_GROUP_ADD,
     DATA_GROUP_UPDATE,
-    DATA_GROUP_DELETE
+    DATA_GROUP_DELETE,
+    DATA_GROUP_ASSIGN_ROLE
 } from '../actions/types';
 
 const initialState = {
@@ -48,6 +49,18 @@ export default function(state = initialState, action) {
                 loading: false,
                 groups: state.groups.map(group => 
                     group._id === payload._id ? group = payload : group)
+            }
+
+        case DATA_GROUP_ASSIGN_ROLE:
+            return {
+                ...state,
+                loading: false,
+                groups: state.groups.map(group => {
+                    let tempGroup = payload.find(curGroup => 
+                        curGroup._id === group._id)
+                    
+                    return tempGroup ? group = tempGroup : group
+                })
             }
 
         case DATA_GROUP_DELETE:
