@@ -12,6 +12,7 @@ function ValidItem({ valid , validTypes }) {
             </span>
             {valid.validType === 'numRange' && 
                 <span>
+
                     ({valid.min} -
                     {valid.max}) 
                 </span>

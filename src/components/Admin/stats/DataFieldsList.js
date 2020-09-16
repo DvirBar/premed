@@ -9,8 +9,9 @@ function DataFieldsList({ fields, groups, types, selUni }) {
 
     useEffect(() => {
         setUniFields(fields.filter(field => 
-            field.university === selUni))
+            field.university._id === selUni))
     }, [selUni])    
+    
     if(fields.length === 0 && groups.length === 0)
         return <p className="no-resource-error">
                 אין שדות וקבוצות נתונים במסלול זה

@@ -12,7 +12,7 @@ function Subpage() {
     const page = useSelector(state => 
         state.pages.pages.find(page => page.url === pageUrl))
 
-    const subpage = page.subpages.find(subpage => 
+    const subpage = page?.subpages.find(subpage => 
         subpage.url === subpageUrl)
     
     const [displayLinks, setDisplayLinks] = useState(false);
@@ -28,7 +28,7 @@ function Subpage() {
     return (
         <div className="subpage">
             <SubpageLinks 
-            links={subpage.links}
+            links={subpage?.links}
             display={displayLinks} />
             <TopicsList subpage={subpage} />
             <span 

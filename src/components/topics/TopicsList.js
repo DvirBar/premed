@@ -10,7 +10,7 @@ function TopicsList({ subpage }) {
 
     useEffect(() => {
         setTopics(fetchedTopics.filter(topic => 
-            topic.subpage === subpage._id &&
+            topic.subpage === subpage?._id &&
             !topic.parent))
     }, [fetchedTopics, subpage])
 

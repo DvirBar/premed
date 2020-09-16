@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCalcs, getStoredCalcs } from '../../../../redux/actions/calculations';
 import InlineSelect from '../../../common/InlineSelect';
+import UniSelect from '../unis/UniSelect';
 import AddCalc from './AddCalc';
 import AssignArgs from './AssignArgs';
+import CalcsList from './CalcsList';
 
 function Calcs() {
     // Get calculations
@@ -66,10 +68,14 @@ function Calcs() {
     const { unis } = unisSelector;
     const loadUnis = unisSelector.loading;
     const [pathUnis, setPathUnis] = useState([])
+    const [selUni, setSelUni] = useState({})
+
+    const selectUni = option => {
+        setSelUni(option.value)
+    }
 
     // Filter fields, groups and unis according to path
     useEffect(() => {
-
         if(unis) {
             let filtUnis = unis.filter(uni =>
                 uni.paths.find(path => 
@@ -87,7 +93,7 @@ function Calcs() {
 
     return (
         <div>
-            <p className="top-bar">
+            <div className="top-bar">
                 <InlineSelect
                 selected={selPath}
                 selectOption={selectPathOption}
@@ -97,11 +103,26 @@ function Calcs() {
                 fields={fields}
                 groups={groups}
                 calcs={calcs} />
-            </p>    
-            <AddCalc 
-            path={selPath}
-            unis={pathUnis}
-            storedCalcs={storedCalcs} />
+            </div>
+            <div className="middle-bar">
+                <AddCalc 
+                path={selPath}
+                unis={pathUnis}
+                storedCalcs={storedCalcs} />
+                
+                {selPath.value && unis?.length !== 0 &&
+                    <UniSelect
+                    selPath={selPath}
+                    unis={unis}
+                    selectUni={selectUni} />
+                }  
+            </div>
+
+            <CalcsList
+            pathId={selPath.value}
+            calcs={calcs}
+            fields={fields}
+            uniId={selUni} />
         </div>
     )
 }

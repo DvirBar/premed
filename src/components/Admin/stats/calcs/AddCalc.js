@@ -5,6 +5,7 @@ import { addCalc } from '../../../../redux/actions/calculations';
 import FormInput from '../../../common/FormInput';
 import Dropdown from '../../../common/Dropdown';
 import Modal from '../../../layout/Modal';
+import Checkbox from '../../../common/Checkbox';
  
 function AddCalc({ path, unis, storedCalcs }) {
     const [displayModal, setDisplayModal] = useState(false);
@@ -15,9 +16,10 @@ function AddCalc({ path, unis, storedCalcs }) {
         setDefaultValues({
             name: '',
             pathId: path.value,
-            calc: ''
+            storedCalcId: '',
+            isSuggestion: false
         })
-    }, [path])
+    }, [path]) 
 
     const {
         handleChange,
@@ -60,8 +62,13 @@ function AddCalc({ path, unis, storedCalcs }) {
     }
 
     useEffect(() => {
-        console.log(errors)
-    }, [errors])
+        console.log(values);
+    }, [values])
+
+    // const toggleIsSuggestion = event => {
+    //     handleChange
+    //     console.log(event.target.value);
+    // }
 
     return (
         <Fragment>
@@ -71,7 +78,7 @@ function AddCalc({ path, unis, storedCalcs }) {
         <Modal
         display={displayModal}
         toggleModal={toggleModal}
-        title={"צור שקלול"}>
+        title={"יצירת שקלול"}>
 
             <form onSubmit={handleSubmit}>
                 <FormInput 
@@ -99,6 +106,16 @@ function AddCalc({ path, unis, storedCalcs }) {
                     title="שקלול"
                     onChange={handleChange} />
                 }
+
+                <Checkbox
+                name="isSuggestion"
+                label="סימון כהצעה"
+                value={{
+                    on: true, 
+                    off: false}}
+                checked={values.isSuggestion}
+                onChange={handleChange} />
+    
                 <button type="submit">צור</button>
             </form>
         </Modal>

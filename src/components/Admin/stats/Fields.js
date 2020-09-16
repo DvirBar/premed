@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllowedTypes } from '../../../redux/actions/datafields';
+import { useSelector } from 'react-redux';
 import InlineSelect from '../../common/InlineSelect';
 import AddDataField from './AddDataField';
 import DataFieldsList from './DataFieldsList';
@@ -8,7 +7,6 @@ import AddDataGroup from './AddDataGroup';
 import UniSelect from './unis/UniSelect';
 
 function Fields() {
-    const dispatch = useDispatch();
     const [selPath, setSelPath] = useState({});
     const [pathOptions, setPathOptions] = useState([]);
     // Groups filtered by path
@@ -18,9 +16,6 @@ function Fields() {
     // Filter by university
     const [selUni, setSelUni] = useState('')
 
-    useEffect(() => {
-        dispatch(getAllowedTypes())
-    }, [])
 
     // Paths
     const pathSelector = useSelector(state => state.paths);

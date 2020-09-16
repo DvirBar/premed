@@ -8,7 +8,8 @@ function ValidModal({ field, types, display, toggleModal }) {
         <Modal
         display={display}
         toggleModal={toggleModal}
-        title={'מאמתים עבור ' + field.name}>
+        title={'מאמתים עבור ' + field.name}
+        subTitle={field.university?.name}>
             <AddValid 
             field={field}
             validTypes={types.validationTypes} />

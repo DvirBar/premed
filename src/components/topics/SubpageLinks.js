@@ -9,8 +9,8 @@ function SubpageLinks({ links, display }) {
             <li className="list-header">
                 קישורים שימושיים
             </li>
-            {links.length !== 0 
-            ?   links.map(link => 
+            {links?.length !== 0 
+            ?   links?.map(link => 
                 <li className="link-item">
                     <a 
                     href={link.url} 

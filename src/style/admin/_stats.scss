@@ -119,38 +119,39 @@
 
         .field-body {
             padding-right: 1rem;
-
-            .valid-list-title {
-                margin-top: 1rem;
-                color: #707070;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .valid-short {
-                display: flex;
-                font-size: 1.6rem;
-
-                .valid-item {
-                    margin-left: 2rem;
-                }
-            }
     }
 }
 
-.valid-list-title {
 
-    &:hover > .material-icons {
-        display: inline-block;
-    }
+    .group-item {
+        .group-title {
+            position: relative;
+            border-bottom: 1px solid #ddd;
+            padding-right: 1rem;
 
-    .material-icons {
-        display: none;
-        color: #707070;
-        font-size: 1.6rem;
-        margin-right: 0.5rem;
-        
-        &:hover {
-            opacity: 0.6;
+            .group-name {
+                font-size: 2rem;
+            }
+
+            .group-menu {
+                position: absolute;
+                bottom: -15%;
+                display: none;
+
+                .material-icons {
+                    &:hover {
+                        opacity: 0.6;
+                    }
+                }
+            }
+
+            &:hover > .group-menu {
+                display: inline;
+            }
+        }
+        .group-content {
+            padding: 3rem;
+            padding-right: 3rem;
         }
     }
 }
@@ -207,36 +208,32 @@
     }
 }
 
+.valid-list-title {
+    margin-top: 1rem;
+    color: #707070;
+    border-bottom: 1px solid #ddd;
 
-    .group-item {
-        .group-title {
-            position: relative;
-            border-bottom: 1px solid #ddd;
-            padding-right: 1rem;
+    &:hover > .material-icons {
+        display: inline-block;
+    }
 
-            .group-name {
-                font-size: 2rem;
-            }
-
-            .group-menu {
-                position: absolute;
-                bottom: -15%;
-                display: none;
-
-                .material-icons {
-                    &:hover {
-                        opacity: 0.6;
-                    }
-                }
-            }
-
-            &:hover > .group-menu {
-                display: inline;
-            }
+    .material-icons {
+        display: none;
+        color: #707070;
+        font-size: 1.6rem;
+        margin-right: 0.5rem;
+        
+        &:hover {
+            opacity: 0.6;
         }
-        .group-content {
-            padding: 3rem;
-            padding-right: 3rem;
-        }
+    }
+}
+
+.valid-short {
+    display: flex;
+    font-size: 1.6rem;
+
+    .valid-item {
+        margin-left: 2rem;
     }
 }

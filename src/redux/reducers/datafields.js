@@ -16,7 +16,7 @@ import {
 
 const initialState = {
     loading: false,
-    fields:[],
+    fields: [],
     types: {}
 }
 

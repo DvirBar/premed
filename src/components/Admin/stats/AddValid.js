@@ -24,8 +24,8 @@ function AddValid({ field, validTypes }) {
     useEffect(() => {
         if(validTypes && validTypes.length !== 0) {
             // Filter validators that the field already has
-            const filtValids = validTypes.filter(type => 
-                !field.validators.find(valid =>
+            const filtValids = validTypes?.filter(type => 
+                !field.validators?.find(valid =>
                     valid.validType === type.value))
     
             setValidOptions(filtValids.map(valid => ({
