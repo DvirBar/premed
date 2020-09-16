@@ -55,6 +55,7 @@ router.get('/:id', (req, res, next) => {
 // @access  Public
 router.get('/', (req, res, next) => { 
     DataField.find()
+        .populate("university")
         .then(field => res.send(field))
         .catch(next);
 })

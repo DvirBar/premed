@@ -141,19 +141,12 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
     const calcId = req.params.id;
 
-    // If output field was assigned but suggestion was not specified
-    if(outputFieldId && typeof isSuggestion === "undefined")
-        return res.status(SuggestionRequired.status)
-                  .send(SuggestionRequired.msg)
-
     Calculation.findById(calcId)
             .then(calc => {
             // Check that calculation exists
                 if(!calc) 
                     return res.status(CalcNotExist.status)
                               .send(CalcNotExist.msg)
-
-
                          
                 // Check that assigned calc is a stored procedure
                 if(!storedCalcs.find(calc => calc.id === storedCalcId))

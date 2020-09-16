@@ -7,18 +7,6 @@ const CalculationSchema = new Schema({
     name: {
         type: String
     },
-    fields: [{
-        type: ObjectId,
-        ref: 'DataField'
-    }],
-    groups: [{
-        type: ObjectId,
-        ref: 'DataGroup'
-    }],
-    prevCalcs: [{
-        type: ObjectId,
-        ref: 'Calculation'
-    }],
     university: {
         type: ObjectId,
         ref: 'University'
