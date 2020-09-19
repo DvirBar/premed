@@ -104,6 +104,7 @@ function Navbar({ paths }) {
                                     <ul className="sub-menu">
                                         <li>
                                             <Link to="/profile"> 
+                                                <i className="material-icons">person</i>
                                                 <span>פרופיל</span>
                                             </Link>
                                         </li>

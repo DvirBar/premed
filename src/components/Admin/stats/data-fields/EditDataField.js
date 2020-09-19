@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { editDataField } from '../../../redux/actions/datafields';
-import Modal from '../../layout/Modal';
-import FormInput from '../../common/FormInput';
-import Dropdown from '../../common/Dropdown';
-import FieldOptionsList from './data-fields/FieldOptionsList';
+import useForm from '../../../../forms/useForm';
+import { editDataField } from '../../../../redux/actions/datafields';
+import Modal from '../../../layout/Modal';
+import FormInput from '../../../common/FormInput';
+import Dropdown from '../../../common/Dropdown';
+import FieldOptionsList from './FieldOptionsList';
 
 function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
     const [defaultValues, setDefaultValues] = useState({})

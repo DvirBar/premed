@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import DropdownMenu from '../../common/DropdownMenu';
-import DataFieldItem from './DataFieldItem';
-import VerifyDelete from '../../common/VerifyDelete';
-import { deleteDataGroup } from '../../../redux/actions/datagroups';
+import DropdownMenu from '../../../common/DropdownMenu';
+import DataFieldItem from '../data-fields/DataFieldItem';
+import VerifyDelete from '../../../common/VerifyDelete';
+import { deleteDataGroup } from '../../../../redux/actions/datagroups';
 import EditDataGroup from './EditDataGroup';
 import AddSubGroup from './AddSubGroup';
 import AddFieldToGroup from './AddFieldToGroup';
@@ -132,6 +132,13 @@ function DataGroupItem({ group, groups, fields, types }) {
             toggleModal={toggleVer} />
         </div>
     )}
+
+DataGroupItem.propTypes = {
+    group: PropTypes.object.isRequired,
+    groups: PropTypes.array.isRequired,
+    fields: PropTypes.array.isRequired,
+    types: PropTypes.array.isRequired
+}
 
 
 export default DataGroupItem

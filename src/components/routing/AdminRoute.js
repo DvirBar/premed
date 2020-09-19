@@ -10,6 +10,9 @@ const AdminRoute = ({ component: Component, ...rest }) => {
             if(auth.isAuthenticated) {
                 if(auth.user.isAdmin)
                     return <Component {...rest} {...props} />;
+                
+                else 
+                    return <Redirect to='/' />;  
             }
             else 
                 return <Redirect to='/' />;  

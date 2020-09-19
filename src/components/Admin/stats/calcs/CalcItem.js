@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import DropdownMenu from '../../../common/DropdownMenu';
 import VerifyDelete from '../../../common/VerifyDelete';
-import ValidModal from '../ValidModal';
+import ValidModal from '../valids/ValidModal';
 import { deleteCalc } from '../../../../redux/actions/calculations';
 import EditCalc from './EditCalc';
-import ValidItem from '../ValidItem';
 import ShortValidList from '../valids/ShortValidList';
 import CalcDetails from './CalcDetails';
 
@@ -52,21 +51,26 @@ function CalcItem({ calc, field, types, storedCalcs }) {
     return (
         <Fragment>
              <div className="calc-item">
-                <div className="calc-title">
-                    <span className="calc-name">
-                        {calc.name}
-                    </span>
-                    <div className="calc-menu">
-                        <i 
-                        className="material-icons"
-                        onClick={() => toggleMenu(!displayMenu)}>
-                            more_vert
-                        </i>
-                        <DropdownMenu
-                        display={displayMenu}
-                        toggleMenu={toggleMenu}
-                        options={options} />
+                <div className="calc-top">
+                    <div className="calc-title">
+                        <span className="calc-name">
+                            {calc.name}
+                        </span>
+                        <div className="calc-menu">
+                            <i 
+                            className="material-icons"
+                            onClick={() => toggleMenu(!displayMenu)}>
+                                more_vert
+                            </i>
+                            <DropdownMenu
+                            display={displayMenu}
+                            toggleMenu={toggleMenu}
+                            options={options} />
+                        </div>
                     </div>
+                    <span className="calc-brand">
+                        שקלול
+                    </span>
                 </div>
 
                 <div className="calc-section">
@@ -91,9 +95,11 @@ function CalcItem({ calc, field, types, storedCalcs }) {
                         </i>
                     </div>
                     <div className="valid-short">
-                        <ShortValidList
-                        fieldValids={field.validators}
-                        validTypes={types.validationTypes} />
+                        {field &&
+                             <ShortValidList
+                             fieldValids={field?.validators}
+                             validTypes={types.validationTypes} />
+                        }
                     </div>                    
                 </div>
             </div>

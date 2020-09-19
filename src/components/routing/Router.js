@@ -13,6 +13,7 @@ import Steps from '../steps/Steps';
 import StepItem from '../steps/StepItem';
 import Subpage from '../topics/Subpage';
 import TopicContent from '../topics/TopicContent';
+import NoMatchPage from '../layout/NoMatchPage';
 
 const Router = () => {
     const location = useLocation();
@@ -35,6 +36,7 @@ const Router = () => {
                 <ProtectedRoute exact path="/steps/:pathId/:stepId" component={StepItem} />
                 <ProtectedRoute exact path="/:pageUrl/:subpageUrl" component={Subpage} />
                 <ProtectedRoute path="/:pageUrl/:subpageUrl/:topicUrl" component={TopicContent} />
+                <Route component={NoMatchPage} />
             </Switch>
         </div>
     )

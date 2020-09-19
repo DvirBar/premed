@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { addDataGroup } from '../../../redux/actions/datagroups';
-import FormInput from '../../common/FormInput';
-import Modal from '../../layout/Modal';
+import useForm from '../../../../forms/useForm';
+import { addDataGroup } from '../../../../redux/actions/datagroups';
+import FormInput from '../../../common/FormInput';
+import Modal from '../../../layout/Modal';
 
 function AddSubGroup({ parentGroup, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -22,10 +22,6 @@ function AddSubGroup({ parentGroup, display, toggleModal }) {
         values,
         errors
     } = useForm(addDataGroup, defaultValues)
-
-    useEffect(() => {
-        console.log(display);
-    }, [display])
         
     return (
         <Modal

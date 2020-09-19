@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { editDataGroup } from '../../../redux/actions/datagroups';
-import FormInput from '../../common/FormInput';
-import Dropdown from '../../common/Dropdown';
-import Modal from '../../layout/Modal';
+import useForm from '../../../../forms/useForm';
+import { editDataGroup } from '../../../../redux/actions/datagroups';
+import FormInput from '../../../common/FormInput';
+import Dropdown from '../../../common/Dropdown';
+import Modal from '../../../layout/Modal';
 
 function EditDataGroup({ display, toggleModal, group, groups }) {
     const [defaultValues, setDefaultValues] = useState({

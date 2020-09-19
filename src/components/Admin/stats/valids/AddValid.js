@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { addValid } from '../../../redux/actions/datafields';
-import Modal from '../../layout/Modal';
-import Dropdown from '../../common/Dropdown';
+import useForm from '../../../../forms/useForm';
+import { addValid } from '../../../../redux/actions/datafields';
+import Dropdown from '../../../common/Dropdown';
 
 function AddValid({ field, validTypes }) {
 

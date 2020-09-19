@@ -13,7 +13,7 @@ const Dropdown = ({ options, defaultOption, name, title,
     useEffect(() => { 
         if(selected && 
             (Object.keys(selected).length === 0 || defaultOption)) {
-            setSelected( defaultOption || placeholder || options[0])
+            setSelected(defaultOption || placeholder || options[0])
         }
     }, [placeholder, defaultOption, options])
 
@@ -25,7 +25,7 @@ const Dropdown = ({ options, defaultOption, name, title,
                 value: option.value,
                 type: option.type,
                 key: uniqueListKey
-            }    
+            }
             onChange(data)
             setDisplay(false)
         }

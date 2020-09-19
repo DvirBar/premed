@@ -32,10 +32,6 @@ function Checkbox({ name, label, value, values, onChange, checked, isMulti }) {
         }
     }, [isChanging, isChecked])
 
-    useEffect(() => {
-        console.log(isChecked);
-    }, [])
-
     return (
         <div className="checkbox-elem">
              <div 

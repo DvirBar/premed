@@ -1,12 +1,12 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import DropdownMenu from '../../common/DropdownMenu';
+import DropdownMenu from '../../../common/DropdownMenu';
 import EditDataField from './EditDataField';
-import VerifyDelete from '../../common/VerifyDelete';
-import { deleteDataField } from '../../../redux/actions/datafields';
-import ValidItem from './ValidItem'
-import ValidModal from './ValidModal';
+import VerifyDelete from '../../../common/VerifyDelete';
+import { deleteDataField } from '../../../../redux/actions/datafields';
+import ValidItem from '../valids/ValidItem'
+import ValidModal from '../valids/ValidModal';
 
 function DataFieldItem({ field, types }) {
     const dataTypeName = types?.dataTypes?.find(type => 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Loadbar from '../../layout/Loadbar';
 import PathList from './PathList';
 import UniList from './UniList';
 import Unis from './Unis';
@@ -20,7 +21,7 @@ function AdminDefault() {
     }, [fetchedPaths])
 
     if(loadUnis || loadPaths)
-        return <p>loading...</p>
+        return <Loadbar />
 
     else {
         return (

@@ -11,8 +11,6 @@ import AncAdmin from './anouncements/AncAdmin';
 import StepsAdmin from './steps/StepsAdmin';
 import Pages from './pages/Pages';
 import Stats from './stats/Stats';
-import Calcs from './stats/calcs/Calcs';
-import Fields from './stats/Fields';
 
 
 const AdminRouter = () => {
@@ -20,6 +18,7 @@ const AdminRouter = () => {
     let location = useLocation();
     let { path } = useRouteMatch();
 
+    // Initialize messages when switching url
     useEffect(() => {
         dispatch(initMessage());
     }, [location])
@@ -31,8 +30,6 @@ const AdminRouter = () => {
                 <AdminRoute path={`${path}/steps`} component={StepsAdmin} />
                 <AdminRoute path={`${path}/pages`} component={Pages} />
                 <AdminRoute exact path={`${path}/stats`} component={Stats} />
-                <AdminRoute exact path={`${path}/stats/calcs`} component={Calcs} />
-                <AdminRoute exact path={`${path}/stats/fields`} component={Fields} />
             </Switch>
     )
 }

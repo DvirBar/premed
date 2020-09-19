@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { addDataGroup } from '../../../redux/actions/datagroups';
-import FormInput from '../../common/FormInput';
-import Dropdown from '../../common/Dropdown';
-import Modal from '../../layout/Modal';
+import useForm from '../../../../forms/useForm';
+import { addDataGroup } from '../../../../redux/actions/datagroups';
+import FormInput from '../../../common/FormInput';
+import Dropdown from '../../../common/Dropdown';
+import Modal from '../../../layout/Modal';
 
 function AddDataGroup({ path, groups }) {
     const [displayModal, setDisplayModal] = useState(false)

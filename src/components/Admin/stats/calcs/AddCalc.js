@@ -60,16 +60,7 @@ function AddCalc({ path, unis, storedCalcs }) {
     const toggleModal = open => {
         setDisplayModal(open)
     }
-
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
-    // const toggleIsSuggestion = event => {
-    //     handleChange
-    //     console.log(event.target.value);
-    // }
-
+    
     return (
         <Fragment>
         <button onClick={() => toggleModal(true)}>

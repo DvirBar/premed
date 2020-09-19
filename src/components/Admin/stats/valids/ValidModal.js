@@ -1,5 +1,5 @@
 import React from 'react'; 
-import Modal from '../../layout/Modal';
+import Modal from '../../../layout/Modal';
 import AddValid from './AddValid';
 import ValidatorsList from './ValidatorsList';
 

@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
-import { deleteValid } from '../../../redux/actions/datafields';
-import VerifyDelete from '../../common/VerifyDelete';
+import { deleteValid } from '../../../../redux/actions/datafields';
+import VerifyDelete from '../../../common/VerifyDelete';
 
 function DeleteValid({ valid, fieldId }) {
     const [display, setDisplay] = useState(false)

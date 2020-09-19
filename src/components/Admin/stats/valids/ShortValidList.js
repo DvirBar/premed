@@ -1,5 +1,5 @@
 import React from 'react'
-import ValidItem from '../ValidItem'
+import ValidItem from './ValidItem'
 
 function ShortValidList({ fieldValids, validTypes }) {
     if(fieldValids?.length === 0)

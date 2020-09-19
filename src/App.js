@@ -9,11 +9,10 @@ import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getTopics } from './redux/actions/topics';
-import { getDataGroups } from './redux/actions/datagroups';
-import { getDataFields } from './redux/actions/datafields';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
+import Loadbar from './components/layout/Loadbar';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,8 +30,6 @@ function App() {
   useEffect(() => {
     if(auth) {
       dispatch(getTopics());
-      dispatch(getDataGroups());
-      dispatch(getDataFields());
     }
   }, [auth])
 
@@ -47,20 +44,24 @@ function App() {
     setPaths(fetchedPaths)
   }, [fetchedPaths])
 
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Navbar paths={paths}/>
-        <div className="cover-photo">
-          <div className="cover-top-layer"></div>
+  if(auth.loading || !auth)
+    return <Loadbar loadfull={true} />
+
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar paths={paths}/>
+          <div className="cover-photo">
+            <div className="cover-top-layer"></div>
+          </div>
+
+          <div className="content">
+              <Router /> 
+          </div>
+          {/* <Footer /> */}
         </div>
-        <div className="content">
-          <Router />
-        </div>
-        {/* <Footer /> */}
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
 }
 
 export default App;

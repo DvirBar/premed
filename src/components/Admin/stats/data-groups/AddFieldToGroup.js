@@ -1,11 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import useForm from '../../../forms/useForm';
-import { addDataField } from '../../../redux/actions/datafields';
-import FormInput from '../../common/FormInput';
-import Dropdown from '../../common/Dropdown';
-import Modal from '../../layout/Modal';
-import FieldOptionsList from './data-fields/FieldOptionsList';
+import useForm from '../../../../forms/useForm';
+import { addDataField } from '../../../../redux/actions/datafields';
+import FormInput from '../../../common/FormInput';
+import Dropdown from '../../../common/Dropdown';
+import Modal from '../../../layout/Modal';
+import FieldOptionsList from '../data-fields/FieldOptionsList';
 
 function AddFieldToGroup({ group, types, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({})
