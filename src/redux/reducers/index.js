@@ -12,6 +12,7 @@ import datagroups from './datagroups';
 import datafields from './datafields';
 import unis from './universities';
 import calcs from './calculations';
+import userdata from './userdata';
 
 export default combineReducers({
     auth,
@@ -26,5 +27,6 @@ export default combineReducers({
     datagroups,
     datafields,
     unis,
-    calcs
+    calcs,
+    userdata
 });
