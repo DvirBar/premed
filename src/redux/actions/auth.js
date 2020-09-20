@@ -4,9 +4,11 @@ import {
     AUTH_ERROR,
     LOGIN_LOADING,
     LOGIN_SUCCESS,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    USER_UPDATE,
+    USER_ERROR
 } from './types';
-import { getError } from './messages';
+import { getError, getMessage } from './messages';
 import axios from 'axios';
 
 
@@ -33,6 +35,12 @@ export const authError = () => {
 export const loginLoad = () => {
     return {
         type: LOGIN_LOADING
+    }
+}
+
+const userError = () => {
+    return {
+        type: USER_ERROR
     }
 }
 
@@ -97,4 +105,22 @@ export const register = data => dispatch => {
             dispatch(authError())
             dispatch(getError(err));
         })
+}
+
+// TODO: write edit action
+export const editUser = data => dispatch => {
+    // TODO: Add soft load
+
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put('/api/auth/user', body)
+         .then(res => dispatch({
+             type: USER_UPDATE,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(userError())
+             dispatch(getMessage(err))
+         })
 }

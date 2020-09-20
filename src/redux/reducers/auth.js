@@ -4,7 +4,9 @@ import {
     AUTH_ERROR,
     LOGIN_LOADING,
     LOGIN_SUCCESS,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    USER_UPDATE, 
+    USER_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +17,8 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
+    const payload = action.payload
+
     switch(action.type) {
         case LOGIN_LOADING:
         case AUTH_LOADING:
@@ -29,7 +33,7 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 loading: false, 
-                user: action.payload.user
+                user: payload.user
             }
         
         case AUTH_SUCCESS:
@@ -37,7 +41,7 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 loading: false,
-                user: action.payload
+                user: payload
             }
 
         case AUTH_ERROR:
@@ -49,6 +53,19 @@ export default function(state = initialState, action) {
                 isAuthenticated: false,
                 loading: false,
                 user: null
+            }
+        
+        case USER_UPDATE:
+            return {
+                ...state,
+                loading: false,
+                user: payload
+            }
+
+        case USER_ERROR:
+            return {
+                ...state,
+                loading: false
             }
 
         default: 

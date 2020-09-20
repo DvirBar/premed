@@ -195,10 +195,11 @@ ul {
 @import 'forms/buttons';
 @import 'forms/checkbox';
 
-@import 'models/anouncements';
-@import 'models/dashboard';
-@import 'models/steps';
-@import 'models/topics';
+@import 'pages/anouncements';
+@import 'pages/dashboard';
+@import 'pages/steps';
+@import 'pages/topics';
+@import 'pages/profile';
 
 @import 'admin/admin';
 @import 'admin/default';

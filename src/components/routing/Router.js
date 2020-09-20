@@ -30,7 +30,7 @@ const Router = () => {
                 <Route exact path="/" component={Default} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <ProtectedRoute exact path="/profile" component={Profile} />
+                <ProtectedRoute path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route exact path="/steps/:pathId" component={Steps} />
                 <ProtectedRoute exact path="/steps/:pathId/:stepId" component={StepItem} />
