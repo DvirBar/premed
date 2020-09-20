@@ -1,9 +1,8 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import config from 'config'
-import cors from 'cors'
+import express from 'express';
+import mongoose from 'mongoose';
+import config from 'config';
+import cors from 'cors';
 import errorHandler from  '../middleware/errorHandler';
-import errorLogger from '../middleware/errorLogger';
 
 // Init app
 const app = express();
@@ -24,8 +23,9 @@ import pages from '../routes/api/pages';
 import topics from '../routes/api/topics';
 import datagroups from '../routes/api/data-groups';
 import datafields from '../routes/api/data-fields';
-import univeristies from '../routes/api/universities';
+import universities from '../routes/api/universities';
 import calculations from '../routes/api/calculations';
+import userdata from '../routes/api/user-data';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -37,8 +37,9 @@ app.use('/api/pages', pages);
 app.use('/api/topics', topics);
 app.use('/api/datagroups', datagroups);
 app.use('/api/datafields', datafields);
-app.use('/api/universities', univeristies);
+app.use('/api/universities', universities);
 app.use('/api/calculations', calculations);
+app.use('/api/userdata', userdata)
 
 // Exit middlewares
 app.use(errorHandler);
@@ -60,3 +61,4 @@ mongoose
     })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
+
