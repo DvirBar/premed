@@ -22,6 +22,24 @@ export const uniError = () => {
     }
 }
 
+
+// Get unis by paths
+export const getUnisByPaths = data => dispatch => {
+    dispatch(uniLoad());
+
+    const params = JSON.stringify(data)
+
+    axios.get(`/api/universities/${params}`)
+         .then(res => dispatch({
+             type: UNI_SUCCESS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(uniError())
+             dispatch(getMessage(err))
+         })
+}
+
 // Get all universities
 export const getUnis = () => dispatch => {
     dispatch(uniLoad());

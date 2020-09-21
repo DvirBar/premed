@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-function Checkbox({ name, label, value, values, onChange, checked, isMulti }) {
+function Checkbox({ name, label, value, onChange, checked, isMulti }) {
     const [isChecked, setIsChecked] = useState(checked || false);
     const [isChanging, setIsChanging] = useState(false)
 
@@ -26,7 +26,7 @@ function Checkbox({ name, label, value, values, onChange, checked, isMulti }) {
             }
     
             if(isMulti)
-                dataObj.type = isMulti
+                dataObj.type = "multiValue"
     
             onChange(dataObj)
         }

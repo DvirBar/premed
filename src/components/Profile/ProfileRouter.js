@@ -6,7 +6,9 @@ import {
     useRouteMatch } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from '../routing/ProtectedRoute';
+import ValidatePath from './user-data/ValidatePath';
 import UserDetails from './UserDetails';
+
 
 const ProfileRouter = () => {
     const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const ProfileRouter = () => {
     return ( 
         <Switch>
             <ProtectedRoute exact path={`${path}`} component={UserDetails} />
-            <ProtectedRoute exact path={`${path}/userdata`} component={UserDetails} />
+            <ProtectedRoute exact path={`${path}/userdata`} component={ValidatePath} />
             <ProtectedRoute exact path={`${path}/suggestions`} component={UserDetails} />
         </Switch>
     )

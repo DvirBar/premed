@@ -86,6 +86,25 @@ export const validDelete = field => {
     }
 }
 
+// Get data fields by paths
+export const getFieldsByPaths = data => dispatch => {
+    dispatch(dataFieldLoad());
+
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.get(`/api/datafields/${body}`)
+         .then(res => dispatch({
+             type: DATA_FIELD_SUCCESS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataFieldError())
+             dispatch(getMessage(err))
+         })
+
+}
+
 // Get all data fields
 export const getDataFields = () => dispatch => {
     dispatch(dataFieldLoad());

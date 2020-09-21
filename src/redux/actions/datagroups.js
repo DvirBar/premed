@@ -51,7 +51,25 @@ export const dataGroupDelete = id => {
     }
 }
 
-// Get all paths
+// Get data groups by paths
+export const getGroupsByPaths = data => dispatch => {
+    dispatch(dataGroupLoad());
+
+    // Requrest body
+    const body = JSON.stringify(data);
+
+    axios.get(`/api/datagroups/${body}`)
+         .then(res => dispatch({
+             type: DATA_GROUP_SUCCESS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataGroupError())
+             dispatch(getMessage(err))
+         })
+}
+
+// Get all data groups
 export const getDataGroups = () => dispatch => {
     dispatch(dataGroupLoad());
 

@@ -36,12 +36,11 @@ export const getOneUserData = () => dispatch => {
             })})
          .catch(err => {
              dispatch(dataError());
-             dispatch(getError(err));
          });
 }
 
 // Get all users data by path
-export const getOneUserData = pathId => dispatch => {
+export const getUsersData = pathId => dispatch => {
     dispatch(dataLoad());
 
     axios.get(`api/userdata/user/${pathId}`)
@@ -93,7 +92,7 @@ export const editUserDataPaths = data => dispatch => {
 }
 
 // Insert new data to user data collection
-export const editUserDataPaths = data => dispatch => {
+export const insertData = data => dispatch => {
     dispatch(dataLoad());
 
     // Request body

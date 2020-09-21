@@ -64,7 +64,7 @@ const useForm = (callback, defaultValues, ...params) => {
                 const name = event.name;
                 const value = event.value;
                 let valArr = values[name]
-
+                
                 if(!valArr)
                     valArr = []
 

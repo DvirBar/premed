@@ -24,6 +24,25 @@ export const calcError = () => {
     }
 }
 
+// Get calculations by paths
+export const getCalcsByPaths = data => dispatch => {
+    dispatch(calcLoad());
+
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.get(`/api/calculations/${body}`)
+         .then(res => dispatch({
+             type: CALC_SUCCESS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(calcError())
+             dispatch(getMessage(err))
+         })
+
+}
+
 // Get all calculations
 export const getCalcs = () => dispatch => {
     dispatch(calcLoad());
