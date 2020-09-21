@@ -143,12 +143,17 @@ router.put('/user', auth, (req, res, next) => {
     } = req.body
 
     res.locals.model = modelName;
+    const userId = res.locals.user.id
 
-    user.email = email;
-    user.save()
+    User.findById(userId)
         .then(user => {
-            // TODO: send verification email 
-            res.json(user)
+            user.email = email;
+            user.save()
+                .then(user => {
+                    // TODO: send verification email 
+                    res.send(user)
+                })
+                .catch(next)        
         })
         .catch(next)
 })

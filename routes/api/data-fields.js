@@ -18,7 +18,7 @@ const types = allowedTypes.types
 const dataGroupMessages = require('../../messages/data-groups');
 const dataFieldMessages = require('../../messages/data-fields');
 const pathMessages = require('../../messages/paths');
-const uniMessages = require('../../messages/universities')
+const uniMessages = require('../../messages/universities');
 
 const { DataFieldSuccessDelete, DataFieldNotExist, 
     InvalidFieldType, InvalidDataType, InvalidValidatorType, 
@@ -36,16 +36,15 @@ router.get('/allowedTypes', [auth, authAdmin], (req, res, next) => {
     res.send(types);
 })
 
-// @route   GET api/datafields/:id
-// @desc    Get data group by id
+// @route   GET api/datafields/:pathIds
+// @desc    Get data groups by pathId
 // @access  Public
-router.get('/:id', (req, res, next) => {
-    DataField.findById(req.params.id)
-            .then(field => {
-                if(!field) 
-                    return res.status(DataFieldNotExist.status).send(DataFieldNotExist.msg);
-                
-                return res.send(field);
+router.get('/:pathIds', (req, res, next) => {
+    const pathIds = JSON.parse(req.params.pathIds)
+
+    DataField.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
+            .then(fields => {
+                return res.send(fields);
             })
             .catch(next)
 })
@@ -126,8 +125,9 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                                     })
 
                                     // Only insert options if field type is select
-                                    if(fieldType === 'select') 
+                                    if(fieldType === 'select') {
                                         newField.fieldOptions = fieldOptions
+                                    }
 
                                     newField.save()
                                             .then(field => {
@@ -191,8 +191,9 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                                         field.uni = uniId
 
                                         // Only insert options if field type is select
-                                        if(fieldType === 'select') 
+                                        if(fieldType === 'select') {
                                             field.fieldOptions = fieldOptions
+                                        }
 
                                         field.save()
                                                 .then(field => {

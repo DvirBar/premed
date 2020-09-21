@@ -18,7 +18,21 @@ const { json } = require('express');
 const { UniNotExist, PathsNotFound, UniSuccessDelete } = uniMessages;
 const { PathNotExist } = pathsMessages;
 
-// @route   GET api/universitiess/:id
+
+// @route   GET api/universities/:pathIds
+// @desc    Get universities by pathId
+// @access  Public
+router.get('/:pathIds', (req, res, next) => {
+    const pathIds = JSON.parse(req.params.pathIds)
+
+    University.find({ paths: { $in: pathIds}})
+            .then(unis => {
+                return res.send(unis);
+            })
+            .catch(next)
+})
+
+// @route   GET api/universities/:id
 // @desc    Get university by id
 // @access  Private
 router.get('/:id', auth, (req, res, next) => {

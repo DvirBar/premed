@@ -5,25 +5,27 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Models
 const UserData = require('../../models/UserData');
+const DataField = require('../../models/DataField');
 const Path = require('../../models/Path');
 const modelName = 'user data';
 
 // Errors
 const dataMessages = require('../../messages/user-data');
+const fieldsMessages = require('../../messages/data-fields');
 const authMessages = require('../../messages/auth');
 const pathsMessages = require('../../messages/paths');
 
 
 const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
     UnauthorizedEdit } = dataMessages;
-const { UserDoesNotExist } = authMessages;
+const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
 // @route   GET api/userdata/user
 // @desc    Get one user data
 // @access  Private
 router.get('/user', auth, (req, res, next) => {
-    const userId = res.locals.user.id
+    const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
             .then(data => {
@@ -126,10 +128,12 @@ router.put('/editpaths', auth, (req, res, next) => {
 // @access  Private
 router.put('/insertdata', auth, (req, res, next) => {
     const {
-        values
+        fieldId,
+        value
     } = req.body;
 
     const userId = res.locals.user.id
+
 
     UserData.findOne({ user: userId })
             .then(data => {
@@ -137,12 +141,28 @@ router.put('/insertdata', auth, (req, res, next) => {
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg)
                     
-                data.values.push(...values)
-                data.save()
-                    .then(data => {
-                        return res.send(data)
-                    })
-                    .catch(next);
+                DataField.findById(fieldId)
+                         .then(field => {
+                            if(!field)
+                                return res.status(DataFieldNotExist.status)
+                                          .send(DataFieldNotExist.msg)
+
+                            const values = data.values;
+                            let found = false
+                            
+                            // If the user already has a value for the field
+                            
+
+                            data.values.push({
+                                field: fieldId,
+                                value
+                            })
+                            data.save()
+                                .then(data => {
+                                    return res.send(data)
+                                })
+                                .catch(next);
+                         }
             })
             .catch(next);
 })

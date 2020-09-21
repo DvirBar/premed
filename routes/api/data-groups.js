@@ -18,19 +18,18 @@ const { DataGroupSuccessDelete, DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathsMessages;
 const { UniNotExist } = uniMessages;
 
-// @route   GET api/datagroups/:id
-// @desc    Get data group by id
-// @access  Private
-router.get('/:id', auth, (req, res, next) => {
-    DataGroup.findById(req.params.id)
-            .then(group => {
-                if(!group) return res.status(NotExist.status).send(NotExist.msg);
-                
-                return res.json(group);
+// @route   GET api/datafields/:pathIds
+// @desc    Get data groups by pathId
+// @access  Public
+router.get('/:pathIds', (req, res, next) => {
+    const pathIds = JSON.parse(req.params.pathIds)
+
+    DataGroup.find({ path: { $in: pathIds}})
+            .then(groups => {
+                return res.send(groups);
             })
             .catch(next)
 })
-
 // @route   GET api/datagroups
 // @desc    Get all datagroups
 // @access  Private

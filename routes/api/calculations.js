@@ -33,19 +33,17 @@ router.get('/storedCalcs', [auth, authAdmin], (req, res, next) => {
     return res.send(storedCalcs);
 })
 
-// @route   GET api/calculations/:id
-// @desc    Get calculation by id
-// @access  Private
-router.get('/:id', auth, (req, res, next) => {
-    Calculation.findById(req.params.id)
-                .then(calc => {
-                    if(!calc) 
-                        return res.status(CalcNotExist.status)
-                                  .send(CalcNotExist.msg);
-                    
-                    return res.send(calc);
-                })
-                .catch(next);
+// @route   GET api/calculations/:pathIds
+// @desc    Get calcs by pathId
+// @access  Public
+router.get('/:pathIds', (req, res, next) => {
+    const pathIds = JSON.parse(req.params.pathIds)
+
+    Calculation.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
+            .then(calcs => {
+                return res.send(calcs);
+            })
+            .catch(next)
 })
 
 // @route   GET api/calculations

@@ -10,10 +10,8 @@ const UserDataSchema = new Schema({
     },
     values: [{
         field: {
-            type: ObjectId
-        },
-        type: {
-            type: String
+            type: ObjectId,
+            ref: 'DataField'
         },
         value: {
             type: String
@@ -31,6 +29,6 @@ const UserDataSchema = new Schema({
         type: Date,
         default: Date.now 
     }
-}, { _id: false });
+});
 
 module.exports = mongoose.model('UserData', UserDataSchema);
