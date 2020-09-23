@@ -4,20 +4,21 @@ import { getFieldsByPaths } from '../../../redux/actions/datafields';
 import { getGroupsByPaths } from '../../../redux/actions/datagroups';
 import { getCalcsByPaths } from '../../../redux/actions/calculations';
 import { getUnisByPaths } from '../../../redux/actions/universities';
+import { getStoredCalcs } from '../../../redux/actions/calculations';
 import Loadbar from '../../layout/Loadbar';
 import DataBlock from './DataBlock';
 
 function UserStats({ data }) {
     const dispatch = useDispatch();
     const paths = data.paths;
-    console.log(paths);
-
+    
     useEffect(() => {
         if(paths && paths.length !== 0) {
             dispatch(getFieldsByPaths(paths));
             dispatch(getGroupsByPaths(paths));
             dispatch(getCalcsByPaths(paths));
             dispatch(getUnisByPaths(paths))
+            dispatch(getStoredCalcs())
         }
     }, [paths])
 
@@ -65,7 +66,6 @@ function UserStats({ data }) {
         setUnis(fetchedUnis)
     }, [fetchedUnis])
 
-    
     if(loadFields || loadGroups || loadCalcs || loadUnis)
         return <Loadbar />
     
@@ -75,6 +75,24 @@ function UserStats({ data }) {
             fields={fields.filter(field =>
                 !field.group && !field.university)} 
             dataVals={data.values} />
+
+            <DataBlock
+            fields={fields.filter(field =>
+                field.group && !field.university)}
+            groups={groups.filter(group =>
+                !group.path)} 
+            dataVals={data.values} />
+
+            {paths.map(path => 
+                unis.map(uni =>
+                    uni.paths.find(curPath => curPath === path) && 
+                        <DataBlock
+                        fields={fields.filter(field =>
+                            field.university === uni._id)}
+                        dataVals={data.values}
+                        uni={uni} />
+                    )
+                )}
         </Fragment>
     )
 }

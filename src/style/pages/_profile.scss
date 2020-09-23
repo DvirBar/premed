@@ -58,7 +58,7 @@
             background-color: #fff;
             box-shadow: $default-shadow;
             border-radius: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 3rem;
             padding: 2rem;
         }
         
@@ -69,73 +69,3 @@
     }
 }
 
-.choose-path {
-    background-color: #fff;
-    box-shadow: $default-shadow;
-    height: 45rem;
-    padding: 5rem;
-    border-radius: 1rem;
-
-    .title {
-        color: $main-color;
-        font-size: 2.2rem;
-        margin-bottom: 3rem;
-    }
-
-    .options-container {
-        display: flex;
-        justify-content: center;
-        column-gap: 3rem;
-        width: 100%;
-
-        .path-option {
-            position: relative;
-            padding: 1rem;
-            width: 20rem;
-            height: 20rem;
-            border: 2.5px solid #ccc;
-            border-radius: 1rem;
-            transition: border-color 0.5s ease; 
-            cursor: pointer;
-
-            &.checked {
-                border: 2.5px solid $main-color;
-
-                & > .path-name {
-                    color: $main-color;
-                }
-            }
-
-            &:hover {
-                border: 2.5px solid $main-color;
-
-                & > .path-name {
-                    color: $main-color;
-                }
-            }
-
-            .path-name {
-                position: absolute;
-                bottom: 15px;
-                height: 15rem;
-                width: 100%;
-                right: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 2rem;
-                color: #999;
-                transition: color 0.5s ease;
-            }
-        }  
-    }
-    
-    .button-block {
-        margin-top: 5rem;
-        width: 100%;
-
-        button {
-            margin: auto;
-        }
-    }
-}

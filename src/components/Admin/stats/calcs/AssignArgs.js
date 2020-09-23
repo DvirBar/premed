@@ -5,6 +5,7 @@ import Modal from '../../../layout/Modal';
 import { dataFieldAssignRole } from '../../../../redux/actions/datafields';
 import { dataGroupAssignRole } from '../../../../redux/actions/datagroups';
 import { calcAssignRole } from '../../../../redux/actions/calculations';
+import GroupArg from './GroupArg';
 
 function AssignArgs({ storedCalcs, fields, groups, calcs }) {
     const dispatch = useDispatch();
@@ -96,7 +97,8 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
     }
 
     const findRoleBind = (arg, options) => {
-        const defOption = options.find(option => option.role === arg.role)
+        const defOption = options.find(option => 
+            option.role === arg.role)
         return defOption
     }
 
@@ -128,23 +130,35 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
                 <div className="arg-block">
                 {argArr.length !== 0 && 
                     argArr.map(arg => 
-                        <div className={findRoleBind(arg, 
-                            matchArgType(arg.type).options)
-                            ? "role-block"
-                            : "role-block not-assigned"}>
-                            <span>{arg.name}</span>
-                            <Dropdown
-                            key={arg.role}
-                            options={matchArgType(arg.type).options}
-                            defaultOption={findRoleBind(arg, 
-                                matchArgType(arg.type).options)}
-                            name={matchArgType(arg.type).name}
-                            title={matchArgType(arg.type).title}
-                            onChange={assignOption}
-                            placeholder={{name: "בחירה"}}
-                            uniqueListKey={arg.role} />
-                        </div>
-                        )}
+                        arg.type === "group"
+                        ? (
+                            <GroupArg
+                            arg={arg}
+                            fields={fields}
+                            groupOptions={groupOptions}
+                            findRoleBind={findRoleBind}
+                            assignOption={assignOption} />
+                        )
+                        
+                        : (
+                            <div className={findRoleBind(arg, 
+                                matchArgType(arg.type).options)
+                                ? "role-block"
+                                : "role-block not-assigned"}>
+                                <span>{arg.name}</span>
+                                <Dropdown
+                                key={arg.role}
+                                options={matchArgType(arg.type).options}
+                                defaultOption={findRoleBind(arg, 
+                                    matchArgType(arg.type).options)}
+                                name={matchArgType(arg.type).name}
+                                title={matchArgType(arg.type).title}
+                                onChange={assignOption}
+                                placeholder={{name: "בחירה"}}
+                                uniqueListKey={arg.role} />
+                            </div>
+       
+                        ))}
                 </div>
             </Modal>
         </Fragment>

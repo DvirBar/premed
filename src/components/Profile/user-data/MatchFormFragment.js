@@ -12,7 +12,7 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setErrors] = useState('');
+    const [error, setError] = useState('');
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
@@ -27,10 +27,9 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     }, [fieldOptions])
 
     useEffect(() => {
-        console.log("sending");
-        if(!error && isSubmitting) {
+        if((!error || error.length === 0) && isSubmitting) {
             const dataObj = {
-                field: name,
+                fieldId: name,
                 value
             }
             dispatch(insertData(dataObj))
@@ -46,10 +45,24 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
             : event.value)
     }
 
+    useEffect(() => {
+        if(type !== 'textbox') {
+            addData()
+        }
+    }, [value])
+ 
     const addData = () => {
-        if(value && value.length !== 0) {
+        if(value && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
-            setErrors(validateForm(value, fieldValids))
+            setError(validateForm(value, fieldValids))
+        }
+
+        if(error && error.length !== 0 && value === defValue) {
+            setError('')
+        }
+
+        if(value?.length === 0) {
+            setError('')
         }
     }
 
@@ -72,14 +85,15 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
                     option.value === defValue)}
                 placeholder="בחירה"
                 name={name}
-                onChange={addData} />
+                width={'10rem'}
+                onChange={changeData} />
     }
 
     else if(type === "checkbox") {
         return <Checkbox 
                 name={name}
                 label={title}
-                onChange={addData}
+                onChange={changeData}
                 value={{on: true, off: false}}
                 checked={defValue ? true : false} />
     }

@@ -13,23 +13,24 @@ function ValidatePath() {
     }, [])
 
     const dataSelector = useSelector(state => state.userdata);
-    const fetchedData = dataSelector.data;
+    const data = dataSelector.data;
     const loadData = dataSelector.loading;
-    const [data, setData] = useState({})
+    // const [data, setData] = useState({})
 
-    useEffect(() => {
-        setData(fetchedData)
-    }, [fetchedData])
+    // useEffect(() => {
+    //     setData(fetchedData)
+    // }, [fetchedData])
+
 
     if(loadData)
         return <Loadbar />
 
-    else if(!data || data.paths?.length === 0) {
-        return <ChoosePath />
+    else if(data && Object.keys(data).length !== 0) {
+        return <UserStats data={data} />
     }
 
     else  {
-        return <UserStats data={data} />
+        return <ChoosePath />
     }
 }
 

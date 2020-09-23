@@ -16,8 +16,15 @@
                 border: 2px solid #cf1414;
             }
         }
+
         .dropdown {
             margin: 0;
+        }
+
+        .nested-args {
+            margin-right: 2rem;
+            padding-right: 5rem;
+            border-right: 3px solid $main-color;
         }
     }
 

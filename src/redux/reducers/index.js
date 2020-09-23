@@ -9,7 +9,7 @@ import steps from './steps';
 import pages from './pages';
 import topics from './topics';
 import datagroups from './datagroups';
-import datafields from './datafields';
+import datafields, * as fieldSelectors from './datafields';
 import unis from './universities';
 import calcs from './calculations';
 import userdata from './userdata';
@@ -30,3 +30,6 @@ export default combineReducers({
     calcs,
     userdata
 });
+
+export const getGroupFields = (fields) => 
+    fieldSelectors.getGroupFields(fields)

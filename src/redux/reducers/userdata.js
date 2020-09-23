@@ -11,7 +11,7 @@ import {
 
 const initialState = {
     loading: false,
-    data: [],
+    data: {}
 }
 
 export default function(state = initialState, action) {
@@ -41,7 +41,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: [...state.data, payload]
+                data: payload
             }
 
         case USER_DATA_UPDATE_PATHS:
@@ -50,15 +50,14 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: state.data.map(data => data.user === payload.user 
-                    ? data = payload : data)
+                data: payload
             }
 
         case USER_DATA_DELETE:
             return {
                 ...state,
                 loading: false,
-                data: state.data.filter(data => data.user !== payload)
+                data: state.data.values.filter(data => data.user !== payload)
             }
 
         default:

@@ -83,7 +83,7 @@ $unfocus_color: #888;
         box-sizing: border-box;
         margin: 0;
         list-style: none;
-        width: $dropdown_width;
+        width: inherit;
         position: absolute;
         left: 0;
         top: $dropdown_height;

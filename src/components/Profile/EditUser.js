@@ -22,10 +22,6 @@ function EditUser({ user }) {
         errors
     } = useForm(editUser, defaultValues)
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-    
     return (
         <form onSubmit={handleSubmit} noValidate>
             <FormInput

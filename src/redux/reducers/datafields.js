@@ -74,12 +74,10 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                fields: state.fields.map(field => {
-                    let tempField = payload.find(curField => 
-                        curField._id === field._id)
-                    
-                    return tempField ? field = tempField : field
-                })
+                fields: state.fields.map(field => 
+                    payload._id === field._id 
+                    ? field = payload : field
+                )
             }
 
         case DATA_FIELD_DELETE: 
@@ -92,4 +90,9 @@ export default function(state = initialState, action) {
         default: 
             return state;
     }
+}
+
+export const getGroupFields = fields => {
+    return fields.filter(field => 
+        field.group)
 }

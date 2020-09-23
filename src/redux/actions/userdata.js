@@ -93,8 +93,9 @@ export const editUserDataPaths = data => dispatch => {
 
 // Insert new data to user data collection
 export const insertData = data => dispatch => {
-    dispatch(dataLoad());
-
+    // TODO: Soft loading 
+    // TODO: Prompt user on successful save 
+    
     // Request body
     const body = JSON.stringify(data);
 
@@ -106,6 +107,7 @@ export const insertData = data => dispatch => {
              }))
          .catch(err => {
              dispatch(dataError())
+             console.log(err);
              dispatch(getError(err))
             })
 }
