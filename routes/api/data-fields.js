@@ -43,6 +43,8 @@ router.get('/:pathIds', (req, res, next) => {
     const pathIds = JSON.parse(req.params.pathIds)
 
     DataField.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
+            .populate("calcOutput")
+            .populate("group")
             .then(fields => {
                 return res.send(fields);
             })
@@ -277,10 +279,12 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                    field.save()
                        .then(field => {
         // Find if there is field with the same role and unassign it
-                            DataField.find({ $and: 
+                            DataField.findOne({ $and: 
                                 [{_id: { $ne: field._id}}, 
-                                    {role: { $ne: undefined} }]})
+                                    {role: role },
+                                {group: field.group}]})
                                 .then(prevField => {
+                                    console.log(prevField);
                                     if(prevField) {
                                         prevField.role = undefined
                                         prevField.save()
@@ -294,7 +298,7 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                             .catch(next); // Save prev field
                                     }
 
-                                    return res.send(calc)
+                                    return res.send(field)
                                 })
                                 .catch(next); // Find field
                        })

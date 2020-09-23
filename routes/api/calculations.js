@@ -6,6 +6,7 @@ const authAdmin = require('../../middleware/authAdmin');
 // Models
 const Calculation = require('../../models/Calculation');
 const DataField = require('../../models/DataField');
+const UserData = require('../../models/UserData');
 const Path = require('../../models/Path');
 const University = require('../../models/University');
 const modelName = 'calculation';
@@ -40,7 +41,20 @@ router.get('/:pathIds', (req, res, next) => {
     const pathIds = JSON.parse(req.params.pathIds)
 
     Calculation.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
-            .then(calcs => {
+            .then(initCalcs => {
+                let calcs = [...initCalcs.map(calc => {
+                    if(calc.calc) {
+                        let storCalc = storedCalcs.find(storCalc => 
+                            calc.calc === storCalc.id) 
+
+                        if(storCalc) {
+                            calc.calc = storCalc
+                        }
+                    }
+
+                    return calc
+                })]
+
                 return res.send(calcs);
             })
             .catch(next)
@@ -231,5 +245,31 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
             })
             .catch(next);
 })
+
+// // @route   GET api/calculations/execCalc
+// // @desc    Execute calculation
+// // @access  Private
+// router.get('/execCalc/:storCalcId', auth, (req, res, next) => {
+
+//     const storCalc = storedCalcs.find(calc => calc.id === storCalcId)
+
+//     UserData.find()
+//             .populate('values.field')
+//             .then(data => {
+//                 const values = data.values
+
+//                 let args = storCalc.args.map(arg => {
+//                     if(arg.type === "group") {
+//                         let groupArgs = []
+//                         for(let value of values) {
+//                             if(value.field.group.role === arg.role)
+//                                 groupArgs.push()
+//                         }
+//                     }
+//                 })
+//             })
+             
+// })
+
 
 module.exports = router;

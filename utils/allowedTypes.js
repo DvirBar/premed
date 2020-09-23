@@ -23,6 +23,11 @@ const allowedTypes = {
             {
                 name: 'מחרוזת',
                 value: 'str'
+            },
+            {
+                name: 'תאריך',
+                value: 'date',
+                defVal: 'isDate'
             }
         ],
         validationTypes: [
@@ -45,6 +50,11 @@ const allowedTypes = {
                 name: "טווח מספרים",
                 value: "numRange",
                 description: "בודק שהערך נמצא בטווח מספרים"
+            },
+            {
+                name: "תאריך",
+                value: "isDate",
+                description: "בודק שהערך הוא תאריך תקין"
             },
             {
                 name: "עברית בלבד",

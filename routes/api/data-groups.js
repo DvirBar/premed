@@ -24,7 +24,7 @@ const { UniNotExist } = uniMessages;
 router.get('/:pathIds', (req, res, next) => {
     const pathIds = JSON.parse(req.params.pathIds)
 
-    DataGroup.find({ path: { $in: pathIds}})
+    DataGroup.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
             .then(groups => {
                 return res.send(groups);
             })

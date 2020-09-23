@@ -28,6 +28,7 @@ router.get('/user', auth, (req, res, next) => {
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
+            .populate('values.field')
             .then(data => {
                 if(!data) 
                     return res.status(DataNotExist.status)
@@ -150,21 +151,32 @@ router.put('/insertdata', auth, (req, res, next) => {
                             const values = data.values;
                             let found = false
                             
-                            // If the user already has a value for the field
-                            
+            // If the user already has a value for the field
+                            for(let item of values) {
+                                if(item.field.equals(fieldId)) {
+                                    item.value = value;
+                                    found = true;
+                                    break;
+                                }
+                            }
 
-                            data.values.push({
-                                field: fieldId,
-                                value
-                            })
+            // If the field is yet to have a value
+                            if(!found) {
+                                data.values.push({
+                                    field: fieldId,
+                                    value
+                                })
+                            }
+
                             data.save()
                                 .then(data => {
                                     return res.send(data)
                                 })
-                                .catch(next);
-                         }
+                                .catch(err => {throw err}); // Save user data
+                         })
+                         .catch(err =>  {throw err}); // Find data field
             })
-            .catch(next);
+            .catch(next); // Find user data
 })
 
 // @route   PUT api/userdata/toggleEnabled
