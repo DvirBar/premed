@@ -8,14 +8,17 @@ const UserDataSchema = new Schema({
         type: ObjectId,
         ref: 'User'
     },
-    values: [{
+    dataVals: [{
         field: {
             type: ObjectId,
             ref: 'DataField'
         },
         value: {
             type: String
-        }
+        },
+        suggestValue: {
+            type: String
+        }   
     }],
     paths: [{
         type: ObjectId,

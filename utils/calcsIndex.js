@@ -21,7 +21,7 @@ const storedCalcs = [
         {
             id: "bagrutHuji",
             name: "ממוצע בגרות העברית",
-            func: calcs.hujiFinal,
+            func: calcs.hujiBargut,
             args: bagrut
         }
 ]

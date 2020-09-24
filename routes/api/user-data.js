@@ -17,9 +17,12 @@ const pathsMessages = require('../../messages/paths');
 
 
 const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
-    UnauthorizedEdit } = dataMessages;
+    ArgsInsuffice, UnauthorizedEdit } = dataMessages;
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
+
+import { populate } from '../../models/UserData';
+import storedCalcs from '../../utils/calcsIndex';
 
 // @route   GET api/userdata/user
 // @desc    Get one user data
@@ -28,7 +31,7 @@ router.get('/user', auth, (req, res, next) => {
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-            .populate('values.field')
+            .populate('dataVals.field')
             .then(data => {
                 if(!data) 
                     return res.status(DataNotExist.status)
@@ -148,7 +151,7 @@ router.put('/insertdata', auth, (req, res, next) => {
                                 return res.status(DataFieldNotExist.status)
                                           .send(DataFieldNotExist.msg)
 
-                            const values = data.values;
+                            const values = data.dataVals;
                             let found = false
                             
             // If the user already has a value for the field
@@ -162,7 +165,7 @@ router.put('/insertdata', auth, (req, res, next) => {
 
             // If the field is yet to have a value
                             if(!found) {
-                                data.values.push({
+                                data.dataVals.push({
                                     field: fieldId,
                                     value
                                 })
@@ -170,7 +173,13 @@ router.put('/insertdata', auth, (req, res, next) => {
 
                             data.save()
                                 .then(data => {
-                                    return res.send(data)
+                                    async function populateData() {
+                                        await data.populate("dataVals.field").execPopulate();
+                                        const valueObj = data.dataVals.find(val => 
+                                            val.field._id.equals(fieldId))
+                                        return res.send(valueObj); 
+                                    }
+                                    populateData();
                                 })
                                 .catch(err => {throw err}); // Save user data
                          })
@@ -198,6 +207,132 @@ router.put('/toggleEnabled', [auth, authAdmin], (req, res, next) => {
                         return res.send(data)
                     })
                     .catch(next);
+            })
+            .catch(next);
+})
+
+
+// @route   PUT api/calculations/execCalc
+// @desc    Execute calculation
+// @access  Private
+router.put('/execCalc/:storCalcId', auth, (req, res, next) => {
+
+    const storCalcId = req.params.storCalcId;
+    const storCalc = storedCalcs.find(calc => calc.id === storCalcId);
+    const userId = res.locals.user.id;
+
+    UserData.findOne({ user: userId })
+            .populate({
+                path: 'dataVals.field',
+                populate: { path: 'group' }
+            })
+            .then(data => {
+                if(!data)
+                    return res.status(DataNotExist.status)
+                              .send(DataNotExist.msg)
+
+                const values = data.dataVals
+                const params = {}
+
+                for(let arg of storCalc.args) {
+
+                     // If arg is a group, map its nested arguments and create a group object
+                     if(arg.type === "group") {
+                        let groupArgs = {} // Object for the group's nested arguments
+
+                        // Find all values that belong to the group
+                        const groupVals = values.filter(val => val.field.group?.role === arg.role)
+                        
+                        // Check that all group fields have a value
+                        if(groupVals.length !== arg.fields.length) {
+                            return res.status(ArgsInsuffice.status)
+                                      .send(ArgsInsuffice.msg)
+                        }
+                        
+                        // Iterate all group fields
+                        for(let value of groupVals) {
+                            let valField = value.field 
+
+                            /* Match value role to group field role and create a key-value 
+                            pair of its argument's name and numeric value */
+                            const varName = arg.fields.find(argField => 
+                                argField.role === valField.role).varName
+
+                            groupArgs[varName] = value.value
+                        }
+                        
+                        params[arg.varName] = groupArgs
+
+                    }
+
+                    else {
+                        const argValue = values.find(val => val.role === arg.role)
+
+                        if(!argValue)
+                            return res.status(ArgsInsuffice.status)
+                                    .send(ArgsInsuffice.msg)
+
+                        params[arg.varName] = argValue.value
+                    }
+                }
+
+                const calcResult = storCalc.func(params);
+
+                DataField.find({ calcOutput: { $exists: true }})
+                         .populate('calcOutput')
+                         .then(fields => {
+                            const calcField = fields.find(field => 
+                            field.calcOutput.calc === storCalc.id)
+
+                            const calcOutput = calcField.calcOutput
+                        
+                            let found = false
+                            const fieldId = calcField._id
+                        
+                            // If the user already has a value for the field
+                            for(let item of values) {
+                                if(item.field.equals(fieldId)) {
+
+                                    if(!calcOutput.isSuggestion) {
+                                        item.value = calcResult;
+                                    }
+                                    else {
+                                        item.suggestValue = calcResult;
+                                    }
+                                    found = true;
+                                    break;
+                                }
+                            }
+                
+                            // If the field is yet to have a value
+                            if(!found) {
+                                if(!calcOutput.isSuggestion) {
+                                    data.dataVals.push({
+                                        field: fieldId,
+                                        value: calcResult
+                                    })
+                                }
+
+                                else {
+                                    data.dataVals.push({
+                                        field: fieldId,
+                                        suggestValue: calcResult
+                                    })
+                                }
+                            }
+
+                        data.save()
+                        .then(data => {
+                            async function populateData() {
+                                await data.populate("dataVals.field").execPopulate();
+                                const valueObj = data.dataVals.find(val => 
+                                    val.field._id.equals(fieldId))
+                                return res.send(valueObj); 
+                            }
+                            populateData();
+                        })
+                        .catch(next);
+                    })
             })
             .catch(next);
 })

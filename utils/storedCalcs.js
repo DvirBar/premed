@@ -24,3 +24,15 @@ export const hujiFinal = params => {
     // Return result rounded to 3 decimals
     return S.toFixed(3);
 }
+
+export const hujiBargut = params => {
+    const {
+        'math': math,
+        'eng': eng,
+        'heb': heb
+    } = params
+    
+   let score = math.grade * math.units + eng.grade * eng.units + heb.grade * heb.units;
+
+   return score
+}

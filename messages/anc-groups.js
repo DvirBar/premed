@@ -23,7 +23,7 @@ const ancMessages = {
     AlreadySubscribed: {
         msg: {
             en: 'You are already subscribed to this group',
-            he: 'אתה כבר רשום לקבוצה זו'
+            he: 'קיימת כבר הרשמה לקבוצה זו'
         },
         status: 403
     },
