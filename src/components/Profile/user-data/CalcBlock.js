@@ -1,14 +1,33 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { executeCalc } from '../../../redux/actions/userdata';
 import { getGroupFields } from '../../../redux/reducers';
+import Modal from '../../layout/Modal';
 
-function CalcBlock({ calc, values }) {
+function CalcBlock({ field, dataVals }) {
+    const dispatch = useDispatch();
+
+    const [values, setValues] = useState([])
     const storedCalcs = useSelector(state => state.calcs.storedCalcs)
     const groupFields = useSelector(state => 
         getGroupFields(state.datafields.fields))
     const [storedCalc, setStoredCalc] = useState({})
     const [groupArgs, setGroupsArgs] = useState([])
     const [argsMissing, setArgsMissing] = useState([])
+    const [calc, setCalc] = useState({})
+    const [value, setValue] = useState({})
+
+    useEffect(() => {
+        setCalc(field.calcOutput)
+    }, [field])
+
+    useEffect(() => {
+        setValue(values?.find(val => val.field._id === field._id))
+    }, [values, field])
+
+    useEffect(() => {
+        setValues(dataVals)
+    }, [dataVals])
 
     useEffect(() => {
         setStoredCalc(storedCalcs?.find(storCalc => 
@@ -27,12 +46,12 @@ function CalcBlock({ calc, values }) {
                     field.group.role === arg.role);
         
                 for(let field of roleGroupFields) {
-                    if(!values.find(val => 
+                    if(!values?.find(val => 
                         val.field._id === field._id)) {
                         return arg
                     }}}
 
-            else if(!values.find(val => val.field.role === arg.role)) {
+            else if(!values?.find(val => val.field.role === arg.role)) {
                 return arg;
             }
         })
@@ -40,15 +59,26 @@ function CalcBlock({ calc, values }) {
         setArgsMissing(missing?.map(arg => arg.name))
     }, [values, storedCalc, groupArgs])
 
+    useEffect(() => {
+        if(argsMissing?.length === 0 && storedCalc.id)
+            dispatch(executeCalc(storedCalc.id))
+    }, [argsMissing, storedCalc, dataVals])
+
+
     return (
-        <Fragment>
+        <fieldset className={argsMissing?.length === 0 
+            ? "calc-block"
+            : "calc-block missing"}>
+            <legend>הצעה</legend>
             {argsMissing?.length === 0 
-            ?  <div className="calc-block">Show calc</div>
-            :  <div className="calc-block missing"> 
-                 Missing
-               </div>
+            ?  <div>
+                    {value.suggestValue}
+                </div>
+            :  <div> 
+                חסרים נתונים
+            </div>
             }
-        </Fragment>
+        </fieldset>
     )
 }
 

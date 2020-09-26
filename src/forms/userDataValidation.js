@@ -1,6 +1,7 @@
 import * as validators from './validators';
 
 export default function validateForm(value, fieldValids) {
+    console.log(value, fieldValids);
     let error = '';
     for(let valid of fieldValids) {
         const validate = validators[valid.validType];

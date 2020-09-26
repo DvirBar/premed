@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { addUserData } from '../../../redux/actions/userdata';
 import useForm from '../../../forms/useForm';
@@ -17,9 +17,6 @@ function ChoosePath() {
         errors
     } = useForm(addUserData, defaultValues)
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
 
     return (
         <form onSubmit={handleSubmit} className="choose-path">

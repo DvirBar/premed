@@ -1,6 +1,5 @@
 $input-width: 25rem;
 $border-input-width: 12rem;
-$error-color: #be1b1b;
 
 .form-default {
     padding: 1rem;
@@ -115,17 +114,16 @@ textarea {
 
 .form-input-border {
     display: inline-block;
-    border: 1.5px solid #ccc;
+    border: 1.5px solid #bbb;
     border-radius: 0.5rem;
     transition: border-color 0.5s ease;
     padding: 0;
 
     legend {
-        color: #bbb;
+        color: #aaa;
         margin: 0 0.5rem;
         transition: color 0.5s ease;
         font-size: 1.2rem;
-        margin: 0 0.5rem;
         vertical-align: text-top;
     }
 

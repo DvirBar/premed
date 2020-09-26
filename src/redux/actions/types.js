@@ -111,7 +111,6 @@ export const DATA_FIELD_OPTION_DELETE = 'DATA_FIELD_OPTION_DELETE';
 export const DATA_FIELD_ASSIGN_ROLE = 'DATA_FIELD_ASSIGN_ROLE';
 
 
-
 // Universities
 export const UNI_LOADING = 'UNI_LOADING';
 export const UNI_SUCCESS = 'UNI_SUCCESS';
@@ -126,18 +125,21 @@ export const CALC_SUCCESS = 'CALC_SUCCESS';
 export const CALC_ERROR = 'CALC_ERROR';
 export const CALC_ADD = 'CALC_ADD';
 export const CALC_UPDATE = 'CALC_UPDATE';
-export const CALC_DELETE = 'CALC_DELETE';
 export const STORED_CALCS_GET = 'STORED_CALCS_GET';
 export const CALC_ASSIGN_ROLE = 'CALC_ASSIGN_ROLE';
+export const CALC_DELETE = 'CALC_DELETE';
+
 
 // User data
 export const USER_DATA_LOADING = 'USER_DATA_LOADING';
+export const USER_DATA_LOAD_SOFT = 'USER_DATA_LOAD_SOFT';
 export const USER_DATA_SUCCESS = 'USER_DATA_SUCCESS';
 export const USER_DATA_ERROR = 'USER_DATA_ERROR';
 export const USER_DATA_ADD = 'USER_DATA_ADD';
 export const USER_DATA_UPDATE_PATHS = 'USER_DATA_UPDATE_PATHS';
 export const USER_DATA_INSERT = 'USER_DATA_INSERT';
 export const USER_DATA_TOGGLE_ENABLED = 'USER_DATA_TOGGLE_ENABLED';
+export const EXEC_CALC = 'EXEC_CALC';
 export const USER_DATA_DELETE = 'USER_DATA_DELETE';
 
 

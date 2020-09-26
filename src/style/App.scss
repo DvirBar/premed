@@ -1,4 +1,5 @@
 $main-color: #486974;
+$error-color: #be1b1b;
 $default-shadow: 
 0 2px 6px 0 rgba(0, 0, 0, 0.2), 
 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -48,6 +49,10 @@ a {
 h1 {
     color: $main-color;
     font-weight: 450;
+}
+
+.wrapper {
+    position:sticky;
 }
 
 h2 {
@@ -107,27 +112,6 @@ ul {
     100% { opacity: 1; }
 }
 
-.loadbar-main {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .loader {
-        border-top: 3px solid $main-color;
-        border-radius: 50%;
-        width: 5rem;
-        height: 5rem;
-        animation: spin 1s linear infinite
-    }
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
-}
-
 .footer {
     position: absolute;
     bottom: 0;
@@ -180,6 +164,7 @@ ul {
 @import 'layout/navbar';
 @import 'layout/modal';
 @import 'layout/container';
+@import 'layout/loadbar';
 
 @import 'common/dropdown';
 @import 'common/dropdownmenu';

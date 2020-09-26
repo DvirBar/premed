@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 
 function FormInputBorder({ title, type, name, value, onChange, 
-    onBlur, error }) {
+    onBlur, error, disabled }) {
+
     return (
         <Fragment>
             <fieldset className={error 
@@ -15,7 +16,8 @@ function FormInputBorder({ title, type, name, value, onChange,
                 value={value || ''}
                 onChange={onChange}
                 onBlur={onBlur}
-                autoComplete="off" />
+                autoComplete="off"
+                disabled={disabled} />
             </fieldset>
             {error &&
                 <p className="field-error">

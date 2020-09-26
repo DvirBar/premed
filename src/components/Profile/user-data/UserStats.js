@@ -2,21 +2,23 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFieldsByPaths } from '../../../redux/actions/datafields';
 import { getGroupsByPaths } from '../../../redux/actions/datagroups';
-import { getCalcsByPaths } from '../../../redux/actions/calculations';
 import { getUnisByPaths } from '../../../redux/actions/universities';
 import { getStoredCalcs } from '../../../redux/actions/calculations';
+import NavigateDataSections from './NavigateDataSections';
 import Loadbar from '../../layout/Loadbar';
 import DataBlock from './DataBlock';
+import TopBar from './TopBar';
 
 function UserStats({ data }) {
     const dispatch = useDispatch();
-    const paths = data.paths;
+    const paths = data.paths
+    const [selUni, setSelUni] = useState()
+    const [selPath, setSelPath] = useState()
     
     useEffect(() => {
         if(paths && paths.length !== 0) {
             dispatch(getFieldsByPaths(paths));
             dispatch(getGroupsByPaths(paths));
-            dispatch(getCalcsByPaths(paths));
             dispatch(getUnisByPaths(paths))
             dispatch(getStoredCalcs())
         }
@@ -45,15 +47,15 @@ function UserStats({ data }) {
     }, [fetchedGroups])
 
 
-    // Calcs
-    const calcsSelector = useSelector(state => state.calcs);
-    const fetchedCalcs = calcsSelector.calcs;
-    const loadCalcs = calcsSelector.loading;
-    const [calcs, setCalcs] = useState([])
+    // // Calcs
+    // const calcsSelector = useSelector(state => state.calcs);
+    // const fetchedCalcs = calcsSelector.calcs;
+    // const loadCalcs = calcsSelector.loading;
+    // const [calcs, setCalcs] = useState([])
 
-    useEffect(() => {
-        setCalcs(fetchedCalcs)
-    }, [fetchedCalcs])
+    // useEffect(() => {
+    //     setCalcs(fetchedCalcs)
+    // }, [fetchedCalcs])
 
 
     // Universities
@@ -66,33 +68,38 @@ function UserStats({ data }) {
         setUnis(fetchedUnis)
     }, [fetchedUnis])
 
-    if(loadFields || loadGroups || loadCalcs || loadUnis)
+    const changeSection = (path, uni) => {
+        setSelUni(uni)
+        setSelPath(path)
+    }
+
+    if(loadFields || loadGroups || loadUnis)
         return <Loadbar />
     
     return (
         <Fragment>
-            <DataBlock
-            fields={fields.filter(field =>
-                !field.group && !field.university)} 
-            dataVals={data.values} />
+            <NavigateDataSections 
+            paths={paths}
+            unis={unis}
+            changeSection={changeSection} />
+
+            <TopBar data={data} />
 
             <DataBlock
             fields={fields.filter(field =>
-                field.group && !field.university)}
-            groups={groups.filter(group =>
-                !group.path)} 
-            dataVals={data.values} />
+                field.university === selUni?._id && (paths.find(curPath => 
+                    curPath._id === field.path) || !field.path) && !field.group)}
+            dataVals={data.dataVals}
+            uni={selUni} />
 
-            {paths.map(path => 
-                unis.map(uni =>
-                    uni.paths.find(curPath => curPath === path) && 
-                        <DataBlock
-                        fields={fields.filter(field =>
-                            field.university === uni._id)}
-                        dataVals={data.values}
-                        uni={uni} />
-                    )
-                )}
+            {!selUni && 
+                <DataBlock
+                fields={fields.filter(field =>
+                    field.group && !field.university)}
+                groups={groups.filter(group => paths.find(curPath => 
+                    curPath._id === group.path) || !group.path)} 
+                dataVals={data.dataVals} />
+            }
         </Fragment>
     )
 }

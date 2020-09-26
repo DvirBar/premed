@@ -2,19 +2,19 @@ import React, { Fragment } from 'react';
 import CalcBlock from './CalcBlock';
 import MatchFormFragment from './MatchFormFragment';
 
-function DataBlock({ fields, groups, calcs, dataVals, uni }) {
+function DataBlock({ fields, groups, dataVals, uni }) {
 
     // When groups are passed
     if(groups) {
         return (
     <Fragment>
-    {groups.map(group =>   // Map top level groups
-            !group.parent &&
+    {groups.map(parentGroup =>   // Map top level groups
+            !parentGroup.parent &&
 
-        <div>
+        <div className="data-block">
             <div className="groups-list">
             {groups.map(group =>  // Map child groups
-                group.parent && 
+                group.parent === parentGroup._id && 
 
                 <div className="group-item">
                     <span className="group-name">
@@ -45,7 +45,7 @@ function DataBlock({ fields, groups, calcs, dataVals, uni }) {
     return (
         <Fragment>
             {fields?.length !== 0 &&
-             <div>
+             <div className="data-block">
                  {uni && <span>{uni.name}</span>}
                 {fields.map(field => 
                     <div className="form-fragment">
@@ -56,12 +56,13 @@ function DataBlock({ fields, groups, calcs, dataVals, uni }) {
                         defValue={dataVals.find(val => 
                             val.field._id === field._id)?.value}
                         fieldOptions={field.fieldOptions}
-                        fieldValids={field.validators} />
+                        fieldValids={field.validators}
+                        disabled={field.calcOutput && !field.calcOutput.isSuggestion} />
 
-                        {field.calcOutput &&
+                        {field.calcOutput && field.calcOutput.isSuggestion &&
                             <CalcBlock
-                            calc={field.calcOutput}
-                            values={dataVals} />
+                            field={field}
+                            dataVals={dataVals} />
                         }
                     </div>
                 )}

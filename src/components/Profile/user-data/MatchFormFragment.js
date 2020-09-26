@@ -8,7 +8,7 @@ import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
 
 
-function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldValids }) {
+function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldValids, disabled }) {
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,12 +27,15 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     }, [fieldOptions])
 
     useEffect(() => {
+        console.log(error);
         if((!error || error.length === 0) && isSubmitting) {
             const dataObj = {
                 fieldId: name,
                 value
             }
             dispatch(insertData(dataObj))
+            setIsSubmitting(false)
+            setError('')
         }
 
         if(error) 
@@ -65,41 +68,40 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
             setError('')
         }
     }
+    
+    switch(type) {
+        case 'textbox': 
+            return <FormInputBorder 
+                    title={title}
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={changeData}
+                    onBlur={addData}
+                    error={error?.length !== 0 ? error : undefined}
+                    disabled={disabled} />
 
-    if(type === "textbox") {
-        return <FormInputBorder 
-                title={title}
-                type={type}
-                name={name}
-                value={value}
-                onChange={changeData}
-                onBlur={addData}
-                error={error?.length !== 0 ? error : undefined} />
-    }
-
-    else if(type === "select") {
-        return <Dropdown 
-                title={title}
-                options={options}
-                defaultOption={options.find(option => 
-                    option.value === defValue)}
-                placeholder="בחירה"
-                name={name}
-                width={'10rem'}
-                onChange={changeData} />
-    }
-
-    else if(type === "checkbox") {
-        return <Checkbox 
-                name={name}
-                label={title}
-                onChange={changeData}
-                value={{on: true, off: false}}
-                checked={defValue ? true : false} />
-    }
-
-    else {
-        return <Fragment></Fragment>
+        case 'select': 
+            return <Dropdown 
+                    title={title}
+                    options={options}
+                    defaultOption={options.find(option => 
+                        option.value === defValue)}
+                    placeholder="בחירה"
+                    name={name}
+                    width={'10rem'}
+                    onChange={changeData} /> 
+        
+        case 'checkbox': 
+            return <Checkbox 
+                    name={name}
+                    label={title}
+                    onChange={changeData}
+                    value={{on: true, off: false}}
+                    checked={defValue ? true : false} />
+        
+        default:
+            return <Fragment></Fragment>
     }
 }
 

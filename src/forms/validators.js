@@ -42,7 +42,7 @@ export function numRange(value, valid) {
     const min = valid.min;
     const max = valid.max;
 
-    const message = "הערך חייב להיות בין " + min + " -ל " + max
+    const message = "הערך חייב להיות בין " + min + " ל- " + max
 
     if(value < min || value > max) {
         return message

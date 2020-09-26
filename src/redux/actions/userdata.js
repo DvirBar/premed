@@ -1,11 +1,13 @@
 import {
     USER_DATA_LOADING,
+    USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
+    EXEC_CALC,
     USER_DATA_DELETE,
 } from './types';
 import axios from 'axios';
@@ -15,6 +17,12 @@ import { getMessage, getError } from './messages';
 export const dataLoad = () => {
     return {
         type: USER_DATA_LOADING
+    }
+}
+
+export const dataLoadSoft = () => {
+    return {
+        type: USER_DATA_LOAD_SOFT
     }
 }
 
@@ -93,7 +101,7 @@ export const editUserDataPaths = data => dispatch => {
 
 // Insert new data to user data collection
 export const insertData = data => dispatch => {
-    // TODO: Soft loading 
+    dispatch(dataLoadSoft());
     // TODO: Prompt user on successful save 
     
     // Request body
@@ -114,7 +122,7 @@ export const insertData = data => dispatch => {
 
 // Toggle user data enabled status
 export const toggleEnabled = () => dispatch => {
-    dispatch(dataLoad());
+    dispatch(dataLoadSoft());
 
     axios.put('api/userdata/toggleEnabled')
          .then(res => 
@@ -126,6 +134,18 @@ export const toggleEnabled = () => dispatch => {
              dispatch(dataError())
              dispatch(getError(err))
             })
+}
+
+export const executeCalc = storCalcId => dispatch => {
+    axios.put(`/api/userdata/execCalc/${storCalcId}`)
+         .then(res => dispatch({
+             type: EXEC_CALC,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataError())
+             dispatch(getError(err))
+         })
 }
 
 

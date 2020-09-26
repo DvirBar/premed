@@ -1,16 +1,19 @@
 import {
     USER_DATA_LOADING,
+    USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
-    USER_DATA_DELETE,
+    EXEC_CALC,
+    USER_DATA_DELETE
 } from '../actions/types';
 
 const initialState = {
     loading: false,
+    softLoading: false,
     data: {}
 }
 
@@ -22,6 +25,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: true
+            }
+
+        case USER_DATA_LOAD_SOFT:
+            return {
+                ...state,
+                softLoading: true
             }
 
         case USER_DATA_SUCCESS: 
@@ -45,19 +54,41 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_UPDATE_PATHS:
-        case USER_DATA_INSERT:
-        case USER_DATA_TOGGLE_ENABLED:
             return {
                 ...state,
                 loading: false,
                 data: payload
             }
 
+        case USER_DATA_TOGGLE_ENABLED:
+            return {
+                ...state,
+                softLoading: false,
+                data: {
+                    ...state.data,
+                    enabled: payload.enabled
+                }
+            }
+
+        case USER_DATA_INSERT:
+        case EXEC_CALC:
+            return {
+                ...state,
+                softLoading: false,
+                data: {
+                    ...state.data,
+                    values: state.data.dataVals.map(value => 
+                        value.field._id === payload.field._id ? 
+                        value = payload : value)
+                }
+            }
+
+
         case USER_DATA_DELETE:
             return {
                 ...state,
                 loading: false,
-                data: state.data.values.filter(data => data.user !== payload)
+                data: state.data.filter(data => data.user !== payload)
             }
 
         default:

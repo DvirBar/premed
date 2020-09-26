@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneUserData } from '../../../redux/actions/userdata';
 import Loadbar from '../../layout/Loadbar';
+import SoftLoadbar from '../../layout/SoftLoadBar';
 import ChoosePath from './ChoosePath';
 import UserStats from './UserStats';
 
@@ -13,20 +14,30 @@ function ValidatePath() {
     }, [])
 
     const dataSelector = useSelector(state => state.userdata);
-    const data = dataSelector.data;
+    const fetchedData = dataSelector.data;
     const loadData = dataSelector.loading;
-    // const [data, setData] = useState({})
+    const loadSoft = dataSelector.softLoading;
+    const [data, setData] = useState({})
 
-    // useEffect(() => {
-    //     setData(fetchedData)
-    // }, [fetchedData])
+    useEffect(() => {
+        setData(fetchedData)
+    }, [fetchedData])
 
 
     if(loadData)
         return <Loadbar />
 
     else if(data && Object.keys(data).length !== 0) {
-        return <UserStats data={data} />
+        return (
+            <Fragment>
+               
+               {loadSoft &&
+                    <SoftLoadbar message="מבצע שמירה" />
+               }
+
+                <UserStats data={data} />
+            </Fragment>
+        )
     }
 
     else  {
