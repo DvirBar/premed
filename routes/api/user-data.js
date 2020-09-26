@@ -21,7 +21,6 @@ const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
-import { populate } from '../../models/UserData';
 import storedCalcs from '../../utils/calcsIndex';
 
 // @route   GET api/userdata/user
@@ -31,7 +30,11 @@ router.get('/user', auth, (req, res, next) => {
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-            .populate('dataVals.field')
+            .populate({
+                path: 'dataVals.field',
+                populate: { path: 'calcOutput' }
+            })
+            .populate('paths')
             .then(data => {
                 if(!data) 
                     return res.status(DataNotExist.status)
@@ -88,7 +91,15 @@ router.post('/', auth, (req, res, next) => {
 
                 newData.save()
                         .then(data => {
-                            return res.send(data)
+                            async function populateData() {
+                                await data.populate({
+                                    path: 'dataVals.field',
+                                    populate: { path: 'calcOutput' }
+                                }).populate('paths').execPopulate();
+    
+                                return res.send(data); 
+                            }
+                            populateData();       
                         })
                         .catch(next); // Save data entry
             })
@@ -119,7 +130,15 @@ router.put('/editpaths', auth, (req, res, next) => {
 
                 data.save()
                     .then(data => {
-                        return res.send(data)              
+                        async function populateData() {
+                            await data.populate({
+                                path: 'dataVals.field',
+                                populate: { path: 'calcOutput' }
+                            }).populate('paths').execPopulate();
+
+                            return res.send(data); 
+                        }
+                        populateData();              
                     })
                     .catch(next); // Save user data
             })
@@ -174,7 +193,10 @@ router.put('/insertdata', auth, (req, res, next) => {
                             data.save()
                                 .then(data => {
                                     async function populateData() {
-                                        await data.populate("dataVals.field").execPopulate();
+                                        await data.populate({
+                                            path: 'dataVals.field',
+                                            populate: { path: 'calcOutput' }
+                                        }).execPopulate();
                                         const valueObj = data.dataVals.find(val => 
                                             val.field._id.equals(fieldId))
                                         return res.send(valueObj); 

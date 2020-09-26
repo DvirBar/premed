@@ -10,7 +10,7 @@ const app = express();
 // Middlewares
 // Entry middlewares
 app.use(express.json());
-app.use (cors());
+app.use(cors());
 
 // App routes
 import auth from '../routes/api/auth';

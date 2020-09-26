@@ -179,7 +179,6 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 });
 
 
-
 // @route   PUT api/calculations/:id/assignRole
 // @desc    Assign role to calculation
 // @access  Admin

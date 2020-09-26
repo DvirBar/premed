@@ -48,6 +48,13 @@ const args = {
         varName: 'heb',
         type: 'group',
         fields: bagrutGroupArgs
+    },
+    {
+        name: 'היסטוריה',
+        role: 'history',
+        varName: 'history',
+        type: 'group',
+        fields: bagrutGroupArgs  
     }], 
     huji: {
         bagrut: {

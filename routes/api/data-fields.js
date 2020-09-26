@@ -284,7 +284,6 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                     {role: role },
                                 {group: field.group}]})
                                 .then(prevField => {
-                                    console.log(prevField);
                                     if(prevField) {
                                         prevField.role = undefined
                                         prevField.save()
