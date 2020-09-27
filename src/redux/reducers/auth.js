@@ -28,9 +28,10 @@ export default function(state = initialState, action) {
             }
         
         case LOGIN_SUCCESS:
-            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', payload.token);
             return {
                 ...state,
+                token: payload.token,
                 isAuthenticated: true,
                 loading: false, 
                 user: payload.user
@@ -50,9 +51,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 token: null,
-                isAuthenticated: false,
                 loading: false,
-                user: null
             }
         
         case USER_UPDATE:

@@ -143,6 +143,10 @@ ul {
     padding: 3rem;
 }
 
+th {
+    font-weight: 400;
+}
+
 
 
 @media only screen and (max-width: 1000px) {
@@ -185,6 +189,7 @@ ul {
 @import 'pages/topics';
 @import 'pages/profile';
 @import 'pages/userdata';
+@import 'pages/stats';
 
 @import 'admin/admin';
 @import 'admin/default';

@@ -14,7 +14,7 @@ import unis from './universities';
 import calcs from './calculations';
 import userdata from './userdata';
 
-export default combineReducers({
+const appReducer = combineReducers({
     auth,
     messages,
     paths,
@@ -30,6 +30,16 @@ export default combineReducers({
     calcs,
     userdata
 });
+
+const rootReducer = (state, action) => {
+    if(action.type === 'LOGOUT_SUCCESS') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+}
+
+export default rootReducer;
 
 export const getGroupFields = (fields) => 
     fieldSelectors.getGroupFields(fields)

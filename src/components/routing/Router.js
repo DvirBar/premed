@@ -14,6 +14,7 @@ import StepItem from '../steps/StepItem';
 import Subpage from '../topics/Subpage';
 import TopicContent from '../topics/TopicContent';
 import NoMatchPage from '../layout/NoMatchPage';
+import Stats from '../stats/Stats';
 
 const Router = () => {
     const location = useLocation();
@@ -33,10 +34,11 @@ const Router = () => {
                 <ProtectedRoute path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route exact path="/steps/:pathId" component={Steps} />
-                <ProtectedRoute exact path="/steps/:pathId/:stepId" component={StepItem} />
+                <Route exact path="/steps/:pathId/:stepId" component={StepItem} />
+                <ProtectedRoute path="/stats/:pathId" component={Stats} />
                 <ProtectedRoute exact path="/:pageUrl/:subpageUrl" component={Subpage} />
                 <ProtectedRoute path="/:pageUrl/:subpageUrl/:topicUrl" component={TopicContent} />
-                <Route component={NoMatchPage} />
+                <Route component={NoMatchPage} />  
             </Switch>
         </div>
     )

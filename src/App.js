@@ -9,29 +9,38 @@ import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getTopics } from './redux/actions/topics';
+import { getAnc } from './redux/actions/anouncements';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
 import Loadbar from './components/layout/Loadbar';
+import axios from 'axios'; 
+
+axios.defaults.baseURL = 'http://10.0.0.11:5000';
+axios.defaults.headers['Content-Type'] = 'application/json';
 
 function App() {
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth)
 
-  // Check if there is a logged in user
+  
   useEffect(() => {
-    dispatch(getUser());
     dispatch(getPaths());
     dispatch(getSteps());
     dispatch(getPages());
-  }, []);
+    dispatch(getAnc());
 
-  const auth = useSelector(state => state.auth)
-
-  useEffect(() => {
     if(auth) {
       dispatch(getTopics());
+      axios.defaults.headers.common['x-auth-token'] = auth.token;
     }
   }, [auth])
+
+   // Check if there is a logged in user
+   useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
 
   moment.locale('he');
 
@@ -39,12 +48,15 @@ function App() {
   const selPaths = useSelector(state => state.paths);
   const fetchedPaths = selPaths.paths;
   const loadPaths = selPaths.loading;
-  
+  const loadSteps = useSelector(state => state.steps.loading);
+  const loadPages = useSelector(state => state.pages.loading);
+  const loadAncs = useSelector(state => state.ancs.loading);
+
   useEffect(() => { // Bind selector to local state
     setPaths(fetchedPaths)
   }, [fetchedPaths])
 
-  if(auth.loading || !auth)
+  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs)
     return <Loadbar loadfull={true} />
 
     return (

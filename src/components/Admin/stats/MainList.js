@@ -31,10 +31,12 @@ function MainList({ fields, groups, calcs, types, selUni }) {
             selUni={selUni}
             types={types} />
 
-            <DataGroupsList
-            groups={groups}
-            groupFields={groupFields}
-            types={types} />
+            {!selUni &&
+                <DataGroupsList
+                groups={groups}
+                groupFields={groupFields}
+                types={types} />
+            }
         </div>
     )
 }

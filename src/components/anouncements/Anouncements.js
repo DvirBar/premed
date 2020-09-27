@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAnc } from '../../redux/actions/anouncements';
 import AncItem from './AncItem';
 
 function Anouncements() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getAnc());
-    }, []);
-    
     const selectedAncs = useSelector(state => state.ancs);
     const fetchedAncs = selectedAncs.ancs;
 

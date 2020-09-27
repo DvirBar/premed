@@ -2,6 +2,7 @@ import {
     USER_DATA_LOADING,
     USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
+    USER_DATA_PATH_SUCCESS,
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
@@ -14,6 +15,7 @@ import {
 const initialState = {
     loading: false,
     softLoading: false,
+    pathData: [],
     data: {}
 }
 
@@ -38,6 +40,13 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 data: payload
+            }
+
+        case USER_DATA_PATH_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                pathData: payload
             }
 
         case USER_DATA_ERROR:
@@ -77,9 +86,18 @@ export default function(state = initialState, action) {
                 softLoading: false,
                 data: {
                     ...state.data,
-                    values: state.data.dataVals.map(value => 
-                        value.field._id === payload.field._id ? 
-                        value = payload : value)
+                    dataVals: 
+                        state.data.dataVals.length === 0
+                        ?  state.data.dataVals = [payload]
+
+                        : (state.data.dataVals.find(value => 
+                            value.field._id === payload.field._id) 
+
+                            ? state.data.dataVals.map(value => 
+                                value.field._id === payload.field._id ? 
+                                payload : value)
+                            
+                            : [...state.data.dataVals, payload])
                 }
             }
 

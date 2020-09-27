@@ -2,6 +2,7 @@ import {
     USER_DATA_LOADING,
     USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
+    USER_DATA_PATH_SUCCESS,    
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
@@ -48,13 +49,13 @@ export const getOneUserData = () => dispatch => {
 }
 
 // Get all users data by path
-export const getUsersData = pathId => dispatch => {
+export const getUsersDataByPath = pathId => dispatch => {
     dispatch(dataLoad());
 
-    axios.get(`api/userdata/user/${pathId}`)
+    axios.get(`api/userdata/${pathId}`)
          .then(res => { 
              dispatch({
-                type: USER_DATA_SUCCESS,
+                type: USER_DATA_PATH_SUCCESS,
                 payload: res.data
             })})
          .catch(err => {

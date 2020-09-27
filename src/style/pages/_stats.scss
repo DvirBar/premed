@@ -1,0 +1,87 @@
+.table-container {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 10rem;
+
+    &::-webkit-scrollbar {
+        width: 0.3rem;
+        opacity: 0;
+    }
+    
+    &::-webkit-scrollbar-track {
+        width: 0.3rem;
+        background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 1rem;
+    }
+
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
+}
+
+.data-table {
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+    color: #464646;
+
+    th, td {
+        padding: 1rem;
+        min-width: 12rem;
+    }
+
+    th {
+        color: #fff;
+    }
+
+    tr {
+        td {
+            border: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+    }
+
+    tr:hover {
+        td {
+            border-top-color: $main-color;
+            border-bottom-color: $main-color;
+        }
+    }
+
+    .uni-header {
+        padding: 0;
+        padding-top: 1rem;
+        transition: padding 0.2s ease-in;
+
+        span {
+            display: block;
+            margin: 0;
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            transition: padding 0.2s ease-in;
+        }
+
+        &:hover {
+            padding-top: 0;
+
+            span {
+                padding-top: 2.5rem;
+                transition: padding 0.2s ease-in;
+            }
+        }
+    }
+
+    .fields-headers th {
+        border-bottom: 8px solid #fff;
+        position: sticky;
+    }
+}

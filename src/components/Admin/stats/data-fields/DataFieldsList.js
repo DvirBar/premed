@@ -11,6 +11,7 @@ function DataFieldsList({ allFields, selUni, types }) {
     useEffect(() => {
         if(selUni) {
             setFields(allFields.filter(field => 
+                field.university &&
                 field.university._id === selUni 
                 && !field.group
                 && !field.calcOutput

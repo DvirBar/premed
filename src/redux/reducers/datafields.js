@@ -71,13 +71,16 @@ export default function(state = initialState, action) {
             }
 
         case DATA_FIELD_ASSIGN_ROLE:
+            console.log(payload);
             return {
                 ...state,
                 loading: false,
-                fields: state.fields.map(field => 
-                    payload._id === field._id 
-                    ? field = payload : field
-                )
+                fields: state.fields.map(field => { 
+                    let tempField = payload.find(curField => 
+                        curField._id === field._id)
+                    
+                    return tempField ? field = tempField : field
+                })
             }
 
         case DATA_FIELD_DELETE: 

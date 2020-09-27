@@ -92,6 +92,15 @@ function Navbar({ paths }) {
                         <span>
                            נתונים  
                         </span>
+                        <ul className="sub-menu">
+                            {paths?.map(path => (
+                                <li key={path._id}>
+                                    <Link to={`/stats/${path._id}`}>
+                                        <span>{path.name}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </li>
                     <ul className="left-section">
                         <li className="search">

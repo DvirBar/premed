@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
 
 function NavigateDataSections({ paths, unis, changeSection }) {
     return (
@@ -34,7 +34,11 @@ function NavigateDataSections({ paths, unis, changeSection }) {
             : (
                 <Fragment>
                     <p className="nav-section-item">
-                        <span className="section-item">כללי</span>
+                        <span 
+                        className="section-item"
+                        onClick={() => changeSection()}>
+                            כללי
+                        </span>
                     {paths.map(path => 
                         <Fragment>
                             {unis?.map(uni => 
