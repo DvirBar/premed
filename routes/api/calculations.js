@@ -178,6 +178,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             .catch(next); // Find data group
 });
 
+
 // @route   PUT api/calculations/:id/assignRole
 // @desc    Assign role to calculation
 // @access  Admin
@@ -245,31 +246,6 @@ router.delete('/:id', [auth, authAdmin], (req, res, next) => {
             })
             .catch(next);
 })
-
-// // @route   GET api/calculations/execCalc
-// // @desc    Execute calculation
-// // @access  Private
-// router.get('/execCalc/:storCalcId', auth, (req, res, next) => {
-
-//     const storCalc = storedCalcs.find(calc => calc.id === storCalcId)
-
-//     UserData.find()
-//             .populate('values.field')
-//             .then(data => {
-//                 const values = data.values
-
-//                 let args = storCalc.args.map(arg => {
-//                     if(arg.type === "group") {
-//                         let groupArgs = []
-//                         for(let value of values) {
-//                             if(value.field.group.role === arg.role)
-//                                 groupArgs.push()
-//                         }
-//                     }
-//                 })
-//             })
-             
-// })
 
 
 module.exports = router;

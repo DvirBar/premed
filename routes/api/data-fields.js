@@ -284,7 +284,6 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                     {role: role },
                                 {group: field.group}]})
                                 .then(prevField => {
-                                    console.log(prevField);
                                     if(prevField) {
                                         prevField.role = undefined
                                         prevField.save()
@@ -297,8 +296,9 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                             })
                                             .catch(next); // Save prev field
                                     }
-
-                                    return res.send(field)
+                                    else {
+                                        return res.send([field])
+                                    }
                                 })
                                 .catch(next); // Find field
                        })

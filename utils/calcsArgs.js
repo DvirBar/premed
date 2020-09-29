@@ -27,7 +27,7 @@ const args = {
         varName: 'mor',
         type: 'field'
     },
-
+/////////////////////////////////////////////////////
     bagrut: [{
         name: 'מתמטיקה',
         role: 'math',
@@ -48,7 +48,76 @@ const args = {
         varName: 'heb',
         type: 'group',
         fields: bagrutGroupArgs
-    }], 
+    },
+    {
+        name: 'היסטוריה',
+        role: 'history',
+        varName: 'history',
+        type: 'group',
+        fields: bagrutGroupArgs  
+    },
+    {
+        name: 'תנ"ך',
+        role: 'bible',
+        varName: 'bible',
+        type: 'group',
+        fields: bagrutGroupArgs  
+    },
+    {
+        name: 'ספרות',
+        role: 'lit',
+        varName: 'lit',
+        type: 'group',
+        fields: bagrutGroupArgs  
+    },
+    {
+        name: 'אזרחות',
+        role: 'civics',
+        varName: 'civics',
+        type: 'group',
+        fields: bagrutGroupArgs  
+    },
+    {
+        name: 'מקצועות נוספים',
+        role: 'moreFields',
+        varName: 'moreFields',
+        isOptional: true,
+        type: 'group',
+        fields: bagrutGroupArgs,
+        options: [
+            {
+                name: 'פיזיקה',
+                role: 'physics',
+                varName: 'physics',
+            },
+            {
+                name: 'ביולוגיה',
+                role: 'bio',
+                varName: 'bio',
+            },
+            {
+                name: 'כימיה',
+                role: 'chem',
+                varName: 'chem',
+            },
+            {
+                name: 'ערבית',
+                role: 'arab',
+                varName: 'arab',
+            },
+            {
+                name: 'מחשבת ישראל',
+                role: 'thought',
+                varName: 'thought',
+            },
+            {
+                name: 'מקצוע אחר',
+                role: 'other',
+                varName: 'other',
+            }
+        ]
+    }
+], 
     huji: {
         bagrut: {
             name: 'בגרות - העברית',

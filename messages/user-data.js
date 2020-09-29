@@ -13,6 +13,14 @@ const userDataMessages = {
         },
         status: 400
     },
+    ArgsInsuffice: {
+        msg: {
+            en: `Could not execute calculation because not all of its 
+            required arguments were provided`,
+            he: `לא ניתן לבצע את החישוב משום שלא קיימים כל המשתנים שנדרשים עבורו`
+        },
+        status: 400
+    },
     UnauthorizedEdit: {
         msg: {
             en: 'You are not authorized to edit this data!',

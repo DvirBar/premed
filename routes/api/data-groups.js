@@ -140,17 +140,16 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                    group.save()
                        .then(group => {
             // Find if there is group with the same role and unassign it
-                            DataGroup.find({ $and: 
+                            DataGroup.findOne({ $and: 
                                 [{_id: { $ne: group._id}}, 
                                     {role: role}]})
                                 .then(prevGroup => {
                                     if(prevGroup) {
-                                        const saveGroup = prevGroup[0]
-                                        saveGroup.role = undefined
-                                        saveGroup.save()
+                                        prevGroup.role = undefined
+                                        prevGroup.save()
                                             .then(() => {
                                                 const returnArr = [
-                                                    saveGroup,
+                                                    prevGroup,
                                                     group
                                                 ]
                                                 return res.send(returnArr)
@@ -158,7 +157,7 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                             .catch(next); // Save prev field
                                         }
                                     else {
-                                        return res.send(group)
+                                        return res.send([group])
                                     }
                                 })
                                 .catch(next); // Find group
