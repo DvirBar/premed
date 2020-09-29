@@ -209,12 +209,20 @@ export const sortData = (state, ordering) => {
 
     switch(ordering.sort.type) {
         case 'ascending':
-            return state.sort((a, b) => {
-                return (
-                    (a.dataVals.find(val => val.field === fieldId)?.value || 0)  -
-                    (b.dataVals.find(val => val.field === fieldId)?.value || 0)
-                ) 
-            })
+            let missingVals = state.filter(entry => 
+                !entry.dataVals.find(val => val.field === fieldId))
+            let sortedArr = state
+                   .filter(entry => entry.dataVals.find(val => val.field === fieldId))
+                   .sort((a, b) => {
+                        return (
+                            (a.dataVals.find(val => val.field === fieldId)?.value || 0)  -
+                            (b.dataVals.find(val => val.field === fieldId)?.value || 0)
+                    ) 
+                 })
+                 
+            Array.prototype.push.apply(sortedArr, missingVals)
+            return sortedArr
+                 
 
         case 'descending':
             return state.sort((a, b) => {

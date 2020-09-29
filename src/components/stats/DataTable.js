@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import FieldOptions from './FieldOptions';
 
 function DataTable({ fields, unis, data}) {
     const [tableSections, setTableSections] = useState([]);
     const [displayOrder, setDisplayOrder] = useState(false);
-    const [selField, setSelField] = useState('');
+    const [selField, setSelField] = useState({});
+    const [highlightRow, setHighlightRow] = useState('')
 
+    const ordering = useSelector(state => state.userdata.ordering);
 
     useEffect(() => {
         setTableSections([{
@@ -68,13 +71,20 @@ function DataTable({ fields, unis, data}) {
 
                             : section.fields.map(field =>
                                 <th
-                                className="field-header"
+                                className={ordering.sort.fieldId === field._id
+                                    ? "field-header sorted"
+                                    : "field-header"}
                                 style={matchColor(section.uni, true)}
                                 onClick={() => openFieldOptions(field)}>
                                     <div>
                                         <span></span>
                                         <span className="field-name">{field.name}</span>
-                                        <i className="material-icons">expand_more</i>
+                                        {<i className={ordering.filters.find(filter => 
+                                            filter.field.id === field._id) 
+                                            ? "material-icons shown"
+                                            : "material-icons"}>
+                                            filter_alt
+                                        </i>}
                                     </div>
                                 </th>
                                 ))}
@@ -82,7 +92,12 @@ function DataTable({ fields, unis, data}) {
                 </thead>
                 <tbody>
                     {data?.map(dataItem => 
-                        <tr className="user-data">
+                        <tr
+                        key={dataItem._id} 
+                        className={highlightRow === dataItem._id 
+                            ? "user-data highlight"
+                            : "user-data"}
+                        onClick={() => setHighlightRow(dataItem._id)}>
                             {tableSections.map(section => 
                             section.fields.length === 0
                             ? <td 
@@ -93,10 +108,18 @@ function DataTable({ fields, unis, data}) {
                             
                             : section.fields.map(field =>
                                     <td 
-                                    className="field-cell" 
+                                    className={ordering.sort.fieldId === field._id 
+                                        ? "field-cell sorted"
+                                        : "field-cell"} 
                                     style={matchColor(section.uni)}>
-                                        {dataItem.dataVals.find(val => 
-                                            val.field === field._id)?.value || '-'}
+                                        {ordering.sort.fieldId === field._id ||
+                                        highlightRow === dataItem._id &&
+                                            <div className="cover"></div>
+                                        }
+                                        <span>
+                                            {dataItem.dataVals.find(val => 
+                                                val.field === field._id)?.value || '-'}
+                                        </span>
                                     </td>
                                 ))}
                         </tr>    
@@ -106,6 +129,7 @@ function DataTable({ fields, unis, data}) {
 
             <FieldOptions
             field={selField}
+            ordering={ordering}
             display={displayOrder}
             toggleModal={toggleOrder}
             title={"סינון ומיון " + selField.name} />

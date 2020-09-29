@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { filterData, clearFilters, sortData } from '../../redux/actions/userdata';
 import Modal from '../layout/Modal';
 import Dropdown from '../common/Dropdown';
 
-function FieldOptions({ field, display, toggleModal, title }) {
+function FieldOptions({ field, ordering, display, toggleModal, title }) {
     const dispatch = useDispatch();
-
-    const ordering = useSelector(state => state.userdata.ordering)
 
     const [minVal, setMinVal] = useState('');
     const [maxVal, setMaxVal] = useState('');

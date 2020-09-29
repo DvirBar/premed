@@ -5,6 +5,7 @@ import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import { editUni } from '../../../redux/actions/universities';
 import FormInput from '../../common/FormInput';
+import ColorPicker from './ColorPicker';
 
 function EditUni({ display, toggleModal, uni }) {
     const [defaultValues, setDefaultValues] = useState({
@@ -21,24 +22,6 @@ function EditUni({ display, toggleModal, uni }) {
         errors
     } = useForm(editUni, defaultValues, uni._id)
 
-    const colors = [
-        '#ffc65c',
-        '#ff5c5c',
-        '#66ff7a',
-        '#66ffeb',
-        '#6694ff',
-        '#cf66ff',
-        '#faff66'
-    ]
-
-    const selectColor = colorCode => {
-        const colorObj = {
-            name: 'color',
-            value: colorCode
-        }
-
-        handleChange(colorObj)
-    }
 
     return (
         <Modal
@@ -71,15 +54,9 @@ function EditUni({ display, toggleModal, uni }) {
                     </Fragment> 
                     )}
 
-                <ul className="color-list">
-                    {colors.map(color => 
-                        <li 
-                        className={values.color === color
-                            ? "color-item selected"
-                            : "color-item"}
-                        style={{backgroundColor: color}}
-                        onClick={() => selectColor(color)}></li>)}
-                </ul>
+                <ColorPicker
+                onChange={handleChange}
+                selColor={values.color} />
                 <button type="submit">הוסף</button>
             </form>
         </Modal>
