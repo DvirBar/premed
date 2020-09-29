@@ -57,7 +57,11 @@ router.get('/:pathId', auth, (req, res, next) => {
                 return res.status(PathNotExist.status)
                           .send(PathNotExist.msg)
             
-            UserData.find({ $and: [{ paths: pathId }, { enabled: true }] })
+            UserData.find({ $and: [
+                { paths: pathId }, 
+                { enabled: true }, 
+                { dataVals: { $exists: true,  $ne: [] }}
+            ]})
             .select("-user")
             .then(data => res.send(data))
             .catch(next);                  
@@ -213,7 +217,7 @@ router.put('/insertdata', auth, (req, res, next) => {
 // @route   PUT api/userdata/toggleEnabled
 // @desc    Assign role to data group
 // @access  Admin
-router.put('/toggleEnabled', [auth, authAdmin], (req, res, next) => {
+router.put('/toggleEnabled', auth, (req, res, next) => {
 
     const userId = res.locals.user.id
 

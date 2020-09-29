@@ -296,8 +296,9 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
                                             })
                                             .catch(next); // Save prev field
                                     }
-
-                                    return res.send(field)
+                                    else {
+                                        return res.send([field])
+                                    }
                                 })
                                 .catch(next); // Find field
                        })
