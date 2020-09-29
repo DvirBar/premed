@@ -4,10 +4,10 @@ import DataTable from './DataTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFieldsByPaths } from '../../redux/actions/datafields';
 import { useRouteMatch } from 'react-router-dom';
-import { getGroupsByPaths } from '../../redux/actions/datagroups';
 import { getUnisByPaths } from '../../redux/actions/universities';
 import { getStoredCalcs } from '../../redux/actions/calculations';
 import { getUsersDataByPath } from '../../redux/actions/userdata';
+import { getFilteredSortedData } from '../../redux/reducers'
 import Loadbar from '../layout/Loadbar';
 
 function Stats() {
@@ -34,12 +34,8 @@ function Stats() {
     const { unis } = unisSelector
     
     // User data
-    const dataSelector = useSelector(state => state.userdata)
-    const loadData = dataSelector.loading
-    const data  = dataSelector.pathData
-
-    // Unis
-    const storedCalcs = useSelector(state => state.storedCalcs)
+    const data = useSelector(state => getFilteredSortedData(state.userdata))
+    const loadData = useSelector(state => state.userdata.loading)
 
     if(loadFields || loadUnis || loadData) {
         return <Loadbar />

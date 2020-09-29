@@ -1,9 +1,10 @@
 .table-container {
     position: absolute;
     right: 0;
-    width: 100%;
+    overflow-y: hidden;
     overflow-x: auto;
-    margin-bottom: 10rem;
+    width: 100%;
+    height: 100vh;
 
     &::-webkit-scrollbar {
         width: 0.3rem;
@@ -28,18 +29,23 @@
 }
 
 .data-table {
+    display: inline-grid;
+    grid-template-areas: 
+    "head-fixed"
+    "body-scrollable";
+
     font-size: 1.5rem;
-    width: 100%;
     text-align: center;
     color: #464646;
 
     th, td {
         padding: 1rem;
-        min-width: 12rem;
+        min-width: 15rem;
+        max-width: 15rem;
     }
-
+    
     th {
-        color: #fff;
+        color: #fff !important;
     }
 
     tr {
@@ -56,6 +62,11 @@
         }
     }
 
+    thead {
+        box-shadow: $default-shadow;
+        grid-area: head-fixed;
+    }
+
     .uni-header {
         padding: 0;
         padding-top: 1rem;
@@ -64,7 +75,7 @@
         span {
             display: block;
             margin: 0;
-            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+            padding: 1.5rem 1.5rem 0.5rem 1rem;
             border-top-left-radius: 1.5rem;
             border-top-right-radius: 1.5rem;
             transition: padding 0.2s ease-in;
@@ -80,8 +91,145 @@
         }
     }
 
-    .fields-headers th {
-        border-bottom: 8px solid #fff;
-        position: sticky;
+    .field-header {
+        & > div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            i {
+                color: #fff;
+                visibility: hidden;
+            }
+    
+            .field-name {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                max-width: 12rem;
+            }
+
+            &:hover {
+                i {
+                    visibility: visible;
+                }
+            }
+        }
+
+    }
+
+    tbody {
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-area: body-scrollable;
+        height: calc(100vh - 108px);
+    }
+}
+
+.field-options {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    color: #464646;
+
+    .filters {
+        background-color: #ededed;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+
+    .filters-title {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .filters-list {
+        display: flex;
+        column-gap: 0.5rem;
+
+        .no-filters {
+            width: 100%;
+            color: #464646;
+            font-size: 1.5rem;
+            display: block;
+            text-align: center;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ddd;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            font-size: 1.5rem;
+        }
+    }
+
+    .clear-all {
+        border: 1.5px solid #ccc;
+        color: #888;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+        cursor: pointer;
+        width: 10rem;
+        padding: 0.5rem;
+        text-align: center;
+        background-color: #fff;
+
+        &:hover {
+            border-color: #0438a8;
+            color: #0438a8;
+        }
+        
+    }
+
+    .filter-fields {
+        display: flex;
+        column-gap: 0.5rem;
+
+        input {
+            width: 12rem;
+        }
+    }
+
+    .sort {
+        display: flex;
+        background-color: #ededed;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        align-items: center;
+        column-gap: 0.5rem;
+    }
+
+    .sort-fields {
+        display: flex;
+        column-gap: 1rem;
+
+        .sort-item {
+            $selected-color: $main-color;
+            border: 1.5px solid #ccc;
+            color: #888;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1.6rem;
+            padding: 0.5rem;
+            background-color: #fff;
+
+            &:hover {
+                border-color: $selected-color;
+                color: $selected-color;
+            }
+
+            &.selected {
+                border-color: $selected-color;
+                color: $selected-color;
+            }
+        }
+
     }
 }

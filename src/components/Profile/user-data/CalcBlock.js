@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
 import { getGroupFields } from '../../../redux/reducers';
-import Modal from '../../layout/Modal';
 
 function CalcBlock({ field, dataVals }) {
     const dispatch = useDispatch();

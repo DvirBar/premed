@@ -12,7 +12,7 @@ import datagroups from './datagroups';
 import datafields, * as fieldSelectors from './datafields';
 import unis from './universities';
 import calcs from './calculations';
-import userdata from './userdata';
+import userdata, * as dataSelectors from './userdata';
 
 const appReducer = combineReducers({
     auth,
@@ -41,5 +41,21 @@ const rootReducer = (state, action) => {
 
 export default rootReducer;
 
-export const getGroupFields = (fields) => 
+export const getGroupFields = fields => 
     fieldSelectors.getGroupFields(fields)
+
+
+export const getFilteredSortedData = state => {
+    let stateCollection = state.pathData
+    let ordering = state.ordering
+
+    if(state.ordering.filters) {
+        stateCollection = dataSelectors.filterData(stateCollection, ordering);
+    }
+
+    if(state.ordering.sort.type) {
+        stateCollection = dataSelectors.sortData(stateCollection, ordering);
+    }
+    
+    return stateCollection;
+}

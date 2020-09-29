@@ -10,6 +10,9 @@ import {
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
     USER_DATA_DELETE,
+    FILTER_DATA,
+    REMOVE_FILTER_DATA,
+    SORT_DATA
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -137,6 +140,7 @@ export const toggleEnabled = () => dispatch => {
             })
 }
 
+// Execute calculation
 export const executeCalc = storCalcId => dispatch => {
     axios.put(`/api/userdata/execCalc/${storCalcId}`)
          .then(res => dispatch({
@@ -149,7 +153,7 @@ export const executeCalc = storCalcId => dispatch => {
          })
 }
 
-
+// Delete all data for the user
 export const deleteUserData = userId => dispatch => {
     dispatch(dataLoad());
 
@@ -166,5 +170,30 @@ export const deleteUserData = userId => dispatch => {
             dispatch(getError(err))
          })
 }
+
+export const filterData = filter => dispatch => {
+    dispatch({
+        type: FILTER_DATA,
+        payload: filter
+    })
+}
+
+export const clearFilters = fieldId => dispatch => {
+    dispatch({
+        type: REMOVE_FILTER_DATA,
+        payload: fieldId
+    })
+}
+
+export const sortData = (type, fieldId) => dispatch => {
+    dispatch({
+        type: SORT_DATA,
+        payload: {
+            type, 
+            fieldId
+        }
+    })
+}
+
 
 
