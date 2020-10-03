@@ -1,8 +1,16 @@
 import React, { Fragment, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from '../common/useOnClickOutside';
+import TopLinks from './TopLinks';
 
-const Modal = ({ display, toggleModal, children, title, subTitle })=> {
+const Modal = ({ 
+  display, 
+  toggleModal, 
+  children, 
+  title, 
+  subTitle, 
+  linksList, 
+  selectLink })=> {
     
     // We'll use ref of modal box, so when clicking outside it'll close
     const ref = useRef();
@@ -36,25 +44,29 @@ const Modal = ({ display, toggleModal, children, title, subTitle })=> {
     }
 
     return (
-        <Fragment>
-            <div 
-            className="gen-modal" 
-            style={display ? showOpacity : hideOpacity} 
-            onKeyPress={event => escapeModal(event)}>
-              <div 
-              className="modal-box" 
-              ref={ref}>
-                <div className="modal-header">
-                    <span class="close-modal" onClick={() => toggleModal(false)}>&times;</span><br/>
-                    <span className="modal-title">{title}</span>
-                    <p className="modal-subtitle">{subTitle}</p>
-                </div>
-                <div className="modal-body">
-                  {children}
-                </div>
-              </div>
+        <div 
+        className="gen-modal" 
+        style={display ? showOpacity : hideOpacity} 
+        onKeyPress={event => escapeModal(event)}>
+          <div 
+          className="modal-box" 
+          ref={ref}>
+            <p class="close-modal" onClick={() => toggleModal(false)}>&times;</p>
+            <div className="modal-header">
+              <p className="modal-titles">
+                <span className="modal-title">{title}</span>
+                <span className="modal-subtitle">{subTitle}</span>
+              </p>
+              {linksList && 
+                <TopLinks 
+                linksList={linksList}
+                selectLink={selectLink} />}
             </div>
-        </Fragment>
+            <div className="modal-body">
+              {children}
+            </div>
+          </div>
+        </div>
     )
 }
 

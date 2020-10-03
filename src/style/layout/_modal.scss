@@ -15,25 +15,30 @@
   .modal-box {
     background-color: #fff;
     margin: 3rem auto;
-    padding: 1.5rem;
     border-radius: 0.5rem;
     max-width: 70rem;
   }
 
   .modal-header {
-    padding-right: 0.5rem;
+    width: 100%;
     text-align: center;
+    box-shadow: 0 3px 6px #00000019;
 
-    .modal-title {
-      margin-top: 2rem;
-      font-size: 2.5rem;
-      color: $main-color;
-    }
+    .modal-titles {
+      padding: 2rem;
 
-    .modal-subtitle {
-      color: #777;
-      font-size: 1.5rem;
-      text-align: center;
+      .modal-title {
+        font-size: 2.5rem;
+        color: $main-color;
+        padding: 0.5rem;
+        display: block;
+      }
+
+      .modal-subtitle {
+        color: #777;
+        font-size: 1.5rem;
+        text-align: center;
+      }
     }
   }
 
@@ -45,9 +50,11 @@
   
   .close-modal {
     color: #aaa;
-    float: right;
+    display: block;
+    right: 0;
     font-size: 2.8rem;
     font-weight: bold;
+    padding: 1.5rem 1.5rem 0 0;
   }
   
   .close-modal:hover,
@@ -55,7 +62,6 @@
     color: #da2a2a;
     text-decoration: none;
     cursor: pointer;
-    float: right;
   }
 
   .modal-form {

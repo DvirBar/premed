@@ -1,0 +1,47 @@
+.top-links {
+    display: flex;
+    background-color: #fff;
+    justify-content: space-evenly;
+    border-radius: 1rem 1rem 0 0;
+
+    a {
+        width: 100%;
+    }
+
+    .link-item {
+        text-align: center;
+        color: #474747;
+        border-bottom: 3px solid transparent;
+        transition: border 0.5s ease;
+        padding: 0;
+        flex: 1;
+        cursor: pointer;
+
+        &.current {
+            color: $main-color;
+            border-bottom: 3px solid $main-color;
+
+            span > .span-hover:hover {
+                background-color: inherit;
+            }
+        }
+
+        span {
+            position: relative;
+            padding: 0.5rem;
+            width: 100%;
+            height: 100%; 
+            display: block;
+
+            &:hover > .span-hover {
+                background-color: #f3f3f3;
+            }
+
+            .span-hover {
+                border-radius: 1rem;
+                transition: background-color 0.5s ease;
+                padding: 0.5rem 2rem;
+            }
+        }
+    }
+}

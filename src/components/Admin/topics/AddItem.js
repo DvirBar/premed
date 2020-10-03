@@ -57,7 +57,7 @@ function AddItem({ topic }) {
                             <a 
                             href={values.link} 
                             target="_blank"
-                            rel="noopener noreferrer">בדוק קישור</a>
+                            rel="noopener noreferrer">בדיקת קישור</a>
                         }   
                     </div>
 

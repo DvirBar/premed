@@ -1,0 +1,112 @@
+import {
+    TABLE_LOADING,
+    TABLE_SUCCESS,
+    TABLE_ERROR,
+    TABLE_ADD,
+    TABLE_UPDATE,
+    TABLE_TOGGLE_ENABLED,
+    TABLE_DELETE,
+} from './types';
+import axios from 'axios';
+import { getMessage, getError } from './messages';
+
+// Basic types
+export const tableLoad = () => {
+    return {
+        type: TABLE_LOADING
+    }
+}
+
+export const tableError = () => {
+    return {
+        type: TABLE_ERROR
+    }
+}
+
+
+// Get all tables
+export const getTables = () => dispatch => {
+    dispatch(tableLoad());
+
+    axios.get('api/datatables')
+         .then(res => { 
+             dispatch({
+                type: TABLE_SUCCESS,
+                payload: res.data
+            })})
+         .catch(err => {
+             dispatch(tableError());
+             dispatch(getError(err));
+         });
+}
+
+// Create new table
+export const addTable = data => dispatch => {
+    dispatch(tableLoad());
+
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.post('api/datatables', body)
+         .then(res => {
+             dispatch ({
+                type: TABLE_ADD,
+                payload: res.data
+             })})
+         .catch(err => {
+             dispatch(tableError())
+             dispatch(getError(err))
+            })
+}
+
+export const editTable = (id, data) => dispatch => {
+    dispatch(tableLoad());
+    
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.put(`api/datatables/${id}`, body)
+         .then(res => 
+            dispatch({
+                type: TABLE_UPDATE,
+                payload: res.data
+             }))
+         .catch(err => {
+             dispatch(tableError())
+             dispatch(getError(err))
+            })
+}
+
+export const toggleEnabled = id => dispatch => {
+    dispatch(tableLoad());
+
+    axios.put(`api/datatables/${id}/toggleEnabled`)
+         .then(res => 
+            dispatch({
+                type: TABLE_TOGGLE_ENABLED,
+                payload: res.data
+             }))
+         .catch(err => {
+             dispatch(tableError())
+             dispatch(getError(err))
+            })
+}
+
+
+export const deleteTable = id => dispatch => {
+    dispatch(tableLoad());
+
+    axios.delete(`api/datatables/${id}`)
+         .then(res => {
+             dispatch({
+                type: TABLE_DELETE,
+                payload: id
+             })
+             dispatch(getMessage(res.data))
+         })
+         .catch(err => {
+            dispatch(tableError())
+            dispatch(getError(err))
+         })
+}
+

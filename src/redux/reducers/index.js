@@ -13,6 +13,7 @@ import datafields, * as fieldSelectors from './datafields';
 import unis from './universities';
 import calcs from './calculations';
 import userdata, * as dataSelectors from './userdata';
+import datatables from './datatables';
 
 const appReducer = combineReducers({
     auth,
@@ -28,7 +29,8 @@ const appReducer = combineReducers({
     datafields,
     unis,
     calcs,
-    userdata
+    userdata,
+    datatables
 });
 
 const rootReducer = (state, action) => {
@@ -46,7 +48,7 @@ export const getGroupFields = fields =>
 
 
 export const getFilteredSortedData = state => {
-    let stateCollection = state.pathData
+    let stateCollection = state.tableData
     let ordering = state.ordering
 
     if(state.ordering.filters) {
