@@ -243,10 +243,16 @@
 
     .filter-fields {
         display: flex;
+        align-items: center;
         column-gap: 0.5rem;
 
         input {
             width: 12rem;
+        }
+
+        .general-error {
+            color: $error-color;
+            font-size: 1.5rem;
         }
     }
 

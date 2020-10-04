@@ -1,8 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filterData, clearFilters, sortData } from '../../redux/actions/userdata';
 import Modal from '../layout/Modal';
 import Dropdown from '../common/Dropdown';
+import validateForm from '../../forms/userDataValidation';
+import BorderTextbox from '../common/BorderTextbox';
 
 function FieldOptions({ field, ordering, display, toggleModal, title }) {
     const dispatch = useDispatch();
@@ -12,6 +14,7 @@ function FieldOptions({ field, ordering, display, toggleModal, title }) {
     const [fieldOptions, setFieldOptions] = useState([]);
     const [selOption, setSelOption] = useState('');
     const [sort, setSort] = useState('');
+    const [error, setError] = useState({});
 
     useEffect(() => {
         if(field.fieldOptions) {
@@ -26,13 +29,54 @@ function FieldOptions({ field, ordering, display, toggleModal, title }) {
         let fieldFilter = ordering.filters.find(filter =>
             filter.field.id === field._id)
 
-        console.log(fieldFilter); 
-
         setMinVal(fieldFilter?.min || '')
         setMaxVal(fieldFilter?.max || '')
         setSort(ordering.sort.fieldId === field._id 
             ? ordering.sort.type : '')
+        setError({})
     }, [field, ordering])
+
+
+    const handleChange = (event, callback) => {
+        const val = event.target.value
+        
+        if(!isNaN(val)) {
+            callback(val)
+        }
+    }
+
+
+
+    // Errors ////////////////////////////////////////////////
+    //// Check that the filter value is within min-max range
+    const validateFilterValue = (value, type) => {
+        if(value && value !== '') {
+            setError({
+                ...error,
+                [type]: validateForm(value, field.validators)
+            })
+        }
+        if(value === '')
+            setError({
+                ...error,
+                [type]: undefined
+            }) 
+    }
+
+    // Check that min is smaller than max
+    useEffect(() => {
+        if(!Object.values(error).find(val => val)) {
+            if(maxVal !== '' && maxVal !== '' && maxVal <= minVal) {
+                setError({ genError: 'הערך המינימלי חייב להיות קטן מהמקסימלי' })
+            }
+        }
+
+        else if(error.genError) {
+            setError({})
+        }
+    }, [minVal, maxVal])
+
+
 
     const toggleSort = sortType => {
         if(sort === sortType)
@@ -47,37 +91,39 @@ function FieldOptions({ field, ordering, display, toggleModal, title }) {
     }
 
     const setDataOrdering = () => {
-        if(maxVal !== '' || minVal !== '') {
-            const filter = {
-                min: minVal,
-                max: maxVal,
-                field: {
-                    id: field._id,
-                    name: field.name,
-                    type: 'num'
+        if(!Object.values(error).find(val => val)) {
+            if(maxVal !== '' || minVal !== '') {
+                const filter = {
+                    min: minVal,
+                    max: maxVal,
+                    field: {
+                        id: field._id,
+                        name: field.name,
+                        type: 'num'
+                    }
                 }
+    
+                dispatch(filterData(filter))
             }
-
-            dispatch(filterData(filter))
-        }
-
-        if(selOption !== '') {
-            const filter = {
-                text: selOption,
-                field: {
-                    id: field.id,
-                    type: 'str'
+    
+            if(selOption !== '') {
+                const filter = {
+                    text: selOption,
+                    field: {
+                        id: field.id,
+                        type: 'str'
+                    }
                 }
+    
+                dispatch(filterData(filter))
             }
-
-            dispatch(filterData(filter))
+    
+            if(sort) {
+                dispatch(sortData(sort, field._id))
+            }
+            
+            toggleModal(false)
         }
-
-        if(sort) {
-            dispatch(sortData(sort, field._id))
-        }
-        
-        toggleModal(false)
     }
 
     const clearFilter = fieldId => {
@@ -121,19 +167,25 @@ function FieldOptions({ field, ordering, display, toggleModal, title }) {
                     <div className="filter-fields">
                         {field.dataType === 'num' 
                         ?   <Fragment>
-                                <input 
+                                <BorderTextbox
                                 type="text" 
-                                className="form-default"
                                 value={minVal}
-                                onChange={e => setMinVal(e.target.value)}
-                                placeholder="גדול מ-" />
-                                
-                                <input 
+                                onChange={e => handleChange(e, setMinVal)}
+                                onBlur={() => validateFilterValue(minVal, 'min')}
+                                placeholder="גדול מ-"
+                                error={error.min} />
+
+                                <BorderTextbox
                                 type="text" 
-                                className="form-default"
                                 value={maxVal}
-                                onChange={e => setMaxVal(e.target.value)}
-                                placeholder="קטן מ-" />
+                                onChange={e => handleChange(e, setMaxVal)}
+                                onBlur={() => validateFilterValue(maxVal, 'max')}
+                                placeholder="קטן מ-"
+                                error={error.max} />
+
+                                <div className="general-error">
+                                    {error.genError}
+                                </div>
                             </Fragment>
                         : field.fieldOptions && field.fieldType === 'select' &&
                             <Fragment>
