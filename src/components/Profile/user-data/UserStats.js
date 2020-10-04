@@ -11,10 +11,12 @@ import TopBar from './TopBar';
 
 function UserStats({ data }) {
     const dispatch = useDispatch();
-    const paths = data.paths
+    const [selTable, setSelTable] = useState()
+    const [paths, setPaths] = useState([])
     const [selUni, setSelUni] = useState()
     const [selPath, setSelPath] = useState()
     
+    // Dispatch actions to get data
     useEffect(() => {
         if(paths && paths.length !== 0) {
             dispatch(getFieldsByPaths(paths));
@@ -24,56 +26,51 @@ function UserStats({ data }) {
         }
     }, [paths])
 
+    // Set selected table
+    useEffect(() => {
+        setSelTable(data.tables.find(table => 
+            table.table.enabled).table._id || data.tables[0].table._id)
+    }, [data])
+
+    const changeTable = table => {
+        setSelTable(table.value)
+    }
+
+    // Get table paths
+    useEffect(() => {
+        setPaths(data.tables.find(table => 
+            table.table._id === selTable)?.paths)
+    }, [selTable, data])
 
     // Fields
     const fieldsSelector = useSelector(state => state.datafields);
-    const fetchedFields = fieldsSelector.fields;
+    const fields = fieldsSelector.fields;
     const loadFields = fieldsSelector.loading;
-    const [fields, setFields] = useState([])
-
-    useEffect(() => {
-        setFields(fetchedFields)
-    }, [fetchedFields])
-
 
     // Groups
     const groupsSelector = useSelector(state => state.datagroups);
-    const fetchedGroups = groupsSelector.groups;
+    const groups = groupsSelector.groups;
     const loadGroups = groupsSelector.loading;
-    const [groups, setGroups] = useState([])
-
-    useEffect(() => {
-        setGroups(fetchedGroups)
-    }, [fetchedGroups])
-
-
-    // // Calcs
-    // const calcsSelector = useSelector(state => state.calcs);
-    // const fetchedCalcs = calcsSelector.calcs;
-    // const loadCalcs = calcsSelector.loading;
-    // const [calcs, setCalcs] = useState([])
-
-    // useEffect(() => {
-    //     setCalcs(fetchedCalcs)
-    // }, [fetchedCalcs])
-
 
     // Universities
     const unisSelector = useSelector(state => state.unis);
-    const fetchedUnis = unisSelector.unis;
+    const unis = unisSelector.unis;
     const loadUnis = unisSelector.loading;
-    const [unis, setUnis] = useState([])
-
-    useEffect(() => {
-        setUnis(fetchedUnis)
-    }, [fetchedUnis])
 
     const changeSection = (path, uni) => {
         setSelUni(uni)
         setSelPath(path)
     }
 
-    if(loadFields || loadGroups || loadUnis)
+    // Filter data vals by table
+    const [dataVals, setDataVals] = useState([])
+
+    useEffect(() => {
+        setDataVals(data.tables.find(table => 
+            table.table._id === selTable)?.dataVals)
+    }, [data, selTable])
+
+    if(loadFields || loadGroups || loadUnis || !selTable || !paths || paths.length === 0)
         return <Loadbar />
     
     return (
@@ -83,13 +80,17 @@ function UserStats({ data }) {
             unis={unis}
             changeSection={changeSection} />
 
-            <TopBar data={data} />
-
+            <TopBar 
+            data={data} 
+            changeTable={changeTable} 
+            tableId={selTable}
+            paths={paths} />
+                 
             <DataBlock
             fields={fields.filter(field =>
                 field.university === selUni?._id && (paths.find(curPath => 
                     curPath._id === field.path) || !field.path) && !field.group)}
-            dataVals={data.dataVals}
+            dataVals={dataVals}
             uni={selUni} />
 
             {!selUni && 
@@ -98,7 +99,7 @@ function UserStats({ data }) {
                     field.group && !field.university)}
                 groups={groups.filter(group => paths.find(curPath => 
                     curPath._id === group.path) || !group.path)} 
-                dataVals={data.dataVals} />
+                dataVals={dataVals} />
             }
         </Fragment>
     )

@@ -6,6 +6,7 @@ import {
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
+    USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
@@ -18,7 +19,7 @@ import {
 const initialState = {
     loading: false,
     softLoading: false,
-    pathData: [],
+    tableData: [],
     data: {},
     ordering: {
         filters: [],
@@ -52,17 +53,18 @@ export default function(state = initialState, action) {
                 data: payload
             }
 
-        case USER_DATA_PATH_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                pathData: payload
-            }
-
         case USER_DATA_ERROR:
             return {
                 ...state,
                 loading: false,
+                softLoading: false
+            }
+
+        case USER_DATA_PATH_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                tableData: payload
             }
 
         case USER_DATA_ADD:
@@ -73,10 +75,32 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_UPDATE_PATHS:
+            console.log(payload);
             return {
                 ...state,
                 loading: false,
-                data: payload
+                data: {
+                    ...state.data,
+                    tables: state.data.tables.map(table => 
+                                table.table._id === payload.table._id
+                                ? table = {
+                                    ...table,
+                                    table: payload.table,
+                                    paths: payload.paths
+                                } 
+                                : table)
+                }
+            }
+
+        case USER_DATA_SWITCH_TABLE: 
+            return {
+                ...state, 
+                loading: false,
+                data: {
+                    ...state.data,
+                    transfer_suggested: false,
+                    tables: [...state.data.tables, payload]
+                }
             }
 
         case USER_DATA_TOGGLE_ENABLED:
@@ -91,27 +115,38 @@ export default function(state = initialState, action) {
 
         case USER_DATA_INSERT:
         case EXEC_CALC:
+            console.log(payload);
             return {
                 ...state,
                 softLoading: false,
                 data: {
                     ...state.data,
-                    dataVals: 
-                        state.data.dataVals.length === 0
-                        ?  state.data.dataVals = [payload]
+                    tables:
+                        state.data.tables.map(table => 
+                            table.table.enabled 
+                        ? {
+                            ...table,
+                            last_updated: new Date(Date.now()),
+                            dataVals: 
+                                table.dataVals.length === 0
+                                ?  table.dataVals = [payload]
 
-                        : (state.data.dataVals.find(value => 
-                            value.field._id === payload.field._id) 
+                                : (table.dataVals.find(value => 
+                                    value.field._id === payload.field._id) 
 
-                            ? state.data.dataVals.map(value => 
-                                value.field._id === payload.field._id ? 
-                                payload : value)
-                            
-                            : [...state.data.dataVals, payload])
+                                    ? table.dataVals.map(value => 
+                                        value.field._id === payload.field._id ? 
+                                        payload : value)
+                                    
+                                    : [...table.dataVals, payload])
+                            }
+
+                        : table
+                        )
                 }
             }
 
-        case FILTER_DATA: {
+        case FILTER_DATA: { // Use brackets to define scope
             const filters = state.ordering.filters
             return {
                 ...state,
@@ -129,7 +164,7 @@ export default function(state = initialState, action) {
         }
 
         // Remove filters from table
-        case REMOVE_FILTER_DATA: {
+        case REMOVE_FILTER_DATA: { // Use brackets to define scope
             const filters = state.ordering.filters
             return {
                 ...state,
@@ -208,29 +243,45 @@ export const sortData = (state, ordering) => {
     const fieldId = ordering.sort.fieldId
 
     switch(ordering.sort.type) {
-        case 'ascending':
+        case 'ascending': {
+            // Save and filter undefined values
             let missingVals = state.filter(entry => 
                 !entry.dataVals.find(val => val.field === fieldId))
+
+            // Sort numeric values
             let sortedArr = state
                    .filter(entry => entry.dataVals.find(val => val.field === fieldId))
                    .sort((a, b) => {
                         return (
-                            (a.dataVals.find(val => val.field === fieldId)?.value || 0)  -
-                            (b.dataVals.find(val => val.field === fieldId)?.value || 0)
+                            (a.dataVals.find(val => val.field === fieldId).value)  -
+                            (b.dataVals.find(val => val.field === fieldId).value)
                     ) 
                  })
                  
+            // Merge sorted array and undefined values array
             Array.prototype.push.apply(sortedArr, missingVals)
             return sortedArr
-                 
+        }
 
-        case 'descending':
-            return state.sort((a, b) => {
-                return (
-                    (b.dataVals.find(val => val.field === fieldId)?.value || 0) -
-                    (a.dataVals.find(val => val.field === fieldId)?.value || 0)
-                ) 
-            })
+        case 'descending': {
+              // Save and filter undefined values
+              let missingVals = state.filter(entry => 
+                !entry.dataVals.find(val => val.field === fieldId))
+
+            // Sort numeric values
+            let sortedArr = state
+                .filter(entry => entry.dataVals.find(val => val.field === fieldId))
+                .sort((a, b) => {
+                    return (
+                        (b.dataVals.find(val => val.field === fieldId).value) -
+                        (a.dataVals.find(val => val.field === fieldId).value)
+                    ) 
+                })
+
+            // Merge sorted array and undefined values array
+            Array.prototype.push.apply(sortedArr, missingVals)
+            return sortedArr
+        }
         
         default: 
             return state

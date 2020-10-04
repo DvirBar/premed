@@ -32,7 +32,7 @@ function ValidatePath() {
             <Fragment>
                
                {loadSoft &&
-                    <SoftLoadbar message="מבצע שמירה" />
+                    <SoftLoadbar message="שמירה מתבצעת" />
                }
 
                 <UserStats data={data} />

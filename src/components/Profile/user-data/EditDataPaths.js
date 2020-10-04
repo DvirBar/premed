@@ -23,10 +23,6 @@ function EditDataPaths({ userPaths, display, toggleModal, title }) {
         errors
     } = useForm(editUserDataPaths, defaultValues)
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
     return (
         <Modal
         display={display}

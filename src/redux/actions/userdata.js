@@ -6,6 +6,7 @@ import {
     USER_DATA_ERROR,
     USER_DATA_ADD,
     USER_DATA_UPDATE_PATHS,
+    USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
@@ -51,11 +52,11 @@ export const getOneUserData = () => dispatch => {
          });
 }
 
-// Get all users data by path
-export const getUsersDataByPath = pathId => dispatch => {
+// Get all users data by path and tableId
+export const getUsersDataByPathTable = (tableId, pathId) => dispatch => {
     dispatch(dataLoad());
 
-    axios.get(`api/userdata/${pathId}`)
+    axios.get(`api/userdata/${tableId}/${pathId}`)
          .then(res => { 
              dispatch({
                 type: USER_DATA_PATH_SUCCESS,
@@ -95,12 +96,30 @@ export const editUserDataPaths = data => dispatch => {
          .then(res => 
             dispatch({
                 type: USER_DATA_UPDATE_PATHS,
+                /* { table: _id,
+                     paths: [pathIds] } */
                 payload: res.data
              }))
          .catch(err => {
              dispatch(dataError())
              dispatch(getError(err))
             })
+}
+
+// Switch to the currently enabled table
+export const switchTable = () => dispatch => {
+    dispatch(dataLoad());
+
+    axios.put('api/userdata/switchtable')
+         .then(res => dispatch({
+             type: USER_DATA_SWITCH_TABLE,
+             // returns switched table
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataError())
+             dispatch(getMessage(err))
+         })
 }
 
 // Insert new data to user data collection
@@ -118,17 +137,18 @@ export const insertData = data => dispatch => {
                 payload: res.data
              }))
          .catch(err => {
-             dispatch(dataError())
              console.log(err);
+             dispatch(dataError())
+             // Returns modified/added dataVal
              dispatch(getError(err))
             })
 }
 
 // Toggle user data enabled status
-export const toggleEnabled = () => dispatch => {
+export const toggleEnabled = tableId => dispatch => {
     dispatch(dataLoadSoft());
 
-    axios.put('api/userdata/toggleEnabled')
+    axios.put(`api/userdata/toggleEnabled/${tableId}`)
          .then(res => 
             dispatch({
                 type: USER_DATA_TOGGLE_ENABLED,

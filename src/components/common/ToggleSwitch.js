@@ -6,7 +6,6 @@ function ToggleSwitch({ options, onChange, value }) {
     const [isChanging, setIsChanging] = useState(false);
 
     useEffect(() => {
-        console.log(value);
         setSelected(value)
     }, [value])
 

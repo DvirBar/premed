@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toggleEnabled } from '../../../redux/actions/userdata'
-import ToggleSwitch from '../../common/ToggleSwitch'
-import DataPathsList from './DataPathsList'
+import ToggleSwitch from '../../common/ToggleSwitch';
+import TableSelect from './TableSelect';
+import DataPathsList from './DataPathsList';
 
-function TopBar({ data }) {
+function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
     const [enabled, setEnabled] = useState(false);
-    const [paths, setPaths] = useState([])
+    const [tables, setTables] = useState([]);
     
     useEffect(() => {
-        setEnabled(data.enabled)
-        setPaths(data.paths)
+        setEnabled(data.tables.find(table => 
+            table.table._id === tableId).enabled)
+        setTables(data.tables.map(table => 
+            table.table))
     }, [data])
 
     const options = [
@@ -26,12 +29,17 @@ function TopBar({ data }) {
     ]
 
     const toggleOptions = () => {
-        dispatch(toggleEnabled())
+        dispatch(toggleEnabled(tableId))
     }
 
 
     return (
         <div className="top-bar">
+            <TableSelect 
+            tables={tables}
+            table={tableId}
+            changeTable={changeTable} />
+
             <div className="switch-block">
                 <p className="switch-name">הצגה בטבלת הנתונים:</p>
                 <ToggleSwitch
@@ -39,6 +47,7 @@ function TopBar({ data }) {
                 onChange={toggleOptions}
                 value={enabled} />
             </div>
+
             <DataPathsList paths={paths} />
         </div>
     )

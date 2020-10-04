@@ -27,7 +27,6 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     }, [fieldOptions])
 
     useEffect(() => {
-        console.log(error);
         if((!error || error.length === 0) && isSubmitting) {
             const dataObj = {
                 fieldId: name,
@@ -71,34 +70,42 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     
     switch(type) {
         case 'textbox': 
-            return <FormInputBorder 
-                    title={title}
-                    type={type}
-                    name={name}
-                    value={value}
-                    onChange={changeData}
-                    onBlur={addData}
-                    error={error?.length !== 0 ? error : undefined}
-                    disabled={disabled} />
+            return <div>
+                        <FormInputBorder 
+                        title={title}
+                        type={type}
+                        name={name}
+                        value={value}
+                        onChange={changeData}
+                        onBlur={addData}
+                        error={error?.length !== 0 ? error : undefined}
+                        disabled={disabled} />
+                    </div>
 
         case 'select': 
-            return <Dropdown 
-                    title={title}
-                    options={options}
-                    defaultOption={options.find(option => 
-                        option.value === defValue)}
-                    placeholder="בחירה"
-                    name={name}
-                    width={'10rem'}
-                    onChange={changeData} /> 
+            return <div>
+                        <Dropdown 
+                        title={title}
+                        options={options}
+                        defaultOption={options.find(option => 
+                            option.value === defValue)}
+                        placeholder={"בחירה"}
+                        name={name}
+                        width={'10rem'}
+                        onChange={changeData} /> 
+                   </div>
+                  
         
         case 'checkbox': 
-            return <Checkbox 
-                    name={name}
-                    label={title}
-                    onChange={changeData}
-                    value={{on: true, off: false}}
-                    checked={defValue ? true : false} />
+            return <div>
+                        <Checkbox 
+                        name={name}
+                        label={title}
+                        onChange={changeData}
+                        value={{on: true, off: false}}
+                        checked={defValue ? true : false} />
+                   </div>
+                    
         
         default:
             return <Fragment></Fragment>

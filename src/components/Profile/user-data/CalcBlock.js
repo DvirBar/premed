@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
 import { getGroupFields } from '../../../redux/reducers';
@@ -15,6 +15,7 @@ function CalcBlock({ field, dataVals }) {
     const [argsMissing, setArgsMissing] = useState([])
     const [calc, setCalc] = useState({})
     const [value, setValue] = useState({})
+    const [calcExecuted, setCalcExecuted] = useState(false)
 
     useEffect(() => {
         setCalc(field.calcOutput)
@@ -59,25 +60,31 @@ function CalcBlock({ field, dataVals }) {
     }, [values, storedCalc, groupArgs])
 
     useEffect(() => {
-        if(argsMissing?.length === 0 && storedCalc.id)
+        if(argsMissing?.length === 0 && storedCalc.id && !calcExecuted) {
             dispatch(executeCalc(storedCalc.id))
-    }, [argsMissing, storedCalc, dataVals])
+            setCalcExecuted(true)
+        }
+    }, [argsMissing, storedCalc, dataVals, calcExecuted])
 
 
     return (
-        <fieldset className={argsMissing?.length === 0 
-            ? "calc-block"
-            : "calc-block missing"}>
-            <legend>הצעה</legend>
-            {argsMissing?.length === 0 
-            ?  <div>
-                    {value.suggestValue}
-                </div>
-            :  <div> 
-                חסרים נתונים
-            </div>
-            }
-        </fieldset>
+        <Fragment>
+            {field.calcOutput && field.calcOutput.isSuggestion &&
+                <fieldset className={argsMissing?.length === 0 
+                ? "calc-block"
+                : "calc-block missing"}>
+                    <legend>הצעה</legend>
+                    {argsMissing?.length === 0 
+                    ?  <div>
+                            {value.suggestValue}
+                        </div>
+                    :  <div> 
+                        חסרים נתונים
+                    </div>
+                    }
+                </fieldset>
+            }   
+        </Fragment>
     )
 }
 

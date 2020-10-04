@@ -12,8 +12,11 @@ const Dropdown = ({ options, defaultOption, name, title,
     // Set initial dropdown values, only if selected is an empty object
     useEffect(() => { 
         if(selected && 
-            (Object.keys(selected).length === 0 || defaultOption)) {
-            setSelected(defaultOption || placeholder || options[0])
+            ((Object.keys(selected).length === 0 || selected.name === placeholder) && 
+            (defaultOption || placeholder))) {
+                console.log(defaultOption);
+                const placeholderObj = { name: placeholder }
+            setSelected(defaultOption || placeholderObj || options[0])
         }
     }, [placeholder, defaultOption, options])
 

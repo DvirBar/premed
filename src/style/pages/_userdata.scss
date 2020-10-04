@@ -180,6 +180,10 @@
             }
         }
     }
+
+    @media only screen and (max-width: 1000px) {
+        display: none
+    }
 }
 
 .data-block {
@@ -237,17 +241,28 @@
     }
 
     .group-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
         padding: 2rem 0;
-        
+
+        align-items: center;
+
         .dropdown {
             margin: 0;
+            display: inline-block;
         }
 
-        & > * {
-            display: inline-block;
+        & > div {
+            display: inline;
+            justify-self: center;
+
+            &:first-child {
+                justify-self: start;
+            }
+
+            &:last-child {
+                justify-self: end;
+            }
         }
     }
 }

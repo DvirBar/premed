@@ -17,9 +17,9 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                 group.parent === parentGroup._id && 
 
                 <div className="group-item">
-                    <span className="group-name">
+                    <div className="group-name">
                         {group.name}:
-                    </span>
+                    </div>
 
                     {fields.map(field => 
                         field.group._id === group._id &&
@@ -59,11 +59,11 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                         fieldValids={field.validators}
                         disabled={field.calcOutput && !field.calcOutput.isSuggestion} />
 
-                        {field.calcOutput && field.calcOutput.isSuggestion &&
+                        {field.calcOutput &&
                             <CalcBlock
                             field={field}
                             dataVals={dataVals} />
-                        }
+                        }   
                     </div>
                 )}
             </div>

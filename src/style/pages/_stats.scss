@@ -1,3 +1,37 @@
+.stats {
+    & > * {
+        animation: opacity-load 1s;
+    }
+}
+
+.external-link-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5rem;
+
+    .external-table-link {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        border: 1px solid $main-color;
+        background-color: $main-color;
+        height: 5rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        color: #fff;
+         
+        &:hover {
+            background-color: #fff;
+            color: $main-color;
+            border-color: $main-color;
+        }
+    }
+}
+
+
+
 .table-container {
     position: absolute;
     right: 0;
