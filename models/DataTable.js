@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // Create schema
 const DataTableSchema = new Schema({
@@ -8,25 +7,18 @@ const DataTableSchema = new Schema({
         type: String,
         required: [true, 'Name is required']
     },
-    year: {
-        type: Number
-    },
-    sheetId: {
+    url: {
         type: String
     },
-    data_created: {
+    date_created: {
         type: Date,
         default: Date.now
     },
-    enabled: { // If true, data will flow to this sheet
+    enabled: { 
+        /* If true, data will flow to this sheet, 
+        only one sheet can be enabled at a time */
         type: Boolean,
         default: false
-    },
-    locked: { 
-    /* If true, users cannot insert data to the 
-    spreadsheet, all disabled sheets are locked */
-        type: Boolean,
-        default: true
     }
 })
 

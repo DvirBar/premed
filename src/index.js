@@ -26,6 +26,7 @@ import datafields from '../routes/api/data-fields';
 import universities from '../routes/api/universities';
 import calculations from '../routes/api/calculations';
 import userdata from '../routes/api/user-data';
+import datatables from '../routes/api/data-tables';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -39,7 +40,8 @@ app.use('/api/datagroups', datagroups);
 app.use('/api/datafields', datafields);
 app.use('/api/universities', universities);
 app.use('/api/calculations', calculations);
-app.use('/api/userdata', userdata)
+app.use('/api/userdata', userdata);
+app.use('/api/datatables', datatables);
 
 // Exit middlewares
 app.use(errorHandler);

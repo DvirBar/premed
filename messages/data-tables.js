@@ -6,11 +6,12 @@ const dataTableMessages = {
         },
         status: 200
     },
-    UnlockDisabledTable: {
+    EnabledAlreadySwitched: {
         msg: {
-            en: 'Connot unlock a disabled table',
-            he: 'לא ניתן לבטל השהייה לטבלה סגורה'
-        }
+            en: 'User has already switched to the enabled table',
+            he: 'המשתמש כבר החליף לטבלה הפעילה'
+        },
+        status: 400
     },
     DataTableNotExist: {
         msg: {

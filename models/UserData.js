@@ -8,29 +8,44 @@ const UserDataSchema = new Schema({
         type: ObjectId,
         ref: 'User'
     },
-    dataVals: [{
-        field: {
+    tables: [{
+        table: {
             type: ObjectId,
-            ref: 'DataField'
+            ref: 'DataTable'
         },
-        value: {
-            type: String
+        paths: [{
+            type: ObjectId,
+            ref: 'Path'
+        }],
+        enabled: {
+            type: Boolean,
+            default: false
         },
-        suggestValue: {
-            type: String
-        }   
+        dataVals: [{
+            table: {
+                type: ObjectId,
+                ref: 'DataTable'
+            },
+            field: {
+                type: ObjectId,
+                ref: 'DataField'
+            },
+            value: {
+                type: String
+            },
+            suggestValue: {
+                type: String
+            },
+          
+        }],
+        last_updated: {
+            type: Date,
+            default: Date.now 
+        }
     }],
-    paths: [{
-        type: ObjectId,
-        ref: 'Path'
-    }],
-    enabled: {
+    transfer_suggested: {
         type: Boolean,
-        default: false
-    },
-    date_created: {
-        type: Date,
-        default: Date.now 
+        default: false 
     }
 });
 

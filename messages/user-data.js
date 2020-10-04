@@ -13,6 +13,13 @@ const userDataMessages = {
         },
         status: 400
     },
+    NoEnabledTable: {
+        msg: {
+            en: 'There is not as enabled table to assign values to',
+            he: 'אין טבלה פעילה שניתן להזין אליה נתונים'
+        },
+        status: 400
+    },
     ArgsInsuffice: {
         msg: {
             en: `Could not execute calculation because not all of its 
@@ -20,6 +27,13 @@ const userDataMessages = {
             he: `לא ניתן לבצע את החישוב משום שלא קיימים כל המשתנים שנדרשים עבורו`
         },
         status: 400
+    },
+    UserDataNotInTable: {
+        msg: {
+            en: 'User data is not available in the requested table',
+            he: 'נתוני המשתמש לא זמינים בטבלה המבוקשת'
+        },
+        status: 404
     },
     UnauthorizedEdit: {
         msg: {

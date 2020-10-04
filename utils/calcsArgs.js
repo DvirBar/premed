@@ -77,46 +77,46 @@ const args = {
         type: 'group',
         fields: bagrutGroupArgs  
     },
-    {
-        name: 'מקצועות נוספים',
-        role: 'moreFields',
-        varName: 'moreFields',
-        isOptional: true,
-        type: 'group',
-        fields: bagrutGroupArgs,
-        options: [
-            {
-                name: 'פיזיקה',
-                role: 'physics',
-                varName: 'physics',
-            },
-            {
-                name: 'ביולוגיה',
-                role: 'bio',
-                varName: 'bio',
-            },
-            {
-                name: 'כימיה',
-                role: 'chem',
-                varName: 'chem',
-            },
-            {
-                name: 'ערבית',
-                role: 'arab',
-                varName: 'arab',
-            },
-            {
-                name: 'מחשבת ישראל',
-                role: 'thought',
-                varName: 'thought',
-            },
-            {
-                name: 'מקצוע אחר',
-                role: 'other',
-                varName: 'other',
-            }
-        ]
-    }
+    // {
+    //     name: 'מקצועות נוספים',
+    //     role: 'moreFields',
+    //     varName: 'moreFields',
+    //     isOptional: true,
+    //     type: 'group',
+    //     fields: bagrutGroupArgs,
+    //     options: [
+    //         {
+    //             name: 'פיזיקה',
+    //             role: 'physics',
+    //             varName: 'physics',
+    //         },
+    //         {
+    //             name: 'ביולוגיה',
+    //             role: 'bio',
+    //             varName: 'bio',
+    //         },
+    //         {
+    //             name: 'כימיה',
+    //             role: 'chem',
+    //             varName: 'chem',
+    //         },
+    //         {
+    //             name: 'ערבית',
+    //             role: 'arab',
+    //             varName: 'arab',
+    //         },
+    //         {
+    //             name: 'מחשבת ישראל',
+    //             role: 'thought',
+    //             varName: 'thought',
+    //         },
+    //         {
+    //             name: 'מקצוע אחר',
+    //             role: 'other',
+    //             varName: 'other',
+    //         }
+    //     ]
+    // }
 ], 
     huji: {
         bagrut: {
