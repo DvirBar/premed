@@ -30,7 +30,10 @@ const { UniNotExist } = uniMessages;
 
 import storedCalcs from '../../utils/calcsIndex';
 
-router.get('/storedCalcs', [auth, authAdmin], (req, res, next) => {
+// @route   GET api/calculations/storedCalcs
+// @desc    Get stored calculations
+// @access  Private
+router.get('/storedCalcs', auth, (req, res, next) => {
     return res.send(storedCalcs);
 })
 
