@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 function useOnClickOutside(ref, display, callback) {
     useEffect(() => {
         const listener = event => {
-            // Do nothing if clicking ref's element or descendent elements
+            // Do nothing if clicking ref element or descendent elements
             if(!ref.current || ref.current.contains(event.target) || !display)
                 return;
 
@@ -15,7 +15,7 @@ function useOnClickOutside(ref, display, callback) {
         // For touch screens
         document.addEventListener('touchstart', listener); 
         
-        return () => { // Cleanup
+        return () => { // Cleanup listeners
             document.removeEventListener('mousedown', listener)
             document.removeEventListener('touchstart', listener)
         }

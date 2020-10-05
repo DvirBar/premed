@@ -1,7 +1,19 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 
 function FormInputBorder({ title, type, name, value, onChange, 
     onBlur, error, disabled }) {
+
+    const [displayError, setDisplayError] = useState(false)
+
+    useEffect(() => {
+        if(error && error.length !== 0) {
+            setDisplayError(true)
+        }
+
+        else {
+            setDisplayError(false)
+        }
+    }, [value, error])
 
     return (
         <Fragment>
@@ -19,11 +31,16 @@ function FormInputBorder({ title, type, name, value, onChange,
                 autoComplete="off"
                 disabled={disabled} />
             </fieldset>
-            {error &&
-                <p className="field-error">
-                    {error}
-                </p>
-            }
+            <span className={displayError 
+            ? "input-error display"
+            : "input-error"}>
+                <i 
+                className="material-icons"
+                onClick={() => setDisplayError(false)}>
+                    close
+                </i>
+                <span>{error}</span>
+            </span>
         </Fragment>
     )
 }

@@ -34,7 +34,7 @@ function NestedArg({ arg, fields, assignOption }) {
             name="calcFieldsIds"
             title="שדה נתונים"
             onChange={assignOption}
-            placeholder={{name: "בחירה"}}
+            placeholder="בחירה"
             uniqueListKey={arg.role} />
         </div>
     )

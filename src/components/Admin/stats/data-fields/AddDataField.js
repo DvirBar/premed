@@ -94,7 +94,7 @@ function AddDataField({ path, types, unis }) {
                             <Dropdown
                             options={fieldTypeOptions}
                             name="fieldType"
-                            placeholder={{name:"בחר"}}
+                            placeholder="בחירה"
                             title="סוג שדה"
                             onChange={handleChange} />
                         }
@@ -105,7 +105,7 @@ function AddDataField({ path, types, unis }) {
                             <Dropdown
                             options={dataTypeOptions}
                             name="dataType"
-                            placeholder={{name:"בחר"}}
+                            placeholder="בחירה"
                             title="סוג נתונים"
                             onChange={handleChange} />
                         }   

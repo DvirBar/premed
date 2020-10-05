@@ -59,7 +59,10 @@
             box-shadow: $default-shadow;
             border-radius: 1rem;
             margin-bottom: 3rem;
-            padding: 2rem;
+
+            &:not(.data-block) {
+                padding: 2rem;
+            }
         }
         
         @keyframes opacity-load {

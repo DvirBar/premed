@@ -14,9 +14,8 @@ const Dropdown = ({ options, defaultOption, name, title,
         if(selected && 
             ((Object.keys(selected).length === 0 || selected.name === placeholder) && 
             (defaultOption || placeholder))) {
-                console.log(defaultOption);
                 const placeholderObj = { name: placeholder }
-            setSelected(defaultOption || placeholderObj || options[0])
+                setSelected(defaultOption || placeholderObj || options[0])
         }
     }, [placeholder, defaultOption, options])
 

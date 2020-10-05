@@ -84,7 +84,7 @@ function AddCalc({ path, unis, storedCalcs }) {
                     <Dropdown
                     options={uniOptions}
                     name="uniId"
-                    placeholder={{name:"בחר"}}
+                    placeholder="בחירה"
                     title="אוניברסיטה"
                     onChange={handleChange} />
                 }
@@ -93,7 +93,7 @@ function AddCalc({ path, unis, storedCalcs }) {
                     <Dropdown
                     options={storedCalcOptions}
                     name="storedCalcId"
-                    placeholder={{name:"בחר"}}
+                    placeholder="בחירה"
                     title="שקלול"
                     onChange={handleChange} />
                 }

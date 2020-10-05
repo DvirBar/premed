@@ -15,6 +15,10 @@ function UserStats({ data }) {
     const [paths, setPaths] = useState([])
     const [selUni, setSelUni] = useState()
     const [selPath, setSelPath] = useState()
+
+    useEffect(() => {
+        dispatch(getStoredCalcs())
+    }, [])
     
     // Dispatch actions to get data
     useEffect(() => {
@@ -22,7 +26,6 @@ function UserStats({ data }) {
             dispatch(getFieldsByPaths(paths));
             dispatch(getGroupsByPaths(paths));
             dispatch(getUnisByPaths(paths))
-            dispatch(getStoredCalcs())
         }
     }, [paths])
 
@@ -85,11 +88,15 @@ function UserStats({ data }) {
             changeTable={changeTable} 
             tableId={selTable}
             paths={paths} />
+            {/* (paths.find(curPath => 
+                    curPath._id === field.path) || !field.path)  */}
                  
             <DataBlock
             fields={fields.filter(field =>
-                field.university === selUni?._id && (paths.find(curPath => 
-                    curPath._id === field.path) || !field.path) && !field.group)}
+                (selUni 
+                ? field.university === selUni._id 
+                    && field.path === selPath?._id 
+                : !field.university ) && !field.group)}
             dataVals={dataVals}
             uni={selUni} />
 

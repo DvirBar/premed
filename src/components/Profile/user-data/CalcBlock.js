@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
 import { getGroupFields } from '../../../redux/reducers';
+import ArgsMissingList from './ArgsMissingList';
 
 function CalcBlock({ field, dataVals }) {
     const dispatch = useDispatch();
@@ -22,23 +23,25 @@ function CalcBlock({ field, dataVals }) {
     }, [field])
 
     useEffect(() => {
-        setValue(values?.find(val => val.field._id === field._id))
-    }, [values, field])
-
-    useEffect(() => {
         setValues(dataVals)
     }, [dataVals])
+
+    useEffect(() => {
+        setValue(values?.find(val => val.field._id === field._id))
+    }, [values, field])
 
     useEffect(() => {
         setStoredCalc(storedCalcs?.find(storCalc => 
             storCalc.id === calc.calc))
     }, [storedCalcs, calc])
 
+    // Get argument that are a part of a group
     useEffect(() => {
         setGroupsArgs(storedCalc?.args?.filter(arg => 
             arg.type === "group"))
     }, [storedCalc])
 
+    // Find missing arguments
     useEffect(() => {
         let missing = storedCalc?.args?.filter(arg => {
             if(arg.type === "group" && groupArgs) {
@@ -66,6 +69,10 @@ function CalcBlock({ field, dataVals }) {
         }
     }, [argsMissing, storedCalc, dataVals, calcExecuted])
 
+    useEffect(() => {
+        console.log(argsMissing);
+    }, [argsMissing])
+
 
     return (
         <Fragment>
@@ -83,7 +90,10 @@ function CalcBlock({ field, dataVals }) {
                     </div>
                     }
                 </fieldset>
-            }   
+            }
+            {argsMissing && argsMissing.length !== 0 && 
+                <ArgsMissingList argsMissing={argsMissing} />
+            }
         </Fragment>
     )
 }

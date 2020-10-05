@@ -12,28 +12,33 @@ function DataBlock({ fields, groups, dataVals, uni }) {
             !parentGroup.parent &&
 
         <div className="data-block">
-            <div className="groups-list">
-            {groups.map(group =>  // Map child groups
-                group.parent === parentGroup._id && 
+            <div className="block-header">
+                <p className="block-name">בגרויות</p>
+            </div>
+            <div className="data-block-content">
+                <div className="groups-list">
+                {groups.map(group =>  // Map child groups
+                    group.parent === parentGroup._id && 
 
-                <div className="group-item">
-                    <div className="group-name">
-                        {group.name}:
+                    <div className="group-item">
+                        <div className="group-name">
+                            {group.name}:
+                        </div>
+
+                        {fields.map(field => 
+                            field.group._id === group._id &&
+                                <MatchFormFragment
+                                title={field.name}
+                                name={field._id}
+                                type={field.fieldType}
+                                defValue={dataVals.find(val => 
+                                    val.field._id === field._id)?.value}
+                                fieldOptions={field.fieldOptions}
+                                fieldValids={field.validators} />
+                                )}
                     </div>
-
-                    {fields.map(field => 
-                        field.group._id === group._id &&
-                            <MatchFormFragment
-                            title={field.name}
-                            name={field._id}
-                            type={field.fieldType}
-                            defValue={dataVals.find(val => 
-                                val.field._id === field._id)?.value}
-                            fieldOptions={field.fieldOptions}
-                            fieldValids={field.validators} />
-                            )}
+                )}
                 </div>
-            )}
             </div>
         </div>
     )}
@@ -46,26 +51,32 @@ function DataBlock({ fields, groups, dataVals, uni }) {
         <Fragment>
             {fields?.length !== 0 &&
              <div className="data-block">
-                 {uni && <span>{uni.name}</span>}
-                {fields.map(field => 
-                    <div className="form-fragment">
-                        <MatchFormFragment
-                        title={field.name}
-                        name={field._id}
-                        type={field.fieldType}
-                        defValue={dataVals.find(val => 
-                            val.field._id === field._id)?.value}
-                        fieldOptions={field.fieldOptions}
-                        fieldValids={field.validators}
-                        disabled={field.calcOutput && !field.calcOutput.isSuggestion} />
+                 <div className="block-header">
+                    {uni 
+                    ? <span>{uni.name}</span>
+                    : <span>כללי</span>}
+                 </div>
+                <div className="data-block-content">
+                    {fields.map(field => 
+                        <div className="form-fragment">
+                            <MatchFormFragment
+                            title={field.name}
+                            name={field._id}
+                            type={field.fieldType}
+                            defValue={dataVals.find(val => 
+                                val.field._id === field._id)?.value}
+                            fieldOptions={field.fieldOptions}
+                            fieldValids={field.validators}
+                            disabled={field.calcOutput && !field.calcOutput.isSuggestion} />
 
-                        {field.calcOutput &&
-                            <CalcBlock
-                            field={field}
-                            dataVals={dataVals} />
-                        }   
+                            {field.calcOutput &&
+                                <CalcBlock
+                                field={field}
+                                dataVals={dataVals} />
+                            }   
+                        </div>
+                    )}
                     </div>
-                )}
             </div>
             }
         </Fragment>

@@ -73,7 +73,7 @@ function AddFieldToGroup({ group, types, display, toggleModal }) {
                         <Dropdown
                         options={dataTypeOptions}
                         name="dataType"
-                        placeholder={{name:"בחר"}}
+                        placeholder="בחירה"
                         title="סוג נתונים"
                         onChange={handleChange} />
                     }   
@@ -82,7 +82,7 @@ function AddFieldToGroup({ group, types, display, toggleModal }) {
                         <Dropdown
                         options={fieldTypeOptions}
                         name="fieldType"
-                        placeholder={{name:"בחר"}}
+                        placeholder="בחירה"
                         title="סוג שדה"
                         onChange={handleChange} />
                     }

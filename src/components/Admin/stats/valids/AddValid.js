@@ -53,7 +53,7 @@ function AddValid({ field, validTypes }) {
             name='validType'
             title='סוג'
             onChange={toggleMinMax}
-            placeholder={{name: 'בחר'}} />
+            placeholder='בחירה' />
 
             {showMinMax &&
                 <Fragment>
