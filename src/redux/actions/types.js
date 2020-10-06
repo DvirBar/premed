@@ -49,7 +49,7 @@ export const SEC_ADD = 'SEC_ADD';
 export const SEC_UPDATE = 'SEC_UPDATE';
 export const SEC_DELETE = 'SEC_DELETE';
 export const ITEM_ADD = 'ITEM_ADD';
-export const ITEM_UPDATE = 'ITEM_EDIT';
+export const ITEM_UPDATE = 'ITEM_UPDATE';
 export const ITEM_DELETE = 'ITEM_DELETE';
 
 // Steps
@@ -156,6 +156,18 @@ export const TABLE_ADD = 'TABLE_ADD';
 export const TABLE_UPDATE = 'TABLE_UPDATE';
 export const TABLE_TOGGLE_ENABLED = 'TABLE_TOGGLE_ENABLED';
 export const TABLE_DELETE = 'TABLE_DELETE';
+
+
+// Question Groups
+export const QUEST_GROUP_LOADING = 'QUEST_GROUP_LOADING';
+export const QUEST_GROUP_SUCCESS = 'QUEST_GROUP_SUCCESS';
+export const QUEST_GROUP_ERROR = 'QUEST_GROUP_ERROR';
+export const QUEST_GROUP_ADD = 'QUEST_GROUP_ADD';
+export const QUEST_GROUP_UPDATE = 'QUEST_GROUP_UPDATE';
+export const QUEST_GROUP_DELETE = 'QUEST_GROUP_DELETE';
+export const QUEST_ADD = 'QUEST_ADD';
+export const QUEST_UPDATE = 'QUEST_UPDATE';
+export const QUEST_DELETE = 'QUEST_DELETE';
 
 
 

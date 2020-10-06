@@ -154,7 +154,7 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
                                 name={matchArgType(arg.type).name}
                                 title={matchArgType(arg.type).title}
                                 onChange={assignOption}
-                                placeholder={{name: "בחירה"}}
+                                placeholder="בחירה"
                                 uniqueListKey={arg.role} />
                             </div>
        
