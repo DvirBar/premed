@@ -3,17 +3,16 @@ $info-color: #253385;
 
 button {
     display: flex;
-    margin: 1rem;
     width: 12rem;
     justify-content: center;
     align-items: center;
-    background-color: $main-color;
-    color: #ddd;
+    background-color: #fff;
+    color: $main-color;
     font-size: 1.8rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     transition: background-color 0.4s ease;
-    height: 4.5rem;
-    border: none;
+    height: 4rem;
+    border: 2px solid $main-color;
     outline: none;
     cursor: pointer;
 
@@ -26,19 +25,18 @@ button {
     }
 
     &:hover {
-        background-color: #ddd;
-        border: 0.2rem solid $main-color;
-        color: $main-color;
+        background-color: $main-color;
+        color: #fff;
     }
 }
 
 .danger {
-    background-color: $danger-color;
+    border-color: $danger-color;
+    color: $danger-color;
 
     &:hover {
-        background-color: #ddd;
-        border: 0.2rem solid $danger-color;
-        color: $danger-color;
+        background-color: $danger-color;
+        color: #fff;
     }
 }
 

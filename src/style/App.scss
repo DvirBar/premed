@@ -29,12 +29,6 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-}
-
 body {
     background-color: #fff;
     font-size: $text-size;
@@ -209,3 +203,4 @@ th {
 @import 'admin/stats';
 @import 'admin/calcs';
 @import 'admin/tables';
+@import 'admin/questions';

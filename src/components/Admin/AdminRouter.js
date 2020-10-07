@@ -10,8 +10,8 @@ import AdminDefault from './default/AdminDefault';
 import AncAdmin from './anouncements/AncAdmin';
 import StepsAdmin from './steps/StepsAdmin';
 import Pages from './pages/Pages';
-import Stats from './stats/Stats';
 import StatsMain from './stats/StatsMain';
+import Questions from './questions/Questions';
 
 
 const AdminRouter = () => {
@@ -31,6 +31,7 @@ const AdminRouter = () => {
                 <AdminRoute path={`${path}/steps`} component={StepsAdmin} />
                 <AdminRoute path={`${path}/pages`} component={Pages} />
                 <AdminRoute exact path={`${path}/stats`} component={StatsMain} />
+                <AdminRoute exact path={`${path}/questions`} component={Questions} />
             </Switch>
     )
 }

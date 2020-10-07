@@ -103,7 +103,7 @@ export const addQuest = (groupId, data) => dispatch => {
         })
 }
 
-export const editItem = (groupId, questId, data) => dispatch => {
+export const editQuest = (groupId, questId, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
@@ -118,7 +118,7 @@ export const editItem = (groupId, questId, data) => dispatch => {
             })
 }
 
-export const deleteItem = (groupId, questId) => dispatch => {
+export const deleteQuest = (groupId, questId) => dispatch => {
 
     axios.put(`api/questgroups/${groupId}/${questId}/remove`)
          .then(res => dispatch({

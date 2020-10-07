@@ -1,30 +1,6 @@
 $valid-green: #146411;
 $warning-red: #be1b1b;
 
-#add-table {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 7%;
-    bottom: 7%;
-    width: 7rem;
-    height: 7rem;
-    padding: 2rem;
-    border-radius: 50%;
-    font-size: 3rem;
-    color: #3d3d3d;
-    transition: color 0.3s ease;
-    transition: box-shadow 0.3s ease;
-    box-shadow: $default-shadow;
-    cursor: pointer;
-
-    &:hover {
-        color: $main-color;
-        box-shadow: $default-shadow-hover;
-    }
-}
-
 .tables-list {
     display: flex;
     flex-direction: column;

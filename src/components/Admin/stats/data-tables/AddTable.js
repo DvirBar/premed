@@ -26,8 +26,7 @@ function AddTable() {
     return (
         <Fragment>
             <i 
-            className="material-icons"
-            id="add-table"
+            className="material-icons add-float"
             onClick={() => setDisplay(true)}>
                 add
             </i>
@@ -60,9 +59,7 @@ function AddTable() {
                             rel="noopener noreferrer">בדיקת קישור</a>
                         }               
                     </div>
-                    
-
-
+                
                     <button type="submit">יצירה</button>
                 </form>
             </Modal>

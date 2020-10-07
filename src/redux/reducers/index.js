@@ -14,7 +14,7 @@ import unis from './universities';
 import calcs from './calculations';
 import userdata, * as dataSelectors from './userdata';
 import datatables from './datatables';
-import questgroups from './questgroups';
+import questgroups, * as questGroupsSelectors from './questgroups';
 
 const appReducer = combineReducers({
     auth,
@@ -63,3 +63,6 @@ export const getFilteredSortedData = state => {
     
     return stateCollection;
 }
+
+export const getQuestGroupsByPath = (groups, pathId) => 
+    questGroupsSelectors.getQuestGroupsByPath(groups, pathId)

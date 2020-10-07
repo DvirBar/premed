@@ -26,6 +26,10 @@ function SideMenu() {
         {
             url: `${path}/stats`,
             name: 'סטטיסטיקות' 
+        },
+        {
+            url: `${path}/questions`,
+            name: 'שאלות נפוצות'
         }
         // {
         //     url: `${path}/anouncements`,

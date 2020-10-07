@@ -14,7 +14,7 @@ const initialState = {
     loading: false,
     sections:[]
 }
-//
+
 export default function(state = initialState, action) {
     const payload = action.payload
 
