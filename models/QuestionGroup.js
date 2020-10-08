@@ -20,7 +20,7 @@ const QuestionGroupSchema = new Schema({
         answer: {
             type: String
         },
-        sourceLink: {
+        source_link: {
             type: String
         }
     }],

@@ -159,7 +159,7 @@ router.put('/:id/addQuestion', [auth, authAdmin], (req, res, next) => {
                     const newQuestion = {
                         question,
                         answer,
-                        sourceLink
+                        source_link: sourceLink
                     }
 
                     group.questions.push(newQuestion)
@@ -176,7 +176,7 @@ router.put('/:id/addQuestion', [auth, authAdmin], (req, res, next) => {
 // @route   PUT api/questgroups/:groupId/:questionId
 // @desc    Update question
 // @access  Admin
-router.put('/:groupId/:questionId', [auth, authAdmin], (req, res, next) => {
+router.put('/:groupId/:questId', [auth, authAdmin], (req, res, next) => {
     const {
         question,
         answer,
@@ -184,7 +184,7 @@ router.put('/:groupId/:questionId', [auth, authAdmin], (req, res, next) => {
     } = req.body;
 
     const groupId = req.params.groupId
-    const questionId = req.params.questionId
+    const questionId = req.params.questId
 
     QuestionGroup.findById(groupId)
                  .then(group => {
@@ -200,7 +200,7 @@ router.put('/:groupId/:questionId', [auth, authAdmin], (req, res, next) => {
                     storedQuestion.set({ 
                         question,
                         answer,
-                        sourceLink
+                        source_link: sourceLink
                     })
                     
                     group.save()
@@ -216,9 +216,9 @@ router.put('/:groupId/:questionId', [auth, authAdmin], (req, res, next) => {
 // @route   PUT api/questgroups/:groupId/:questionId/remove
 // @desc    Update question
 // @access  Admin
-router.put('/:groupId/:questionId/remove', [auth, authAdmin], (req, res, next) => {
+router.put('/:groupId/:questId/remove', [auth, authAdmin], (req, res, next) => {
     const groupId = req.params.groupId
-    const questionId = req.params.questionId
+    const questionId = req.params.questId
 
     QuestionGroup.findById(groupId)
                  .then(group => {
