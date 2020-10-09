@@ -71,3 +71,7 @@ export default function(state = initialState, action) {
 export const getQuestGroupsByPath = (groups, pathId) => {
     return groups.filter(group => group.path === pathId)
 }
+
+export const getQuestGroup = (groups, groupId) => {
+    return groups.find(group => group._id === groupId)
+}

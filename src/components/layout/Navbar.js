@@ -102,6 +102,25 @@ function Navbar({ paths }) {
                             ))}
                         </ul>
                     </li>
+                    <li>
+                        <span>
+                           שאלות  
+                        </span>
+                        <ul className="sub-menu">
+                            <li key='general'>
+                                <Link to='/qna/general'>
+                                    <span>כללי</span>
+                                </Link>
+                            </li>
+                            {paths?.map(path => (
+                                <li key={path._id}>
+                                    <Link to={`/qna/${path._id}`}>
+                                        <span>{path.name}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
                     <ul className="left-section">
                         <li className="search">
                             <i className="material-icons search">search</i>

@@ -5,25 +5,22 @@
     font-size: 2rem;
     color: #646464;
     border-bottom: 0.5px solid #aaa;
-    
-    .section-title {
-        cursor: pointer;
-    }
+    cursor: pointer;
 }
 
 .section-content {
     max-height: 0;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-out;
     overflow: hidden;
-    position: relative;
 
     &.open {
         max-height: 200rem;
-        transition: all 0.3s ease;
+        transition: all 0.3s ease-in;
+        overflow: hidden;
     }
 
     &-holder {
         padding: 2rem;
-        overflow-y: auto;
+        overflow: hidden;
     }
 }

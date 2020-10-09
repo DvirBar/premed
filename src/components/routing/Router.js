@@ -15,6 +15,8 @@ import Subpage from '../topics/Subpage';
 import TopicContent from '../topics/TopicContent';
 import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
+import QuestionGroupsList from '../questions/QuestionGroupsList';
+import QuestionsList from '../questions/QuestionsList';
 
 const Router = () => {
     const location = useLocation();
@@ -36,6 +38,9 @@ const Router = () => {
                 <Route exact path="/steps/:pathId" component={Steps} />
                 <Route exact path="/steps/:pathId/:stepId" component={StepItem} />
                 <ProtectedRoute path="/stats/:pathId" component={Stats} />
+                <Route exact path="/qna/general" component={QuestionGroupsList} />
+                <Route exact path="/qna/:pathId" component={QuestionGroupsList} />
+                <Route exact path="/qna/:pathId/:groupId" component={QuestionsList} />
                 <ProtectedRoute exact path="/:pageUrl/:subpageUrl" component={Subpage} />
                 <ProtectedRoute path="/:pageUrl/:subpageUrl/:topicUrl" component={TopicContent} />
                 <Route component={NoMatchPage} />  

@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-function Section({ children }) {
+function Section({ className, children }) {
+    const [titleClass, setTitleClass] = useState('')
     const title = React.Children.map(children, child => 
-        child.type.displayName === 'Title' ? child : null);
+        child.type.displayName === 'Title' ? child : null)
 
+    const [headerClass, setHeaderClass] = useState('')
     const header = React.Children.map(children, child => 
         child.type.displayName === 'Header' ? child : null);
 
-    const headerLeft = React.Children.map(children, child => 
-        child.type.displayName === 'HeaderLeft' ? child : null);
-
+    const [bodyClass, setBodyClass] = useState('')
     const body = React.Children.map(children, child => 
         child.type.displayName === 'Body' ? child : null);
 
+    useEffect(() => {
+        if(title[0]?.props) {
+            setTitleClass(title[0].props.className)
+        }
+
+        if(header[0]?.props) {
+            setHeaderClass(header[0].props.className)
+        }
+
+        if(body[0]?.props) {
+            setBodyClass(body[0].props.className)
+        }
+    }, [title, header, body]) 
+        
     const [display, setDisplay] = useState(false);
 
     const toggleDisplay = () => {
@@ -21,17 +35,30 @@ function Section({ children }) {
     }
     
     return (
-        <div>
-            <p className="section-header">
+        <div className={className
+            ?   `section ${className}`
+            :   "section"}>
+            <p 
+            className="section-header"
+            onClick={() => toggleDisplay()}>
                 <span 
-                className="section-title"
-                onClick={() => toggleDisplay()}>{title}</span>
-                <span 
-                className="section-header-rest">{header}</span>
+                className={titleClass
+                ? `section-title ${titleClass}`
+                : "section-title"}>{title}</span>
+                <span
+                className={headerClass
+                    ? `section-header-rest ${headerClass}`
+                    : "section-header-rest"}>{header}</span>
             </p>
             <div className={display 
-                ? "section-content open" 
-                : "section-content"}>
+                ? (bodyClass
+                    ? `section-content open ${bodyClass}`
+                    : "section-content open"
+                ) 
+                : (bodyClass
+                    ? `section-content ${bodyClass}`
+                    : "section-content"
+                )}>
                 <div className="section-content-holder">
                     {body}
                 </div>
@@ -40,15 +67,21 @@ function Section({ children }) {
     )
 }
 
-const Title = ({ children }) => children;
+const Title = ({ className, children }) => {
+    return children
+};
 Title.displayName = 'Title';
 Section.Title = Title;
 
-const Header = ({ children }) => children;
+const Header = ({ className, children }) => {
+    return children
+};
 Header.displayName = 'Header';
 Section.Header = Header;
 
-const Body = ({ children }) => children;
+const Body = ({ className, children }) => {
+    return children
+};
 Body.displayName = 'Body';
 Section.Body = Body;
 

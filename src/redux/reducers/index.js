@@ -66,3 +66,6 @@ export const getFilteredSortedData = state => {
 
 export const getQuestGroupsByPath = (groups, pathId) => 
     questGroupsSelectors.getQuestGroupsByPath(groups, pathId)
+
+export const getQuestGroup = (groups, groupId) => 
+    questGroupsSelectors.getQuestGroup(groups, groupId)

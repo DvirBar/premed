@@ -10,6 +10,7 @@ import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getTopics } from './redux/actions/topics';
 import { getAnc } from './redux/actions/anouncements';
+import { getQuestGroups } from './redux/actions/questgroups';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
@@ -29,6 +30,7 @@ function App() {
     dispatch(getSteps());
     dispatch(getPages());
     dispatch(getAnc());
+    dispatch(getQuestGroups());
 
     if(auth) {
       dispatch(getTopics());
