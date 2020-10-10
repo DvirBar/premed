@@ -10,52 +10,63 @@
     }
 }
 
-.ancgroups {
-    .paths-groups-list {
-        margin: 1.5rem 0.5rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1rem;
-        row-gap: 4rem;
-        
-        .path-name {
+.paths-groups-list {
+    margin: 1.5rem 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    row-gap: 4rem;
+    
+    .path-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        background-color: $main-color;
+        padding: 0.7rem;
+        border-radius: 0.5rem;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+
+        &:hover > .material-icons {
+            display: block;
+        }
+
+        .material-icons {
+            color: inherit;
+            display: none;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    .group-list {
+        margin-right: 1rem;
+        border-right: 0.2rem solid $main-color;
+
+        .group-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #fff;
-            background-color: $main-color;
-            padding: 0.7rem;
-            border-radius: 0.5rem;
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            padding: 1rem;
 
-            .material-icons {
-                color: inherit;
-
-                &:hover {
-                    opacity: 0.6;
-                }
+            .inline-menu {
+                display: none;
             }
-        }
 
-        .group-list {
-            margin-right: 1rem;
-            border-right: 0.2rem solid $main-color;
-
-            li {
-                padding: 1rem;
-
-                &:hover:not(.add-group-input) {
-                    background-color: #eee;
-                }
+            &:hover > .inline-menu {
+                display: block;
             }
-        }
-
-        .add-group-input {
-            border: none;
         }
     }
+
+    .add-group-input {
+        border: none;
+    }
 }
+
 
 .anclist-admin {
     margin-top: 2rem;
@@ -70,6 +81,23 @@
         .anc-title {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+
+
+
+            .material-icons {
+                display: none;
+                color: #727272;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: $error-color;
+                }
+            }
+
+            &:hover > .material-icons {
+                display: block;
+            }
         }
     
         .anc-date {

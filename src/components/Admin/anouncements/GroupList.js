@@ -1,37 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import PathGroupItem from './PathGroupItem';
 
-function GroupList(props) {
-    const paths = props.paths;
-    const groups = props.groups;
-    const loadPaths = props.loadPaths;
-    const loadGroups = props.loadGroups;
-
-    if(loadPaths || loadGroups) {
-        return <p>Loading ...</p>
-    }
-
+function GroupList({ paths, groups }) {
     return (
-        <div className="ancgroups">
-            {paths && groups &&
-                <ul className="paths-groups-list">
-                {paths.map(path => (
-                    <PathGroupItem
-                    key={path._id} 
-                    path={path} 
-                    groups={groups.filter(group => group.path === path._id)} 
-                    />
-                ))}
-
-                {groups.filter(group => !group.path).length !== 0 && (
-                    <PathGroupItem
-                    path={ {name: "אחר"} } 
-                    groups={groups.filter(group => !group.path)} 
-                    />
-                )}
-                </ul>
-            }
+        <div>
+            <ul className="paths-groups-list"> 
+            <PathGroupItem
+            path={{name: "כללי"}} 
+            groups={groups.filter(group => !group.path)} 
+            />
+            
+            {paths.map(path => (
+                <PathGroupItem
+                key={path._id} 
+                path={path} 
+                groups={groups.filter(group => 
+                    group.path === path._id)} />
+            ))}
+            </ul>
         </div>
     )
 }

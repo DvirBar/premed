@@ -16,7 +16,7 @@ function SideMenu() {
             name: 'פרסומים' 
         },
         {
-            url: `${path}/paths`,
+            url: `${path}/steps`,
             name: 'תהליך הקבלה' 
         },
         {

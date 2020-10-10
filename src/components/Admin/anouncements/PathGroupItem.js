@@ -1,38 +1,45 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import GroupItem from './GroupItem';
 import AddGroup from './AddGroup';
 
-function PathGroupItem(props) {
-    const path = props.path;
-    const groups = props.groups;
-    const [show, setShow] = useState(false);
-    const [showAdd, setShowAdd] = useState(false);
+function PathGroupItem({ path, groups }) {
+    const [displayAdd, setDisplayAdd] = useState(false);
+
+    const toggleAdd = toggle => {
+        setDisplayAdd(toggle)
+    }
 
     return (
         <Fragment>
-            <li className="path-item" > 
-                <p className="path-name"
-                onMouseEnter={() => setShow(true)}
-                onMouseLeave={() => setShow(false)}>
+            <li className="path-item"> 
+                <p className="path-name">
                     <span>{path.name}</span>
-                    { show &&
-                        <i 
-                        className="material-icons"
-                        onClick={() => setShowAdd(true)}>add</i>
-                    }
+                    <i 
+                    className="material-icons"
+                    onClick={() => toggleAdd(true)}>add</i>
                 </p>
                 <ul className="group-list">
-                    {groups.map(group => <GroupItem key={group._id} group={group} pathId={path._id} />)}
-                    { showAdd &&
+                    {groups.map(group => 
+                        <GroupItem 
+                        key={group._id} 
+                        propgroup={group} 
+                        pathId={path._id} />)}
+
+                    {displayAdd &&
                         <AddGroup 
                         pathId={path._id} 
-                        display={showAdd} 
-                        setDisplay={setShowAdd} /> 
+                        toggleDisplay={toggleAdd} /> 
                     }
                 </ul>
             </li>
         </Fragment>
     )
+}
+
+PathGroupItem.propTypes = {
+    path: PropTypes.string.isRequired,
+    groups: PropTypes.array.isRequired
 }
 
 export default PathGroupItem

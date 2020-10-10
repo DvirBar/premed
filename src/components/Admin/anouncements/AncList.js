@@ -2,16 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AncItem from './AncItem'
 
-function AncList(props) {
-    const ancs = props.ancs;
-    const groups = props.groups;
-    const loadAncs = props.loadAncs;
-    const loadGroups = props.loadGroups;
-
-    if(loadAncs || loadGroups) {
-        return <p>Loading...</p>;
-    }
-
+function AncList({ ancs, groups }) {
     return (
         <div>
             <div className="anclist-admin">
@@ -29,9 +20,7 @@ function AncList(props) {
 
 AncList.propTypes = {
     ancs: PropTypes.array.isRequired,
-    groups: PropTypes.array.isRequired,
-    loadAncs: PropTypes.bool.isRequired,
-    loadGroups: PropTypes.bool.isRequired
+    groups: PropTypes.array.isRequired
 }
 
 export default AncList

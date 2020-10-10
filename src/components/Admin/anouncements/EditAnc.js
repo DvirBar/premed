@@ -3,14 +3,12 @@ import { editAnc } from '../../../redux/actions/anouncements';
 import useForm from '../../../forms/useForm';
 import PropTypes from 'prop-types';
 import Dropdown from '../../common/Dropdown';
+import FormInput from '../../common/FormInput';
+import TextArea from '../../common/TextArea';
 import Modal from '../../layout/Modal';
 
-function EditAnc({ groups, anc, display, toggleModal }) {
+function EditAnc({ groups, anc, display, toggleModal}) {
     const [defaultValues, setDefaultValues] = useState({})
-    const [selected, setSelected] = useState({
-        name: anc.group.name,
-        value: anc.group._id
-    })
 
     useEffect(() => {
         setDefaultValues({
@@ -18,7 +16,7 @@ function EditAnc({ groups, anc, display, toggleModal }) {
             content: anc.content,
             groupId: anc.group._id 
         })
-    }, [])
+    }, [anc])
 
     const options = groups.map(group => ({
         name: group.name,
@@ -33,46 +31,43 @@ function EditAnc({ groups, anc, display, toggleModal }) {
         initValues
     } = useForm(editAnc, defaultValues, anc._id)
 
-    useEffect(() => { // Listen to display and init values
-        initValues();
-        setSelected({
-            name: anc.group.name,
-            value: anc.group._id
-        })
+    useEffect(() => {
+        console.log(display);
     }, [display])
+    
 
     return (
-        <Modal display={display} toggleModal={toggleModal}>
+        <Modal 
+        display={display} 
+        toggleModal={toggleModal}
+        title="עריכת פרסום">
             <form onSubmit={handleSubmit} noValidate>
-                <input 
+                <FormInput
                 type="text"
                 name="title" 
-                placeholder="כותרת..."
-                value={values.title || ''}
+                label="כותרת"
+                value={values.title}
                 onChange={handleChange}
-                /><br />
-                <p className="form-error">
-                    {errors.title && errors.title}
-                </p><br />
+                error={errors.title} />
 
-                <input 
-                type="textarea"
+                <TextArea
+                rows="10" cols="80"
                 name="content" 
-                placeholder="תוכן הפרסום"
-                value={values.content || ''}
+                placeholder="תוכן"
+                value={values.content}
                 onChange={handleChange}
-                /><br />
+                error={errors.content} />
                 
                 <Dropdown 
-                selected={selected}
-                setSelected={setSelected}
                 options={options}
-                name={"groupId"}
-                onChange={handleChange}
-                />
+                defaultOption={options.find(option => 
+                    option.value === anc.group._id)}
+                name="groupId"
+                title="קבוצה"
+                onChange={handleChange} />
 
                 <button
-                type="submit">ערוך</button>
+                type="submit">עריכה</button>
             </form>
         </Modal>
     )

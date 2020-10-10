@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import AncItem from './AncItem';
 
 function Anouncements() {
-    const selectedAncs = useSelector(state => state.ancs);
-    const fetchedAncs = selectedAncs.ancs;
+    const ancsSelector = useSelector(state => state.ancs);
+    const { ancs, loading } = ancsSelector;
 
-    const [ancs, setAncs] = useState(fetchedAncs);
-
-    useEffect(() => { // Bind seletor to local state
-        setAncs(fetchedAncs)
-    }, [fetchedAncs])
 
     if(ancs) { 
         return (

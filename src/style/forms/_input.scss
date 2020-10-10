@@ -157,16 +157,32 @@ textarea {
     font-size: inherit;
     resize: none;
     border: none;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     outline: none;
     padding: 1rem;
-    color: #aaa;
-    transition: all 0.5s ease;
+    color: #777;
+    font-size: 1.6rem;
+    transition: all 0.2s ease;
     box-shadow: $default-shadow;
+
+    &::placeholder {
+        color: #aaa
+    }
     
     &:focus {
         color: #000;
         box-shadow: $default-shadow-hover;
+    }
+
+    &.error {
+        border: 2px solid $error-color;
+    }
+}
+
+.textarea-input {
+    .text-area-error {
+        color: $error-color;
+        font-size: 1.4rem;
     }
 }
 

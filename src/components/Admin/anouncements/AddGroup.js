@@ -2,11 +2,9 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { addGroup } from '../../../redux/actions/ancgroups'; 
 
-function AddGroup(props) {
+function AddGroup({ pathId, toggleDisplay }) {
     const dispatch = useDispatch();
-    const [display, setDisplay] = [props.display, props.setDisplay];
     const [group, setGroup] = useState("");
-    const pathId = props.pathId;
 
     const createGroup = event => {
         if(event.key === "Enter") {
@@ -20,14 +18,14 @@ function AddGroup(props) {
                 dispatch(addGroup(data));
                 // Clear input and hide field
                 setGroup("")
-                setDisplay(false) 
+                toggleDisplay(false) 
             }
         }
     }
 
     const exitAdd = () => {
         setGroup("");
-        setDisplay(false);
+        toggleDisplay(false);
     }
     
     return (
@@ -42,8 +40,9 @@ function AddGroup(props) {
             onKeyPress={e => createGroup(e)} />
             <span 
             className="exit-edit"
-            onClick={exitAdd}
-            >&times;</span>
+            onClick={exitAdd}>
+                &times;
+            </span>
         </li>
     )
 }

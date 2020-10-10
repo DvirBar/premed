@@ -1,33 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import DropdownMenu from '../../common/DropdownMenu';
 import { editGroup, deleteGroup } from '../../../redux/actions/ancgroups';
 import VerifyDelete from '../../common/VerifyDelete';
 
-function GroupItem(props) {
+function GroupItem({ propgroup, pathId }) {
     const dispatch = useDispatch();
-    const [group, setGroup] = useState(props.group);
-    const [tempGroup, setTempGroup] = useState(group.name); // Used to save current group in case the user regrets editing
-    const [showIcon, setShowIcon] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
-    const [showVerifyDelete, setShowVerifyDelete] = useState(false);
+    const [group, setGroup] = useState(propgroup)
+    // Used to save current group in case the user regrets editing
+    const [tempGroup, setTempGroup] = useState(); 
+    const [displayMenu, setDisplayMenu] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
-    const enterEditMode = () => {
-        setEditMode(true);
-        setShowMenu(false);
-    }
-
-    const leaveEditMode = () => {
-        setEditMode(false);
-        setGroup({...group, name: tempGroup});
-    }
-
-    const openVerifyDelete = () => {
-        setShowMenu(false)
-        setShowVerifyDelete(true);
-    }
+    useEffect(() => {
+        setGroup(propgroup)
+        setTempGroup(propgroup?.name)
+    }, [propgroup])
 
     const handleKeyPress = e => {
         // Update group
@@ -35,7 +25,7 @@ function GroupItem(props) {
             // Compose object 
             const data = {
                 name: group.name,
-                pathId: props.pathId
+                pathId: pathId
             }
 
             dispatch(editGroup(group._id, data));
@@ -45,27 +35,60 @@ function GroupItem(props) {
         }
     }
 
+    const toggleMenu = toggle => {
+        setDisplayMenu(toggle)
+    }
+
+    const toggleEditMode = toggle => {
+        if(toggle) {
+            setEditMode(true);
+            setDisplayMenu(false);
+        }
+
+        else {
+            setEditMode(false);
+            setGroup({...group, name: tempGroup});
+        }
+    
+    }
+
+    const toggleDelete = toggle => {
+        setShowDelete(toggle)
+    }
+
+    const options = [
+        {
+            name: "עריכת קבוצה",
+            action: () => toggleEditMode(true)
+        },
+        {
+            name: "מחיקת קבוצה",
+            action: () => toggleDelete(true)
+        }
+    ]
+
     if(!editMode) {
         return (
-            <li onMouseEnter={() => setShowIcon(true)} onMouseLeave={() => setShowIcon(false)}>
-               <span>{group.name} </span>
-               {showIcon && (
+            <li className="group-item">
+               <span>{group.name}</span>
+                <div className="inline-menu">
                     <i 
                     className="material-icons more-list"
-                    onClick={() => setShowMenu(!showMenu)}
-                    >more_vert</i>
-               )}
+                    onClick={() => toggleMenu(!displayMenu)}>
+                        more_vert
+                    </i>
 
-                <DropdownMenu show={showMenu} setShow={setShowMenu}>
-                    <li onClick={enterEditMode}>ערוך קבוצה</li>
-                    <li onClick={openVerifyDelete}>מחק קבוצה</li>
-                </DropdownMenu>
+                    <DropdownMenu 
+                    display={displayMenu}
+                    toggleMenu={toggleMenu} 
+                    options={options} />
+                </div>
+                
                 <VerifyDelete 
-                display={showVerifyDelete} 
-                setDisplay={setShowVerifyDelete}
+                display={showDelete} 
+                toggleModal={toggleDelete}
                 callback={deleteGroup}
-                values={[group._id]}
-                />
+                values={[group._id]} />
             </li>
         )
     }
@@ -82,7 +105,7 @@ function GroupItem(props) {
 
                 <span 
                 className="exit-edit"
-                onClick={leaveEditMode}
+                onClick={() => toggleEditMode(false)}
                 >&times;</span>
             </li>
         )

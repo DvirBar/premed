@@ -1,15 +1,13 @@
 import React,  { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroups } from '../../../redux/actions/ancgroups';
+import Loadbar from '../../layout/Loadbar';
 import AncList from './AncList';
 import AddAnc from './AddAnc';
 import ManageGroups from './ManageGroups';
 
 function AncAdmin() {
     const dispatch = useDispatch();
-    const [paths, setPaths] = useState([]);
-    const [groups, setGroups] = useState([]);
-    const [ancs, setAncs] = useState([]);
 
     useEffect(() => {
         dispatch(getGroups());
@@ -20,42 +18,30 @@ function AncAdmin() {
     const selAncs = useSelector(state => state.ancs);
 
     const loadPaths = selPaths.loading;
-    const fetchedPaths = selPaths.paths;
+    const paths = selPaths.paths;
     const loadGroups = selGroups.loading;
-    const fetchedGroups = selGroups.groups;
+    const groups = selGroups.groups;
     const loadAncs = selAncs.loading;
-    const fetchedAncs = selAncs.ancs;
+    const ancs = selAncs.ancs;
 
-    useEffect(() => { // Bind selector to local state
-        setPaths(fetchedPaths);
-        setGroups(fetchedGroups);
-        setAncs(fetchedAncs);
+    
+    if(loadPaths || loadGroups || loadAncs)
+        return <Loadbar />
 
-    }, [fetchedPaths, fetchedGroups, fetchedAncs])
-
-    if(paths.length === 0)
-        return <p>יש להוסיף תחילה מסלולים</p>;
-
-    else if(loadPaths || loadGroups || loadAncs)
-        return <p>Loading ...</p>; 
+    else if(paths.length === 0)
+        return <p className="no-resource-error">יש להוסיף תחילה מסלולים</p>;
 
     else {
         return (
-        <div className="anc-admin">
+            <div className="anc-admin">
                 <p className="header">
                 <AddAnc 
                 ancs={ancs} 
-                groups={groups} 
-                loadAncs={loadAncs} 
-                loadGroups={loadGroups}
-                />
+                groups={groups} />
 
                 <ManageGroups
                 paths={paths}
-                groups={groups}
-                loadPaths={loadPaths}
-                loadGroups={loadGroups}
-                />
+                groups={groups} />
             </p>
             
             <AncList 

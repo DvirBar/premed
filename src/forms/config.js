@@ -21,6 +21,10 @@ export const config = {
             isRequired: { message: 'יש להזין כותרת'}
         },
 
+        content: {
+            isRequired: { message: 'יש להזין תוכן'}
+        },
+
         path: {
             isRequired: { message: 'יש להזין מסלול' }
         },

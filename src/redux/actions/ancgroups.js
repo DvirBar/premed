@@ -100,8 +100,6 @@ export const getSubs = () => dispatch => {
 
 // Add new group
 export const addGroup = data => dispatch => {
-    dispatch(groupLoad());
-
     // Reuest body 
     const body = JSON.stringify(data);
 
@@ -114,8 +112,6 @@ export const addGroup = data => dispatch => {
 
 // Edit group
 export const editGroup = (id, data) => dispatch => {
-    dispatch(groupLoad());
-
     // Request body
     const body = JSON.stringify(data)
 
@@ -127,8 +123,6 @@ export const editGroup = (id, data) => dispatch => {
 
 // Subscribe to a group
 export const subscribeGroup = id => dispatch => {
-    dispatch(groupLoad());
-
     axios 
         .put(`/api/ancgroups/${id}/subscribe`)
         .then(res => {
@@ -140,8 +134,6 @@ export const subscribeGroup = id => dispatch => {
 
 // Unsubscribe from a group
 export const unsubscribeGroup = id => dispatch => {
-    dispatch(groupLoad());
-
     axios 
         .put(`/api/ancgroups/${id}/unsubscribe`)
         .then(res => {
@@ -153,8 +145,6 @@ export const unsubscribeGroup = id => dispatch => {
 
 // Add path to group
 export const addGroupPath = (data, id) => dispatch => {
-    dispatch(groupLoad());
-
     // Request body
     const body = JSON.stringify(data)
 
@@ -166,8 +156,6 @@ export const addGroupPath = (data, id) => dispatch => {
 
 // Delete group
 export const deleteGroup = id => dispatch => {
-    dispatch(groupLoad());
-
     axios
         .delete(`/api/ancgroups/${id}`)
         .then(res => {

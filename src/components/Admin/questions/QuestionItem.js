@@ -11,7 +11,7 @@ function QuestionItem({ question, groupId }) {
         setDisplayEdit(toggle)
     }
 
-    const toggleDelete = (event, toggle) => {
+    const toggleDelete = (toggle, event) => {
         if(toggle) {
             event.stopPropagation()
         }
@@ -30,7 +30,7 @@ function QuestionItem({ question, groupId }) {
                     </span>
                     <i 
                     className="material-icons"
-                    onClick={e => toggleDelete(e, true)}>
+                    onClick={e => toggleDelete(true, e)}>
                         delete
                     </i>
                 </p>
