@@ -14,10 +14,10 @@ function DeleteStep({ stepId }) {
         <Fragment>
             <button 
             className={"danger"}
-            onClick={() => toggleVerDelete(true)}>מחק</button>
+            onClick={() => toggleVerDelete(true)}>מחיקה</button>
             <VerifyDelete
             callback={deleteStep}
-            value={stepId}
+            values={[stepId]}
             display={display} 
             toggleModal={toggleVerDelete} />
         </Fragment>

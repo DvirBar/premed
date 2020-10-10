@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Loadbar from '../../layout/Loadbar';
 import InlineSelect from '../../common/InlineSelect';
 import AddStep from './AddStep';
 import StepsTree from '../../steps/StepsTree';
@@ -7,31 +8,26 @@ import EditStep from './EditStep';
 import DeleteStep from './DeleteStep';
 
 function StepsAdmin() {
-    // Local state
-    const [paths, setPaths] = useState([]);
-    const [steps, setSteps] = useState([]);
-    const [selPath, setSelPath] = useState({})
-    const [selPathSteps, setSelPathSteps] = useState([])
-    const [selStep, setSelStep] = useState({})
+    const [selPath, setSelPath] = useState({});
+    const [selPathSteps, setSelPathSteps] = useState([]);
+    const [selStep, setSelStep] = useState({});
+    const [pathOptions, setPathOptions] = useState([])
 
     // Load state from redux
     const selPaths = useSelector(state => state.paths);
     const selSteps = useSelector(state => state.steps);
     const loadPaths = selPaths.loading;
-    const fetchedPaths = selPaths.paths;
+    const paths = selPaths.paths;
     const loadSteps = selSteps.loading;
-    const fetchedSteps = selSteps.steps;
+    const steps = selSteps.steps;
 
     useEffect(() => {
-        setPaths(fetchedPaths);
-        setSteps(fetchedSteps);
-    }, [fetchedPaths, fetchedSteps])
-
-    // Create default selected path
-    useEffect(() => {
-        if(paths.length !== 0) 
-            setSelPath({ name: paths[0].name, value: paths[0]._id })
+        setPathOptions(paths.map(path => ({
+            name: path.name,
+            value: path._id
+        })))
     }, [paths])
+
 
     // Listen to selected path and change steps and init selected step
     useEffect(() => {
@@ -46,8 +42,14 @@ function StepsAdmin() {
     }, [selPath])
 
     // Select step 
-    const selectStep = step => {
+    const selectStep = (step, event) => {
+        if(event)
+            event.stopPropagation()
         setSelStep(step)
+    }
+
+    const selectPath = selected => {
+        setSelPath(selected)
     }
 
     if(paths.length === 0)
@@ -58,15 +60,15 @@ function StepsAdmin() {
         )
 
     else if(loadPaths || loadSteps)
-        return <p>Loading...</p>
+        return <Loadbar />
     
     return (
         <div className="steps-admin">
             <p className="path-select">
                 <InlineSelect 
-                options={paths}
+                options={pathOptions}
                 selected={selPath}
-                setSelected={setSelPath} />
+                selectOption={selectPath} />
             </p>
             <div className="steps-block">
                 {selPath.value &&

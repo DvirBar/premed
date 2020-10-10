@@ -1,8 +1,12 @@
 form {
     display: flex;
     flex-direction: column;
-    row-gap: 2rem;
+    row-gap: 3rem;
     padding: 2rem 0;
+
+    .dropdown {
+        margin: 0;
+    }
 }
 
 .form-error {

@@ -13,7 +13,7 @@ function AddStep({ path, steps }) {
     const [siblings, setSiblings] = useState([])
     const [prevOptions, setPrevOptions] = useState([])
 
-    const title = "צור שלב עבור " + path.name;
+    const title = "יצירת שלב עבור " + path.name;
 
     const toggleModal = open => {
         setDisplayModal(open)
@@ -74,7 +74,7 @@ function AddStep({ path, steps }) {
     return (
         <Fragment>
             <div className="add-step">
-                <button onClick={() => toggleModal(true)}>+ הוסף שלב</button>
+                <button onClick={() => toggleModal(true)}>+ שלב חדש</button>
             </div>
             <Modal 
             display={displayModal} 
@@ -92,8 +92,9 @@ function AddStep({ path, steps }) {
                     {parentOptions.length !== 0 && 
                         <Dropdown
                         options={parentOptions}
-                        name={"parentId"}
-                        title={"שייך ל"}
+                        defaultOption={parentOptions[0]}
+                        name="parentId"
+                        title="שייך ל"
                         onChange={handleChange}
                         />
                     }
@@ -101,13 +102,14 @@ function AddStep({ path, steps }) {
                     {prevOptions.length !== 0 && 
                         <Dropdown
                         options={prevOptions}
-                        name={"prevId"}
-                        title={"שלב קודם"}
+                        defaultOption={prevOptions[0]}
+                        name="prevId"
+                        title="שלב קודם"
                         onChange={handleChange}
                         />
                     }
                   
-                    <button type="submit">צור שלב</button>
+                    <button type="submit">יצירה</button>
                 </form>
             </Modal>
         </Fragment>

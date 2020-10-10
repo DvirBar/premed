@@ -1,41 +1,71 @@
 .steps-tree {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
     color: $main-color;
     text-align: center;
     z-index: 1;
     margin: auto;
+    font-size: 1.6rem;
 
     .tree-node {
-        margin: 1rem;
+        display: flex;
+        justify-content: center;
+        margin: 0.5rem;
+        
 
-        .family-container {
-            border: 2px solid $main-color;
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            min-width: 20rem;
-            z-index: 0;
-        }
-
-        .node {
-            display: block;
-            min-height: 1.5rem;
-            min-width: 1.5rem;
-            max-width: 1.5rem;
-            max-height: 1.5rem;
-            background-color: $main-color;
-            margin: 0.3rem auto;
-            border-radius: 50%;
-            transition: all 0.1s ease-in-out;
+        .steps-family {
+            width: 100%;
+            padding: 1rem; 
+            border-radius: 0.5rem;
+            border: 2px solid #aaa;
+            transition: border-color 0.2s ease-in;
             cursor: pointer;
 
             &:hover {
-                min-height: 1.8rem;
-                min-width: 1.8rem;
-                max-width: 1.8rem;
-                max-height: 1.8rem;
+                border-color: $main-color;
+            }
+
+            legend {
+                margin: 0 1rem;
+                font-size: 1.7rem;
+            }
+
+            .steps-level {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .node-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 10rem;
+            word-wrap: break-word;
+
+            .node {
+                display: block;
+                width: 1.2rem;
+                height: 1.2rem;
+                background-color: #aaa;
+                margin: 0.3rem auto;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: background-color 0.2s ease-in;
+
+                &:hover {
+                    background-color: $main-color;
+                }
             }
         }
     }
+}
+
+.tree-container {
+    display: flex;
+    justify-content: center;
 }
 
 .step-content {
