@@ -26,7 +26,7 @@ function TopicItem({ siblings, topics, selTopic, selectTopic }) {
             <Dropdown
             options={options}
             title={"נושא"}
-            placeholder={{name: "בחר"}}
+            placeholder="בחירה"
             onChange={selectOption}
             />
             {children.length !== 0 && // Recursion base case

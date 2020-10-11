@@ -10,7 +10,6 @@ function MainList({ fields, groups, calcs, types, selUni }) {
     // Get only fileds that are part of a group to be passed to group list
     const groupFields = fields.filter(field => field.group)
 
-
     const [uniFields, setUniFields] = useState([])
     
     if(fields.length === 0 && groups.length === 0 && calcs.length === 0)
@@ -30,7 +29,7 @@ function MainList({ fields, groups, calcs, types, selUni }) {
             fields={calcFields}
             selUni={selUni}
             types={types} />
-
+        
             {!selUni &&
                 <DataGroupsList
                 groups={groups}

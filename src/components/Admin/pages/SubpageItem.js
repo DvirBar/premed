@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import Section from '../../common/Section';
 import DropdownMenu from '../../common/DropdownMenu';
 import Modal from '../../layout/Modal';
 import AddTopic from '../topics/AddTopic';
@@ -26,7 +27,10 @@ function SubpageItem({ pageId, subpage }) {
             topic.subpage === subpage._id))
     }, [selTopics])
 
-    const toggleMenu = open => {
+    const toggleMenu = (open, event) => {
+        if(event) {
+            event.stopPropagation();
+        }
         setDisplayMenu(open)
     }
 
@@ -58,26 +62,22 @@ function SubpageItem({ pageId, subpage }) {
     ]
     
     return (
-        <div>
-            <div className="section-header">
-                <span 
-                className="section-title"
-                onClick={() => setDisplaySection(!displaySection)}>
+        <Fragment>
+             <Section className="subpage-item">
+                <Section.Title>
                     {subpage.name}
-                </span>
-                <div className="subpage-menu">
-                    <i className="material-icons"
-                    onClick={() => toggleMenu(!displayMenu)}>more_vert</i>
-                    <DropdownMenu
-                    display={displayMenu}
-                    toggleMenu={toggleMenu}
-                    options={options} />
-                </div>
-            </div>
-            <div className={displaySection
-                ? "section-content open" 
-                : "section-content"}>
-                <div className="section-content-holder">
+                </Section.Title>
+                <Section.Header>
+                    <div className="inline-menu">
+                        <i className="material-icons"
+                        onClick={e => toggleMenu(!displayMenu, e)}>more_vert</i>
+                        <DropdownMenu
+                        display={displayMenu}
+                        toggleMenu={toggleMenu}
+                        options={options} />
+                    </div>
+                </Section.Header>
+                <Section.Body>
                     <LinksList 
                     subpage={subpage}
                     pageId={pageId} />
@@ -85,9 +85,9 @@ function SubpageItem({ pageId, subpage }) {
                     <SubpageTopics 
                     loading={loadTopics}
                     topics={topics} />
-                </div>
-            </div>
-            
+                </Section.Body>
+            </Section>
+
             <AddTopic
             subpageId={subpage._id}
             topics={topics} 
@@ -109,8 +109,7 @@ function SubpageItem({ pageId, subpage }) {
             values={[pageId, subpage._id]}
             display={displayVer}
             toggleModal={toggleVer} />
-
-        </div>
+        </Fragment>
     )
 }
 

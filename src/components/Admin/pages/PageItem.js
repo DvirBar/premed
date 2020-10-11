@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types'
 import SubpageItem from './SubpageItem'
 import DropdownMenu from '../../common/DropdownMenu';
@@ -14,65 +14,66 @@ function PageItem({ subpages, page }) {
     const [displayEdit, setDisplayEdit] = useState(false);
     const [displayVer, setDisplayVer] = useState(false)
     
-    const toggleMenu = open => {
-        setDisplayMenu(open)
+    const toggleMenu = toggle => {
+        setDisplayMenu(toggle)
     }
 
-    const toggleAdd = open => {
-        setDisplayAdd(open)
+    const toggleAdd = toggle => {
+        setDisplayAdd(toggle)
     }
 
-    const toggleEdit = open => {
-        setDisplayEdit(open)
+    const toggleEdit = toggle => {
+        setDisplayEdit(toggle)
     }
 
-    const toggleVer = open => {
-        setDisplayVer(open)
+    const toggleVer = toggle => {
+        setDisplayVer(toggle)
     }
 
     const options = [
         {
-            name: "הוסף דף",
+            name: "הוספת דף",
             action: () => toggleAdd(true)
         },
         {
-            name: "ערוך עמוד",
+            name: "עריכת עמוד",
             action: () => toggleEdit(true)
         },
         {
-            name: "מחק עמוד",
+            name: "עריכת עמוד",
             action: () => toggleVer(true)
         }
     ]
 
     return (
-        <div>
-            <div className="block-title" 
-            onMouseLeave={() => toggleMenu(false)}>
-                <span className="page-title">{page.name}</span>
-                <div className="page-menu">
-                    <i className="material-icons"
-                    onClick={() => toggleMenu(!displayMenu)}>more_vert</i>
-                    <DropdownMenu
-                    display={displayMenu}
-                    toggleMenu={toggleMenu}
-                    options={options} />
+        <Fragment>
+            <div className="page-item">
+                <div className="block-title" 
+                onMouseLeave={() => toggleMenu(false)}>
+                    <span className="page-title">{page.name}</span>
+                    <div className="page-menu">
+                        <i className="material-icons"
+                        onClick={() => toggleMenu(!displayMenu)}>more_vert</i>
+                        <DropdownMenu
+                        display={displayMenu}
+                        toggleMenu={toggleMenu}
+                        options={options} />
+                    </div>
+                </div>
+
+                <div className="block-content">
+                    {subpages.length !== 0
+                    ?   subpages.map(subpage => (
+                            <SubpageItem
+                            pageId={page._id}
+                            subpage={subpage} />
+                        ))
+                
+                    :   <p className="no-resource-error">
+                            עדיין אין דפים
+                        </p>} 
                 </div>
             </div>
-
-            <div className="block-content">
-                {subpages.length !== 0
-                ?   subpages.map(subpage => (
-                        <SubpageItem
-                        pageId={page._id}
-                        subpage={subpage} />
-                    ))
-            
-                :   <p className="no-resource-error">
-                        עדיין אין דפים
-                    </p>} 
-            </div>
-
             <Modal
             display={displayAdd}
             toggleModal={toggleAdd}
@@ -84,7 +85,7 @@ function PageItem({ subpages, page }) {
             <Modal
             display={displayEdit}
             toggleModal={toggleEdit}
-            title={"ערוך עמוד"}>
+            title="עריכת עמוד">
                 <EditPage
                 page={page} />
             </Modal>  
@@ -94,7 +95,7 @@ function PageItem({ subpages, page }) {
             values={[page._id]}
             display={displayVer}
             toggleModal={toggleVer} />
-        </div>
+        </Fragment>
     )
 }
 

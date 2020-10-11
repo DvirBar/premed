@@ -142,7 +142,7 @@ function Stats() {
         return <Loadbar />
         
     return (
-        <div>    
+        <div className="stats-admin">    
             <p className="top-bar">
                 <InlineSelect
                 selected={selPath}

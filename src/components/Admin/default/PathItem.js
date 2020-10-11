@@ -1,70 +1,83 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import DropdownMenu from '../../common/DropdownMenu';
 import { editPath, deletePath } from '../../../redux/actions/paths';
 import VerifyDelete from '../../common/VerifyDelete';
 
 
-function PathItem(props) {
+function PathItem({ path }) {
     const dispatch = useDispatch();
-    const [path, setPath] = useState(props.path);
-    const [tempPath, setTempPath] = useState(path.name); // Used to save current path in case the user regrets editing
-    const [showIcon, setShowIcon] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
-    const [showVerifyDelete, setShowVerifyDelete] = useState(false);
+    const [tempPath, setTempPath] = useState(path); // Used to save current path in case the user regrets editing
+    const [displayMenu, setDisplayMenu] = useState(false);
+    const [displayDelete, setDisplayDelete] = useState(false);
     const [editMode, setEditMode] = useState(false);
 
-    const enterEditMode = () => {
-        setEditMode(true);
-        setShowMenu(false);
+    const toggleMenu = toggle => {
+        setDisplayMenu(toggle)
     }
 
-    const leaveEditMode = () => {
-        setEditMode(false);
-        setPath({...path, name: tempPath});
+    const toggleEditMode = toggle => {
+        if(toggle) {
+            setEditMode(true);
+            setDisplayMenu(false);    
+        }
+
+        else {
+            setEditMode(false);
+            setTempPath(path);
+        }
     }
 
-    const openVerifyDelete = () => {
-        setShowMenu(false)
-        setShowVerifyDelete(true);
+    const toggleDelete = toggle => {
+        setDisplayDelete(toggle)
     }
 
     const handleKeyPress = e => {
         // Update path
-        if(e.key === "Enter" && path.name !== "") {
+        if(e.key === "Enter" && tempPath.name !== "") {
             // Compose object 
             const data = {
-                name: path.name
+                name: tempPath.name
             }
 
-            dispatch(editPath(path._id, data));
-            setTempPath(path.name) // TODO: only if not error
+            dispatch(editPath(path._id, data)); // TODO: only if not error
             // Exit edit mode 
             setEditMode(false);
         }
     }
 
+    const options = [
+        {
+            name: "עריכה",
+            action: () => toggleEditMode(true)
+        },
+        {
+            name: "מחיקה",
+            action: () => toggleDelete(true)
+        }
+    ]
+
+    useEffect(() => {
+        console.log(editMode);
+    }, [editMode])
+
     if(!editMode) {
         return (
-            <li onMouseEnter={() => setShowIcon(true)} onMouseLeave={() => setShowIcon(false)}>
-               <span>{path.name} </span>
-               {showIcon && (
-                    <i 
-                    className="material-icons more-list"
-                    onClick={() => setShowMenu(!showMenu)}
-                    >more_vert</i>
-               )}
-{/* 
-                <DropdownMenu show={showMenu} setShow={setShowMenu}>
-                       <li onClick={enterEditMode}>ערוך מסלול</li>
-                       <li onClick={openVerifyDelete}>מחק מסלול</li>
-                </DropdownMenu> */}
+            <li className="path-item">
+               <span>{path.name}</span>
+                <div className="inline-menu">
+                    <i className="material-icons"
+                    onClick={() => setDisplayMenu(!displayMenu)}>more_vert</i>
+                    <DropdownMenu 
+                    display={displayMenu}
+                    toggleMenu={toggleMenu}
+                    options={options} />
+                </div>
                 <VerifyDelete 
-                display={showVerifyDelete} 
-                setDisplay={setShowVerifyDelete}
+                display={displayDelete} 
+                toggleModal={toggleDelete}
                 callback={deletePath}
-                values={[path._id]}
-                />
+                values={[path._id]} />
             </li>
         )
     }
@@ -75,14 +88,12 @@ function PathItem(props) {
                 <input 
                 type="text"
                 value={path.name}
-                onChange={e => setPath({...path, name: e.target.value})}
-                onKeyPress={e => handleKeyPress(e)}
-                />
+                onChange={e => setTempPath({...path, name: e.target.value})}
+                onKeyPress={e => handleKeyPress(e)} />
 
                 <span 
                 className="exit-edit"
-                onClick={leaveEditMode}
-                >&times;</span>
+                onClick={toggleEditMode(false)}>&times;</span>
             </li>
         )
     }

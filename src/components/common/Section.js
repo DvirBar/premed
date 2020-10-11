@@ -67,21 +67,16 @@ function Section({ className, children }) {
     )
 }
 
-const Title = ({ className, children }) => {
-    return children
-};
+const Title = ({ className, children }) => children;
 Title.displayName = 'Title';
 Section.Title = Title;
 
-const Header = ({ className, children }) => {
-    return children
-};
+const Header = ({ className, children }) => children;
+
 Header.displayName = 'Header';
 Section.Header = Header;
 
-const Body = ({ className, children }) => {
-    return children
-};
+const Body = ({ className, children }) =>  children;
 Body.displayName = 'Body';
 Section.Body = Body;
 

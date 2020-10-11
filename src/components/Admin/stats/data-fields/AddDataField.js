@@ -81,7 +81,7 @@ function AddDataField({ path, types, unis }) {
                 className="add-data-field"
                 onSubmit={handleSubmit}
                 onKeyPress={e => e.key === "Enter" && e.preventDefault()}>
-                    <div>
+                    <div className="add-fields-inputs">
                         <FormInput 
                         label="שם"
                         type="text"

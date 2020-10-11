@@ -22,7 +22,7 @@ function AddLink({ subpage, pageId, display, toggleModal }) {
         <Modal 
         display={display} 
         toggleModal={toggleModal} 
-        title={"הוסף קישור"}>
+        title="הוסף קישור">
             <form onSubmit={handleSubmit} noValidate>
                 <FormInput
                 label={"שם"}

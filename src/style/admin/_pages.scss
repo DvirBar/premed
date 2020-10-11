@@ -1,7 +1,20 @@
+.pages-admin {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+
+.page-item {
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 0.5rem;
+}
+
 .block-title {
     padding: 1.5rem;
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     position: relative;
+    box-shadow: 0 3px 6px #00000030;
     
     .page-menu {
         display: none;
@@ -21,22 +34,22 @@
 
 .block-content {
     padding: 2rem;
-    background-color: #f0f0f0;
     border-radius: 0.5rem;
     position: relative;
 
-    .section-header {
+    .subpage-item {
         position: relative;
 
-        .subpage-menu {
+        &:hover {
+            .inline-menu {
+                display: block;
+            }
+        }
+    
+        .inline-menu {
             display: none;
             position: absolute;
-            font-size: 2.8rem;
             top: 13px;
-        }
-
-        &:hover > .subpage-menu {
-            display: inline;
         }
     }
 }

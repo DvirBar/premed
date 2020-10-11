@@ -34,7 +34,7 @@ function GroupArg({ arg, fields, groupOptions, findRoleBind,
                 name="groupIds"
                 title="קבוצת נתונים"
                 onChange={selectGroup}
-                placeholder={{name: "בחירה"}}
+                placeholder="בחירה"
                 uniqueListKey={arg.role} />
             </div>
                 {selGroup && Object.keys(selGroup).length !== 0 &&

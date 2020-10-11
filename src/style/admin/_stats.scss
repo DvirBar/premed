@@ -29,9 +29,13 @@
                 background-color: #ddd;
             }
         }
-        
     }
 
+    .stats-admin {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
 }
 
 
@@ -41,16 +45,17 @@
 
 .stats-add-buttons {
     display: flex;
-
-    & > .dropdown {
-        margin: 1rem;    
-    }
+    align-items: center;
+    column-gap: 1.5rem;
 }
 
 .add-data-field {
-    display: flex;
-    column-gap: 5rem;
 
+    .add-fields-inputs {
+        display: flex;
+        flex-direction: column;
+        row-gap: 3rem;
+    }
     .field-options-list {
         width: 20rem;
         background-color: #fff;
@@ -86,8 +91,6 @@
 }
 
 .data-fields-admin {
-    margin: 5rem 0;
-
     .data-field {
         margin: 2rem;
         margin-top: 0;

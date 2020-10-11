@@ -45,7 +45,7 @@ function QuestionGroupItem({ group }) {
         }
     ]
     return (
-        <div className="question-groups-item">
+        <Fragment>
             <Section>
                 <Section.Title>
                     <span>{group.name}</span>
@@ -79,7 +79,7 @@ function QuestionGroupItem({ group }) {
             values={[group._id]}
             display={displayDelete}
             toggleModal={toggleDelete} />
-        </div> 
+        </Fragment>
     )
 }
 

@@ -19,22 +19,22 @@ function AddPage() {
     return (
         <form onSubmit={handleSubmit} noValidate>
             <FormInput
-            label={"שם"}
-            type={"text"}
-            name={"name"}
+            label="שם"
+            type="text"
+            name="name"
             value={values.name}
             onChange={handleChange}
             error={errors.name} />
 
             <FormInput
-            label={"כתובת"}
-            type={"text"}
-            name={"url"}
+            label="כתובת"
+            type="text"
+            name="url"
             value={values.url}
             onChange={handleChange}
             error={errors.url} />
 
-            <button type="submit">צור</button>
+            <button type="submit">יצירה</button>
         </form>
     )
 }
