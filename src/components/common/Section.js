@@ -14,6 +14,8 @@ function Section({ className, children }) {
     const body = React.Children.map(children, child => 
         child.type.displayName === 'Body' ? child : null);
 
+    console.log(children);
+
     useEffect(() => {
         if(title[0]?.props) {
             setTitleClass(title[0].props.className)

@@ -1,6 +1,6 @@
 $main-color: #486974;
 $error-color: #be1b1b;
-$default-shadow: 
+$default-shadow:
 0 2px 6px 0 rgba(0, 0, 0, 0.2), 
 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 $default-shadow-hover:
@@ -151,7 +151,7 @@ th {
 
 @media only screen and (max-width: 1000px) {
     .content {
-        margin: ($header-height + $cover-height + 5rem) 2rem;
+        margin: ($header-height + $cover-height + 5rem) 0.5rem;
     }
 }
 
@@ -161,7 +161,7 @@ th {
     align-items: center;
     margin: 5rem auto;
     height: 100%;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #555;
 }
 
@@ -178,6 +178,7 @@ th {
 @import 'common/selectBox';
 @import 'common/section';
 @import 'common/multiselect';
+@import 'common/carousel';
 
 @import 'forms/main';
 @import 'forms/input';

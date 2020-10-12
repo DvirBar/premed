@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function StepContent({ selStep }) {
     return (
         <div className="step-content">
-            <h1 className="step-title">{selStep.name}</h1>
+            <span className="step-title">{selStep.name}</span>
             {selStep.content 
             ?
                 <div className="content-container">

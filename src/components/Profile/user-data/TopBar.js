@@ -41,7 +41,7 @@ function TopBar({ data, tableId, changeTable, paths }) {
             changeTable={changeTable} />
 
             <div className="switch-block">
-                <p className="switch-name">הצגה בטבלת הנתונים:</p>
+                <p className="switch-name">הצגת הנתונים שלי בטבלה המרכזית:</p>
                 <ToggleSwitch
                 options={options}
                 onChange={toggleOptions}

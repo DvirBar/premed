@@ -12,7 +12,9 @@ function Steps() {
     const steps = useSelector(state => 
         state.steps.steps.filter(step => step.path === pathId))
     
-    const selectStep = step => {
+    const selectStep = (step, event) => {
+        if(event)
+            event.stopPropagation()
         history.push(`${newPath}/${step._id}`)
     }
 
