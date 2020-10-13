@@ -63,8 +63,6 @@ header {
         width: 100%;
 
        li {
-           cursor: pointer;
-           
            span {
                padding: 1rem;
                height: 100%;
@@ -93,6 +91,12 @@ header {
         }
     }
 
+    .drive-links {
+        & > span {
+            cursor: pointer;
+        }
+    }
+
     @media only screen and (min-width: 769px) {
         .links > li:hover:not(.left-section), .user-links:hover {
             border-bottom: 0.3rem solid #eee;
@@ -100,7 +104,6 @@ header {
 
         .links > li, .user-links{
             border-bottom: 0.3rem solid #eeeeee00;
-            position: relative;
             transition: border-color 0.3s linear;
         }
 

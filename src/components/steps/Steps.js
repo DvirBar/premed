@@ -1,31 +1,36 @@
 import React from 'react';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import StepsTree from './StepsTree';
+import TopLinks from '../layout/TopLinks';
+import StepRouter from './StepRouter';
 
 function Steps() {
-    let history = useHistory();
-    let { params, path } = useRouteMatch();
-    const { pathId } = params
-    let newPath = path.replace(/:pathId/g, pathId)
+    let { path } = useRouteMatch();
 
-    const steps = useSelector(state => 
-        state.steps.steps.filter(step => step.path === pathId))
-    
-    const selectStep = (step, event) => {
-        if(event)
-            event.stopPropagation()
-        history.push(`${newPath}/${step._id}`)
-    }
+    const paths = useSelector(state => state.paths.paths)
 
-    if(!steps)
-        return <p>Loading ...</p>
+    const linksList = paths.map(pathItem => ({
+        name: pathItem.name,
+        url: `${path}/${pathItem._id}`
+    }))
 
     return (
         <div>
-            <StepsTree 
-            steps={steps}
-            selectStep={selectStep} />
+            <div className="top-content-nav">
+                <TopLinks className="top-links-profile-nav">
+                    {linksList.map(link => 
+                        <Link
+                        className="profile-link" 
+                        key={link.url} 
+                        to={link.url} 
+                        id={link.url}>
+                            {link.name}
+                        </Link>
+                        )}
+                </TopLinks>
+            </div> 
+
+            <StepRouter />
         </div>
     )
 }

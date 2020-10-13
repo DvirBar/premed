@@ -98,8 +98,16 @@ ul {
 
 .content {
     max-width: 900px;
-    margin: ($header-height + $cover-height + 5rem) auto;
+    margin: ($header-height + $cover-height + 10rem) auto;
     z-index: 0;
+
+    .default-page {
+        position: absolute;
+        top: ($header-height + $cover-height + 2rem);
+        max-width: 900px;
+        margin: auto;
+        margin-bottom: 5rem;
+    }
 }
 
 .router {
@@ -151,7 +159,7 @@ th {
 
 @media only screen and (max-width: 1000px) {
     .content {
-        margin: ($header-height + $cover-height + 5rem) 0.5rem;
+        margin: ($header-height + $cover-height + 10rem) 0.5rem;
     }
 }
 
@@ -163,6 +171,21 @@ th {
     height: 100%;
     font-size: 2.5rem;
     color: #555;
+}
+
+.top-content-nav {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: $header-height + $cover-height;
+    right: 0;
+    box-shadow: 0 3px 6px #00000030;
+    width: 100%;
+    margin-bottom: 3rem;
+
+    .top-links-profile-nav {
+        width: 90rem;
+    }
 }
 
 @import 'layout/navbar';

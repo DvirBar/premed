@@ -15,7 +15,6 @@
         transition: border 0.5s ease;
         padding: 0;
         flex: 1;
-        cursor: pointer;
 
         &.current {
             color: $main-color;
@@ -38,9 +37,17 @@
             }
 
             .span-hover {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 border-radius: 1rem;
                 transition: background-color 0.5s ease;
-                padding: 0.5rem 2rem;
+                padding: 0;
+                cursor: pointer;
+
+                & > * {
+                    padding: 0.5rem;
+                }
             }
         }
     }

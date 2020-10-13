@@ -74,7 +74,6 @@ Title.displayName = 'Title';
 Section.Title = Title;
 
 const Header = ({ className, children }) => children;
-
 Header.displayName = 'Header';
 Section.Header = Header;
 

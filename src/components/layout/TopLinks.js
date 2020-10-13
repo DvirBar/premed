@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
-function TopLinks({ linksList, selectLink }) {
-    const [selected, setSelected] = useState('')
+function TopLinks({ className, children }) {
+    const [selected, setSelected] = useState(children[0].props.id)
 
-    useEffect(() => {
-        if(linksList) {
-            handleSelect(linksList[0].loc)
-        }
-    }, [])
+    console.log(children);
 
-    const handleSelect = loc => {
-        setSelected(loc);
-        selectLink(loc);
+    const selectLink = id => {
+        console.log("clicked");
+        setSelected(id)
+        return true;
     }
-    
+
     return (
-        <ul className="top-links">
-            {linksList.map(link => 
+        <ul className={className 
+        ?   `top-links ${className}`
+        :   "top-links"}>
+            {children.map(child => 
                 <li
-                key={link.loc} 
-                className={link.loc === selected
+                key={child.props.id}
+                className={child.props.id === selected
                 ? "link-item current"
-                : "link-item"}
-                onClick={() => handleSelect(link.loc)}>
+                : "link-item"}>
                     <span>
-                        <span className="span-hover">
-                            {link.name}
+                        <span 
+                        className="span-hover"
+                        onClick={() => selectLink(child.props.id)}>
+                            {child}
                         </span>
                     </span>
                 </li>
@@ -33,5 +33,7 @@ function TopLinks({ linksList, selectLink }) {
         </ul>
     )
 }
+
+
 
 export default TopLinks

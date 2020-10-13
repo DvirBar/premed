@@ -28,14 +28,16 @@ function Anouncements() {
     if(ancs) { 
         return (
             <Fragment>
-                <Carousel className="anc-list">
-                    {ancs.map(anc =>
-                        <AncItem 
-                        key={anc.id} 
-                        anc={anc}
-                        selectAnc={selectAnc}
-                        />)}
-                </Carousel>
+                <div className="ancs-container">
+                    <Carousel className="anc-list">
+                        {ancs.map(anc =>
+                            <AncItem 
+                            key={anc.id} 
+                            anc={anc}
+                            selectAnc={selectAnc}
+                            />)}
+                    </Carousel>
+                </div>
 
                 <Modal 
                 display={display} 

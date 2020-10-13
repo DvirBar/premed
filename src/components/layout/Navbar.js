@@ -32,6 +32,8 @@ function Navbar({ paths }) {
         dispatch(logout())
     }
 
+    const [displayDriveLinks, setDisplayDriveLinks] = useState(false)
+
     return (
         <header>
             <i className="material-icons search-mobile">search</i>
@@ -55,71 +57,22 @@ function Navbar({ paths }) {
                 </span>
                 <ul className='links' style={showMenu ? showMenuStyle : hideMenuStyle}>
                     <li>
-                        <span>
-                            תהליך הקבלה
-                        </span>
-                        <ul className="sub-menu">
-                            {paths?.map(path => (
-                                <li key={path._id}>
-                                    <Link to={`/steps/${path._id}`}>
-                                        <span>{path.name}</span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        <Link to={`/steps/${paths[0]._id}`}>
+                            <span>תהליך הקבלה</span>
+                        </Link>
                     </li>
-                    <Fragment>
-                        {pages && pages.length !== 0 &&
-                            pages.map(page => (
-                                <li key={page._id}>
-                                    <span>
-                                        {page.name}
-                                    </span>
-                                    <ul className="sub-menu">
-                                    {page.subpages.map(subpage => (
-                                        <li key={subpage._id}>
-                                            <Link to={`/${page.url}/${subpage.url}`}>
-                                                <span>{subpage.name}</span>
-                                            </Link>
-                                        </li>
-                                    ))}
-                                    </ul>
-                                </li>
-                            ))
-                        }
-                    </Fragment>
-                    <li>
-                        <span>
-                           נתונים  
-                        </span>
-                        <ul className="sub-menu">
-                            {paths?.map(path => (
-                                <li key={path._id}>
-                                    <Link to={`/stats/${path._id}`}>
-                                        <span>{path.name}</span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                    <li className="drive-links">
+                        <span>דרייב</span>
                     </li>
                     <li>
-                        <span>
-                           שאלות  
-                        </span>
-                        <ul className="sub-menu">
-                            <li key='general'>
-                                <Link to='/qna/general'>
-                                    <span>כללי</span>
-                                </Link>
-                            </li>
-                            {paths?.map(path => (
-                                <li key={path._id}>
-                                    <Link to={`/qna/${path._id}`}>
-                                        <span>{path.name}</span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        <Link to={`/stats/${paths[0]._id}`}>
+                            <span>נתונים</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to='/qna/general'>
+                            <span>שאלות נפוצות</span>
+                        </Link>
                     </li>
                     <ul className="left-section">
                         <li className="search">

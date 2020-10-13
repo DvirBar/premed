@@ -2,17 +2,18 @@ import React from 'react'
 import { useRouteMatch, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import TopLinks from '../layout/TopLinks';
-import StatsRouter from './StatsRouter';
+import QuestionsRouter from './QuestionsRouter';
 
 function Stats() {
     let { path } = useRouteMatch();
 
     const paths = useSelector(state => state.paths.paths)
 
-    const linksList = paths.map(pathItem => ({
+    const linksList = ([{name: 'כללי', url: `${path}/general`},
+    ...paths.map(pathItem => ({
         name: pathItem.name,
         url: `${path}/${pathItem._id}`
-    }))
+    }))])
 
     return (
         <div>
@@ -30,7 +31,7 @@ function Stats() {
                 </TopLinks>
             </div> 
             
-            <StatsRouter />
+            <QuestionsRouter />
         </div>
     )
 }

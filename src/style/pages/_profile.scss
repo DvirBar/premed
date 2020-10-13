@@ -2,57 +2,8 @@
     margin: auto;
     width: 900px;
 
-
-    .top-links {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        background-color: #fff;
-        box-shadow: $default-shadow;
-        border-radius: 1rem 1rem 0 0;
-        margin-bottom: 3rem;
-
-        a {
-            width: 100%;
-        }
-
-        .link-item {
-            text-align: center;
-            color: #474747;
-            border-bottom: 3px solid transparent;
-            transition: border 0.5s ease;
-            padding: 0;
-
-            &.current {
-                color: $main-color;
-                border-bottom: 3px solid $main-color;
-
-                span > .span-hover:hover {
-                    background-color: inherit;
-                }
-            }
-
-            span {
-                position: relative;
-                padding: 0.5rem;
-                width: 100%;
-                height: 100%; 
-                display: block;
-
-                &:hover > .span-hover {
-                    background-color: #f3f3f3;
-                }
-
-                .span-hover {
-                    border-radius: 1rem;
-                    transition: background-color 0.5s ease;
-                    padding: 0.5rem 2rem;
-                }
-            }
-        }
-    }
-
     .profile-container {
-
+        border-top: 3rem;
         & > div:not(.loadbar-soft) {
             animation: opacity-load 0.5s ease;
             background-color: #fff;
