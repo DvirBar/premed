@@ -6,10 +6,10 @@ const topicMessages = {
         },
         status: 200
     },
-    SubpageRequired: {
+    PageRequired: {
         msg: {
-            en: 'Sub-page is required',
-            he: 'יש להזין דף'
+            en: 'Page is required',
+            he: 'יש להזין עמוד'
         },
         status: 400
     },

@@ -29,9 +29,15 @@ router.get('/:id', (req, res, next) => {
 // @desc    Get all anouncements without author Id
 // @access  Public
 router.get('/', (req, res, next) => { 
-    Anouncement.find()
+    const date = new Date()
+
+    Anouncement.find({ date: {
+        $lte: Date.now(), 
+        $gte: date.setMonth(date.getMonth() - 2)
+       }})
         .select("-userId")
         .populate("group")
+        .sort({ date: '-1'})
         .then(anc => res.json(anc))
         .catch(next)
 })
@@ -59,7 +65,7 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 
     const userId = res.locals.user.id
     // Create new anouncement
-    newAnc = new Anouncement({
+    const newAnc = new Anouncement({
         title: title,
         content: content,
         userId: userId,
@@ -67,10 +73,10 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
     })
 
     newAnc.save()
-            .then(anc => {
-                return res.json(anc)
-            })
-            .catch(next)
+        .then(anc => {
+            return res.send(anc)
+        })
+        .catch(next)
 })
 
 // @route   PUT api/anouncements/:id

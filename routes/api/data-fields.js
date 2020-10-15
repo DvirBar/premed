@@ -54,7 +54,7 @@ router.get('/:pathIds', (req, res, next) => {
 // @route   GET api/datafields
 // @desc    Get all data fields
 // @access  Public
-router.get('/', (req, res, next) => { 
+router.get('/', auth, (req, res, next) => { 
     DataField.find()
         .populate("university")
         .then(field => res.send(field))

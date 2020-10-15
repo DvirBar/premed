@@ -17,8 +17,8 @@ const { PathNotExist } = pathsMessage;
 
 // @route   GET api/questgroups/:id
 // @desc    Get question group by id
-// @access  Private
-router.get('/:id', auth, (req, res, next) => {
+// @access  Public
+router.get('/:id', (req, res, next) => {
     QuestionGroup.findById(req.params.id)
             .then(group => {
                 if(!group) 
@@ -32,8 +32,8 @@ router.get('/:id', auth, (req, res, next) => {
 
 // @route   GET api/questgroups
 // @desc    Get all question groups
-// @access  Private
-router.get('/', auth, (req, res, next) => { 
+// @access  Public
+router.get('/', (req, res, next) => { 
     QuestionGroup.find()
             .then(groups => { 
                 return res.send(groups)
@@ -43,8 +43,8 @@ router.get('/', auth, (req, res, next) => {
 
 // @route   GET api/questgroups/path/:pathId
 // @desc    Get all question group by path
-// @access  Private
-router.get('/path/:pathId', auth, (req, res, next) => { 
+// @access  Public
+router.get('/path/:pathId', (req, res, next) => { 
     const pathId = req.params.pathId
 
     Path.findById(pathId)

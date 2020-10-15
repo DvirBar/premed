@@ -27,7 +27,13 @@ const pageMessages = {
         },
         status: 400
     },
-    
+    PathRequired: {
+        msg: {
+            en: 'At least one path is required',
+            he: 'יש לייחס למסלול אחד לפחות'
+        },
+        status: 400
+    },
     SubpageNotExist: {
         msg: {
             en: 'Sub-page does not exist',

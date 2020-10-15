@@ -11,7 +11,7 @@ const modelName = 'topic';
 const topicMessages = require('../../messages/topics');
 const pageMessages = require('../../messages/pages');
 const authAdmin = require('../../middleware/authAdmin');
-const { SuccessDelete, SubpageRequired, ItemDetailsRequired, 
+const { SuccessDelete, PageRequired, ItemDetailsRequired, 
     LinkDetailsRequired, TopicNotExist, ItemNotExist } = topicMessages;
 const { PageNotExist, SubpageNotExist } = pageMessages;
 
@@ -48,29 +48,33 @@ router.post('/', [auth,authAdmin], (req, res, next) => {
         description,
         url,
         parentId,
-        subpageId
+        pageId
     } = req.body;
 
     res.locals.model = modelName;
 
-    if(!subpageId) return res.status(SubpageRequired.status).send(SubpageRequired.msg)
+    if(!pageId) 
+        return res.status(PageRequired.status)
+                  .send(PageRequired.msg)
 
-    // Check that subpage assigned exists
-    Page.find({ subpages: {_id: subpageId }})
-        .then(subpage => {
-            if(!subpage) return res.status(SubpageNotExist.status).send(SubpageNotExist.msg)
+    // Check that page assigned exists
+    Page.findById(pageId)
+        .then(page => {
+            if(!page) 
+            return res.status(PageNotExist.status)
+                      .send(PageNotExist.msg)
 
             Topic.findById(parentId)
                  .then(topic => {
                     if(!topic && parentId) 
                         return res.status(TopicNotExist.status).send(TopicNotExist.msg)
 
-                    newTopic = new Topic({
+                    const newTopic = new Topic({
                         name: name,
                         description: description,
                         url: url,
                         parent: parentId,
-                        subpage: subpageId
+                        page: pageId
                     })
         
                     newTopic.save()
@@ -101,7 +105,8 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
     Topic.findById(topicId)
          .then(topic => {
             if(!topic) 
-                return res.status(TopicNotExist.status).send(TopicNotExist.msg)
+                return res.status(TopicNotExist.status)
+                          .send(TopicNotExist.msg)
             
             Topic.findById(parentId)
                  .then(parentTopic => {

@@ -39,7 +39,7 @@ const TopicSchema = new Schema({
         type: ObjectId,
         ref: "Topic"
     },
-    subpage: {
+    page: {
         type: ObjectId,
         required: [true, 'Page is required'],
         ref: 'Page'

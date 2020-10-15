@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.Types.ObjectId
 
 // Create schema
 const PageSchema = new Schema({
@@ -8,30 +9,23 @@ const PageSchema = new Schema({
         required: [true, 'Name is required'],
         unique: true
     },
-    subpages: [{
-        name: {
-            type: String
-            // Unique only for own page
-        },
-        links: [{
-            name: {
-                type: String
-            },
-            url: {
-                type: String
-            }
-        }],
-        url: {
-            type: String,
-            required: [true, 'Url is required']
-            // Unique only for own page
-        }
-    }],
     url: {
         type: String,
         required: [true, 'Url is required'],
         unique: true
-    }
+    },
+    paths: [{
+        type: ObjectId,
+        ref: 'Path'
+    }],
+    links: [{
+        name: {
+            type: String
+        },
+        url: {
+            type: String
+        }
+    }]
 })
 
 module.exports = mongoose.model('Page', PageSchema);

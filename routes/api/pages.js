@@ -9,9 +9,8 @@ const modelName = 'page';
 
 // Errors
 const pageMessages = require('../../messages/pages');
-const { PageNotExist,SubpageDetailsRequired,
-     SubpageDetailsNotUnique, SubpageNotExist, 
-     LinkDetailsRequired, LinkNotExist, SuccessDelete } = pageMessages;
+const { PageNotExist, PathRequired, LinkDetailsRequired, 
+    LinkNotExist, SuccessDelete } = pageMessages;
 
 // @route   GET api/pages/:id
 // @desc    Get page by id
@@ -19,9 +18,11 @@ const { PageNotExist,SubpageDetailsRequired,
 router.get('/:id', (req, res, next) => {
     Page.findById(req.params.id)
             .then(page => {
-                if(!page) return res.status(PageNotExist.status).json(PageNotExist.msg);
+                if(!page) 
+                    return res.status(PageNotExist.status)
+                              .send(PageNotExist.msg);
                 
-                return res.json(page);
+                return res.send(page);
             })
             .catch(next)
 })
@@ -31,7 +32,7 @@ router.get('/:id', (req, res, next) => {
 // @access  Private
 router.get('/', (req, res, next) => { 
     Page.find()
-        .then(page => res.json(page))
+        .then(page => res.send(page))
         .catch(next);
 })
  
@@ -41,20 +42,27 @@ router.get('/', (req, res, next) => {
 router.post('/', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        url 
+        url,
+        pathIds 
     } = req.body;
 
     res.locals.model = modelName;
 
+    if(!pathIds || pathIds && pathIds.length === 0) {
+        return res.status(PathRequired.status)
+                  .send(PathRequired.msg)
+    }
+
     // Create new path
     const newPage = new Page({
         name: name,
-        url: url
+        url: url,
+        paths: pathIds
     })
 
     newPage.save()
             .then(page => {
-                return res.json(page)
+                return res.send(page)
             })
             .catch(next);
 })
@@ -65,12 +73,18 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 router.put('/:id', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
-        url
+        url,
+        pathIds
      } = req.body;
 
     res.locals.model = modelName;
 
     const pageId = req.params.id;
+
+    if(!pathIds || pathIds && pathIds.length === 0) {
+        return res.status(PathRequired.status)
+                  .send(PathRequired.msg)
+    }
 
     Page.findById(pageId)
               .then(page => {
@@ -78,113 +92,21 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     
                 page.name = name;
                 page.url = url;
+                page.paths = pathIds
 
                 page.save()
                     .then(page => {
-                        return res.json(page)              
+                        return res.send(page)              
                     })
                     .catch(next);
                 })
               .catch(next);
 });
 
-// @route   PUT api/pagess/:id/item
-// @desc    Create new subpage
-// @access  Admin
-router.put('/:id/subpage', [auth, authAdmin], (req, res, next) => {
-    const { 
-        name,
-        url
-    } = req.body;
-
-    res.locals.model = modelName;
-    const pageId = req.params.id;
-
-    if(!name || !url)
-        return res.status(SubpageDetailsRequired.status).send(SubpageDetailsRequired.msg)
-    
-    Page.findById(pageId)
-         .then(page => {
-            if(!page) return res.status(PageNotExist.status).send(PageNotExist.msg)
-            
-            // Check that subpage name and url are unique for that page
-            const found = page.subpages.find(subpage => 
-                subpage.name === name || subpage.url === url)
-            
-            if(found)
-                return res.status(SubpageDetailsNotUnique.status).send(SubpageDetailsNotUnique.msg)
-
-            const newSubpage = {
-                name: name,
-                url: url
-            }
-
-            page.subpages.push(newSubpage)
-            page.save()
-                .then(page => {
-                    return res.send(page)
-                })
-                .catch(next);
-         })
-         .catch(next);
-})
-
-
-// @route   PUT api/pages/:id/:subpageId
-// @desc    Update subpage
-// @access  Admin
-router.put('/:id/:subpageId', [auth, authAdmin], (req, res, next) => {
-    const { 
-        name,
-        url
-    } = req.body;
-
-    res.locals.model = modelName;
-    const pageId = req.params.id;
-    const subpageId = req.params.subpageId;
-
-    if(!name || !url)
-        return res.status(SubpageDetailsRequired.status).send(SubpageDetailsRequired.msg)
-    
-    Page.findById(pageId)
-         .then(page => {
-            if(!page) return res.status(PageNotExist.status)
-                                .send(PageNotExist.msg)
-            
-            const subPage = page.subpages.id(subpageId)
-
-            if(!subPage)
-                return res.status(SubpageNotExist.status)
-                          .send(SubpageNotExist.msg)
-
-            // Check that subpage name and url are unique for that page
-            const found = page.subpages.find(subpage => 
-                subpage._id !== subpageId &&
-                (subpage.name === name || subpage.url === url) 
-            )
-            
-            if(found)
-                return res.status(SubpageDetailsNotUnique.status)
-                          .send(SubpageDetailsNotUnique.msg)
-
-            subPage.set({
-                name: name,
-                url: url
-            })
-
-            page.save()
-                .then(page => {
-                    return res.send(page)
-                })
-                .catch(next);
-         })
-         .catch(next);
-})
-
-// @route   PUT api/pages/:id/:subpageId/addlink
+// @route   PUT api/pages/:id/addlink
 // @desc    Add new link
 // @access  Admin
-router.put('/:id/:subpageId/addlink', [auth, authAdmin], (req, res, next) => {
+router.put('/:id/addlink', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
         url
@@ -192,7 +114,6 @@ router.put('/:id/:subpageId/addlink', [auth, authAdmin], (req, res, next) => {
 
     res.locals.model = modelName;
     const pageId = req.params.id;
-    const subpageId = req.params.subpageId;
 
     if(!name || !url)
         return res.status(LinkDetailsRequired.status).send(LinkDetailsRequired.msg)
@@ -201,19 +122,13 @@ router.put('/:id/:subpageId/addlink', [auth, authAdmin], (req, res, next) => {
          .then(page => {
             if(!page) return res.status(PageNotExist.status)
                                 .send(PageNotExist.msg)
-            
-            const subPage = page.subpages.id(subpageId)
-
-            if(!subPage)
-                return res.status(SubpageNotExist.status)
-                          .send(SubpageNotExist.msg)
 
             const newLink = {
                 name: name,
                 url: url
             }
 
-            subPage.links.push(newLink)
+            page.links.push(newLink)
 
             page.save()
                 .then(page => {
@@ -224,10 +139,10 @@ router.put('/:id/:subpageId/addlink', [auth, authAdmin], (req, res, next) => {
          .catch(next);
 })
 
-// @route   PUT api/pages/:id/:subpageId/:linkId
+// @route   PUT api/pages/:id/:linkId
 // @desc    Edit link
 // @access  Admin
-router.put('/:id/:subpageId/:linkId', [auth, authAdmin], (req, res, next) => {
+router.put('/:id/:linkId', [auth, authAdmin], (req, res, next) => {
     const { 
         name,
         url
@@ -235,7 +150,6 @@ router.put('/:id/:subpageId/:linkId', [auth, authAdmin], (req, res, next) => {
 
     res.locals.model = modelName;
     const pageId = req.params.id;
-    const subpageId = req.params.subpageId;
     const linkId = req.params.linkId
 
     if(!name || !url)
@@ -243,18 +157,12 @@ router.put('/:id/:subpageId/:linkId', [auth, authAdmin], (req, res, next) => {
     
     Page.findById(pageId)
          .then(page => {
-            // Chekc that page exists
+            // Check that page exists
             if(!page) return res.status(PageNotExist.status)
                                 .send(PageNotExist.msg)
-            
-            // Check that subpage exists
-            const subPage = page.subpages.id(subpageId)
-            if(!subPage)
-                return res.status(SubpageNotExist.status)
-                          .send(SubpageNotExist.msg)
 
             // Check that link exists              
-            const link = subPage.links.id(linkId)
+            const link = page.links.id(linkId)
             if(!link)
                 return res.status(LinkNotExist.status)
                           .send(LinkNotExist.msg)
@@ -273,65 +181,29 @@ router.put('/:id/:subpageId/:linkId', [auth, authAdmin], (req, res, next) => {
          .catch(next);
 })
 
-// @route   PUT api/pages/:id/:subpageId/:linkId/remove
+// @route   PUT api/pages/:id/:linkId/remove
 // @desc    Remove link
 // @access  Admin
-router.put('/:id/:subpageId/:linkId/remove', [auth, authAdmin], (req, res, next) => {
+router.put('/:id/:linkId/remove', [auth, authAdmin], (req, res, next) => {
     res.locals.model = modelName;
     const pageId = req.params.id;
-    const subpageId = req.params.subpageId;
     const linkId = req.params.linkId
 
     Page.findById(pageId)
          .then(page => {
-            // Chekc that page exists
-            if(!page) return res.status(PageNotExist.status)
-                                .send(PageNotExist.msg)
-            
-            // Check that subpage exists
-            const subPage = page.subpages.id(subpageId)
-            if(!subPage)
-                return res.status(SubpageNotExist.status)
-                          .send(SubpageNotExist.msg)
+            // Check that page exists
+            if(!page) 
+                return res.status(PageNotExist.status)
+                          .send(PageNotExist.msg)
 
             // Check that link exists              
-            const link = subPage.links.id(linkId)
+            const link = page.links.id(linkId)
             if(!link)
                 return res.status(LinkNotExist.status)
                           .send(LinkNotExist.msg)
 
             link.remove()
             
-            page.save()
-                .then(page => {
-                    return res.send(page)
-                })
-                .catch(next);
-         })
-         .catch(next);
-})
-
-
-// @route   PUT api/pages/:id/:subpageId/remove
-// @desc    Remove subpage
-// @access  Admin
-router.put('/:id/:subpageId/remove', [auth, authAdmin], (req, res, next) => {
-
-    const pageId = req.params.id;
-    const subpageId = req.params.subpageId;
-
-    Page.findById(pageId)
-         .then(page => {
-            if(!page) return res.status(PageNotExist.status)
-                                .send(PageNotExist.msg)
-            
-            const subPage = page.subpages.id(subpageId)
-
-            if(!subPage)
-                return res.status(SubpageNotExist.status)
-                          .send(SubpageNotExist.msg)
-
-            subPage.remove();
             page.save()
                 .then(page => {
                     return res.send(page)
