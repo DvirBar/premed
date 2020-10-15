@@ -1,41 +1,31 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import Modal from '../../layout/Modal';
 import AddPage from './AddPage';
-import PageItem from './PageItem'; 
 import Loadbar from '../../layout/Loadbar';
+import PathsSelect from './PathsSelect';
+import PagesList from './PagesList';
 
 function Pages() {
-    const [displayModal, setDisplayModal] = useState(false);
-
-    const pages = useSelector(state => state.pages.pages)
     const loading =  useSelector(state => state.pages.loading)
+    const paths = useSelector(state => state.paths.paths)
 
-    const toggleModal = toggle => {
-        setDisplayModal(toggle)
+    const [selPaths, setSelPaths] = useState([]);
+    
+    const selectPaths = paths => {
+        setSelPaths(paths)
     }
 
-    
     if(loading)
         return <Loadbar />
         
     return (
         <div className="pages-admin">
-            <button 
-            onClick={() => toggleModal(true)}>יצירת דף</button>
-            
-            <Modal 
-            display={displayModal}
-            toggleModal={toggleModal}
-            title="דף חדש">
-                <AddPage />
-            </Modal>
-            
-            {pages && pages.map(page => (
-                <PageItem 
-                subpages={page.subpages}
-                page={page}/>
-            ))}
+            <PathsSelect 
+            paths={paths}
+            selPaths={selPaths}
+            selectPaths={selectPaths} />
+            <AddPage paths={paths} />
+            <PagesList selPaths={selPaths} />
         </div>
     )
 }

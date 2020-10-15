@@ -1,25 +1,24 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types'
-import SubpageItem from './SubpageItem'
 import DropdownMenu from '../../common/DropdownMenu';
-import Modal from '../../layout/Modal';
-import AddSubPage from './AddSubPage';
 import EditPage from './EditPage';
 import VerifyDelete from '../../common/VerifyDelete';
 import { deletePage } from '../../../redux/actions/pages';
+import Section from '../../common/Section';
+import Topics from '../topics/Topics';
 
-function PageItem({ subpages, page }) {
+function PageItem({ page }) {
     const [displayMenu, setDisplayMenu] = useState(false);
-    const [displayAdd, setDisplayAdd] = useState(false);
     const [displayEdit, setDisplayEdit] = useState(false);
     const [displayVer, setDisplayVer] = useState(false)
     
-    const toggleMenu = toggle => {
+    const toggleMenu = (toggle, event) => {
+        if(event) {
+            event.stopPropagation()
+        }
+        
         setDisplayMenu(toggle)
-    }
-
-    const toggleAdd = toggle => {
-        setDisplayAdd(toggle)
+        
     }
 
     const toggleEdit = toggle => {
@@ -32,63 +31,42 @@ function PageItem({ subpages, page }) {
 
     const options = [
         {
-            name: "הוספת דף",
-            action: () => toggleAdd(true)
-        },
-        {
             name: "עריכת עמוד",
             action: () => toggleEdit(true)
         },
         {
-            name: "עריכת עמוד",
+            name: "מחיקת עמוד",
             action: () => toggleVer(true)
         }
     ]
 
     return (
         <Fragment>
-            <div className="page-item">
-                <div className="block-title" 
-                onMouseLeave={() => toggleMenu(false)}>
-                    <span className="page-title">{page.name}</span>
-                    <div className="page-menu">
-                        <i className="material-icons"
-                        onClick={() => toggleMenu(!displayMenu)}>more_vert</i>
-                        <DropdownMenu
-                        display={displayMenu}
-                        toggleMenu={toggleMenu}
-                        options={options} />
-                    </div>
-                </div>
-
-                <div className="block-content">
-                    {subpages.length !== 0
-                    ?   subpages.map(subpage => (
-                            <SubpageItem
-                            pageId={page._id}
-                            subpage={subpage} />
-                        ))
-                
-                    :   <p className="no-resource-error">
-                            עדיין אין דפים
-                        </p>} 
-                </div>
-            </div>
-            <Modal
-            display={displayAdd}
-            toggleModal={toggleAdd}
-            title={"הוסף דף"}>
-                <AddSubPage 
-                pageId={page._id} />
-            </Modal>
-
-            <Modal
+            <Section className="page-item">
+                <Section.Title>
+                    <span className="page-title">
+                        {page.name}
+                    </span>
+                </Section.Title>
+                <Section.Header>
+                    <i className="material-icons page-menu"
+                    onClick={event => toggleMenu(!displayMenu, event)}>
+                        more_vert
+                    </i>
+                    <DropdownMenu
+                    display={displayMenu}
+                    toggleMenu={toggleMenu}
+                    options={options} />
+                </Section.Header>
+                <Section.Body>
+                    <Topics page={page} />
+                </Section.Body>
+            </Section>
+            <EditPage
+            page={page}
             display={displayEdit}
-            toggleModal={toggleEdit}
-            title="עריכת עמוד">
-                <EditPage
-                page={page} />
-            </Modal>  
+            toggleModal={toggleEdit} />
+           
 
             <VerifyDelete 
             callback={deletePage}
@@ -100,7 +78,6 @@ function PageItem({ subpages, page }) {
 }
 
 PageItem.propTypes = {
-    subpages: PropTypes.array.isRequired,
     page: PropTypes.object.isRequired
 }
 

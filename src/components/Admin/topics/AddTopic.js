@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../../../forms/useForm';
 import { addTopic } from '../../../redux/actions/topics';
@@ -7,14 +7,14 @@ import Dropdown from '../../common/Dropdown';
 import Modal from '../../layout/Modal';
 
 
-function AddTopic({ subpageId, topics, display, toggle, title }) {
+function AddTopic({ pageId, topics }) {
     const [parentOptions, setParentOptions] = useState([])
     const [selParent, setSelParent] = useState({})
     
     const [defaultValues, setDefaultValues] = useState({
         name: '',
         url: '',
-        subpageId: subpageId
+        pageId: pageId
     })
 
     const {
@@ -52,37 +52,50 @@ function AddTopic({ subpageId, topics, display, toggle, title }) {
             setSelParent(parentOptions[0])
     }, [values, parentOptions])
 
-    return (
-        <Modal display={display} toggleModal={toggle} title={title}>
-            <form onSubmit={handleSubmit} noValidate>
-                <FormInput
-                label={"שם"}
-                type={"text"}
-                name={"name"}
-                value={values.name}
-                onChange={handleChange}
-                error={errors.name} />
+    const [display, setDisplay] = useState(false)
+    const toggleModal = toggle => {
+        setDisplay(toggle)
+    }
 
-                <FormInput
-                label={"כתובת"}
-                type={"text"}
-                name={"url"}
-                value={values.url}
-                onChange={handleChange}
-                error={errors.url} />
-                
-                {parentOptions.length !== 0 && selParent &&
-                    <Dropdown
-                    selected={selParent}
-                    options={parentOptions}
-                    name={"parentId"}
-                    title={"שייך ל"}
+    return (
+        <Fragment>
+            <button onClick={() => toggleModal(true)}>
+                עמוד חדש
+            </button>
+            <Modal 
+            display={display} 
+            toggleModal={toggleModal} 
+            title='עמוד חדש'>
+                <form onSubmit={handleSubmit} noValidate>
+                    <FormInput
+                    label="שם"
+                    type="text"
+                    name="name"
+                    value={values.name}
                     onChange={handleChange}
-                    />
-                }
-                <button type="submit">צור</button>
-            </form>
-        </Modal>
+                    error={errors.name} />
+
+                    <FormInput
+                    label="כתובת"
+                    type="text"
+                    name="url"
+                    value={values.url}
+                    onChange={handleChange}
+                    error={errors.url} />
+                    
+                    {parentOptions.length !== 0 && selParent &&
+                        <Dropdown
+                        selected={selParent}
+                        options={parentOptions}
+                        name="parentId"
+                        title="שייך ל"
+                        onChange={handleChange}
+                        />
+                    }
+                    <button type="submit">צור</button>
+                </form>
+            </Modal>
+        </Fragment>
     )
 }
 

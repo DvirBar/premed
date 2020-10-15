@@ -4,10 +4,29 @@
     row-gap: 3rem;
 }
 
-.page-item {
-    background-color: #fff;
-    box-shadow: $default-shadow;
-    border-radius: 0.5rem;
+.pages-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    
+    .page-item {
+        background-color: #fff;
+        box-shadow: $default-shadow;
+        border-radius: 0.5rem;
+        position: relative;
+    
+        .section-header:hover {
+            .page-menu {
+                display: block;
+            }
+        }
+    
+        .page-menu {
+            display: none;
+            position: absolute;
+            top: 13px;
+        }
+    }
 }
 
 .block-title {

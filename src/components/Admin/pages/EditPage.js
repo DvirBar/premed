@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import useForm from '../../../forms/useForm';
 import { editPage } from '../../../redux/actions/pages';
+import Modal from '../../layout/Modal';
 import FormInput from '../../common/FormInput';
 
-function EditPage({ page }) {
+function EditPage({ page, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({
         name: page.name,
-        url: page.url
+        url: page.url,
+        pathIds: page.paths
     })
 
     const {
@@ -16,26 +18,34 @@ function EditPage({ page }) {
         errors
     } = useForm(editPage, defaultValues, page._id)
     
+    useEffect(() => {
+        console.log(values);
+    }, [values])
     return (
-        <form onSubmit={handleSubmit} noValidate>
-            <FormInput
-            label={"שם"}
-            type={"text"}
-            name={"name"}
-            value={values.name}
-            onChange={handleChange}
-            error={errors.name} />
+        <Modal
+        display={display}
+        toggleModal={toggleModal}
+        title="עריכת עמוד">
+            <form onSubmit={handleSubmit} noValidate>
+                <FormInput
+                label="שם"
+                type="text"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                error={errors.name} />
 
-            <FormInput
-            label={"כתובת"}
-            type={"text"}
-            name={"url"}
-            value={values.url}
-            onChange={handleChange}
-            error={errors.url} />
+                <FormInput
+                label="כתובת"
+                type="text"
+                name="url"
+                value={values.url}
+                onChange={handleChange}
+                error={errors.url} />
 
-            <button type="submit">צור</button>
-        </form>
+                <button type="submit">עריכה</button>
+            </form>
+        </Modal>
     )
 }
 

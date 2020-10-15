@@ -67,12 +67,9 @@ export const PAGE_ERROR = 'PAGE_ERROR';
 export const PAGE_ADD = 'PAGE_ADD';
 export const PAGE_UPDATE = 'PAGE_UPDATE';
 export const PAGE_DELETE = 'PAGE_DELETE';
-export const SUBPAGE_ADD = 'SUBPAGE_ADD';
-export const SUBPAGE_UPDATE = 'SUBPAGE_EDIT';
-export const SUBPAGE_DELETE = 'SUBPAGE_DELETE';
-export const SUBPAGE_LINK_ADD = 'SUBPAGE_LINK_ADD';
-export const SUBPAGE_LINK_UPDATE = 'SUBPAGE_LINK_EDIT';
-export const SUBPAGE_LINK_DELETE = 'SUBPAGE_LINK_DELETE';
+export const PAGE_LINK_ADD = 'PAGE_LINK_ADD';
+export const PAGE_LINK_UPDATE = 'PAGE_LINK_EDIT';
+export const PAGE_LINK_DELETE = 'PAGE_LINK_DELETE';
 
 // Topics
 export const TOPIC_LOADING = 'TOPIC_LOADING';

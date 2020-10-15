@@ -26,7 +26,7 @@ function AddItem({ topic }) {
     return (
         <Fragment>
             <button
-            onClick={() => toggleModal(true)}>הוסף חומר</button>
+            onClick={() => toggleModal(true)}>חומר חדש</button>
             <Modal 
             display={displayModal} 
             toggleModal={toggleModal} 

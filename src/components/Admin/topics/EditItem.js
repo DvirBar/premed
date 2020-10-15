@@ -31,12 +31,12 @@ function EditItem({ displayModal, toggleModal, topicId, item }) {
         <Modal
         display={displayModal}
         toggleModal={toggleModal}
-        title={"ערוך חומר"}>
+        title="עריכת חומר">
             <form onSubmit={handleSubmit}>
                 <FormInput
-                label={"שם"}
-                type={"text"}
-                name={"name"}
+                label="שם"
+                type="text"
+                name="name"
                 value={values.name}
                 onChange={handleChange}
                 error={errors.name} />
@@ -47,9 +47,9 @@ function EditItem({ displayModal, toggleModal, topicId, item }) {
 
                 <div className="drive-link">
                     <FormInput
-                    label={"קישור"}
-                    type={"text"}
-                    name={"link"}
+                    label="קישור"
+                    type="text"
+                    name="link"
                     value={values.link}
                     onChange={handleChange}
                     error={errors.link} />
@@ -63,9 +63,7 @@ function EditItem({ displayModal, toggleModal, topicId, item }) {
                 </div>
 
                 <div className="form-buttons">
-                    <button
-                    className="info" 
-                    type="submit">עדכן</button>
+                    <button type="submit">עדכן</button>
                     <button 
                     className="danger"
                     onClick={() => toggleVer(true)}>מחק</button>

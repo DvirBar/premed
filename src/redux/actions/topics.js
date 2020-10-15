@@ -107,7 +107,6 @@ export const addTopic = data => dispatch => {
 export const editTopic = (id, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data);
-    console.log(body)
 
     axios.put(`api/topics/${id}`, body)
          .then(res => dispatch(topicUpdate(res.data)))

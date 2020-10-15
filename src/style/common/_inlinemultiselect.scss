@@ -1,0 +1,18 @@
+.inline-multi-select {
+    display: flex;
+    column-gap: 2rem;
+
+    .multi-select-item {
+        border: 1px solid #ccc;
+        color: #aaa;
+        transition: all 0.3s ease;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        &:hover, &.selected {
+            border-color: $main-color;
+            color: $main-color;
+        }
+    }
+}

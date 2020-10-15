@@ -14,8 +14,6 @@ function Section({ className, children }) {
     const body = React.Children.map(children, child => 
         child.type.displayName === 'Body' ? child : null);
 
-    console.log(children);
-
     useEffect(() => {
         if(title[0]?.props) {
             setTitleClass(title[0].props.className)
@@ -40,7 +38,7 @@ function Section({ className, children }) {
         <div className={className
             ?   `section ${className}`
             :   "section"}>
-            <p 
+            <div 
             className="section-header"
             onClick={() => toggleDisplay()}>
                 <span 
@@ -51,7 +49,7 @@ function Section({ className, children }) {
                 className={headerClass
                     ? `section-header-rest ${headerClass}`
                     : "section-header-rest"}>{header}</span>
-            </p>
+            </div>
             <div className={display 
                 ? (bodyClass
                     ? `section-content open ${bodyClass}`

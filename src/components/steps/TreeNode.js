@@ -11,6 +11,7 @@ function TreeNode({ step, steps, selectStep }) {
         }
     }
 
+    // Convert set to an iterable array
     prevSteps = Array.from(prevSteps)
 
     return (

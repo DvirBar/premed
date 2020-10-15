@@ -1,8 +1,15 @@
+.admin-topics {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
 .admin-topics-list {
     width: 100%;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
 
     .topic-item {
         background-color: #f9f9f9;
@@ -22,18 +29,9 @@
     display: flex;
 }
 
-.topic-content {
-    .topic-headers {
-        display: flex;
-        align-items: center;
-
-        & > * {
-            margin-left: 1rem;
-        }
-    }
-    .form-edit-topic {
-        border-bottom: 1px solid #ddd;
-    }
+.topic-modify {
+    display: flex;
+    column-gap: 2rem;
 }
 
 .topic-items-list {
