@@ -1,12 +1,19 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTopics } from '../../../redux/actions/topics';
 import { getPageTopics } from '../../../redux/selectors/topics';
 import AddTopic from './AddTopic';
 import PageTopics from './PageTopics';
 
 function Topics({ page }) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getTopics());
+    }, [])
+
     const topics = useSelector(state => 
-        getPageTopics(state.topics, page._id))
+        getPageTopics(state.topics.topics, page._id))
 
     return (
         <div className="admin-topics">

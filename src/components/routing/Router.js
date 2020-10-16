@@ -10,13 +10,14 @@ import Login from '../auth/Login';
 import Profile from '../profile/Profile';
 import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
-import Subpage from '../topics/Subpage';
-import TopicContent from '../topics/TopicContent';
+import Subpage from '../drive/Page';
+import TopicContent from '../drive/TopicContent';
 import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
 import QuestionGroupsList from '../questions/QuestionGroupsList';
 import QuestionsList from '../questions/QuestionsList';
 import Questions from '../questions/Questions';
+import Drive from '../drive/Drive';
 
 const Router = () => {
     const location = useLocation();
@@ -38,8 +39,7 @@ const Router = () => {
                 <Route path="/steps" component={Steps} />
                 <ProtectedRoute path="/stats" component={Stats} />
                 <Route path="/qna" component={Questions} />
-                <ProtectedRoute exact path="/:pageUrl/:subpageUrl" component={Subpage} />
-                <ProtectedRoute path="/:pageUrl/:subpageUrl/:topicUrl" component={TopicContent} />
+                <ProtectedRoute path="/drive" component={Drive} />
                 <Route component={NoMatchPage} />  
             </Switch>
         </div>

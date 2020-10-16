@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import IconsObj from '../../topics/IconsMap';
+import IconsObj from '../../drive/IconsMap';
 
 function IconsSelect({ value, onChange }) {
     const [selected, setSelected] = useState(value)

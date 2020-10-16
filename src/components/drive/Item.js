@@ -26,31 +26,30 @@ function Item({ topicId, item }) {
     }
 
     return (
-        <p className="material-item">
             <a 
             href={item.link}
             target="_blank"
+            className="drive-grid-item drive-topic-item"
             rel="noopener noreferrer">
-                <span className="item-title">{item.name}</span>
-                <span className="item-icon">
+                <div className="drive-item-title">{item.name}</div>
+                <div className="item-icon">
                     <img src={IconObj[item.icon]} />
-                </span>
+                </div>
+                <div 
+                className="item-footer">
+                    <span className="item-likes">
+                        <span className="item-likes-count">
+                            {likes.count}
+                        </span>
+                        <span onClick={() => dispatchTogLike()}>
+                            {hasLiked 
+                                ? <i className="material-icons">favorite</i>
+                                : <i className="material-icons">favorite_border</i>
+                            }
+                        </span>
+                    </span>
+                </div>
             </a>
-            <span 
-            className="item-footer">
-                <span className="item-likes">
-                    <span className="item-likes-count">
-                        {likes.count}
-                    </span>
-                    <span onClick={() => dispatchTogLike()}>
-                        {hasLiked 
-                            ? <i className="material-icons">favorite</i>
-                            : <i className="material-icons">favorite_border</i>
-                        }
-                    </span>
-                </span>
-            </span>
-        </p>
     )
 }
 

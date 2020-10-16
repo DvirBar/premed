@@ -8,7 +8,7 @@ function Topic({ topic }) {
         <Link 
         className="topic"
         to={`${location.pathname}/${topic.url}`}>
-            <span className="topic-name">
+            <span className="drive-grid-item topic-name">
                 {topic.name}
             </span>
         </Link>

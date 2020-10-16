@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import TopicsList from './TopicsList';
-import SubpageLinks from './SubpageLinks';
+import PageLinks from './PageLinks';
+import { getPageByUrl } from '../../redux/selectors/pages';
+import PagesNav from './PagesNav';
 
 
-function Subpage() {
-    const { path, params } = useRouteMatch()
-    const { pageUrl, subpageUrl } = params;
+function Page() {
+    const { params } = useRouteMatch()
+    const { pageUrl } = params;
 
     const page = useSelector(state => 
-        state.pages.pages.find(page => page.url === pageUrl))
-
-    const subpage = page?.subpages.find(subpage => 
-        subpage.url === subpageUrl)
+        getPageByUrl(state.pages.pages, pageUrl))
     
     const [displayLinks, setDisplayLinks] = useState(false);
 
@@ -21,16 +20,13 @@ function Subpage() {
         setDisplayLinks(!displayLinks)
     }
 
-    useEffect(() => {
-        console.log(displayLinks);
-    }, [displayLinks])
-
     return (
-        <div className="subpage">
-            <SubpageLinks 
-            links={subpage?.links}
+        <div className="page">
+            <PagesNav />
+            <PageLinks 
+            links={page?.links}
             display={displayLinks} />
-            <TopicsList subpage={subpage} />
+            <TopicsList page={page} />
             <span 
             className="links-list-mobile"
             onClick={() => toggleList()}>
@@ -42,4 +38,4 @@ function Subpage() {
     )
 }
 
-export default Subpage
+export default Page

@@ -1,10 +1,10 @@
 import React from 'react'
 
-function SubpageLinks({ links, display }) {
+function PageLinks({ links, display }) {
     return (
         <ul className={display 
-            ? "subpage-links-list open"
-            : "subpage-links-list"
+            ? "page-links-list open"
+            : "page-links-list"
             }>
             <li className="list-header">
                 קישורים שימושיים
@@ -26,4 +26,4 @@ function SubpageLinks({ links, display }) {
     )
 }
 
-export default SubpageLinks
+export default PageLinks

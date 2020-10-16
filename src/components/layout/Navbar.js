@@ -62,7 +62,9 @@ function Navbar({ paths }) {
                         </Link>
                     </li>
                     <li className="drive-links">
-                        <span>דרייב</span>
+                        <Link to={`/drive/${paths[0]._id}`}>
+                            <span>דרייב</span>
+                        </Link>
                     </li>
                     <li>
                         <Link to={`/stats/${paths[0]._id}`}>

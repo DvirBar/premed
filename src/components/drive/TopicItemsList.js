@@ -3,7 +3,7 @@ import Item from './Item';
 
 function TopicItemsList({ topic }) {
     return (
-        <div className="topic-items-list">
+        <div className="drive-items-grid drive-topic-items-list">
         {topic.items.map(item => 
             <Item key={item._id} item={item} topicId={topic._id} />
             )}        

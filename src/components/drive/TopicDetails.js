@@ -12,7 +12,6 @@ import TopicItemsList from './TopicItemsList';
 
 function TopicDetails() {
     let { url , params } = useRouteMatch();
-    let location = useLocation()
     let { topicUrl } = params;
     const [topic, setTopic] = useState({})
     const [children, setChildren] = useState([])
@@ -39,15 +38,17 @@ function TopicDetails() {
         <div className="topic-details">
                 <Fragment>
                     <Switch>
-                    {children.length !== 0 && 
                         <Route exact path={`${url}`}>
-                            <div className="topic-description">
-                                {topic.description}
-                            </div>
-                            <SubTopicsList topics={children} />
+                            {topic.description &&
+                                <div className="topic-description">
+                                    {topic.description}
+                                </div>
+                            }
+                            {children.length !== 0 && 
+                                <SubTopicsList topics={children} />
+                            }   
                             <TopicItemsList topic={topic} />
                         </Route>
-                    }
                         <Route path={`${url}/:topicUrl`} component={TopicDetails} />
                     </Switch>
                 </Fragment>

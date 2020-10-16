@@ -9,7 +9,7 @@ import {
 import TopicDetails from './TopicDetails';
 import ProtectedRoute from '../routing/ProtectedRoute';
 
-function TopicContent() {
+function TopicRouter() {
     let { params, url } = useRouteMatch()
     let location = useLocation()
     const { topicUrl } = params
@@ -29,4 +29,4 @@ function TopicContent() {
     )
 }
 
-export default TopicContent
+export default TopicRouter

@@ -10,9 +10,7 @@ function SubTopicsList({ topics }) {
                 className="subtopic-item"
                 key={topic._id}
                 to={`${url}/${topic.url}`}>
-                    <span className="topic-name">
-                        {topic.name}
-                    </span>
+                    {topic.name}
                 </Link>
             )}
         </div>

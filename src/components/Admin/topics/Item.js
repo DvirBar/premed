@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditItem from './EditItem';
-import IconObj from '../../topics/IconsMap';
+import IconObj from '../../drive/IconsMap';
 
 function Item({ topicId, item }) {
     const [displayModal, setDisplayModal] = useState(false)

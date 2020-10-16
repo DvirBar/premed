@@ -8,7 +8,6 @@ import { getUser } from './redux/actions/auth';
 import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
-import { getTopics } from './redux/actions/topics';
 import { getAnc } from './redux/actions/anouncements';
 import { getQuestGroups } from './redux/actions/questgroups';
 import moment from 'moment';
@@ -33,7 +32,6 @@ function App() {
     dispatch(getQuestGroups());
 
     if(auth) {
-      dispatch(getTopics());
       axios.defaults.headers.common['x-auth-token'] = auth.token;
     }
   }, [auth])

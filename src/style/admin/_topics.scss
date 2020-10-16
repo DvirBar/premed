@@ -60,25 +60,25 @@
         box-shadow: $default-shadow-hover;
     }
 
-    .item-title {
-        text-align: center;
-        color: #616161;
-        border-bottom: 1rem;
-    }
-
     .item-icon {
         position: relative;
         display: flex;
         justify-content: center;
         bottom: 0;
         height: 70%;
-
+    
         > img {
             position: absolute;
             height: 50%;
             width: 50%;
             bottom: 30%;   
         }
+    }
+
+    .item-title {
+        text-align: center;
+        color: #616161;
+        border-bottom: 1rem;
     }
 }
 
