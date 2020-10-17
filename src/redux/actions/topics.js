@@ -7,7 +7,12 @@ import {
     TOPIC_DELETE,
     TOPIC_ITEM_ADD,
     TOPIC_ITEM_UPDATE,
-    TOPIC_ITEM_TOGGLE_LIKE,
+    TOPIC_ITEM_TOGGLE_UPVOTE,
+    TOPIC_ITEM_TOGGLE_DOWNVOTE,
+    TOPIC_ITEM_COMMENT_ADD,
+    TOPIC_ITEM_COMMENT_UPDATE,
+    TOPIC_ITEM_COMMENT_TOGGLE_LIKE,
+    TOPIC_ITEM_COMMENT_DELETE, 
     TOPIC_ITEM_DELETE
 } from '../actions/types';
 import axios from 'axios';
@@ -20,65 +25,9 @@ export const topicLoad = () => {
     }
 }
 
-export const topicSuccess = topics => {
-    return {
-        type: TOPIC_SUCCESS,
-        payload: topics
-    }
-}
-
 export const topicError = () => {
     return {
         type: TOPIC_ERROR
-    }
-}
-
-export const topicAdd = topic => {
-    return {
-        type: TOPIC_ADD,
-        payload: topic
-    }
-}
-
-export const topicUpdate = topic => {
-    return {
-        type: TOPIC_UPDATE,
-        payload: topic
-    }
-}
-
-export const topicDelete = id => {
-    return {
-        type: TOPIC_DELETE,
-        payload: id
-    }
-}
-
-export const itemAdd = topic => {
-    return {
-        type: TOPIC_ITEM_ADD,
-        payload: topic
-    }
-}
-
-export const itemUpdate = topic => {
-    return {
-        type: TOPIC_ITEM_UPDATE,
-        payload: topic
-    }
-}
-
-export const itemToggleLike = topic => {
-    return {
-        type: TOPIC_ITEM_TOGGLE_LIKE,
-        payload: topic
-    }
-}
-
-export const itemDelete = topic => {
-    return {
-        type: TOPIC_ITEM_DELETE,
-        payload: topic
     }
 }
 
@@ -87,7 +36,10 @@ export const getTopics = () => dispatch => {
     dispatch(topicLoad());
 
     axios.get('api/topics')
-         .then(res => dispatch(topicSuccess(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_SUCCESS,
+             payload: res.data
+         }))
          .catch(err => {
              dispatch(topicError());
              dispatch(getError(err));
@@ -100,7 +52,10 @@ export const addTopic = data => dispatch => {
     const body = JSON.stringify(data);
 
     axios.post('api/topics', body)
-         .then(res => dispatch(topicAdd(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_ADD,
+             payload: res.data
+         }))
          .catch(err => dispatch(getError(err)))
 }
 
@@ -109,7 +64,10 @@ export const editTopic = (id, data) => dispatch => {
     const body = JSON.stringify(data);
 
     axios.put(`api/topics/${id}`, body)
-         .then(res => dispatch(topicUpdate(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_UPDATE,
+             payload: res.data
+         }))
          .catch(err => dispatch(getError(err)))
 }
 
@@ -117,7 +75,10 @@ export const deleteTopic = id => dispatch => {
 
     axios.delete(`api/topics/${id}`)
          .then(res => {
-             dispatch(topicDelete(id));
+             dispatch({
+                 type: TOPIC_DELETE,
+                 payload: id
+             });
              dispatch(getMessage(res.data));
          })
          .catch(err => dispatch(getError(err)))
@@ -128,7 +89,10 @@ export const addItem = (topicId, data) => dispatch => {
     const body = JSON.stringify(data);
 
     axios.put(`api/topics/${topicId}/item`, body)
-         .then(res => dispatch(itemAdd(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_ITEM_ADD,
+             payload: res.data
+         }))
          .catch(err => dispatch(getError(err)))
 }
 
@@ -137,20 +101,104 @@ export const editItem = (topicId, itemId, data) => dispatch => {
     const body = JSON.stringify(data);
 
     axios.put(`api/topics/${topicId}/${itemId}`, body)
-         .then(res => dispatch(itemUpdate(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_ITEM_UPDATE,
+             payload: res.data
+         }))
          .catch(err => dispatch(getError(err)))
 }
 
-export const toggleLike = (topicId, itemId) => dispatch => {
-    axios.put(`api/topics/${topicId}/${itemId}/toggleLike`)
-         .then(res => dispatch(itemToggleLike(res.data)))
+export const toggleUpvote = (topicId, itemId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/toggleUpvote`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_TOGGLE_UPVOTE,
+             payload: {
+                topicId,
+                itemId,
+                data: res.data
+            }
+         }))
          .catch(err => dispatch(getError(err)))
 }
+
+export const toggleDownvote = (topicId, itemId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/toggleDownvote`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_TOGGLE_DOWNVOTE,
+             payload: {
+                topicId,
+                itemId,
+                data: res.data
+            }
+         }))
+         .catch(err => dispatch(getError(err)))
+}
+
+
+export const addComment = (topicId, itemId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/addComment`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_COMMENT_ADD,
+             payload: {
+                topicId,
+                itemId,
+                comments: res.data
+            }
+         }))
+         .catch(err => dispatch(getError(err)))
+}
+
+export const editComment = (topicId, itemId, commentId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/${commentId}/editComment`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_COMMENT_UPDATE,
+             payload:  {
+                topicId,
+                itemId,
+                commentId,
+                comment: res.data
+            }
+         }))
+         .catch(err => dispatch(getError(err)))
+}
+
+
+export const toggleLikeComment = (topicId, itemId, commentId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/${commentId}/toggleLike`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_COMMENT_TOGGLE_LIKE,
+             payload:  {
+                topicId,
+                itemId,
+                commentId,
+                likes: res.data
+            }
+         }))
+         .catch(err => dispatch(getError(err)))
+}
+
+
+export const deleteComment = (topicId, itemId, commentId) => dispatch => {
+    axios.put(`api/topics/${topicId}/${itemId}/${commentId}/remove`)
+         .then(res => dispatch({
+             type: TOPIC_ITEM_COMMENT_DELETE,
+             payload: {
+                 topicId,
+                 itemId,
+                 commentId
+             }
+         }))
+         .catch(err => dispatch(getError(err)))
+}
+
 
 export const deleteItem = (topicId, itemId) => dispatch => {
 
     axios.put(`api/topics/${topicId}/${itemId}/remove`)
-         .then(res => dispatch(itemDelete(res.data)))
+         .then(res => dispatch({
+             type: TOPIC_ITEM_DELETE,
+             payload: res.data
+         }))
          .catch(err => dispatch(getError(err)))
 }
 

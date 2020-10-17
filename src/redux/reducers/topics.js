@@ -7,8 +7,13 @@ import {
     TOPIC_DELETE,
     TOPIC_ITEM_ADD,
     TOPIC_ITEM_UPDATE,
-    TOPIC_ITEM_TOGGLE_LIKE,
-    TOPIC_ITEM_DELETE
+    TOPIC_ITEM_TOGGLE_UPVOTE,
+    TOPIC_ITEM_TOGGLE_DOWNVOTE,
+    TOPIC_ITEM_COMMENT_ADD,
+    TOPIC_ITEM_COMMENT_UPDATE,
+    TOPIC_ITEM_COMMENT_DELETE,
+    TOPIC_ITEM_DELETE,
+    TOPIC_ITEM_COMMENT_TOGGLE_LIKE
 } from '../actions/types';
 
 const initialState = {
@@ -49,7 +54,6 @@ export default function(state = initialState, action) {
         case TOPIC_UPDATE:
         case TOPIC_ITEM_ADD:
         case TOPIC_ITEM_UPDATE:
-        case TOPIC_ITEM_TOGGLE_LIKE:
         case TOPIC_ITEM_DELETE:
             return {
                 ...state,
@@ -57,6 +61,91 @@ export default function(state = initialState, action) {
                 topics: state.topics.map(topic => 
                     topic._id === payload._id ? topic = payload : topic)
             }
+
+        case TOPIC_ITEM_TOGGLE_UPVOTE:
+        case TOPIC_ITEM_TOGGLE_DOWNVOTE:
+            return {
+                ...state,
+                topics: state.topics.map(topic => 
+                    topic._id === payload.topicId
+                    ?   topic.items.map(item => 
+                        item._id === payload.itemId
+                        ?   {
+                                ...item,
+                                upvotes: payload.data.upvotes,
+                                downvotes: payload.data.downvotes
+                            }
+                        :   item)
+                    :   topic)
+            }
+            
+        case TOPIC_ITEM_COMMENT_ADD:
+            return {
+                ...state,
+                loading: false,
+                topics: state.topics.map(topic =>
+                    topic._id === payload.topicId
+                    ?   topic.items.map(item =>
+                        item._id === payload.itemId
+                        ?   {
+                            ...item,
+                            comments: payload.comments
+                        }
+                        :   item)
+                    :   topic)
+            }
+
+        case TOPIC_ITEM_COMMENT_UPDATE:
+            return {
+                ...state,
+                loading: false,
+                topics: state.topics.map(topic =>
+                    topic._id === payload.topicId
+                    ?   topic.items.map(item =>
+                        item._id === payload.itemId
+                        ?   item.comments.map(comment =>
+                                comment._id === payload.commentId
+                                ?   payload.comment
+                                :   comment)
+                        :   item)
+                    :   topic)
+            }
+
+
+        case TOPIC_ITEM_COMMENT_TOGGLE_LIKE:
+            return {
+                ...state,
+                loading: false,
+                topics: state.topics.map(topic =>
+                    topic._id === payload.topicId
+                    ?   topic.items.map(item =>
+                        item._id === payload.itemId
+                        ?   item.comments.map(comment =>
+                                comment._id === payload.commentId
+                                ?   {
+                                    ...comment,
+                                    likes: payload.likes
+                                }
+                                :   comment)
+                        :   item)
+                    :   topic)
+            }
+
+        case TOPIC_ITEM_COMMENT_DELETE:
+            return {
+                ...state,
+                loading: false,
+                topics: state.topics.map(topic =>
+                    topic._id === payload.topicId
+                    ?   topic.items.map(item =>
+                        item._id === payload.itemId
+                        ?   item.comments.filter(comment =>
+                            comment._id !== payload.commentId)
+                        :   item)
+                    :   topic)
+            }
+
+
 
         case TOPIC_DELETE: 
             return {
