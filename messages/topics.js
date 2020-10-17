@@ -23,9 +23,23 @@ const topicMessages = {
     LinkDetailsRequired: {
         msg: {
             en: 'If you provide a link, both name and url are required',
-            he: 'אם בחרתם להוסיף לינק, יש להוסיף גם שם וגם כתובת'
+            he: 'אם בחרתם להוסיף קישור, יש להוסיף גם שם וגם כתובת'
         },
         status: 400
+    },
+    CommentNotOwned: {
+        msg: {
+            en: 'You do not own this comment!',
+            he: 'התגובה לא שייכת למשתמש שלך!'
+        },
+        status: 403
+    },
+    CannotLikeOwnComment: {
+        msg: {
+            en: 'You cannot like your own comment',
+            he: 'לא ניתן לסמן בלייק את התגובה של עצמך'
+        },
+        status: 403
     },
     TopicNotExist: {
         msg: {
@@ -38,6 +52,13 @@ const topicMessages = {
         msg: {
             en: "Item does not exist",
             he: "הפריט לא קיים"
+        },
+        status: 404
+    },
+    CommentNotExist: {
+        msg: {
+            en: 'Comment does not exist',
+            he: 'התגובה לא קיימת'
         },
         status: 404
     }

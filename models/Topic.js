@@ -21,16 +21,35 @@ const TopicSchema = new Schema({
         link: {
             type: String
         },
-        likes: {
-            count: {
-                type: Number,
-                default: 0
+        upvotes: [{
+            type: ObjectId,
+            ref: "User"
+        }],
+        downvotes: [{
+            type: ObjectId,
+            ref: "User"
+        }],
+        comments: [{
+            text: {
+                type: String
             },
-            users: [{
+            author: {
                 type: ObjectId,
                 ref: "User"
+            },
+            parent: {
+                type: ObjectId,
+                ref: "Topic.comments"
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            },
+            likes: [{
+                type: ObjectId,
+                ref: 'User'
             }]
-        }
+        }]
     }],
     url: {
         type: String

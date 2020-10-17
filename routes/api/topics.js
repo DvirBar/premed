@@ -12,7 +12,9 @@ const topicMessages = require('../../messages/topics');
 const pageMessages = require('../../messages/pages');
 const authAdmin = require('../../middleware/authAdmin');
 const { SuccessDelete, PageRequired, ItemDetailsRequired, 
-    LinkDetailsRequired, TopicNotExist, ItemNotExist } = topicMessages;
+    LinkDetailsRequired, TopicNotExist, ItemNotExist, 
+    CommentNotOwned, CommentNotExist, 
+    CannotLikeOwnComment } = topicMessages;
 const { PageNotExist, SubpageNotExist } = pageMessages;
 
 // @route   GET api/topics/:id
@@ -206,10 +208,10 @@ router.put('/:id/:itemId', [auth, authAdmin], (req, res, next) => {
          .catch(next);
 })
 
-// @route   PUT api/topics/:id/:itemId/toggleLike
-// @desc    Toggle like of item
+// @route   PUT api/topics/:id/:itemId/toggleUpvote
+// @desc    Toggle upvote of item
 // @access  Private
-router.put('/:id/:itemId/toggleLike', auth, (req, res, next) => {
+router.put('/:id/:itemId/toggleUpvote', auth, (req, res, next) => {
     const topicId = req.params.id
     const itemId = req.params.itemId
     const userId = res.locals.user.id
@@ -223,17 +225,80 @@ router.put('/:id/:itemId/toggleLike', auth, (req, res, next) => {
             if(!item)
                 return res.status(ItemNotExist.status).send(ItemNotExist.msg)
         
-            // Check if user has already liked the item
-            const hasLiked = item.likes.users.find(user => String(user) === userId)
-            const likes = item.likes.count 
-            item.set({
-                likes: {
-                    count: hasLiked ? likes - 1 : likes + 1,
-                    users: hasLiked 
-                    ? item.likes.users.filter(user => String(user) !== userId)
-                    : [...item.likes.users, userId]
+            // Check if user has already upvoted the item
+            const upvotes = item.upvotes
+            const upvoteIndex = upvotes.findIndex(upvote => 
+                String(upvote) === userId) 
+        
+            // If user has already upvoted
+            if(upvoteIndex !== -1) {
+                upvotes.splice(upvoteIndex, 1)
+            }
+
+            /* If user hasn't upvoted, check if they downvoted, 
+                and remove from downvotes */
+            else {
+                const downvotes = item.downvotes
+                const downvoteIndex = downvotes.findIndex(downvote => 
+                    String(downvote) === userId)
+
+                if(downvoteIndex !== -1) {
+                    downvotes.splice(downvoteIndex, 1)
                 }
-            })
+
+                upvotes.push(userId)
+            }
+
+            topic.save()
+                .then(topic => {
+                    return res.send(topic)
+                })
+                .catch(next);
+         })
+         .catch(next);
+})
+
+
+// @route   PUT api/topics/:id/:itemId/toggleDownvote
+// @desc    Toggle downvote of item
+// @access  Private
+router.put('/:id/:itemId/toggleDownvote', auth, (req, res, next) => {
+    const topicId = req.params.id
+    const itemId = req.params.itemId
+    const userId = res.locals.user.id
+
+    Topic.findById(topicId)
+         .then(topic => {
+            if(!topic)
+                return res.status(TopicNotExist.status).send(TopicNotExist.msg)
+            
+            const item = topic.items.id(itemId)
+            if(!item)
+                return res.status(ItemNotExist.status).send(ItemNotExist.msg)
+        
+            // Check if user has already downvoted or upvoted the item
+            const downvotes = item.downvotes
+            const downvoteIndex = downvotes.findIndex(downvote => 
+                String(downvote) === userId) 
+        
+            // If user has already downvoted
+            if(downvoteIndex !== -1) {
+                downvotes.splice(downvoteIndex, 1)
+            }
+
+            /* If user hasn't downvoted, check if they downvoted, 
+                and remove from downvotes */
+            else {
+                const upvotes = item.upvotes
+                const upvoteIndex = upvotes.findIndex(upvote => 
+                    String(upvote) === userId)
+
+                if(upvoteIndex !== -1) {
+                    upvotes.splice(upvoteIndex, 1)
+                }
+
+                downvotes.push(userId)
+            }
 
             topic.save()
                 .then(topic => {
@@ -269,6 +334,208 @@ router.put('/:id/:itemId/remove', [auth, authAdmin], (req, res, next) => {
             .catch(next)
     })
     .catch(next);
+})
+
+
+// @route   PUT api/topics/:id/:itemId/addComment
+// @desc    Add comment
+// @access  Private
+router.put('/:id/:itemId/addComment', auth, (req, res, next) => {
+    const {
+        text,
+        parentId
+    } = req.body
+
+    const topicId = req.params.id;
+    const itemId = req.params.itemId;
+    const userId = res.locals.user.id;
+
+    Topic.findById(topicId)
+         .then(topic => {
+             if(!topic)
+                return res.status(TopicNotExist.status)
+                          .send(TopicNotExist.msg)
+
+            const item = topic.items.id(itemId)
+
+            if(!item) {
+                return res.status(ItemNotExist.status)
+                          .send(ItemNotExist.msg)
+            }
+
+            const newComment = {
+                text,
+                parent: parentId,
+                author: userId
+            }
+
+            item.comments.push(newComment)
+
+            topic.save()
+                 .then(topic => {
+                     return res.send(topic)
+                 })
+                 .catch(next);
+         })
+         .catch(next);
+})
+
+
+// @route   PUT api/topics/:id/:itemId/editComment
+// @desc    Edit comment
+// @access  Private
+router.put('/:id/:itemId/:commentId/editComment', auth, (req, res, next) => {
+    const {
+        text
+    } = req.body
+
+    const topicId = req.params.id;
+    const itemId = req.params.itemId;
+    const commentId = req.params.commentId
+    const userId = res.locals.user.id;
+
+    Topic.findById(topicId)
+         .then(topic => {
+             if(!topic)
+                return res.status(TopicNotExist.status)
+                          .send(TopicNotExist.msg)
+
+            const item = topic.items.id(itemId)
+
+            if(!item) 
+                return res.status(ItemNotExist.status)
+                          .send(ItemNotExist.msg)
+            
+            const comment = item.comments.id(commentId)
+
+            if(!comment)
+                return res.status(CommentNotExist.status)
+                          .send(CommentNotExist.msg)
+
+            if(String(comment.author) !== userId) 
+                return res.status(CommentNotOwned.status)
+                          .send(CommentNotOwned.msg)
+
+            comment.set({
+                ...comment,
+                text
+            })
+
+            topic.save()
+                 .then(topic => {
+                     return res.send(topic)
+                 })
+                 .catch(next);
+         })
+         .catch(next);
+})
+
+
+// @route   PUT api/topics/:id/:itemId/toggleLike
+// @desc    Edit comment
+// @access  Private
+router.put('/:id/:itemId/:commentId/toggleLike', auth, (req, res, next) => {
+    const topicId = req.params.id;
+    const itemId = req.params.itemId;
+    const commentId = req.params.commentId
+    const userId = res.locals.user.id;
+
+    Topic.findById(topicId)
+         .then(topic => {
+             if(!topic)
+                return res.status(TopicNotExist.status)
+                          .send(TopicNotExist.msg)
+
+            const item = topic.items.id(itemId)
+
+            if(!item) 
+                return res.status(ItemNotExist.status)
+                          .send(ItemNotExist.msg)
+            
+            const comment = item.comments.id(commentId)
+
+            if(!comment)
+                return res.status(CommentNotExist.status)
+                          .send(CommentNotExist.msg)
+
+            if(String(comment.author) === userId)
+                return res.status(CannotLikeOwnComment.status)
+                          .send(CannotLikeOwnComment.msg)
+
+            const likes = comment.likes
+
+            const likeIndex = likes.findIndex(like => 
+                String(like) === userId)
+
+            // If user has already liked the comment, unlike it
+            if(likeIndex !== -1) 
+                likes.splice(likeIndex, 1)
+
+            else 
+                likes.push(userId)
+
+            topic.save()
+                 .then(topic => {
+                     return res.send(topic)
+                 })
+                 .catch(next);
+         })
+         .catch(next);
+})
+
+
+// @route   PUT api/topics/:id/:itemId/deleteComment
+// @desc    Delete comment
+// @access  Private (Admin allowed)
+router.put('/:id/:itemId/:commentId/deleteComment', auth, (req, res, next) => {
+    const {
+        adminNote,
+        sendNote
+    } = req.body
+    
+    const topicId = req.params.id;
+    const itemId = req.params.itemId;
+    const commentId = req.params.commentId
+    const userId = res.locals.user.id;
+    const isAdmin = res.locals.user.isAdmin;
+
+    Topic.findById(topicId)
+         .then(topic => {
+            if(!topic)
+                return res.status(TopicNotExist.status)
+                          .send(TopicNotExist.msg)
+
+            const item = topic.items.id(itemId)
+
+            if(!item) 
+                return res.status(ItemNotExist.status)
+                          .send(ItemNotExist.msg)
+            
+            const comment = item.comments.id(commentId)
+
+            if(!comment)
+                return res.status(CommentNotExist.status)
+                          .send(CommentNotExist.msg)
+
+            // If the user doesn't own the comment and is not admin
+            if(String(comment.author) !== userId && !isAdmin) 
+                return res.status(CommentNotOwned.status)
+                          .send(CommentNotOwned.msg)
+
+            // If the user is admin and doesn't own the comment
+            if(String(comment.author) !== userId && isAdmin) {
+                // TODO: log removal and send user an admin note if chosen
+            }
+
+            comment.remove()
+
+            topic.save()
+                 .then(topic => {
+                     return res.send(topic)
+                 })
+                 .catch(next);
+         })
+         .catch(next);
 })
 
 

@@ -18,7 +18,7 @@ const { PathNotExist } = pathsMessages;
 // @route   GET api/steps/:id
 // @desc    Get step by id
 // @access  Public
-router.get('/:id', (req, res, next) => {
+router.get('/:id',  [auth, authAdmin], (req, res, next) => {
     Step.findById(req.params.id)
         .then(step => {
             if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
@@ -33,6 +33,7 @@ router.get('/:id', (req, res, next) => {
 // @access  Public
 router.get('/', (req, res, next) => { 
     Step.find()
+        .select('-author')
         .then(step => res.send(step))
         .catch(next)
 })
