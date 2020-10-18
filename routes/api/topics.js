@@ -226,7 +226,7 @@ router.put('/:id/:itemId/toggleUpvote', auth, (req, res, next) => {
                 return res.status(ItemNotExist.status).send(ItemNotExist.msg)
         
             // Check if user has already upvoted the item
-            const upvotes = item.upvotes
+            const { upvotes, downvotes } = item 
             const upvoteIndex = upvotes.findIndex(upvote => 
                 String(upvote) === userId) 
         
@@ -238,7 +238,6 @@ router.put('/:id/:itemId/toggleUpvote', auth, (req, res, next) => {
             /* If user hasn't upvoted, check if they downvoted, 
                 and remove from downvotes */
             else {
-                const downvotes = item.downvotes
                 const downvoteIndex = downvotes.findIndex(downvote => 
                     String(downvote) === userId)
 
@@ -251,7 +250,10 @@ router.put('/:id/:itemId/toggleUpvote', auth, (req, res, next) => {
 
             topic.save()
                 .then(topic => {
-                    return res.send(topic)
+                    return res.send({
+                        downvotes,
+                        upvotes
+                    })
                 })
                 .catch(next);
          })
@@ -277,7 +279,7 @@ router.put('/:id/:itemId/toggleDownvote', auth, (req, res, next) => {
                 return res.status(ItemNotExist.status).send(ItemNotExist.msg)
         
             // Check if user has already downvoted or upvoted the item
-            const downvotes = item.downvotes
+            const { upvotes, downvotes } = item;
             const downvoteIndex = downvotes.findIndex(downvote => 
                 String(downvote) === userId) 
         
@@ -289,7 +291,6 @@ router.put('/:id/:itemId/toggleDownvote', auth, (req, res, next) => {
             /* If user hasn't downvoted, check if they downvoted, 
                 and remove from downvotes */
             else {
-                const upvotes = item.upvotes
                 const upvoteIndex = upvotes.findIndex(upvote => 
                     String(upvote) === userId)
 
@@ -302,7 +303,10 @@ router.put('/:id/:itemId/toggleDownvote', auth, (req, res, next) => {
 
             topic.save()
                 .then(topic => {
-                    return res.send(topic)
+                    return res.send({
+                        upvotes,
+                        downvotes
+                    })
                 })
                 .catch(next);
          })
@@ -373,7 +377,7 @@ router.put('/:id/:itemId/addComment', auth, (req, res, next) => {
 
             topic.save()
                  .then(topic => {
-                     return res.send(topic)
+                     return res.send(item.comments)
                  })
                  .catch(next);
          })
@@ -423,7 +427,7 @@ router.put('/:id/:itemId/:commentId/editComment', auth, (req, res, next) => {
 
             topic.save()
                  .then(topic => {
-                     return res.send(topic)
+                     return res.send(comment)
                  })
                  .catch(next);
          })
@@ -476,7 +480,7 @@ router.put('/:id/:itemId/:commentId/toggleLike', auth, (req, res, next) => {
 
             topic.save()
                  .then(topic => {
-                     return res.send(topic)
+                     return res.send(likes)
                  })
                  .catch(next);
          })
