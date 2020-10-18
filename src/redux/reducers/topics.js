@@ -48,6 +48,7 @@ export default function(state = initialState, action) {
         case TOPIC_ADD:
             return {
                 ...state,
+                loading: false,
                 topics: [...state.topics, payload]
             }
 
@@ -66,9 +67,12 @@ export default function(state = initialState, action) {
         case TOPIC_ITEM_TOGGLE_DOWNVOTE:
             return {
                 ...state,
+                loading: false,
                 topics: state.topics.map(topic => 
                     topic._id === payload.topicId
-                    ?   topic.items.map(item => 
+                    ?   {
+                        ...topic,   
+                        items: topic.items.map(item => 
                         item._id === payload.itemId
                         ?   {
                                 ...item,
@@ -76,6 +80,7 @@ export default function(state = initialState, action) {
                                 downvotes: payload.data.downvotes
                             }
                         :   item)
+                    }
                     :   topic)
             }
             

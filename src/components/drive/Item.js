@@ -1,55 +1,35 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleLike } from '../../redux/actions/topics';
+import { useSelector } from 'react-redux';
 import IconObj from './IconsMap';
+import ItemVotes from './ItemVotes';
+import ItemComments from './ItemComments';
 
 function Item({ topicId, item }) {
-    const dispatch = useDispatch();
-    const [hasLiked, setHasLiked] = useState(false);
-    const likes = item.likes
     const auth = useSelector(state => state.auth);
     const userId = auth.user._id; 
 
-    useEffect(() => {
-        if(likes) {
-            if(likes.users.find(user => user === userId))
-                setHasLiked(true)
-
-            else
-                setHasLiked(false)
-        }
-    }, [likes])
-
-    const dispatchTogLike = () => {
-        dispatch(toggleLike(topicId, item._id))
-    }
-
     return (
-            <a 
-            href={item.link}
-            target="_blank"
-            className="drive-grid-item drive-topic-item"
-            rel="noopener noreferrer">
-                <div className="drive-item-title">{item.name}</div>
-                <div className="item-icon">
-                    <img src={IconObj[item.icon]} />
-                </div>
-                <div 
-                className="item-footer">
-                    <span className="item-likes">
-                        <span className="item-likes-count">
-                            {likes.count}
-                        </span>
-                        <span onClick={() => dispatchTogLike()}>
-                            {hasLiked 
-                                ? <i className="material-icons">favorite</i>
-                                : <i className="material-icons">favorite_border</i>
-                            }
-                        </span>
-                    </span>
-                </div>
-            </a>
+        <a 
+        href={item.link}
+        target="_blank"
+        className="drive-grid-item drive-topic-item"
+        rel="noopener noreferrer">
+            <div className="drive-item-title">{item.name}</div>
+            <div className="item-icon">
+                <img src={IconObj[item.icon]} />
+            </div>
+            <div 
+            className="item-footer">
+                <ItemComments />
+                <ItemVotes 
+                topicId={topicId}
+                itemId={item._id}
+                upvotes={item.upvotes}
+                downvotes={item.downvotes}
+                userId={userId} />
+            </div>
+        </a>
     )
 }
 

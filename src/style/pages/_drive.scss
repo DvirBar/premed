@@ -232,19 +232,48 @@
 
 .item-footer {
     display: flex;
-    flex-direction: row-reverse;
-    color: $main-color;
+    justify-content: space-between;
     font-size: 2rem;
+    align-items: center;
+    width: 100%;
+    padding: 0 1.5rem;
+    position: relative;
 
-    .item-likes {
+    .comments-icon {
+        position: absolute;
+        color: #555;
+        font-size: 2.8rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $main-color;
+        }
+    }
+
+    .item-votes {
         display: flex;
         align-items: center;
+        z-index: 1;
 
-        .material-icons {
+        & > span {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .item-upvotes {
+            color: $okay-color;
+        }
+
+        .item-downvotes {
+            color: $error-color;
+        }
+
+        .thumb-icons {
             transition: all 0.5s ease;
-            color: $main-color;
             display: flex;
             align-items: center;
+            font-size: 2.5rem;
 
             &:hover {
                 transition: all 0.5s ease;
