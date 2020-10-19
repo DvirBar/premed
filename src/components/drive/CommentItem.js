@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteComment } from '../../redux/actions/topics';
 import DropdownMenu from '../common/DropdownMenu';
+import useDateGap from '../common/useDateGap';
 import CommentLikes from './CommentLikes';
 import CommentText from './CommentText';
 
@@ -28,6 +29,8 @@ function CommentItem({  topicId, itemId, comment }) {
     const removeComment = () => {
         dispatch(deleteComment(topicId, itemId, comment._id))
     }
+
+    const dateGap = useDateGap()
 
     const options = [
         {
@@ -63,7 +66,7 @@ function CommentItem({  topicId, itemId, comment }) {
                         reply
                     </i>
                     <span>
-                        {comment.date}
+                        {dateGap(comment.date)}
                     </span>
                 </div>
             </div>
