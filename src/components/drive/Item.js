@@ -21,7 +21,12 @@ function Item({ topicId, item }) {
             </div>
             <div 
             className="item-footer">
-                <ItemComments />
+                <ItemComments 
+                topicId={topicId}
+                itemId={item._id}
+                itemName={item.name}
+                comments={item.comments} />
+
                 <ItemVotes 
                 topicId={topicId}
                 itemId={item._id}

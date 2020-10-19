@@ -238,12 +238,13 @@
     width: 100%;
     padding: 0 1.5rem;
     position: relative;
+    color: #777;
+    transition: color 0.2s ease;
 
     .comments-icon {
         position: absolute;
-        color: #555;
+        bottom: 2px;
         font-size: 2.8rem;
-        transition: color 0.3s ease;
 
         &:hover {
             color: $main-color;
@@ -261,28 +262,139 @@
             align-items: center;
         }
 
-        .item-upvotes {
-            color: $okay-color;
-        }
-
-        .item-downvotes {
-            color: $error-color;
-        }
-
-        .thumb-icons {
-            transition: all 0.5s ease;
+        .thumb-icon {
             display: flex;
             align-items: center;
             font-size: 2.5rem;
 
             &:hover {
-                transition: all 0.5s ease;
-                opacity: 0.6;
+                opacity: 0.8;
             }
+        }
+
+        .item-upvotes .voted {
+            color: $okay-color; 
+        }
+
+        .item-downvotes .voted {
+            color: $error-color; 
         }
 
         & > * {
             margin-left: 0.5rem;
+        }
+    }
+}
+
+.item-comments {
+    cursor: default;
+
+    .add-comment {
+        width: 100%;
+        padding: 1rem;
+        border: 1.5px solid #aaa;
+        border-radius: 0.5rem;
+        font-size: 1.8rem;
+        transition: border-color 0.3s ease;
+        outline: none;
+
+        &:focus {
+            border-color: $main-color;
+        }
+    }
+
+    .comments-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        padding-bottom: 3rem;
+        width: 100%;
+    
+        .comment-item {
+            display: flex;
+            align-items: center;
+            row-gap: 0.5rem;
+            width: 100%;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #aaa;
+
+            .comment-details {
+                display: flex;
+                flex-direction: column;
+                row-gap: 0.5rem;
+                max-width: 100%;
+
+                .comment-author {
+                    font-size: 1.6rem;
+                    color: $main-color;
+                    font-weight: 500;
+                }
+
+                .comment-text {
+                    font-size: 1.6rem;
+                    word-wrap: break-word;
+                    background-color: #ececec;
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+                    
+                    .cancel-edit {
+                        font-size: 1.4rem;
+                        color: $main-color;
+                        cursor: pointer;
+                        padding: 0 0.5rem;
+                        font-weight: 500;
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+
+                .comment-footer {
+                    display: flex;
+                    align-items: center;
+                    color: #777;
+                    font-size: 1.5rem;
+                    
+                    .comment-likes {
+                        display: flex;
+                        text-align: center;
+
+                        & > * {
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        &.liked {
+                            color: $main-color;
+                        }
+                    }
+
+                    .material-icons {
+                        font-size: 2rem;
+
+                        &:hover {
+                            color: $main-color;
+                        }
+                    }
+                }
+            }
+
+            &:hover > .comment-options {
+                display: block;
+            }
+
+            .comment-options {
+                display: none;
+
+                .material-icons {
+                    color: #777;
+
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
         }
     }
 }

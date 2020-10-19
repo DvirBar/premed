@@ -90,13 +90,16 @@ export default function(state = initialState, action) {
                 loading: false,
                 topics: state.topics.map(topic =>
                     topic._id === payload.topicId
-                    ?   topic.items.map(item =>
-                        item._id === payload.itemId
-                        ?   {
-                            ...item,
-                            comments: payload.comments
+                    ?   {
+                        ...topic,
+                        items: topic.items.map(item =>
+                            item._id === payload.itemId
+                            ?   {
+                                ...item,
+                                comments: payload.comments
+                            }
+                            :   item)
                         }
-                        :   item)
                     :   topic)
             }
 
@@ -106,13 +109,20 @@ export default function(state = initialState, action) {
                 loading: false,
                 topics: state.topics.map(topic =>
                     topic._id === payload.topicId
-                    ?   topic.items.map(item =>
-                        item._id === payload.itemId
-                        ?   item.comments.map(comment =>
-                                comment._id === payload.commentId
-                                ?   payload.comment
-                                :   comment)
-                        :   item)
+                    ?   {
+                        ...topic,
+                        items: topic.items.map(item =>
+                            item._id === payload.itemId
+                            ?   {
+                                ...item,
+                                comments: item.comments.map(comment =>
+                                    comment._id === payload.commentId
+                                    ?   payload.comment
+                                    :   comment)
+                            }
+                            :   item)
+                    }
+                        
                     :   topic)
             }
 
@@ -123,16 +133,22 @@ export default function(state = initialState, action) {
                 loading: false,
                 topics: state.topics.map(topic =>
                     topic._id === payload.topicId
-                    ?   topic.items.map(item =>
-                        item._id === payload.itemId
-                        ?   item.comments.map(comment =>
-                                comment._id === payload.commentId
-                                ?   {
-                                    ...comment,
-                                    likes: payload.likes
+                    ?   {   
+                            ...topic,
+                            items: topic.items.map(item =>
+                            item._id === payload.itemId
+                            ?   {
+                                ...item,
+                                comments: item.comments.map(comment =>
+                                    comment._id === payload.commentId
+                                    ?   {
+                                        ...comment,
+                                        likes: payload.likes
+                                    }
+                                    :   comment)
                                 }
-                                :   comment)
-                        :   item)
+                            :   item)
+                        }
                     :   topic)
             }
 
@@ -142,11 +158,17 @@ export default function(state = initialState, action) {
                 loading: false,
                 topics: state.topics.map(topic =>
                     topic._id === payload.topicId
-                    ?   topic.items.map(item =>
-                        item._id === payload.itemId
-                        ?   item.comments.filter(comment =>
-                            comment._id !== payload.commentId)
-                        :   item)
+                    ?   {   
+                            ...topic,
+                            items: topic.items.map(item =>
+                            item._id === payload.itemId
+                            ?  {
+                                ...item,
+                                comments: item.comments.filter(comment =>
+                                    comment._id !== payload.commentId)
+                            } 
+                            :   item)
+                        }
                     :   topic)
             }
 

@@ -3,17 +3,21 @@
     padding: 0;
     z-index: 10;
     box-shadow: $default-shadow;
-    width: 12rem;
     color: $main-color;
     background-color: #fff;
     font-size: 1.8rem;
     overflow: hidden;
+    min-width: 0;
     max-height: 0;
-    transition: max-height 0.25s ease-in;
+    max-width: 0;
+    transition: all 0.2s ease-out;
+    font-size: 1.6rem;
 
     &.open {
         max-height: 15rem;
-        transition: max-height 0.25s ease-out;
+        min-width: 12rem;
+        max-width: auto;
+        transition: all 0.2s ease-in;
     }
 
     li {

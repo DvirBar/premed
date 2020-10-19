@@ -135,8 +135,10 @@ export const toggleDownvote = (topicId, itemId) => dispatch => {
 }
 
 
-export const addComment = (topicId, itemId) => dispatch => {
-    axios.put(`api/topics/${topicId}/${itemId}/addComment`)
+export const addComment = (topicId, itemId, data) => dispatch => {
+    const body = JSON.stringify(data)
+
+    axios.put(`api/topics/${topicId}/${itemId}/addComment`, body)
          .then(res => dispatch({
              type: TOPIC_ITEM_COMMENT_ADD,
              payload: {
@@ -148,8 +150,10 @@ export const addComment = (topicId, itemId) => dispatch => {
          .catch(err => dispatch(getError(err)))
 }
 
-export const editComment = (topicId, itemId, commentId) => dispatch => {
-    axios.put(`api/topics/${topicId}/${itemId}/${commentId}/editComment`)
+export const editComment = (topicId, itemId, commentId, data) => dispatch => {
+    const body = JSON.stringify(data)
+
+    axios.put(`api/topics/${topicId}/${itemId}/${commentId}/editComment`, body)
          .then(res => dispatch({
              type: TOPIC_ITEM_COMMENT_UPDATE,
              payload:  {

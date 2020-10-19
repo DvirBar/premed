@@ -49,30 +49,32 @@ function ItemVotes({ topicId, itemId, upvotes, downvotes, userId }) {
     return (
         <div className="item-votes">
             <span className="item-downvotes">
-                <span className="item-downvotes-count">
+                <span className={downVote 
+                    ?   "item-count voted"
+                    :   "item-count"}>
                     {downvotes.length}
                 </span>
                 <span
-                className="thumb-icons"
+                className="thumb-icon"
                 onClick={e => dispatchDownvote(e)}>
-                    {downVote 
-                    ? <i class="fas fa-thumbs-down"></i>
-                    : <i class="far fa-thumbs-down"></i>
-                    }
+                    <i class={downVote 
+                    ?   "material-icons voted"
+                    :   "material-icons"}>thumb_down</i>
                 </span>
             </span>
 
             <span className="item-upvotes">
-                <span className="item-upvotes-count">
+                <span className={upVote 
+                    ?   "item-count voted"
+                    :   "item-count"}>
                     {upvotes.length}
                 </span>
                 <span
-                className="thumb-icons"
+                className="thumb-icon"
                 onClick={e => dispatchUpvote(e)}>
-                    {upVote 
-                    ? <i class="fas fa-thumbs-up"></i>
-                    : <i class="far fa-thumbs-up"></i>
-                    }
+                    <i class={upVote 
+                    ?   "material-icons voted"
+                    :   "material-icons"}>thumb_up</i>
                 </span>
             </span>
         </div>
