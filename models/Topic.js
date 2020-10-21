@@ -31,7 +31,8 @@ const TopicSchema = new Schema({
         }],
         comments: [{
             text: {
-                type: String
+                type: String,
+                required: true
             },
             author: {
                 type: ObjectId,

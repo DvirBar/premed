@@ -28,6 +28,7 @@ import calculations from '../routes/api/calculations';
 import userdata from '../routes/api/user-data';
 import datatables from '../routes/api/data-tables';
 import questgroups from '../routes/api/question-groups';
+import inquiries from '../routes/api/inquiries';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -44,6 +45,7 @@ app.use('/api/calculations', calculations);
 app.use('/api/userdata', userdata);
 app.use('/api/datatables', datatables);
 app.use('/api/questgroups', questgroups);
+app.use('/api/inquiries', inquiries)
 
 // Exit middlewares
 app.use(errorHandler);

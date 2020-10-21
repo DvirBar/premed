@@ -367,6 +367,12 @@ router.put('/:id/:itemId/addComment', auth, (req, res, next) => {
                           .send(ItemNotExist.msg)
             }
 
+            const parent = item.comments.id(parentId)
+
+            if(!parent && parentId)
+                return res.status(CommentNotExist.status)
+                          .send(CommentNotExist.msg)
+
             const newComment = {
                 text,
                 parent: parentId,
@@ -422,7 +428,7 @@ router.put('/:id/:itemId/:commentId/editComment', auth, (req, res, next) => {
 
             comment.set({
                 ...comment,
-                text
+                text: text
             })
 
             topic.save()
@@ -488,10 +494,10 @@ router.put('/:id/:itemId/:commentId/toggleLike', auth, (req, res, next) => {
 })
 
 
-// @route   PUT api/topics/:id/:itemId/deleteComment
+// @route   PUT api/topics/:id/:itemId/:commentId/remove
 // @desc    Delete comment
 // @access  Private (Admin allowed)
-router.put('/:id/:itemId/:commentId/deleteComment', auth, (req, res, next) => {
+router.put('/:id/:itemId/:commentId/remove', auth, (req, res, next) => {
     const {
         adminNote,
         sendNote
