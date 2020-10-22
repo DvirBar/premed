@@ -31,13 +31,17 @@ const InquirySchema = new Schema({
             type: Boolean
         },
         note: {
-
+            type: String
         },
         admin: {
             type: ObjectId,
             ref: 'User'
         }
     }],
+    assignedAdmin: {
+        type: ObjectId,
+        ref: 'User'
+    },
     sent: {
         type: Date,
         default: Date.now
