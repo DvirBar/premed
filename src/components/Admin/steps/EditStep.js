@@ -4,6 +4,9 @@ import { editStep } from '../../../redux/actions/steps';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
 import Dropdown from '../../common/Dropdown';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as he from '@ckeditor/ckeditor5-build-classic/build/translations/he.js';
 
 function EditStep({ selStep, steps }) {
     const stepId = selStep._id
@@ -63,7 +66,18 @@ function EditStep({ selStep, steps }) {
             }))])
         }, [siblings])
 
-        
+
+    
+    const changeContent = data => {
+        handleChange({
+            name: 'content',
+            value: data
+        })
+    }
+    
+    useEffect(() => {
+        console.log(values);
+    }, [values])
     return (
         <form className="edit-step" onSubmit={handleSubmit} noValidate>
             <FormInput
@@ -95,13 +109,20 @@ function EditStep({ selStep, steps }) {
                 onChange={handleChange}
                 />
             }
-        
-            <textarea 
-            cols="80" rows="20"
-            name="content"
-            value={values.content || ''}
-            onChange={handleChange} />
-            
+
+            <CKEditor
+            editor={ ClassicEditor }
+            config={{
+                language: {
+                    ui: 'he',
+                    content: 'he'
+                }
+            }}
+            data={values.content}
+            onChange={ (event, editor) => {
+                changeContent(editor.getData())
+            }} />
+         
             <button 
             className="info"
             type="submit">עדכן</button>

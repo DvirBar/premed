@@ -7,8 +7,9 @@ function StepContent({ selStep }) {
             <span className="step-title">{selStep.name}</span>
             {selStep.content 
             ?
-                <div className="content-container">
-                    {selStep.content}
+                <div 
+                className="content-container ck-editor"
+                dangerouslySetInnerHTML={{__html: selStep.content}}>
                 </div>
             : 
             <div className="no-resource-error">

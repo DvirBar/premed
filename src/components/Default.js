@@ -12,10 +12,6 @@ function Default() {
             <Anouncements />
             {auth.isAuthenticated && 
                 <Dashboard />}
-
-            <div contentEditable="true">
-                
-            </div>
         </div>
     )
 }

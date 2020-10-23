@@ -69,7 +69,7 @@
 }
 
 .step-content {
-    margin-top: 5rem;
+    margin-top: 1.5rem;
     width: 100%;
 
     &:hover { 
@@ -83,6 +83,7 @@
         display: inline-block;
         font-size: 3rem;
         color: $main-color;
+        padding: 1.5rem 0;
 
         &::after {
             display:block;
@@ -91,5 +92,9 @@
             transform: scaleX(0);  
             transition: transform 0.3s ease-in-out;
         }
+    }
+
+    .content-container {
+        padding-right: 1.5rem;
     }
 }
