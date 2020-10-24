@@ -19,7 +19,7 @@ function ArgsMissingList({ argsMissing }) {
                 ? "args-missing-list display"
                 : "args-missing-list"}>
                 {argsMissing.map(arg => 
-                    <li key={arg.role}>{arg}</li>                        
+                    <li key={arg.role}>{arg.name}</li>                        
                 )}
             </ul>
         </div>

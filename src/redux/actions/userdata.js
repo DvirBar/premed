@@ -2,9 +2,11 @@ import {
     USER_DATA_LOADING,
     USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
+    COPY_DATA_SIMULATION,
     USER_DATA_PATH_SUCCESS,    
     USER_DATA_ERROR,
     USER_DATA_ADD,
+    SIMULATE_CALCS,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -34,6 +36,14 @@ export const dataLoadSoft = () => {
 export const dataError = () => {
     return {
         type: USER_DATA_ERROR
+    }
+}
+
+export const copyDataSimulation = () => dispatch => {
+    dispatch(dataLoad())
+
+    return {
+        type: COPY_DATA_SIMULATION
     }
 }
 
@@ -77,6 +87,23 @@ export const addUserData = data => dispatch => {
          .then(res => {
              dispatch ({
                 type: USER_DATA_ADD,
+                payload: res.data
+             })})
+         .catch(err => {
+             dispatch(dataError())
+             dispatch(getError(err))
+            })
+}
+
+// Simulate calculations and get results
+export const simulateCalcs = data => dispatch => {
+    // Request body
+    const body = JSON.stringify(data);
+
+    axios.post('api/simulateCalcs', body)
+         .then(res => {
+             dispatch ({
+                type: SIMULATE_CALCS,
                 payload: res.data
              })})
          .catch(err => {

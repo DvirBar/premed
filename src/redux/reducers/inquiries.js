@@ -2,6 +2,7 @@ import {
     INQUIRY_LOADING,
     INQUIRY_SUCCESS,
     INQUIRY_ERROR,
+    GET_INQUIRY_TYPES,
     INQUIRY_ADD,
     INQUIRY_UPDATE,
     INQUIRY_ASSIGN_ADMIN,
@@ -12,7 +13,8 @@ import {
 
 const initialState = {
     loading: false,
-    inquiries: []
+    inquiries: [],
+    types: {}
 }
 
 export default function(state = initialState, action) {
@@ -24,18 +26,25 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: true
             }
-
+            
         case INQUIRY_SUCCESS: 
             return {
                 ...state,
                 loading: false,
                 inquiries: payload
             }
-
+            
         case INQUIRY_ERROR:
             return {
                 ...state,
                 loading: false,
+            }
+    
+        case GET_INQUIRY_TYPES:
+            return {
+                ...state,
+                loading: false,
+                types: payload
             }
 
         case INQUIRY_ADD:
@@ -102,11 +111,11 @@ export default function(state = initialState, action) {
             }
 
 
-        case DATA_GROUP_DELETE:
+        case INQUIRY_DELETE:
             return {
                 ...state,
-                groups: state.groups.filter(group => 
-                    group._id !== payload)
+                inquiries: state.inquiries.filter(inquiry => 
+                    inquiry._id !== payload)
             }
 
         default:

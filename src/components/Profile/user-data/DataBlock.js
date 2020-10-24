@@ -72,7 +72,9 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                             {field.calcOutput &&
                                 <CalcBlock
                                 field={field}
-                                dataVals={dataVals} />
+                                dataVals={dataVals}
+                                value={dataVals.find(val => 
+                                    val.field._id === field._id)?.value} />
                             }   
                         </div>
                     )}

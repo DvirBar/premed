@@ -4,6 +4,7 @@ import { getOneUserData } from '../../../redux/actions/userdata';
 import Loadbar from '../../layout/Loadbar';
 import SoftLoadbar from '../../layout/SoftLoadBar';
 import ChoosePath from './ChoosePath';
+import useMissingArgs from './useMissingArgs';
 import UserStats from './UserStats';
 
 function ValidatePath() {
@@ -13,25 +14,18 @@ function ValidatePath() {
         dispatch(getOneUserData());
     }, [])
 
-    const dataSelector = useSelector(state => state.userdata);
-    const fetchedData = dataSelector.data;
-    const loadData = dataSelector.loading;
-    const loadSoft = dataSelector.softLoading;
-    const [data, setData] = useState({})
-
-    useEffect(() => {
-        setData(fetchedData)
-    }, [fetchedData])
+    const { data, loading, softLoading } = useSelector(state => 
+        state.userdata);
 
 
-    if(loadData)
+    if(loading)
         return <Loadbar />
 
     else if(data && Object.keys(data).length !== 0) {
         return (
             <Fragment>
                
-               {loadSoft &&
+               {softLoading &&
                     <SoftLoadbar message="שמירה מתבצעת" />
                }
 

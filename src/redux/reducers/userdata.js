@@ -5,6 +5,8 @@ import {
     USER_DATA_PATH_SUCCESS,
     USER_DATA_ERROR,
     USER_DATA_ADD,
+    COPY_DATA_SIMULATION,
+    SIMULATE_CALCS,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -21,6 +23,8 @@ const initialState = {
     softLoading: false,
     tableData: [],
     data: {},
+    changedField: {},
+    simulatedData: {},
     ordering: {
         filters: [],
         sort: {
@@ -58,6 +62,13 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 softLoading: false
+            }
+
+        case COPY_DATA_SIMULATION: 
+            return {
+                ...state,
+                loading: false,
+                simulatedData: state.data
             }
 
         case USER_DATA_PATH_SUCCESS:
@@ -143,7 +154,8 @@ export default function(state = initialState, action) {
 
                         : table
                         )
-                }
+                },
+                changedField: payload
             }
 
         case FILTER_DATA: { // Use brackets to define scope

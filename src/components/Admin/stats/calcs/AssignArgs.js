@@ -61,7 +61,8 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
     useEffect(() => {
         setPrevCalcOptions(calcs.map(calc => ({
             name: calc.name,
-            value: calc._id,
+            value: fields.find(field => 
+                field.calcOutput === calc._id)?._id,
             type: 'calc',
             role: calc.role,
             forbidden: calc.role ? true : false
@@ -89,7 +90,7 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
                     title: 'שקלול',
                     name: 'prevCalcsIds',
                     options: prevCalcOptions,
-                    callback: calcAssignRole
+                    callback: dataFieldAssignRole
                 }
             default:
                 return;

@@ -55,6 +55,9 @@ function AddCalc({ path, unis, storedCalcs }) {
         })))
     }, [storedCalcs, values.uni])
 
+    useEffect(() => {
+        console.log(values);
+    }, [values])
 
    
     const toggleModal = open => {

@@ -2,6 +2,7 @@ import {
     INQUIRY_LOADING,
     INQUIRY_SUCCESS,
     INQUIRY_ERROR,
+    GET_INQUIRY_TYPES,
     INQUIRY_ADD,
     INQUIRY_UPDATE,
     INQUIRY_DELETE,
@@ -47,6 +48,21 @@ export const getUserInquiries = () => dispatch => {
     axios.get('api/inquiries/user')
          .then(res => dispatch({
              type: INQUIRY_SUCCESS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(inquiryError());
+             dispatch(getError(err));
+         });
+}
+
+// Get inquiry types
+export const getUserInquiryTypes = () => dispatch => {
+    dispatch(inquiryLoad());
+
+    axios.get('api/inquiries/types')
+         .then(res => dispatch({
+             type: GET_INQUIRY_TYPES,
              payload: res.data
          }))
          .catch(err => {
