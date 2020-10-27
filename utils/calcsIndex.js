@@ -8,22 +8,22 @@ const {
 
 
 const storedCalcs = [
-        {
-            id: "hujiFinal",
-            name: "סכם העברית (בגרות)",
-            func: calcs.hujiFinal,
-            args: [
-                huji.bagrut,
-                psycho,
-                mor
-            ]
-        },
-        {
-            id: "bagrutHuji",
-            name: "ממוצע בגרות העברית",
-            func: calcs.hujiBargut,
-            args: bagrut
-        }
+    {
+        id: "hujiFinal",
+        name: "סכם העברית (בגרות)",
+        func: calcs.hujiFinal,
+        args: [
+            huji.bagrut,
+            psycho,
+            mor
+        ]
+    },
+    {
+        id: "bagrutHuji",
+        name: "ממוצע בגרות העברית",
+        func: calcs.hujiBargut,
+        args: bagrut
+    }
 ]
 
 

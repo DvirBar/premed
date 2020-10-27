@@ -14,14 +14,25 @@ const { NotExist, InquiryNotOwned, StatusInvalid,
 
 const allowedTypes = require('../../utils/allowedTypes'); 
 const { StatusNotExist } = require('../../messages/inquiries');
-const { inquiryStatusTypes } = allowedTypes.types;
+const { inquiryStatusTypes, inquiryTypes } = allowedTypes.types;
 const { isType } = allowedTypes;
 
 const wasEdited = 'הפנייה נערכה'
 
-// @route   GET api/inquiries/:id
+// @route   GET api/inquiries/types
 // @desc    Get inquiry by id
 // @access  Private
+router.get('/types', auth, (req, res, next) => {
+    return res.status(200).send({
+        statusTypes: inquiryStatusTypes,
+        inquiryTypes
+    })
+})
+
+
+// @route   GET api/inquiries/:id
+// @desc    Get inquiry by id
+// @access  Admin
 router.get('/:id', [auth, authAdmin], (req, res, next) => {
     Inquiry.findById(req.params.id)
             .select('-status.admin')
@@ -52,6 +63,7 @@ router.get('/user', auth, (req, res, next) => {
     const userId = res.locals.user._id
 
     Inquiry.find({ user: userId })
+            .select('-status.admin')
             .then(inquiries => res.send(inquiries))
             .catch(next)
 })
@@ -190,7 +202,7 @@ router.put('/:id/assignAdmin', auth, (req, res, next) => {
 router.put('/:id/changeStatus', [auth, authAdmin], (req, res, next) => {
     const {
         value
-    }
+    } = req.body
 
     const inquiryId = req.params.id
     const userId = res.locals.user._id
@@ -251,7 +263,7 @@ router.put('/:id/changeStatus', [auth, authAdmin], (req, res, next) => {
 router.put('/:id/:statusId', [auth, authAdmin], (req, res, next) => {
     const {
         note
-    }
+    } = req.body
     
     const userId = res.locals.user.id;
     const inquiryId = req.params.id;

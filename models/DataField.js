@@ -46,8 +46,12 @@ const DataFieldSchema = new Schema({
         type: String
     },
     calcOutput: {
-        type: ObjectId,
-        ref: 'Calculation'
+        storedCalc: {
+            type: String
+        },
+        isSuggestion: {
+            type: Boolean
+        }
     }
 })
 

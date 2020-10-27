@@ -123,7 +123,7 @@ const args = {
             name: 'בגרות - העברית',
             role: 'bagrut-huji',
             varName: 'bagrut',
-            type: 'calc'    
+            type: 'field'    
         }
     }
 }

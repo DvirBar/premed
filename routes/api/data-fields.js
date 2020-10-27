@@ -23,7 +23,7 @@ const uniMessages = require('../../messages/universities');
 const { DataFieldSuccessDelete, DataFieldNotExist, 
     InvalidFieldType, InvalidDataType, InvalidValidatorType, 
     ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist,
-    OptionNotExist } = dataFieldMessages;
+    CalcDetailRequired, OptionNotExist } = dataFieldMessages;
 const { DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathMessages; 
 const { UniNotExist } = uniMessages;
@@ -37,13 +37,12 @@ router.get('/allowedTypes', [auth, authAdmin], (req, res, next) => {
 })
 
 // @route   GET api/datafields/:pathIds
-// @desc    Get data groups by pathId
+// @desc    Get data fields by pathId
 // @access  Public
 router.get('/:pathIds', (req, res, next) => {
     const pathIds = JSON.parse(req.params.pathIds)
 
     DataField.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
-            .populate("calcOutput")
             .populate("group")
             .then(fields => {
                 return res.send(fields);
@@ -73,7 +72,9 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         pathId,
         groupId,
         uniId,
-        fieldOptions
+        fieldOptions,
+        storedCalc,
+        isSuggestion
     } = req.body;
 
     res.locals.model = modelName;
@@ -88,58 +89,73 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         return res.status(InvalidDataType.status)
                   .send(InvalidDataType.msg)
 
+     /* Check that if provided, both isSuggestion 
+        and storedCalc are provided */
+    if(storedCalc && typeof isSuggestion === "undefiend") {
+        return res.status(CalcDetailRequired.status)
+                    .send(CalcDetailRequired.msg)
+    }
+    
+
     Path.findById(pathId)
         .then(path => {
+        // Check that if assigned, path exists
+        if(!path && pathId)
+            return res.status(PathNotExist.status)
+                        .send(PathNotExist.msg)
+        
+        DataGroup.findById(groupId)
+                .then(group => {
 
-            // Check that if assigned, path exists
-            if(!path && pathId)
-                return res.status(PathNotExist.status)
-                          .send(PathNotExist.msg)
-            
-            DataGroup.findById(groupId)
-                    .then(group => {
-
-                        // Check that if assigned, group exists
-                        if(!group && groupId)
-                            return res.status(DataGroupNotExist.status)
-                                      .send(DataGroupNotExist.msg)
+                // Check that if assigned, group exists
+                if(!group && groupId)
+                    return res.status(DataGroupNotExist.status)
+                                .send(DataGroupNotExist.msg)
+                
+                University.findById(uniId)
+                        .then(uni => {
+                        if(!uni && uniId)
+                            return res.status(UniNotExist.status)
+                                        .send(UniNotExist.msg)
                         
-                        University.findById(uniId)
-                                  .then(uni => {
-                                    if(!uni && uniId)
-                                        return res.status(UniNotExist.status)
-                                                  .send(UniNotExist.msg)
-                                    
-                                    const dataObj = types.dataTypes.find(type =>
-                                        type.value === dataType)
-                                    
-                                    // Create new field
-                                    const newField = new DataField({
-                                        name: name,
-                                        fieldType: fieldType,
-                                        dataType: dataType,
-                                        path: pathId,
-                                        group: groupId,
-                                        validators: {
-                                            validType: dataObj.defVal
-                                        },
-                                        university: uniId,
-                                    })
-
-                                    // Only insert options if field type is select
-                                    if(fieldType === 'select') {
-                                        newField.fieldOptions = fieldOptions
-                                    }
-
-                                    newField.save()
-                                            .then(field => {
-                                                return res.send(field)
-                                            })
-                                            .catch(next); // Saving field
-                                  })
-                                  .catch(next); // Find university
+                       
+                        const dataObj = types.dataTypes.find(type =>
+                            type.value === dataType)
+                        
+                        // Create new field
+                        const newField = new DataField({
+                            name: name,
+                            fieldType: fieldType,
+                            dataType: dataType,
+                            path: pathId,
+                            group: groupId,
+                            validators: {
+                                validType: dataObj.defVal
+                            },
+                            university: uniId
                         })
-                        .catch(next); // Find data group
+
+                        if(storedCalc) {
+                            newField.calcOutput = {
+                                storedCalc,
+                                isSuggestion
+                            }
+                        }
+
+                        // Only insert options if field type is select
+                        if(fieldType === 'select') {
+                            newField.fieldOptions = fieldOptions
+                        }
+
+                        newField.save()
+                                .then(field => {
+                                    return res.send(field)
+                                })
+                                .catch(next); // Saving field
+                        })
+                        .catch(next); // Find university
+                })
+                .catch(next); // Find data group
         })
         .catch(next); // Find path
 })
@@ -154,7 +170,9 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
         fieldType,
         groupId,
         uniId,
-        fieldOptions
+        fieldOptions,
+        storedCalc,
+        isSuggestion
     } = req.body;
 
     res.locals.model = modelName;
@@ -166,48 +184,67 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
     if(!allowedTypes.isType(fieldType, types.fieldTypes))
         return res.status(InvalidFieldType.status)
                   .send(InvalidFieldType.msg)
+
+     /* Check that if provided, both isSuggestion 
+        and storedCalc are provided */
+    if(storedCalc && typeof isSuggestion === "undefiend") {
+        return res.status(CalcDetailRequired.status)
+                  .send(CalcDetailRequired.msg)
+    }
+    
   
     DataGroup.findById(groupId)
-                .then(group => {
+            .then(group => {
 
-                // Check that if assigned, group exists
-                if(!group && groupId)
-                    return res.status(DataGroupNotExist.status)
-                                .send(DataGroupNotExist.msg)
+            // Check that if assigned, group exists
+            if(!group && groupId)
+                return res.status(DataGroupNotExist.status)
+                            .send(DataGroupNotExist.msg)
+                        
+            DataField.findById(fieldId)
+                    .then(field => {
+                    if(!field)
+                        return res.status(DataFieldNotExist.status)
+                                    .send(DataFieldNotExist.msg)
+                    
+                    University.findById(uniId)
+                            .then(uni => {
+                            if(!uni && uniId)
+                                return res.status(UniNotExist.status)
+                                            .send(UniNotExist.msg)
+                                
+                            field = {
+                                ...field,
+                                name,
+                                fieldType,
+                                group,
+                                uni
+                            }
                             
-                DataField.findById(fieldId)
-                            .then(field => {
-                            if(!field)
-                                return res.status(DataFieldNotExist.status)
-                                            .send(DataFieldNotExist.msg)
-                            
-                            University.findById(uniId)
-                                      .then(uni => {
-                                        if(!uni && uniId)
-                                            return res.status(UniNotExist.status)
-                                                      .send(UniNotExist.msg)
-                                            
-                                        field.name = name,
-                                        field.fieldType = fieldType,
-                                        field.group = groupId,
-                                        field.uni = uniId
+                            if(storedCalc) {
+                                newField.calcOutput = {
+                                    storedCalc,
+                                    isSuggestion
+                                }
+                            }
 
-                                        // Only insert options if field type is select
-                                        if(fieldType === 'select') {
-                                            field.fieldOptions = fieldOptions
-                                        }
+                            /* Only insert options if 
+                            field type is select */
+                            if(fieldType === 'select') {
+                                field.fieldOptions = fieldOptions
+                            }
 
-                                        field.save()
-                                                .then(field => {
-                                                    return res.send(field)
-                                                })
-                                                .catch(next); // Saving field
-                                      })
-                                      .catch(next);
+                            field.save()
+                                .then(field => {
+                                    return res.send(field)
+                                })
+                                .catch(next); // Saving field
                             })
-                            .catch(next); // Find data field
-                })
-                .catch(next); // Find data group
+                            .catch(next);
+                    })
+                    .catch(next); // Find data field
+            })
+            .catch(next); // Find data group
 });
 
 // @route   PUT api/datafields/:id/addValid

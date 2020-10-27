@@ -93,51 +93,55 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                 return res.status(PathNotExist.status).send(PathNotExist.msg)
 
             University.findById(uniId)
-                      .then(uni => {
-                        if(!uni && uniId)
-                            return res.status(UniNotExist.status)
-                                      .send(UniNotExist.msg)
-                
-                        // Check that assigned calc is a stored procedure
-                        if(!storedCalcs.find(calc => calc.id == storedCalcId))
-                            return res.status(StoredCalcNotExist.status)
-                                        .send(StoredCalcNotExist.msg)
+                .then(uni => {
+                    if(!uni && uniId)
+                        return res.status(UniNotExist.status)
+                                    .send(UniNotExist.msg)
+            
+                    const storedCalc = storedCalcs.find(calc => calc.id == storedCalcId)
 
-                        // Create new calculation
-                        const newCalc = new Calculation({
-                            name: name,
-                            path: pathId,
-                            university: uniId,
-                            outputField: isSuggestion,
-                            calc: storedCalcId
-                        })
+                    // Check that assigned calc is a stored procedure
+                    if(!storedCalc)
+                        return res.status(StoredCalcNotExist.status)
+                                    .send(StoredCalcNotExist.msg)
 
-                        newCalc.save()
-                                .then(calc => {
-                                    const dataObj = types.dataTypes.find(type =>
-                                        type.value === dataType)
+                    // Create new calculation
+                    const newCalc = new Calculation({
+                        name: name,
+                        path: pathId,
+                        university: uniId,
+                        outputField: isSuggestion,
+                        calc: storedCalcId
+                    })
 
-                                    const newOutputField = new DataField({
-                                        name: name,
-                                        path: pathId,
-                                        university: uniId,
-                                        dataType: 'num',
-                                        fieldType: 'textbox',
-                                        validators: {
-                                            validType: dataObj.defVal
-                                        },
-                                        calcOutput: calc._id
-                                    })
+                    console.log(name);
 
-                                    newOutputField.save()
-                                        .then(() => {
-                                            return res.send(calc)
-                                        })         
-                                    .catch(next); // Save outputField
-                                })
-                                .catch(next); // Save calc
-                      })
-                      .catch(next); // Find parent university
+                    newCalc.save()
+                        .then(calc => {
+                            const dataObj = types.dataTypes.find(type =>
+                                type.value === 'num')
+
+                            const newOutputField = new DataField({
+                                name: name,
+                                path: pathId,
+                                university: uniId,
+                                dataType: 'num',
+                                fieldType: 'textbox',
+                                validators: {
+                                    validType: dataObj.defVal
+                                },
+                                calcOutput: calc._id
+                            })
+
+                            newOutputField.save()
+                                .then(() => {
+                                    return res.send(calc)
+                                })         
+                            .catch(next); // Save outputField
+                    })
+                    .catch(next); // Save calc
+                })
+                .catch(next); // Find parent university
         })
         .catch(next) // Find path
 })
@@ -189,28 +193,28 @@ router.put('/:id/assignRole', [auth, authAdmin], (req, res, next) => {
     const role = req.body.role
     const calcId = req.params.id
 
-    Calculation.findById(calcId)
-               .then(calc => {
-                   if(!calc && calcId)
+    DataField.findOne({ outputField: calcId })
+               .then(field => {
+                   if(!field && calcId)
                         return res.status(CalcNotExist.status)
                                   .send(CalcNotExist.msg)
 
-                   calc.role = role
+                   field.role = role
 
-                   calc.save()
-                       .then(calc => {  
-    // Find if there is calc with the same role and unassign it
-                           Calculation.find({ $and: 
-                            [{_id: { $ne: calc._id}}, 
+                   field.save()
+                       .then(field => {  
+    // Find if there is field with the same role and unassign it
+                            field.find({ $and: 
+                            [{_id: { $ne: field._id}}, 
                                 {role: { $ne: undefined} }]})
-                            .then(prevCalc => {
-                                if(prevCalc) {
-                                    prevCalc.role = undefined
-                                    prevCalc.save()
+                            .then(prevField => {
+                                if(prevField) {
+                                    prevField.role = undefined
+                                    prevField.save()
                                         .then(() => {
                                             const returnArr = [
-                                                prevCalc,
-                                                calc
+                                                prevField,
+                                                field
                                             ]
                                             return res.send(returnArr)
                                         })

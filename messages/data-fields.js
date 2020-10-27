@@ -40,6 +40,12 @@ const dataFieldMessages = {
             he: "ערכים מינימיליים ומקסימליים נדרשים בבדיקת טווח ערכים"
         },
         status: 400
+    },
+    CalcDetailRequired: {
+        msg: {
+            en: "Both calculation and suggestion type are required",
+            he: "יש להזין גם שקלול וגם סוג הצעה"
+        }
     },   
     ValidatorNotExist: {
         msg: {
