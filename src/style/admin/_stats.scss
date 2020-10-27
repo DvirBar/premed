@@ -101,38 +101,51 @@
         .field-title {
             margin-bottom: 1.5rem;
             position: relative;
-            
-            .field-name {
-                color: $main-color;
-                font-weight: 500;
-                font-size: 2rem;
-                margin-left: 0.5rem;
-            }
+            display: flex;
+            justify-content: space-between;
 
-            .field-type {
-                font-size: 1.6rem; 
-                color: #707070;
-            }
-
-            .field-menu {
-                position: absolute;
-                bottom: -15%;
-                display: none;
-
-                .material-icons {
-                    &:hover {
-                        opacity: 0.6;
+            .right-title-section {
+                .field-name {
+                    color: $main-color;
+                    font-weight: 500;
+                    font-size: 2rem;
+                    margin-left: 0.5rem;
+                }
+    
+                .field-type {
+                    font-size: 1.6rem; 
+                    color: #707070;
+                }
+    
+                .field-menu {
+                    position: absolute;
+                    bottom: -15%;
+                    display: none;
+    
+                    .material-icons {
+                        &:hover {
+                            opacity: 0.6;
+                        }
                     }
+                }
+    
+                &:hover > .field-menu {
+                    display: inline;
+                
                 }
             }
 
-            &:hover > .field-menu {
-                display: inline;
+            .calc-brand {
+                padding: 1rem;
+                background-color: #faab51;
+                border-radius: 0.5rem;
+                color: #fff;
+                font-size: 1.3rem;
             }
         }
 
-        .field-body {
-            padding-right: 1rem;
+    .field-body {
+        padding-right: 1rem;
     }
 }
 
@@ -168,7 +181,6 @@
             padding-right: 3rem;
         }
     }
-}
 
 .add-valid {
     display: flex;
@@ -250,4 +262,5 @@
     .valid-item {
         margin-left: 2rem;
     }
+}
 }

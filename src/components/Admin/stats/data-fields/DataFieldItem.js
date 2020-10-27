@@ -54,24 +54,31 @@ function DataFieldItem({ field, types }) {
         <Fragment>
             <div className="data-field">
                 <div className="field-title">
-                    <span className="field-name">
-                        {field.name}
-                    </span>
-                    <span className="field-type">
-                        {dataTypeName}, &nbsp;
-                        {fieldTypeName}
-                    </span>
-                    <div className="field-menu">
-                        <i 
-                        className="material-icons"
-                        onClick={() => toggleMenu(!displayMenu)}>
-                            more_vert
-                        </i>
-                        <DropdownMenu
-                        display={displayMenu}
-                        toggleMenu={toggleMenu}
-                        options={options} />
-                    </div>
+                    <div className="right-title-section">
+                        <span className="field-name">
+                            {field.name}
+                        </span>
+                        <span className="field-type">
+                            {dataTypeName}, &nbsp;
+                            {fieldTypeName}
+                        </span>
+                        <div className="field-menu">
+                            <i 
+                            className="material-icons"
+                            onClick={() => toggleMenu(!displayMenu)}>
+                                more_vert
+                            </i>
+                            <DropdownMenu
+                            display={displayMenu}
+                            toggleMenu={toggleMenu}
+                            options={options} />
+                        </div>
+                    </div>  
+                    {field.calcOutput &&
+                        <span className="calc-brand">
+                            שקלול
+                        </span>
+                    }
                 </div>
                 <div className="field-body">
                     <p className="valid-list-title">

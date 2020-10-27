@@ -14,7 +14,6 @@ function DataFieldsList({ allFields, selUni, types }) {
                 field.university &&
                 field.university._id === selUni 
                 && !field.group
-                && !field.calcOutput
             ))
         }
 
@@ -22,7 +21,6 @@ function DataFieldsList({ allFields, selUni, types }) {
             setFields(allFields.filter(field => 
                 !field.university
                 && !field.group
-                && !field.calcOutput
             ))
         }
     }, [selUni, allFields])

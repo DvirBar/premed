@@ -20,7 +20,11 @@ function FormInputBorder({ title, type, name, value, onChange,
             <fieldset className={error 
             ? "form-input-border error" 
             : "form-input-border"}>
-                <legend>{title}</legend>
+                <legend>
+                    <span>
+                        {title}
+                    </span>
+                </legend>
                 <input 
                 type={type}
                 className="text-input" 

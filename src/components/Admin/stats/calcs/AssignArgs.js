@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types'
 import Dropdown from '../../../common/Dropdown';
 import Modal from '../../../layout/Modal';
 import { dataFieldAssignRole } from '../../../../redux/actions/datafields';
@@ -7,7 +8,7 @@ import { dataGroupAssignRole } from '../../../../redux/actions/datagroups';
 import { calcAssignRole } from '../../../../redux/actions/calculations';
 import GroupArg from './GroupArg';
 
-function AssignArgs({ storedCalcs, fields, groups, calcs }) {
+function AssignArgs({ storedCalcs, fields, groups }) {
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(false)
     const [argArr, setArgArr] = useState([])
@@ -55,19 +56,19 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
     }, [groups])
 
 
-    // Map calc options
-    const [prevCalcOptions, setPrevCalcOptions] = useState([])
+    // // Map calc options
+    // const [prevCalcOptions, setPrevCalcOptions] = useState([])
 
-    useEffect(() => {
-        setPrevCalcOptions(calcs.map(calc => ({
-            name: calc.name,
-            value: fields.find(field => 
-                field.calcOutput === calc._id)?._id,
-            type: 'calc',
-            role: calc.role,
-            forbidden: calc.role ? true : false
-        })))
-    }, [calcs])
+    // useEffect(() => {
+    //     setPrevCalcOptions(calcs.map(calc => ({
+    //         name: calc.name,
+    //         value: fields.find(field => 
+    //             field.calcOutput === calc._id)?._id,
+    //         type: 'calc',
+    //         role: calc.role,
+    //         forbidden: calc.role ? true : false
+    //     })))
+    // }, [calcs])
 
     const matchArgType = type => {
         switch(type) {
@@ -84,13 +85,6 @@ function AssignArgs({ storedCalcs, fields, groups, calcs }) {
                     name: 'groupIds',
                     options: groupOptions,
                     callback: dataGroupAssignRole
-                }
-            case "calc":
-                return {
-                    title: 'שקלול',
-                    name: 'prevCalcsIds',
-                    options: prevCalcOptions,
-                    callback: dataFieldAssignRole
                 }
             default:
                 return;

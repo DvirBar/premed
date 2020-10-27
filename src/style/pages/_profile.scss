@@ -4,7 +4,7 @@
 
     .profile-container {
         border-top: 3rem;
-        & > div:not(.loadbar-soft) {
+        & > div:not(.loadbar-soft):not(.float-button-wrapper) {
             animation: opacity-load 0.5s ease;
             background-color: #fff;
             box-shadow: $default-shadow;

@@ -85,12 +85,30 @@ const useForm = (callback, defaultValues, ...params) => {
         }
     }
 
-    const initValues = () => {
-        if(!isSubmitting) {
-            setValues(defaultValues);
-            setErrors({});
+    const initValues = initValues => {
+        if(!isSubmitting) 
+            if(!initValues) {
+                setValues(defaultValues);
+                setErrors({})
+            }
+            
+            // else {
+                // setValues(
+                //     Object.keys(values).map(keyName => {
+                //         if(initValues.includes(keyName))
+                //             return values[keyName] = defaultValues[keyName]
+
+                //         return values[keyName]
+                //     }))
+
+                // setErrors({
+                //     ...Object.keys(values).map(keyName => (
+                //     initValues.includes(keyName)
+                //     ? delete errors[keyName] 
+                //     : errors[keyName]
+                // ))})
+            // }
         } 
-    }
 
     return {
         handleChange,

@@ -24,12 +24,12 @@ const useMissingArgs = (storedCalcs, dataVals) => {
                 
                         for(let field of roleGroupFields) {
                             if(!dataVals.find(val => 
-                                val.field._id === field._id)) {
+                                val.field?._id === field._id)) {
                                 return arg
                             }}}
         
                     else if(!dataVals?.find(val => 
-                        val.field.role === arg.role)) {
+                        val.field?.role === arg.role)) {
                         return arg;
                     }
                 })

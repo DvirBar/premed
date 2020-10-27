@@ -1,41 +1,55 @@
 import React, { useEffect, useState } from 'react'
 
 function Checkbox({ name, label, value, onChange, checked, isMulti }) {
-    const [isChecked, setIsChecked] = useState(checked || false);
-    const [isChanging, setIsChanging] = useState(false)
-
-    useEffect(() => {
-        if(typeof checked !== "undefined")
-            setIsChecked(checked)
-    }, [checked])
-
     const check = () => {
-        setIsChecked(!isChecked)
-        setIsChanging(true)
-    }
+        if(name) {
+            let dataObj = {}
 
-    useEffect(() => {
-        if(isChanging) {
-            let dataObj = {
-                name,
-                value: isChecked 
-                ? (typeof value.on !== "undefined"
-                    ? value.on : value)
-                : (typeof value.off !== "undefined"
-                    ? value.off : value)
+            if(isMulti) {
+                dataObj = {
+                    name,
+                    value: value,
+                    type: "multiValue"
+                }    
             }
-    
-            if(isMulti)
-                dataObj.type = "multiValue"
-    
+
+            else {
+                dataObj = {
+                    name,
+                    value: !checked
+                }
+            }
+
             onChange(dataObj)
         }
-    }, [isChanging, isChecked])
+        
+        else {
+            onChange(!checked)
+        }
+    }
+
+    // useEffect(() => {
+    //     if(isChanging) {
+    //         let dataObj = {
+    //             name,
+    //             value: isChecked 
+    //             ? (typeof value.on !== "undefined"
+    //                 ? value.on : value)
+    //             : (typeof value.off !== "undefined"
+    //                 ? value.off : value)
+    //         }
+    
+    //         if(isMulti)
+    //             dataObj.type = "multiValue"
+    
+    //         onChange(dataObj)
+    //     }
+    // }, [isChanging, isChecked])
 
     return (
         <div className="checkbox-elem">
              <div 
-            className={isChecked
+            className={checked
                 ? "checkbox checked"
                 : "checkbox"}
             onClick={() => check()}>

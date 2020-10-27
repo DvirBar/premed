@@ -204,12 +204,17 @@
 
     .data-block-content {
         padding: 2rem;
+        &:not(.group) {
+            display: flex;
+            column-gap: 3rem;
+            row-gap: 2rem;
+            flex-wrap: wrap;
+        }
     }
 }
 
 .form-fragment {
     position: relative;
-    margin: 3rem 0;
     display: flex;
     column-gap: 1rem;
 
@@ -291,7 +296,7 @@
     .group-item {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        padding: 2rem 0;
+        // padding: 2rem 0;
 
         align-items: center;
 

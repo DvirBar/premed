@@ -5,19 +5,18 @@
     box-shadow: $default-shadow;
     color: $main-color;
     background-color: #fff;
+    max-height: 15rem;
+    min-width: 12rem;
     font-size: 1.8rem;
     overflow: hidden;
-    min-width: 0;
-    max-height: 0;
-    max-width: 0;
-    transition: all 0.2s ease-out;
     font-size: 1.6rem;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.2s ease-in-out;
 
     &.open {
-        max-height: 15rem;
-        min-width: 12rem;
-        max-width: auto;
-        transition: all 0.2s ease-in;
+        transform: scale(1);
+        transition: transform 0.2s ease-in-out;
     }
 
     li {

@@ -15,7 +15,7 @@ function DataBlock({ fields, groups, dataVals, uni }) {
             <div className="block-header">
                 <p className="block-name">בגרויות</p>
             </div>
-            <div className="data-block-content">
+            <div className="data-block-content group">
                 <div className="groups-list">
                 {groups.map(group =>  // Map child groups
                     group.parent === parentGroup._id && 
@@ -32,7 +32,7 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                                 name={field._id}
                                 type={field.fieldType}
                                 defValue={dataVals.find(val => 
-                                    val.field._id === field._id)?.value}
+                                    val.field?._id === field._id)?.value}
                                 fieldOptions={field.fieldOptions}
                                 fieldValids={field.validators} />
                                 )}
@@ -64,7 +64,7 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                             name={field._id}
                             type={field.fieldType}
                             defValue={dataVals.find(val => 
-                                val.field._id === field._id)?.value}
+                                val.field?._id === field._id)?.value}
                             fieldOptions={field.fieldOptions}
                             fieldValids={field.validators}
                             disabled={field.calcOutput && !field.calcOutput.isSuggestion} />
@@ -74,7 +74,7 @@ function DataBlock({ fields, groups, dataVals, uni }) {
                                 field={field}
                                 dataVals={dataVals}
                                 value={dataVals.find(val => 
-                                    val.field._id === field._id)?.value} />
+                                    val.field?._id === field._id)?.value} />
                             }   
                         </div>
                     )}

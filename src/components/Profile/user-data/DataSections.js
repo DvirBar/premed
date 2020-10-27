@@ -7,6 +7,7 @@ import NavigateDataSections from './NavigateDataSections';
 import DataSection from './DataSection';
 import useMissingArgs from './useMissingArgs';
 import useExecCalc from './useExecCalc';
+import Calculator from './calculator/Calculator';
 
 function DataSections({ dataVals, paths }) {
     const dispatch = useDispatch()
@@ -50,6 +51,8 @@ function DataSections({ dataVals, paths }) {
 
     return (
         <Fragment>
+            <Calculator />
+
             <NavigateDataSections 
             paths={paths}
             unis={unis}

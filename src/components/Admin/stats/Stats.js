@@ -6,7 +6,6 @@ import { getCalcs, getStoredCalcs } from '../../../redux/actions/calculations';
 import InlineSelect from '../../common/InlineSelect';
 import AssignArgs from './calcs/AssignArgs';
 import AddDataField from './data-fields/AddDataField';
-import AddCalc from './calcs/AddCalc';
 import AddDataGroup from './data-groups/AddDataGroup';
 import UniSelect from './unis/UniSelect';
 import Loadbar from '../../layout/Loadbar';
@@ -22,8 +21,8 @@ function Stats() {
     const [pathGroups, setPathGroups] = useState([]); 
     // Fields filtered by path
     const [pathFields, setPathFields] = useState([]); 
-    // Calcs filtered by path
-    const [pathCalcs, setPathCalcs] = useState([]); 
+    // // Calcs filtered by path
+    // const [pathCalcs, setPathCalcs] = useState([]); 
     // Filter by university
     const [selUni, setSelUni] = useState('');
 
@@ -33,7 +32,7 @@ function Stats() {
         dispatch(getAllowedTypes());
         dispatch(getDataGroups());
         dispatch(getDataFields());
-        dispatch(getCalcs());
+        // dispatch(getCalcs());
         dispatch(getStoredCalcs());
     }, [])
 
@@ -49,28 +48,23 @@ function Stats() {
 
 
     // Data Fields
-    const fieldSelector = useSelector(state => state.datafields);
-    const fetchedFields = fieldSelector.fields;
-    const types = fieldSelector.types;
-    const [fields, setFields] = useState([])
+    const { fields, types } = useSelector(state => state.datafields);
 
-    useEffect(() => {
-        setFields(fetchedFields)
-    }, [fetchedFields])
-
-
-
-    // Calcs
+    // Stored calcs
     const calcsSelector = useSelector(state => state.calcs);
-    const fetchedCalcs = calcsSelector.calcs;
-    const { storedCalcs } = calcsSelector;
+    const storedCalcs = calcsSelector.storedCalcs;
     const loadCalcs = calcsSelector.loading;
-    const [calcs, setCalcs] = useState(fetchedCalcs);
 
-    //// Bind selector to local state
-    useEffect(() => {
-        setCalcs(fetchedCalcs)
-    }, [fetchedCalcs])
+    // // Calcs
+    // const calcsSelector = useSelector(state => state.calcs);
+    // const fetchedCalcs = calcsSelector.calcs;
+    // const { storedCalcs } = calcsSelector;
+    // const [calcs, setCalcs] = useState(fetchedCalcs);
+
+    // //// Bind selector to local state
+    // useEffect(() => {
+    //     setCalcs(fetchedCalcs)
+    // }, [fetchedCalcs])
 
 
     // Universities
@@ -117,19 +111,19 @@ function Stats() {
             setPathGroups(filtGroups)
         }
 
-        if(calcs) {
-            let filtCalcs = calcs.filter(calc => 
-                calc.path === selPath.value)
+        // if(calcs) {
+        //     let filtCalcs = calcs.filter(calc => 
+        //         calc.path === selPath.value)
 
-            setPathCalcs(filtCalcs)
-        }
+        //     setPathCalcs(filtCalcs)
+        // }
 
         if(fields) {
             let filtFields = fields.filter(field =>
                 field.path === selPath.value)
             setPathFields(filtFields)
         }
-    }, [selPath, fields, groups, calcs])
+    }, [selPath, fields, groups])
 
     const selectUni = option => {
         setSelUni(option.value)
@@ -152,8 +146,7 @@ function Stats() {
                 <AssignArgs 
                 storedCalcs={storedCalcs}
                 fields={fields}
-                groups={groups}
-                calcs={calcs} />    
+                groups={groups} />    
             </p>    
 
             <p className="stats-add-buttons"> 
@@ -166,10 +159,10 @@ function Stats() {
                 path={selPath}
                 groups={pathGroups} />
 
-                <AddCalc 
+                {/* <AddCalc 
                 path={selPath}
                 unis={pathUnis}
-                storedCalcs={storedCalcs} />
+                storedCalcs={storedCalcs} /> */}
 
                 {selPath.value && unis?.length !== 0 &&
                     <UniSelect
@@ -181,7 +174,6 @@ function Stats() {
             <MainList
             fields={pathFields}
             groups={pathGroups}
-            calcs={pathCalcs}
             types={types}
             selUni={selUni} />
         </div>

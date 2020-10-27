@@ -6,6 +6,8 @@ import FormInput from '../../../common/FormInput';
 import Dropdown from '../../../common/Dropdown';
 import Modal from '../../../layout/Modal';
 import FieldOptionsList from './FieldOptionsList';
+import Checkbox from '../../../common/Checkbox';
+import { useSelector } from 'react-redux';
 
 function AddDataField({ path, types, unis }) {
     const [displayModal, setDisplayModal] = useState(false)
@@ -16,7 +18,8 @@ function AddDataField({ path, types, unis }) {
             name: '',
             fieldType: '',
             dataType: '',
-            pathId: path.value
+            pathId: path.value,
+            isSuggestion: false
         })
     }, [path])
 
@@ -24,7 +27,8 @@ function AddDataField({ path, types, unis }) {
         handleChange,
         handleSubmit,
         values,
-        errors
+        errors,
+        initValues
     } = useForm(addDataField, defaultValues)
 
     const fieldTypes = types?.fieldTypes;
@@ -62,10 +66,27 @@ function AddDataField({ path, types, unis }) {
             value: uni._id
         }))])
     }, [unis, path])
+
+
+    const storedCalcs = useSelector(state => state.calcs.storedCalcs)
+    const [calcOptions, setCalcOptions] = useState([])
+
+    // Stored calcs 
+    useEffect(() => {
+        setCalcOptions([{ name: "ללא", value: undefined }, 
+        ...storedCalcs.map(calc => ({
+            name: calc.name,
+            value: calc.id
+        }))])        
+    }, [storedCalcs])
     
     const toggleModal = open => {
         setDisplayModal(open)
     }
+
+    useEffect(() => {
+        console.log(values);
+    }, [values])
 
     return (
         <Fragment>
@@ -118,6 +139,19 @@ function AddDataField({ path, types, unis }) {
                             onChange={handleChange} />
                         }
 
+                        <div className="calc-section">
+                            <Dropdown
+                            options={calcOptions}
+                            name="storedCalc"
+                            title="שקלול"
+                            onChange={handleChange} />
+
+                            <Checkbox 
+                            name="isSuggestion"
+                            label="סימון כהצעה"
+                            onChange={handleChange}
+                            checked={values.isSuggestion} />
+                        </div>
                         <button type="submit">הוסף</button>
                     </div>
 

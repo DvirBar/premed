@@ -14,26 +14,21 @@ function CalcBlock({ field, dataVals, value }) {
 
     useEffect(() => {
         setStoredCalc(storedCalcs?.filter(storCalc => 
-            storCalc.id === calc.calc))
+            storCalc.id === field.calcOutput.storedCalc))
     }, [storedCalcs, calc])
 
-    useEffect(() => {
-        console.log(storedCalc);
-    }, [storedCalc])
-
     const argsMissing = useMissingArgs(storedCalc, dataVals)
-    console.log(argsMissing);
 
     return (
         <Fragment>
-            {field.calcOutput && field.calcOutput.isSuggestion &&
+            {field && field.calcOutput.isSuggestion &&
                 <fieldset className={argsMissing?.length === 0 
                 ? "calc-block"
                 : "calc-block missing"}>
                     <legend>הצעה</legend>
                     {argsMissing?.length === 0 
                     ?  <div>
-                            {value.suggestValue}
+                            {value?.suggestValue}
                         </div>
                     :  <div> 
                         חסרים נתונים
