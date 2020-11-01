@@ -6,6 +6,9 @@ import {
     TABLE_UPDATE,
     TABLE_TOGGLE_ENABLED,
     TABLE_DELETE,
+    THRESHOLD_ADD,
+    THRESHOLD_UPDATE,
+    THRESHOLD_DELETE
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +67,63 @@ export default function(state = initialState, action) {
                     }
                     return table
                 })
+            }
+
+        case THRESHOLD_ADD:
+            return {
+                ...state,
+                loading: false,
+                tables: state.tables.map(table =>
+                    table._id === payload.tableId
+                    ?   {
+                        ...table,
+                        thresholds: [
+                            ...table.thresholds.filter(thresh =>
+                                !payload.thresholds.find(fieldThresh =>
+                                    fieldThresh._id === thresh._id)),
+                            
+                            ...payload.thresholds
+                        ]}
+                    :   table  
+                    )
+            }
+
+        case THRESHOLD_EDIT:
+            return {
+                ...state,
+                loading: false,
+                tables: state.tables.map(table =>
+                    table._id === payload.tableId
+                    ?   {
+                        ...table,
+                        thresholds: [
+                            ...table.thresholds.filter(thresh =>
+                                !payload.thresholds.find(fieldThresh =>
+                                    fieldThresh._id === thresh._id)),
+                            
+                            ...payload.thresholds
+                        ]}
+                    :   table  
+                    )
+            }
+
+        case THRESHOLD_DELETE:
+            return {
+                ...state,
+                loading: false,
+                tables: state.tables.map(table =>
+                    table._id === payload.tableId
+                    ?   {
+                        ...table,
+                        thresholds: [
+                            ...table.thresholds.filter(thresh =>
+                                !payload.thresholds.find(fieldThresh =>
+                                    fieldThresh._id === thresh._id)),
+                            
+                            ...payload.thresholds
+                        ]}
+                    :   table  
+                    )
             }
 
         case TABLE_DELETE:
