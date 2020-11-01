@@ -8,10 +8,44 @@ const DataTable = require('../../models/DataTable');
 
 // Errors
 import dataTablesMessages from '../../messages/data-tables';
+import findClosestDates from '../../utils/datesService';
 
-const { DataTableSuccessDelete, UnlockDisabledTable,
-     DataTableNotExist } = dataTablesMessages;
+const { DataTableSuccessDelete, ThresholdSuccessDelete, 
+     InvalidThreshType, InvalidRejectValue, InvalidAcceptValue,
+      DataTableNotExist, ThresholdNotExist } = dataTablesMessages;
 
+
+const validateDateValues = (closestDates, thresholds, threshType, value) => {
+    if(closestDates.later) {
+        const laterThresh = thresholds.find(thresh =>
+            new Date(thresh.date).getTime() === closestDates.later.getTime())
+
+        if(threshType === 'accept' 
+        && laterThresh.value > value) {
+            throw InvalidAcceptValue
+        }
+
+        else if(threshType === 'reject' 
+        && laterThresh.value < value) {
+            throw InvalidRejectValue
+        } 
+    }
+
+    if(closestDates.earlier) {
+        const earlierThresh = thresholds.find(thresh =>
+            new Date(thresh.date).getTime() === closestDates.earlier.getTime())
+
+        if(threshType === 'accept' 
+        && earlierThresh.value < value) {
+            throw InvalidAcceptValue
+        }
+
+        else if(threshType === 'reject' 
+        && earlierThresh.value > value) {
+            throw InvalidRejectValue
+        } 
+    }
+}
 
 // @route   GET api/datatables/:id
 // @desc    Get data table by id
@@ -149,6 +183,199 @@ router.put('/:id/toggleEnabled', [auth, authAdmin], (req, res, next) => {
              })
              .catch(next); // Find table to toggle enabled status
 });
+
+// @route   PUT api/datatables/:id/addThreshold
+// @desc    Add threshold
+// @access  Admin
+router.put('/:id/addThreshold', [auth, authAdmin], (req, res, next) => {
+    const {
+        threshType,
+        date,
+        isFinal,
+        fieldId,
+        value
+    } = req.body
+    
+    if(threshType !== 'reject' && threshType !== 'accept') {
+        return res.status(InvalidThreshType.status)
+                  .send(InvalidThreshType.msg)     
+    }
+
+    const tableId = req.params.id;
+
+    DataTable.findById(tableId)
+             .then(table => {
+                if(!table)
+                    return res.status(DataTableNotExist.status)
+                              .send(DataTableNotExist.msg)
+
+                const thresholds = table.thresholds.filter(thresh => 
+                    thresh.field === fieldId)
+
+                if(thresholds.length !== 0) {
+                    const closestDates = findClosestDates(
+                        date,
+                        thresholds.map(thresh => thresh.date)
+                    )
+                    
+                    try {
+                        validateDateValues(closestDates, thresholds, threshType, value)
+                    }
+
+                    catch(err) {
+                        return res.status(err.status).send(err.msg)
+                    }
+
+                    /* If field is set to final, check that it is the only one.
+                    if not, set the other isFinal to false */
+                    if(isFinal) {
+                        const formerFinal = thresholds.find(thresh => 
+                            thresh.isFinal 
+                            && thresh.threshType === threshType)
+    
+                        if(formerFinal)
+                            formerFinal.isFinal = false
+                    }
+                }
+
+                const newThreshold = {
+                    threshType,
+                    date,
+                    isFinal,
+                    field: fieldId,
+                    value
+                }
+
+                thresholds.push(newThreshold)
+
+                DataTable.save()
+                         .then(() => {
+                             return res.send(thresholds)
+                         })
+                         .catch(next)
+             })
+             .catch(next)
+})
+
+
+// @route   PUT api/datatables/:id/:threshId
+// @desc    Edit threshold
+// @access  Admin
+router.put('/:id/:threshId', [auth, authAdmin], (req, res, next) => {
+    const {
+        threshType,
+        date,
+        isFinal,
+        value
+    } = req.body
+    
+    if(threshType !== 'reject' && threshType !== 'accept') {
+        return res.status(InvalidThreshType.status)
+                  .send(InvalidThreshType.msg)     
+    }
+
+    const tableId = req.params.id;
+    const threshId = req.params.threshId
+
+    DataTable.findById(tableId)
+             .then(table => {
+                if(!table)
+                    return res.status(DataTableNotExist.status)
+                              .send(DataTableNotExist.msg)
+
+                const thresholds = table.thresholds
+                const editThresh = thresholds.id(threshId)
+                
+                const fieldThresholds = thresholds.filter(thresh =>
+                    thresh.field === editThresh.field)
+
+                
+                
+                if(fieldThresholds.length !== 0 ) {
+                    // Validate date-value consistency only if value or date has changed
+                    if (value !== editThresh.value 
+                    || new Date(date).getTime() !== new Date(editThresh.date).getTime()) {
+                        const closestDates = findClosestDates(
+                            date,
+                            fieldThresholds.map(thresh => thresh.date)
+                        )
+                        
+                        try {
+                            validateDateValues(closestDates, fieldThresholds, threshType, value)
+                        }
+    
+                        catch(err) {
+                            return res.status(err.status).send(err.msg)
+                        }
+                    }
+                    
+                    if(isFinal) {
+                        const formerFinal = fieldThresholds.find(thresh => 
+                            thresh.isFinal 
+                            && thresh._id !== threshId 
+                            && thresh.threshType === threshType)
+    
+                        if(formerFinal)
+                            formerFinal.isFinal = false
+                    }
+                }
+
+                /* If field is set to final, check that it is the only one.
+                    if not, set the other isFinal to false */
+                if(isFinal && fieldThresholds !== 0) {
+                   
+                }
+                
+                editThresh.set({
+                    ...editThresh,
+                    threshType,
+                    date,
+                    isFinal,
+                    value
+                })
+
+                DataTable.save()
+                         .then(() => {
+                             return res.send(fieldThresholds)
+                         })
+                         .catch(next)
+             })
+             .catch(next)
+})
+
+
+// @route   PUT api/datatables/:id/:threshId
+// @desc    Remove threshold
+// @access  Admin
+router.put('/:id/:threshId/remove', [auth, authAdmin], (req, res, next) => {
+    const tableId = req.params.id;
+    const threshId = req.params.threshId
+
+    DataTable.findById(tableId)
+             .then(table => {
+                if(!table)
+                    return res.status(DataTableNotExist.status)
+                              .send(DataTableNotExist.msg)
+
+                const delThresh = table.thresholds.id(threshId)
+
+                if(!delThresh) 
+                    return res.status(ThresholdNotExist.status)
+                              .send(ThresholdNotExist.msg)
+
+                delThresh.remove()
+
+                DataTable.save()
+                         .then(() => {
+                             return res.status(ThresholdSuccessDelete)
+                                       .send(ThresholdSuccessDelete.msg)
+                         })
+                         .catch(next)
+
+            })
+            .catch(next)
+})
+
 
 // @route   DELETE api/datatables/:id
 // @desc    Delete data table
