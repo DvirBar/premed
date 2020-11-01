@@ -161,40 +161,51 @@ router.post('/', auth, (req, res, next) => {
 })
 
 
-// @route   Post api/userdata/simulateCalc
+// @route   Post api/userdata/simulateCalcs
 // @desc    Simulate calculations
 // @access  Private
-router.post('/simulateCalc', auth, (req, res, next) => {
+router.post('/simulateCalcs', auth, (req, res, next) => {
     const {
         values,
         calcIds
     } = req.body
 
     // Find all stored calcs that should be executed
-    const storCalcs = storCalcs.filter(calc =>
+    const storCalcs = storedCalcs.filter(calc =>
         calcIds.includes(calc.id))
+    
+    let resultArray = []
 
-    let resultArray
+    for(let calc of storCalcs) {
+        let calcResult
 
-    for(let calc of storeCalcs) {
-        const calcResult = executeCalc(calc, values)
-        
-        // Find relevan outputfield
-        DataField.find({ calcOutput: { $exists: true }})
-            .populate('calcOutput')
-            .then(fields => {
-                const calcFieldId = fields.find(field => 
-                field.calcOutput.calc === storCalc.id)._id
+        try {
+            calcResult = executeCalc(calc, values)
+        }
 
-                resultArray.push({
-                    fieldId: calcFieldId,
-                    result: calcResult
-                })
-            })
-            .catch(next)
+        catch(error) {
+            return res.status(error.status).send(error.msg)
+        }
+       
+        resultArray.push({
+            calc,
+            result: calcResult
+        })
     }
 
-    return res.send(resultArray)
+    // Find relevant outputfield
+    DataField.find({ calcOutput: { $exists: true }})
+        .populate('calcOutput')
+        .then(fields => {
+            resultArray = resultArray.map(item => ({
+                field: fields.find(field => 
+                    field.calcOutput.storedCalc === item.calc.id),
+                result: item.result
+            }))
+
+            return res.send(resultArray)
+        })
+        .catch(next)    
 })
 
 

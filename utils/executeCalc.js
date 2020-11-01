@@ -17,10 +17,11 @@ const executeCalc = (storCalc, values) => {
             
             // Check that all group fields have a value
             if(groupVals.length !== arg.fields.length) {
-                return {
+                console.log(arg);
+                throw new Error({
                     status: ArgsInsuffice.status,
                     msg: ArgsInsuffice.msg
-                }
+                })
             }
             
             // Iterate all group fields
@@ -40,11 +41,13 @@ const executeCalc = (storCalc, values) => {
 
         else {
             const argValue = values.find(val => 
-                val.role === arg.role)
+                val.field.role === arg.role)
 
             if(!argValue)
-                return res.status(ArgsInsuffice.status)
-                        .send(ArgsInsuffice.msg)
+                throw {
+                    status: ArgsInsuffice.status,
+                    msg: ArgsInsuffice.msg
+                }
 
             params[arg.varName] = argValue.value
         }

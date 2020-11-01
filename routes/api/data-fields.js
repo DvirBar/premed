@@ -43,7 +43,12 @@ router.get('/:pathIds', (req, res, next) => {
     const pathIds = JSON.parse(req.params.pathIds)
 
     DataField.find({ $or: [{ path: { $in: pathIds}}, { path: undefined }]})
-            .populate("group")
+            .populate({
+                path: 'group',
+                populate: {
+                    path: 'parent'
+                }
+            })
             .then(fields => {
                 return res.send(fields);
             })
