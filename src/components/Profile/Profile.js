@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouteMatch, Link } from 'react-router-dom';
 import TopLinks from '../layout/TopLinks';
 import ProfileRouter from './ProfileRouter';
@@ -21,10 +21,21 @@ function Profile() {
         }
     ]
 
+    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
+
+    const selectLink = url => {
+        setSelectedLink(url)
+    }
+
+    console.log(selectedLink);
+
     return (
         <div className="user-profile">
             <div className="top-content-nav">
-                <TopLinks className="top-links-profile-nav">
+                <TopLinks 
+                className="top-links-profile-nav"
+                selectLink={selectLink}
+                selected={selectedLink}>
                     {linksList.map(link => 
                         <Link
                         className="profile-link" 

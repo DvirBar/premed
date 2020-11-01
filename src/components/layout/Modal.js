@@ -9,8 +9,7 @@ const Modal = ({
   children, 
   title, 
   subTitle, 
-  linksList, 
-  selectLink })=> {
+  links })=> {
     
     // We'll use ref of modal box, so when clicking outside it'll close
     const ref = useRef();
@@ -57,10 +56,17 @@ const Modal = ({
                 <span className="modal-title">{title}</span>
                 <span className="modal-subtitle">{subTitle}</span>
               </p>
-              {linksList && 
+              {links?.linksList && 
                 <TopLinks 
-                linksList={linksList}
-                selectLink={selectLink} />}
+                selectLink={links.selectLink}
+                selected={links.selected}>
+                    {links.linksList.map(link => 
+                      <div 
+                      key={link.loc}
+                      id={link.loc}>
+                        {link.name}
+                      </div> )}
+                </TopLinks>}
             </div>
             <div className="modal-body">
               {children}

@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function TopLinks({ className, children }) {
-    const [selected, setSelected] = useState(children[0].props.id)
-
-    console.log(children);
-
-    const selectLink = id => {
-        console.log("clicked");
-        setSelected(id)
-        return true;
-    }
-
+function TopLinks({ className, children, selectLink, selected }) {
     return (
         <ul className={className 
         ?   `top-links ${className}`
