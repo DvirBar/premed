@@ -1,10 +1,21 @@
-export const getFieldByArgs = (fields, args) => {
-
+export const getFieldsByArgs = (fields, calcs) => {
     const fieldArr = fields.filter(field => 
-        args.find(arg => 
-            arg.role === field.role
-        ||  arg.role === field.group.role
-        ||  arg.role === field.calcOutput.role))
+        calcs?.find(calc => calc.args.find(arg => {
+            switch(arg.type) {
+                case 'field':
+                    return arg.role === field.role
+            
+                case 'group':
+                    return arg.role === field.group?.role
+                
+                default: return false;
+            }
+        })))
 
     return fieldArr
 }
+
+export const getCalcFields = fields => {
+    return fields.filter(field => field.calcOutput)
+}
+ 

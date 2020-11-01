@@ -2,11 +2,13 @@ import {
     USER_DATA_LOADING,
     USER_DATA_LOAD_SOFT,
     USER_DATA_SUCCESS,
-    COPY_DATA_SIMULATION,
     USER_DATA_PATH_SUCCESS,    
     USER_DATA_ERROR,
     USER_DATA_ADD,
+    CHANGE_TABLE,
+    COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
+    INSERT_DATA_SIMULATION,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -95,21 +97,55 @@ export const addUserData = data => dispatch => {
             })
 }
 
+// Change selected data table
+export const changeSelTable = tableId => dispatch => {
+    dispatch(dataLoad())
+    dispatch({
+        type: CHANGE_TABLE,
+        payload: tableId
+    })
+}
+
+// Copy data to simaltion data
+export const copyToSimulate = (tableId, fields) => dispatch => {
+    dispatch(dataLoad())
+
+    dispatch({
+        type: COPY_DATA_SIMULATION,
+        payload: {
+            tableId,
+            fields
+        }
+    })
+}
+
 // Simulate calculations and get results
 export const simulateCalcs = data => dispatch => {
     // Request body
     const body = JSON.stringify(data);
 
-    axios.post('api/simulateCalcs', body)
+    axios.post('api/userdata/simulateCalcs', body)
          .then(res => {
              dispatch ({
                 type: SIMULATE_CALCS,
                 payload: res.data
              })})
          .catch(err => {
+             console.log(err);
              dispatch(dataError())
              dispatch(getError(err))
             })
+}
+
+// Insert data to simulation vals
+export const insertDataSimulation = (field, value) => dispatch => {
+    dispatch({
+        type: INSERT_DATA_SIMULATION,
+        payload: {
+            field,
+            value
+        }
+    })
 }
 
 // Edit user paths

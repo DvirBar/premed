@@ -51,7 +51,6 @@ function DataSections({ dataVals, paths }) {
 
     return (
         <Fragment>
-            <Calculator />
 
             <NavigateDataSections 
             paths={paths}

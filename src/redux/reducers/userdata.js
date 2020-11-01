@@ -5,8 +5,10 @@ import {
     USER_DATA_PATH_SUCCESS,
     USER_DATA_ERROR,
     USER_DATA_ADD,
+    CHANGE_TABLE,
     COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
+    INSERT_DATA_SIMULATION,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -23,8 +25,9 @@ const initialState = {
     softLoading: false,
     tableData: [],
     data: {},
+    selTable: null,
     changedField: {},
-    simulatedData: {},
+    simulatedData: [],
     ordering: {
         filters: [],
         sort: {
@@ -64,11 +67,57 @@ export default function(state = initialState, action) {
                 softLoading: false
             }
 
-        case COPY_DATA_SIMULATION: 
+        case CHANGE_TABLE:
             return {
                 ...state,
                 loading: false,
-                simulatedData: state.data
+                selTable: payload
+            }
+ 
+        case COPY_DATA_SIMULATION: 
+            const table = state.data.tables.find(thisTable => 
+                thisTable.table._id === state.selTable)
+            console.log(state.selTable);
+            return {
+                ...state,
+                loading: false,
+                simulatedData: table.dataVals.filter(val => 
+                    payload.fields.find(field =>
+                        field._id === val.field._id))
+            }
+
+        case SIMULATE_CALCS: 
+            return {
+                ...state,
+                softLoading: false,
+                simulatedData: [
+                    ...state.simulatedData.filter(dataItem =>
+                        !payload.find(item =>
+                            item.field._id === dataItem.field._id)),
+                    
+                    ...payload.map(item => ({
+                        field: item.field,
+                        value: (item.result).toString()
+                    }))
+                ]
+            }    
+
+        case INSERT_DATA_SIMULATION: 
+            return {
+                ...state,
+                softLoading: false,
+                simulatedData:
+                state.simulatedData.find(dataItem => 
+                    dataItem.field._id === payload.field._id)
+                ?   state.simulatedData.map(dataItem =>
+                    dataItem.field._id === payload.field._id
+                    ?   {
+                            ...dataItem,
+                            value: payload.value
+                        }
+                    :   dataItem)
+                
+                :   [...state.simulatedData, payload]
             }
 
         case USER_DATA_PATH_SUCCESS:

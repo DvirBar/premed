@@ -28,7 +28,6 @@ function EditDataPaths({ userPaths, display, toggleModal, title }) {
         display={display}
         toggleModal={toggleModal}
         title={title}>
-
             <form onSubmit={handleSubmit} className="choose-path">
                 <p className="choose-path-error">{errors.pathIds}</p>
                 <div className="options-container">
@@ -57,8 +56,7 @@ function EditDataPaths({ userPaths, display, toggleModal, title }) {
                         שמירה
                     </button>
                 </p>
-            </form>
-
+            </form> 
         </Modal>
     )
 }

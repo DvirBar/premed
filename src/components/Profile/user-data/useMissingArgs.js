@@ -49,7 +49,7 @@ const useMissingArgs = (storedCalcs, dataVals) => {
         }
 
         setMissingArgs(tempArgs)
-    }, [storedCalcs, dataVals])
+    }, [dataVals])
 
     return missingArgs
 }

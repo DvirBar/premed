@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneUserData } from '../../../redux/actions/userdata';
 import Loadbar from '../../layout/Loadbar';
 import SoftLoadbar from '../../layout/SoftLoadBar';
+import Calculator from './calculator/Calculator';
 import ChoosePath from './ChoosePath';
-import useMissingArgs from './useMissingArgs';
 import UserStats from './UserStats';
 
 function ValidatePath() {
@@ -30,6 +30,7 @@ function ValidatePath() {
                }
 
                 <UserStats data={data} />
+                <Calculator />
             </Fragment>
         )
     }

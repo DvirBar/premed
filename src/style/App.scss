@@ -267,10 +267,10 @@ th {
 @import 'pages/dashboard';
 @import 'pages/steps';
 @import 'pages/drive';
-@import 'pages/profile';
-@import 'pages/userdata';
+@import 'pages/profile/index';
 @import 'pages/stats';
 @import 'pages/questions';
+// @import 'pages/profile/calculator';
 
 @import 'admin/admin';
 @import 'admin/default';

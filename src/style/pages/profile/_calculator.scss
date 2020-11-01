@@ -1,0 +1,103 @@
+.calculator-content {
+    .goto-pick-calcs {
+        display: flex;
+        color: $main-color;
+        position: relative;
+        cursor: pointer;
+        font-size: 1.8rem;
+
+        i {
+            justify-self: flex-start;
+            transform: translateX(0px);
+            font-size: 2.8rem;
+        }
+        
+        &:hover > i {
+            animation: tilt 2s infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes tilt {
+            0% { transform: translateX(0); }
+            12.5% { transform: translateX(3px); }
+            25% { transform: translateX(0); }
+            37.5% { transform: translateX(3px); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(0); }
+        }
+    }
+}
+
+.choose-calcs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    .choose-calcs-error {
+        color: $error-color;
+        border-right: 5px solid $error-color;
+        padding: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: inline;
+        align-self: flex-start;
+
+        &.display {
+            opacity: 1;
+        }
+        
+    }
+
+    .choose-calcs-instructions {
+        color: #999;
+        font-size: 1.8rem;
+    }
+
+    .finish-button {
+        align-self: center;
+        width: 20rem;
+    }
+}
+
+.choose-calcs-list {
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+
+    .uni-calcs-item {   
+        .uni-name {
+            color: $main-color;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .calcs-options-list {
+            padding: 1rem 0;
+            display: flex;
+            column-gap: 1.5rem;
+            row-gap: 1.5rem;
+            flex-wrap: wrap;
+
+            .choose-calc-option {
+                padding: 1rem;
+                color: #999;
+                border: 1.5px solid #999;
+                border-radius: 1rem;
+                transition: all 0.3s ease;
+                cursor: pointer;
+
+                &:hover {
+                    border-color: $main-color;
+                    color: $main-color;
+                }
+                
+                &.chosen {
+                    border-color: $main-color;
+                    background-color: $main-color;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
