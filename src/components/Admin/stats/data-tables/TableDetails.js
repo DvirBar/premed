@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { toggleEnabled } from '../../../../redux/actions/datatables'
+import React, { useState } from 'react'
 import Modal from '../../../layout/Modal'
 import EditSection from './EditSection'
+import Thresholds from './thresholds/Thresholds'
 
 function TableDetails({ table, display, toggleModal }) {
     const [selectedLink, setSelectedLink] = useState('edit')
@@ -33,7 +33,10 @@ function TableDetails({ table, display, toggleModal }) {
         toggleModal={toggleModal}
         title={table.name}
         links={links}>
-            {selectedLink === "edit" && <EditSection table={table} />}
+            {selectedLink === "edit" && 
+                <EditSection table={table} />}
+            {selectedLink === "thresholds" && 
+                <Thresholds tableId={table._id} />}
         </Modal>
     )
 }

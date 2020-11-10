@@ -20,12 +20,6 @@ function EditTable({ table }) {
         errors
     } = useForm(editTable, defaultValues, table._id)
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
-
-
     return (
         <form onSubmit={handleSubmit} noValidate>
             <FormInput

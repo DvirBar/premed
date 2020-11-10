@@ -15,8 +15,6 @@ function useDateGap() {
         const mins = Math.floor(diff / (1000 * 60));
         const seconds = Math.floor(diff / (1000));
 
-        console.log(diff);
-
         if(seconds < 60) {
             return 'הרגע'
         }

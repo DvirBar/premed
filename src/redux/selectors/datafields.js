@@ -18,4 +18,11 @@ export const getFieldsByArgs = (fields, calcs) => {
 export const getCalcFields = fields => {
     return fields.filter(field => field.calcOutput)
 }
+
+export const getCalcFieldsByUnis = (fields, pathId, uniId) => {
+    return fields.filter(field => 
+        field.calcOutput 
+        && field.path === pathId
+        && field.university._id === uniId)
+}
  

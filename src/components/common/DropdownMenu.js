@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import useOnClickOutside from './useOnClickOutside';
 
 function DropdownMenu({ display, toggleMenu, options}) {
 

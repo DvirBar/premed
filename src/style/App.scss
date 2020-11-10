@@ -257,6 +257,8 @@ th {
 @import 'common/multiselect';
 @import 'common/carousel';
 @import 'common/inlinemultiselect';
+@import 'common/datepicker';
+@import 'common/icons';
 
 @import 'forms/main';
 @import 'forms/input';
@@ -270,7 +272,6 @@ th {
 @import 'pages/profile/index';
 @import 'pages/stats';
 @import 'pages/questions';
-// @import 'pages/profile/calculator';
 
 @import 'admin/admin';
 @import 'admin/default';
@@ -284,5 +285,6 @@ th {
 @import 'admin/calcs';
 @import 'admin/tables';
 @import 'admin/questions';
+@import 'admin/thresholds';
 
 

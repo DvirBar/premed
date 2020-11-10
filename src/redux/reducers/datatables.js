@@ -88,7 +88,7 @@ export default function(state = initialState, action) {
                     )
             }
 
-        case THRESHOLD_EDIT:
+        case THRESHOLD_UPDATE:
             return {
                 ...state,
                 loading: false,
@@ -115,13 +115,9 @@ export default function(state = initialState, action) {
                     table._id === payload.tableId
                     ?   {
                         ...table,
-                        thresholds: [
-                            ...table.thresholds.filter(thresh =>
-                                !payload.thresholds.find(fieldThresh =>
-                                    fieldThresh._id === thresh._id)),
-                            
-                            ...payload.thresholds
-                        ]}
+                        thresholds: table.thresholds.filter(thresh =>
+                            thresh._id !== payload.threshId)
+                        }
                     :   table  
                     )
             }

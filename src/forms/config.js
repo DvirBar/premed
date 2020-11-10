@@ -55,6 +55,10 @@ export const config = {
 
         storedCalcId: {
             isRequired: { message: 'יש לבחור שקלול' }
+        },
+
+        value: {
+            isRequired: { message: 'יש להזין ערך'}
         }
     }
 }

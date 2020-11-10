@@ -1,0 +1,96 @@
+.calendar-float {
+    box-shadow: $default-shadow;
+    border: none;
+    border-radius: 0.5rem;
+    width: 360px;
+    padding: 0.5rem;
+
+    button[disabled] {
+        background-color: inherit;
+        color: #ccc !important;
+        cursor: default;
+    }
+
+    .react-calendar__navigation {
+        button {
+            color: $main-color !important;
+
+            &[disabled] {
+                color: #ccc !important;
+            }
+        }
+    }
+
+    .react-calendar__month-view__weekdays {
+        color: $main-color;
+        font-size: 1.5rem;
+    }
+
+    .react-calendar__tile {
+        font-size: 1.8rem;
+    }
+
+    .react-calendar__tile--now {
+        background-color: #aaa;
+        color: #fff;
+
+        &:hover {
+            background-color: #aaa;
+            color: #fff !important;
+        }
+    }
+
+    .react-calendar__month-view__days__day--weekend {
+        color: $main-color;
+    }
+
+    .react-calendar__month-view__days__day--neighboringMonth {
+        color: #ccc;
+    }
+
+    .react-calendar__tile--active {
+        background: $main-color;
+        color: #fff !important;
+
+        &:hover {
+            color: #fff !important;
+        }
+    }
+
+    .react-calendar__tile--active:enabled:hover, 
+    .react-calendar__tile--active:enabled:focus {
+        background-color: $main-color;
+    }
+
+    .react-calendar__tile:hover {
+        color: $main-color;
+    }
+}
+
+.form-date-picker {
+    position: relative;
+    z-index: 0;
+    
+    .modal-wrapper {
+        width: 100%; 
+        height: 100%;
+        background-color: #0006;
+        z-index: 1;
+        position: fixed;
+        overflow-y: auto;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+        backdrop-filter: blur(2px);
+    }
+
+    .cal-wrapper {
+        display: block;
+        z-index: 2;
+        position: absolute;
+    }
+}
+

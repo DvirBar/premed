@@ -44,6 +44,7 @@ function App() {
 
   moment.locale('he');
 
+
   const [paths, setPaths] = useState([])
   const selPaths = useSelector(state => state.paths);
   const fetchedPaths = selPaths.paths;

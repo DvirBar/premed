@@ -96,7 +96,7 @@ export const toggleEnabled = id => dispatch => {
             })
 }
 
-export const addThreshold = (tableId, data) => disptach => {
+export const addThreshold = (tableId, data) => dispatch => {
     const body = JSON.stringify(data)
 
     axios.put(`api/datatables/${tableId}/addThreshold`, body)
@@ -108,31 +108,31 @@ export const addThreshold = (tableId, data) => disptach => {
              }
          }))
          .catch(err => {
-             disptach(tableError())
-             disptach(getMessage(err))
+             dispatch(tableError())
+             dispatch(getMessage(err))
          })
 }
 
 
-export const editThreshold = (tableId, threshId, data) => disptach => {
+export const editThreshold = (tableId, threshId, data) => dispatch => {
     const body = JSON.stringify(data)
 
     axios.put(`api/datatables/${tableId}/${threshId}`, body)
          .then(res => dispatch({
-             type: THRESHOLD_EDIT,
+             type: THRESHOLD_UPDATE,
              payload: {
                 tableId,
                 thresholds: res.data
             }
          }))
          .catch(err => {
-             disptach(tableError())
-             disptach(getMessage(err))
+             dispatch(tableError())
+             dispatch(getMessage(err))
          })
 }
 
 
-export const deleteThreshold = (tableId, threshId) => disptach => {
+export const deleteThreshold = (tableId, threshId) => dispatch => {
     axios.put(`api/datatables/${tableId}/${threshId}/remove`)
          .then(res => {
              dispatch({
@@ -142,11 +142,12 @@ export const deleteThreshold = (tableId, threshId) => disptach => {
                     threshId
                 }
             })
-            disptach(getMessage(res.data))
+            dispatch(getMessage(res.data))
         })
          .catch(err => {
-             disptach(tableError())
-             disptach(getMessage(err))
+             console.log(err);
+             dispatch(tableError())
+             dispatch(getMessage(err))
          })
 }
 

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import useOnClickOutside from './useOnClickOutside';
 
 const Dropdown = ({ options, defaultOption, name, title, 
     onChange, placeholder, uniqueListKey, width }) => {
@@ -38,8 +39,14 @@ const Dropdown = ({ options, defaultOption, name, title,
         width: width
     }
 
+    const ref = useRef()
+    useOnClickOutside(ref, display, () => setDisplay(false))
+
     return (
-        <div className="dropdown" style={width ? widthStyle : {}}>
+        <div 
+        className="dropdown" 
+        ref={ref}
+        style={width ? widthStyle : {}}>
             <p 
             className="dropdown-main"
             onClick={() => toggleDrop()}>

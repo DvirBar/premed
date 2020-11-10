@@ -21,7 +21,6 @@ const useForm = (callback, defaultValues, ...params) => {
         // If there are errors cancel submit
         if(errors)
             setIsSubmitting(false)
-
     }, [errors])
 
     const handleSubmit = event => {
