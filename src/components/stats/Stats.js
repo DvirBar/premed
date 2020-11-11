@@ -1,45 +1,34 @@
-import React, { useState } from 'react'
-import { useRouteMatch, Link } from 'react-router-dom';
+import React, { useEffect, useState, Fragment } from 'react'
 import { useSelector } from 'react-redux';
-import TopLinks from '../layout/TopLinks';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { getPriorityTable } from '../../redux/selectors/datatables';
+import { getAllPaths } from '../../redux/selectors/paths';
+import Loadbar from '../layout/Loadbar';
 import StatsRouter from './StatsRouter';
+import Topbar from './topbar/TopBar';
 
 function Stats() {
-    let { path } = useRouteMatch();
+    let history = useHistory()
+    let { path } = useRouteMatch()
+    const paths = useSelector(getAllPaths)
+    const activeTable = useSelector(getPriorityTable)
 
-    const paths = useSelector(state => state.paths.paths)
-
-    const linksList = paths.map(pathItem => ({
-        name: pathItem.name,
-        url: `${path}/${pathItem._id}`
-    }))
-
-    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
+    useEffect(() => {
+        if(activeTable) {
+            history.push(`${path}/${paths[0]._id}/${activeTable._id}`)
+        }
+    }, [activeTable])
     
-    const selectLink = url => {
-        setSelectedLink(url)
+    if(!activeTable) {
+        return <Fragment></Fragment>
     }
 
     return (
-        <div>
-            <div className="top-content-nav">
-                <TopLinks 
-                className="top-links-profile-nav"
-                selectLink={selectLink}
-                selected={selectedLink}>
-                    {linksList.map(link => 
-                        <Link
-                        className="profile-link" 
-                        key={link.url} 
-                        to={link.url} 
-                        id={link.url}>
-                            {link.name}
-                        </Link>
-                        )}
-                </TopLinks>
-            </div> 
-            
-            <StatsRouter />
+        <div className="stats-main">
+            <Fragment>
+                <Topbar tableId={activeTable._id} />
+                <StatsRouter />
+            </Fragment>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import FieldOptions from './FieldOptions';
 
-function DataTable({ fields, unis, data}) {
+function DataTable({ fields, unis, data }) {
     const [tableSections, setTableSections] = useState([]);
     const [displayOrder, setDisplayOrder] = useState(false);
     const [selField, setSelField] = useState({});

@@ -10,6 +10,7 @@ import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getAnc } from './redux/actions/anouncements';
 import { getQuestGroups } from './redux/actions/questgroups';
+import { getTables } from './redux/actions/datatables';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
@@ -30,6 +31,7 @@ function App() {
     dispatch(getPages());
     dispatch(getAnc());
     dispatch(getQuestGroups());
+    dispatch(getTables())
 
     if(auth) {
       axios.defaults.headers.common['x-auth-token'] = auth.token;
@@ -52,12 +54,13 @@ function App() {
   const loadSteps = useSelector(state => state.steps.loading);
   const loadPages = useSelector(state => state.pages.loading);
   const loadAncs = useSelector(state => state.ancs.loading);
+  const loadTables = useSelector(state => state.datatables.loading)
 
   useEffect(() => { // Bind selector to local state
     setPaths(fetchedPaths)
   }, [fetchedPaths])
 
-  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs)
+  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs || loadTables)
     return <Loadbar loadfull={true} />
 
     return (

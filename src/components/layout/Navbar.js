@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../redux/actions/auth';
 import logo from '../../assets/logo.svg';
+import { getAllTables, getPriorityTable } from '../../redux/selectors/datatables';
 
 function Navbar({ paths }) {
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
-    const pages = useSelector(state => state.pages.pages)
 
     const [display, setDisplay] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -47,8 +47,7 @@ function Navbar({ paths }) {
                     {!showMenu
                         ? <i 
                         className="material-icons menu"
-                        onClick={() => toggleMenu()}
-                        >menu</i>
+                        onClick={() => toggleMenu()}>menu</i>
                         
                         : <i className="material-icons close"
                         onClick={() => toggleMenu()}
@@ -67,7 +66,7 @@ function Navbar({ paths }) {
                         </Link>
                     </li>
                     <li>
-                        <Link to={`/stats/${paths[0]._id}`}>
+                        <Link to={`/stats`}>
                             <span>נתונים</span>
                         </Link>
                     </li>
@@ -101,7 +100,7 @@ function Navbar({ paths }) {
                                         }
                                         <li onClick={() => logoutUser()}>
                                             <i className="material-icons">power_settings_new</i>
-                                            <span>התנתק</span>
+                                            <span>התנתקות</span>
                                         </li>
                                     </ul>
                                 </li>

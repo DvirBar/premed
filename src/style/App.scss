@@ -228,16 +228,25 @@ th {
 
 .top-content-nav {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 2rem;
     position: absolute;
     top: $header-height + $cover-height;
     right: 0;
-    box-shadow: 0 3px 6px #00000030;
     width: 100%;
-    margin-bottom: 3rem;
-
+    box-shadow: 0 3px 6px #00000030;
+    overflow-x: auto;
+    white-space: nowrap;
+    
     .top-links-profile-nav {
         width: 90rem;
+    }
+
+    @media only screen and(max-width: 900px) {
+        .top-links-profile-nav {
+            width: 100%;
+        }
     }
 }
 
@@ -270,7 +279,7 @@ th {
 @import 'pages/steps';
 @import 'pages/drive';
 @import 'pages/profile/index';
-@import 'pages/stats';
+@import 'pages/stats/index';
 @import 'pages/questions';
 
 @import 'admin/admin';

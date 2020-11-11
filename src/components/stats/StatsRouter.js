@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { 
     Switch, 
     useLocation,
+    useParams,
     useRouteMatch } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from '../routing/ProtectedRoute';
 import PathStats from './PathStats';
-
 
 const StatsRouter = () => {
     const dispatch = useDispatch();
@@ -21,7 +21,9 @@ const StatsRouter = () => {
 
     return ( 
         <Switch>
-            <ProtectedRoute exact path={`${path}/:pathId`} component={PathStats} />
+            <ProtectedRoute exact 
+            path={`${path}/:pathId/:tableId`} 
+            component={PathStats} />
         </Switch>
     )
 }
