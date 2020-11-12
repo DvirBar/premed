@@ -8,7 +8,7 @@ function ThreshList({ tableId, selField, threshType }) {
     // Get thresholds by type and field
     const thresholds = useSelector(state => 
         getThreshsByFieldAndType(
-            state.datatables.tables,
+            state,
             tableId,
             selField,
             threshType))

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import DataTable from './DataTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFieldsByPaths } from '../../redux/actions/datafields';
-import { useParams, useRouteMatch } from 'react-router-dom';
 import { getUnisByPaths } from '../../redux/actions/universities';
 import { getStoredCalcs } from '../../redux/actions/calculations';
 import { getUsersDataByPathTable } from '../../redux/actions/userdata';
@@ -10,9 +9,7 @@ import { getFilteredSortedData } from '../../redux/reducers'
 import Loadbar from '../layout/Loadbar';
 import { getTableById } from '../../redux/selectors/datatables';
 
-function PathStats() {
-    const { pathId, tableId } = useParams();
-
+function PathStats({ pathId, tableId }) {
     const table = useSelector(state => getTableById(state, tableId))
 
     const dispatch = useDispatch()
@@ -48,7 +45,7 @@ function PathStats() {
     }
     
     return (
-        <div className="stats">
+        <Fragment>
             {table.url
             ?   <p className="external-link-container">
                     <a 
@@ -66,7 +63,7 @@ function PathStats() {
                     data={data} />
             }
 
-        </div>
+        </Fragment>
     )
 }
 

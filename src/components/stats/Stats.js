@@ -15,7 +15,7 @@ function Stats() {
 
     useEffect(() => {
         if(activeTable) {
-            history.push(`${path}/${paths[0]._id}/${activeTable._id}`)
+            history.push(`${path}/${paths[0]._id}/${activeTable._id}/table`)
         }
     }, [activeTable])
     

@@ -1,22 +1,25 @@
 import React, { useState } from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
 import TopLinks from '../../layout/TopLinks'
 
-function TypeChoose() {
+function TypeChoose({ pathId, tableId }) {
+    let { path } = useRouteMatch()
+
     const linksList = [
         {
             name: 'טבלה',
-            loc: 'table'
+            url: `${path}/${pathId}/${tableId}/table`
         },
         {
             name: 'סיפים',
-            loc: 'thresh'
+            url: `${path}/${pathId}/${tableId}/thresholds`
         }
     ]
 
-    const [selectedLink, setSelectedLink] = useState(linksList[0].loc)
+    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
     
-    const selectLink = loc => {
-        setSelectedLink(loc)
+    const selectLink = url => {
+        setSelectedLink(url)
     }
 
     return (
@@ -25,11 +28,12 @@ function TypeChoose() {
         selectLink={selectLink}
         selected={selectedLink}>
             {linksList.map(link => 
-                <span
-                key={link.loc}
-                id={link.loc}>
+                <Link
+                key={link.url}
+                id={link.url}
+                to={link.url}>
                     {link.name}
-                </span>)}
+                </Link>)}
         </TopLinks>
     )
 }

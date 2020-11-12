@@ -8,6 +8,7 @@ import {
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from '../routing/ProtectedRoute';
 import PathStats from './PathStats';
+import StatsContent from './StatsContent';
 
 const StatsRouter = () => {
     const dispatch = useDispatch();
@@ -22,8 +23,8 @@ const StatsRouter = () => {
     return ( 
         <Switch>
             <ProtectedRoute exact 
-            path={`${path}/:pathId/:tableId`} 
-            component={PathStats} />
+            path={`${path}/:pathId/:tableId/:type`} 
+            component={StatsContent} />
         </Switch>
     )
 }

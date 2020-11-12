@@ -10,7 +10,7 @@ function PathsChoose({ tableId }) {
 
     const linksList = paths.map(pathItem => ({
         name: pathItem.name,
-        url: `${path}/${pathItem._id}/${tableId}`
+        url: `${path}/${pathItem._id}/${tableId}/table`
     }))
 
     const [selectedLink, setSelectedLink] = useState(linksList[0].url)

@@ -7,27 +7,14 @@ import {
     useRouteMatch } from 'react-router-dom';
 import { getAllTables } from '../../../redux/selectors/datatables';
 
-function SelectTable() {
+function SelectTable({ tableId, pathId}) {
     let { path } = useRouteMatch();
-    const location = useLocation()
-
-    const match = matchPath(location.pathname, {
-        path: `${path}/:pathId/:tableId`,
-        exact: true,
-        strict: false
-      });
-    let pathId, tableId
-
-    if(match && match.params) {
-        pathId = match.params.pathId
-        tableId = match.params.tableId 
-    }
 
     const tables = useSelector(getAllTables)
 
     const linksList = tables.map(table => ({
         name: table.name,
-        url: `${path}/${pathId}/${table._id}`,
+        url: `${path}/${pathId}/${table._id}/table`,
         id: table._id
     }))
 

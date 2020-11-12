@@ -54,13 +54,12 @@ function App() {
   const loadSteps = useSelector(state => state.steps.loading);
   const loadPages = useSelector(state => state.pages.loading);
   const loadAncs = useSelector(state => state.ancs.loading);
-  const loadTables = useSelector(state => state.datatables.loading)
 
   useEffect(() => { // Bind selector to local state
     setPaths(fetchedPaths)
   }, [fetchedPaths])
 
-  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs || loadTables)
+  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs)
     return <Loadbar loadfull={true} />
 
     return (

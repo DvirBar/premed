@@ -1,6 +1,5 @@
 export const getAllTables = state => {
     return state.datatables.tables
-
 }
 
 export const getPriorityTable = state => {
@@ -13,8 +12,8 @@ export const getTableById = (state, tableId) => {
     return state.datatables.tables.find(table => table._id === tableId)
 }
 
-export const getThreshsByFieldAndType = (tables, tableId, fieldId, type) => {
-    const table =  tables.find(table => 
+export const getThreshsByFieldAndType = (state, tableId, fieldId, type) => {
+    const table = state.datatables.tables.find(table => 
         table._id === tableId).thresholds
     .filter(thresh => 
         thresh.threshType === type && 

@@ -25,4 +25,9 @@ export const getCalcFieldsByUnis = (fields, pathId, uniId) => {
         && field.path === pathId
         && field.university._id === uniId)
 }
+
+export const getThreshCalcs = (state, threshes) => {
+    return state.datafields.fields.filter(field => 
+        threshes.find(thresh => thresh.field === field._id))
+}
  
