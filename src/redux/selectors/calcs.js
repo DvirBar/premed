@@ -1,3 +1,7 @@
+export const getAllStoredCalcs = state => {
+    return state.calcs.storedCalcs
+}
+
 export const getCalcsByFields = (calcs, fields) => {
     return calcs.filter(calc => 
         fields.find(field => 

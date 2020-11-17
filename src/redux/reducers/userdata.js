@@ -174,8 +174,6 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_INSERT:
-        case EXEC_CALC:
-            console.log(payload);
             return {
                 ...state,
                 softLoading: false,
@@ -205,6 +203,58 @@ export default function(state = initialState, action) {
                         )
                 },
                 changedField: payload
+            }
+
+        case EXEC_CALC:
+            let dataToInsert = []
+            let dataToUpdate = []
+            const dataVals = state.data.tables.find(table =>
+                table.enabled).dataVals
+
+            if(dataVals.length > 0) {
+                for(let item of payload) {
+                    if(dataVals.find(dataVal => 
+                        dataVal.field._id === item.field._id))
+                        dataToUpdate.push(item)
+                    
+                    else {
+                        dataToInsert.push(item)
+                    }
+                }
+            }
+            
+
+            return {
+                ...state,
+                softLoading: false,
+                data: {
+                    ...state.data,
+                    tables:
+                        state.data.tables.map(table => 
+                            table.table.enabled 
+                        ? {
+                            ...table,
+                            last_updated: new Date(Date.now()),
+                            dataVals: 
+                                table.dataVals.length === 0
+                                ?  table.dataVals = [payload]
+
+                                : 
+                                [...table.dataVals.map(dataVal => {
+                                    const uptItem = dataToUpdate.find(payItem => 
+                                        payItem.field._id === dataVal.field._id)
+
+                                    if(uptItem)
+                                        return uptItem
+
+                                    return dataVal
+                                }), ...dataToInsert]
+                            }
+
+                        : table
+                        )
+                },
+                changedField: undefined
             }
 
         case FILTER_DATA: { // Use brackets to define scope
@@ -311,11 +361,14 @@ export const sortData = (state, ordering) => {
 
             // Sort numeric values
             let sortedArr = state
-                   .filter(entry => entry.dataVals.find(val => val.field === fieldId))
+                   .filter(entry => entry.dataVals.find(val => 
+                    val.field === fieldId))
                    .sort((a, b) => {
                         return (
-                            (a.dataVals.find(val => val.field === fieldId).value)  -
-                            (b.dataVals.find(val => val.field === fieldId).value)
+                            (a.dataVals.find(val => 
+                                val.field === fieldId).value)  -
+                            (b.dataVals.find(val => 
+                                val.field === fieldId).value)
                     ) 
                  })
                  

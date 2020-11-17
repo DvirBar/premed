@@ -57,7 +57,6 @@ function AddFieldToGroup({ group, types, display, toggleModal }) {
         title={"הוסף שדה נתונים ל" + group.name}>
 
             <form  
-            className="add-data-field"
             onSubmit={handleSubmit}
             onKeyPress={e => e.key === "Enter" && e.preventDefault()}>
                 <div>

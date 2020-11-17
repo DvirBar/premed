@@ -62,21 +62,41 @@ const useForm = (callback, defaultValues, ...params) => {
             if(event.type === 'multiValue') {
                 const name = event.name;
                 const value = event.value;
-                let valArr = values[name]
-                
+                let valArr = values[name];
+                 
                 if(!valArr)
                     valArr = []
 
-                // If value does not exist in array, add it
-                if(!valArr.find(val => val === value))
+                if(typeof value === 'object') {
+                    if(event.action === 'add') {
+                        setValues(values => ({
+                            ...values,
+                            [name]: [...valArr, value]
+                        }))
+                    }
+
+                    else if(event.action === 'remove') {
+                        setValues(values => ({
+                            ...values,
+                            [name]: values.filter(value =>
+                                value[event.unique] !== event.value.value)
+                        }))
+                    }
+                }
+                
+                else {
+                    // If value does not exist in array, add it
+                    if(!valArr.find(val => val === value))
                     setValues(values => ({...values,
                     [name]: [...valArr, value]}))
+            
+                    // If value exists in array, remove it 
+                    else
+                        setValues(values => ({...values,
+                        [name]: [...valArr.filter(val =>
+                            val !== value)]}))    
+                }
                 
-                // If value exists in array, remove it 
-                else
-                    setValues(values => ({...values,
-                    [name]: [...valArr.filter(val =>
-                        val !== value)]}))    
             }
             else {  
                 setValues(values => ({...values, [event.name]: event.value}));

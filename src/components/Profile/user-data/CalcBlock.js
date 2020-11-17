@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import ArgsMissingList from './ArgsMissingList';
 import useMissingArgs from './useMissingArgs';
 
-function CalcBlock({ field, dataVals, value }) {
+function CalcBlock({ field, dataVals, suggestValue }) {
     const storedCalcs = useSelector(state => state.calcs.storedCalcs)
     const [storedCalc, setStoredCalc] = useState([])
     const [calc, setCalc] = useState({})
@@ -13,31 +13,36 @@ function CalcBlock({ field, dataVals, value }) {
     }, [field])
 
     useEffect(() => {
-        setStoredCalc(storedCalcs?.filter(storCalc => 
-            storCalc.id === field.calcOutput.storedCalc))
+        setStoredCalc(storedCalcs.find(storedCalc => 
+            storedCalc.id === field.calcOutput.storedCalc))
     }, [storedCalcs, calc])
 
-    const argsMissing = useMissingArgs(storedCalc, dataVals)
+    const calcsMissing = useMissingArgs(storedCalcs, dataVals)
+
+    const argsMissing = calcsMissing.find(missingItem => 
+        missingItem.calc === storedCalc.id)
+
+    
 
     return (
         <Fragment>
             {field && field.calcOutput.isSuggestion &&
-                <fieldset className={argsMissing?.length === 0 
-                ? "calc-block"
-                : "calc-block missing"}>
+                <fieldset className={argsMissing
+                ? "calc-block missing"
+                : "calc-block"}>
                     <legend>הצעה</legend>
-                    {argsMissing?.length === 0 
-                    ?  <div>
-                            {value?.suggestValue}
+                    {argsMissing
+                    ?   <div> 
+                            חסרים נתונים
                         </div>
-                    :  <div> 
-                        חסרים נתונים
-                    </div>
+                    :  <div>
+                            {suggestValue}
+                        </div>
                     }
                 </fieldset>
             }
-            {argsMissing && argsMissing.length !== 0 && 
-                <ArgsMissingList argsMissing={argsMissing[0].missing} />
+            {argsMissing &&
+                <ArgsMissingList argsMissing={argsMissing.missing} />
             }
         </Fragment>
     )

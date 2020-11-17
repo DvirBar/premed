@@ -43,7 +43,7 @@ function DataSections({ dataVals, paths }) {
     // Listen and execute calcs
     const missingArgs = useMissingArgs(storedCalcs, dataVals)
     
-    useExecCalc(storedCalcs, missingArgs)
+    useExecCalc(missingArgs)
 
     if(loadUnis) {
         return <Loadbar />

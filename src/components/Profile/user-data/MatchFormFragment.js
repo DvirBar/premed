@@ -21,8 +21,8 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
 
     useEffect(() => {
         setOptions(fieldOptions.map(option => ({
-                name: option,
-                value: option
+                name: option.name,
+                value: option.value
             })))
     }, [fieldOptions])
 
@@ -56,7 +56,12 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     const addData = () => {
         if(value && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
-            setError(validateForm(value, fieldValids))
+            if(fieldValids.length !== 0)
+                setError(validateForm(value, fieldValids))
+            
+            else {
+                setError(undefined)
+            }
         }
 
         if(error && error.length !== 0 && value === defValue) {
@@ -89,9 +94,9 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
                         options={options}
                         defaultOption={options.find(option => 
                             option.value === defValue)}
-                        placeholder={"בחירה"}
+                        placeholder="בחירה"
                         name={name}
-                        width={'10rem'}
+                        width='10rem'
                         onChange={changeData} /> 
                    </div>
                   

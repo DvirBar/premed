@@ -1,36 +1,60 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 
 function FieldOptionsList({ onChange, values, name }) {
-    const [newOption, setNewOption] = useState('')
+    const [newName, setNewName] = useState('')
+    const [newValue, setNewValue] = useState('')
+    const [addDisabled, setAddDisabled] = useState(true)
     
-    const toggleOption = value => {
-        onChange({
-            name: name,
-            value: value,
-            type: 'multiValue'
-        })
-    }
-    
-    const addOption = e => {
-        if(e.key === "Enter") {
-            if(newOption !== '') {
-                toggleOption(newOption);
-                setNewOption('');
-            }
+    const addOption = () => {
+        const event = {
+            name,
+            value: {
+                name: newName,
+                value: newValue
+            },
+            type: 'multiValue',
+            action: 'add'
         }
+
+        onChange(event)
     }
 
+    const removeOption = value => {
+        const event = {
+            name,
+            value: {
+                value: value
+            },
+            unique: 'value',
+            action: 'remove'
+        }
+
+        onChange(event)
+    }
+
+    useEffect(() => {
+        if(newValue.length > 0 && newName.length > 0) {
+            setAddDisabled(false)
+        }
+        else {
+            setAddDisabled(true)
+        }
+    }, [newValue, newName])
+    
     return (
         <ul className="field-options-list">
             {values && values.length !== 0 
             ? (
                 <Fragment>
                     {values.map(value =>
-                        <li key={value}>
-                            <span>{value}</span>
+                        <li key={value.value}>
+                            <span>{value.name}</span>
+                            <span className="option-value">
+                                {value.value}
+                            </span>
                             <i 
                             className="material-icons"
-                            onClick={() => toggleOption(value)}>
+                            onClick={() => removeOption(value)}>
                                 close
                             </i>
                         </li>
@@ -39,14 +63,29 @@ function FieldOptionsList({ onChange, values, name }) {
             )
             : <li className="no-options">אין אפשרויות</li>
             }
-            <li>
+            <li className="form-new-option">
                 <input 
                 type="text"
                 className="form-default"
-                placeholder="אפשרות חדשה..."
-                value={newOption}
-                onChange={e => setNewOption(e.target.value)}
-                onKeyPress={e => addOption(e)} />
+                style={{ width: '10rem' }}
+                placeholder="שם"
+                value={newName}
+                onChange={e => setNewName(e.target.value)} />
+
+                <input 
+                type="text"
+                className="form-default"
+                style={{ width: '10rem' }}
+                placeholder="ערך"
+                value={newValue}
+                onChange={e => setNewValue(e.target.value)} />
+
+                <div 
+                className="insert-option"
+                disabled={addDisabled}
+                onClick={() => addOption()}>
+                    +
+                </div>
             </li>
         </ul>
     )

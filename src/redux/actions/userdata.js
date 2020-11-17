@@ -224,13 +224,20 @@ export const toggleEnabled = tableId => dispatch => {
 }
 
 // Execute calculation
-export const executeCalc = storCalcId => dispatch => {
-    axios.put(`/api/userdata/execCalc/${storCalcId}`)
+export const executeCalc = calcsToExec => dispatch => {
+    const data = {
+        calcsToExec: calcsToExec
+    }
+
+    const body = JSON.stringify(data)
+
+    axios.put(`/api/userdata/execCalc`, body)
          .then(res => dispatch({
              type: EXEC_CALC,
              payload: res.data
          }))
          .catch(err => {
+             console.log(err);
              dispatch(dataError())
              dispatch(getError(err))
          })

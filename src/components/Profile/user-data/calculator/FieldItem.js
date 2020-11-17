@@ -46,8 +46,8 @@ function FieldItem({ field, defValue, disabled }) {
     useEffect(() => {
         if(field.fieldType === 'select') {
             setOptions(field.fieldOptions.map(option => ({
-                name: option,
-                value: option
+                name: option.name,
+                value: option.value
             })))
         }
     }, [field])

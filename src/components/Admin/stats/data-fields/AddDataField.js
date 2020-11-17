@@ -96,7 +96,7 @@ function AddDataField({ path, types, unis }) {
             <Modal
             display={displayModal}
             toggleModal={toggleModal}
-            title={"הוסף שדה נתונים"}>
+            title="הוספת שדה נתונים">
 
                 <form 
                 className="add-data-field"

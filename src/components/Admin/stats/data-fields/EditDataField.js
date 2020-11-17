@@ -76,6 +76,8 @@ function EditDataField({ display, toggleModal, field, fieldTypes, groups }) {
                     {groupOptions.length !== 0 &&
                         <Dropdown
                         options={groupOptions}
+                        defaultOption={groupOptions.find(option =>
+                            option.value === values.groupId)}
                         name="groupId"
                         title="קבוצת נתונים"
                         onChange={handleChange} />
