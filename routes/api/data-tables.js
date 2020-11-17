@@ -20,12 +20,12 @@ const validateDateValues = (closestDates, thresholds, threshType, value) => {
         const laterThresh = thresholds.find(thresh =>
             new Date(thresh.date).getTime() === closestDates.later.getTime())
 
-        if(threshType === 'accept' 
+        if(threshType === 'accept' && laterThresh
         && laterThresh.value > value) {
             throw InvalidAcceptValue
         }
 
-        else if(threshType === 'reject' 
+        else if(threshType === 'reject' && laterThresh
         && laterThresh.value < value) {
             throw InvalidRejectValue
         } 
@@ -35,12 +35,12 @@ const validateDateValues = (closestDates, thresholds, threshType, value) => {
         const earlierThresh = thresholds.find(thresh =>
             new Date(thresh.date).getTime() === closestDates.earlier.getTime())
 
-        if(threshType === 'accept' 
+        if(threshType === 'accept' && earlierThresh
         && earlierThresh.value < value) {
             throw InvalidAcceptValue
         }
 
-        else if(threshType === 'reject' 
+        else if(threshType === 'reject' && earlierThresh
         && earlierThresh.value > value) {
             throw InvalidRejectValue
         } 
@@ -133,6 +133,7 @@ router.put('/:id/toggleEnabled', [auth, authAdmin], (req, res, next) => {
     const tableId = req.params.id;
 
     DataTable.findById(tableId)
+             .populate('thresholds.field')
              .then(table => {
                 if(!table) 
                     return res.status(DataTableNotExist.status)
@@ -142,6 +143,7 @@ router.put('/:id/toggleEnabled', [auth, authAdmin], (req, res, next) => {
                 // Disable formerly enabled table
                 if(!table.enabled) {
                     DataTable.findOne({ $and: [{enabled: true}, {_id: {$ne: tableId}}] })
+                    .populate('thresholds.field')
                     .then(disabledTable => {
                         if(disabledTable) {
                             disabledTable.enabled = false
@@ -209,17 +211,17 @@ router.put('/:id/addThreshold', [auth, authAdmin], (req, res, next) => {
                     return res.status(DataTableNotExist.status)
                               .send(DataTableNotExist.msg)
 
-                const thresholds = table.thresholds.filter(thresh => 
+                const thresholds = table.thresholds
+                const fieldThresholds = thresholds.filter(thresh =>
                     thresh.field === fieldId)
 
-                if(thresholds.length !== 0) {
+                if(fieldThresholds.length !== 1) {
                     const closestDates = findClosestDates(
                         date,
-                        thresholds.map(thresh => thresh.date)
-                    )
-                    
+                        fieldThresholds.map(thresh => thresh.date))
+
                     try {
-                        validateDateValues(closestDates, thresholds, threshType, value)
+                        validateDateValues(closestDates, fieldThresholds, threshType, value)
                     }
 
                     catch(err) {
@@ -229,7 +231,7 @@ router.put('/:id/addThreshold', [auth, authAdmin], (req, res, next) => {
                     /* If field is set to final, check that it is the only one.
                     if not, set the other isFinal to false */
                     if(isFinal) {
-                        const formerFinal = thresholds.find(thresh => 
+                        const formerFinal = fieldThresholds.find(thresh => 
                             thresh.isFinal 
                             && thresh.threshType === threshType)
     
@@ -248,11 +250,11 @@ router.put('/:id/addThreshold', [auth, authAdmin], (req, res, next) => {
 
                 thresholds.push(newThreshold)
 
-                DataTable.save()
-                         .then(() => {
-                             return res.send(thresholds)
-                         })
-                         .catch(next)
+                table.save()
+                    .then(() => {
+                        return res.send(thresholds)
+                    })
+                    .catch(next)
              })
              .catch(next)
 })
@@ -287,14 +289,14 @@ router.put('/:id/:threshId', [auth, authAdmin], (req, res, next) => {
                 const editThresh = thresholds.id(threshId)
                 
                 const fieldThresholds = thresholds.filter(thresh =>
-                    thresh.field === editThresh.field)
-
+                    thresh.field._id === editThresh.field._id && 
+                    thresh._id !== threshId)
                 
-                
-                if(fieldThresholds.length !== 0 ) {
+                if(fieldThresholds.length > 1) {
                     // Validate date-value consistency only if value or date has changed
                     if (value !== editThresh.value 
                     || new Date(date).getTime() !== new Date(editThresh.date).getTime()) {
+                        
                         const closestDates = findClosestDates(
                             date,
                             fieldThresholds.map(thresh => thresh.date)
@@ -309,6 +311,8 @@ router.put('/:id/:threshId', [auth, authAdmin], (req, res, next) => {
                         }
                     }
                     
+                    /* If field is set to final, check that it is the 
+                    only one. if not, set the other isFinal to false */
                     if(isFinal) {
                         const formerFinal = fieldThresholds.find(thresh => 
                             thresh.isFinal 
@@ -319,12 +323,6 @@ router.put('/:id/:threshId', [auth, authAdmin], (req, res, next) => {
                             formerFinal.isFinal = false
                     }
                 }
-
-                /* If field is set to final, check that it is the only one.
-                    if not, set the other isFinal to false */
-                if(isFinal && fieldThresholds !== 0) {
-                   
-                }
                 
                 editThresh.set({
                     ...editThresh,
@@ -334,11 +332,11 @@ router.put('/:id/:threshId', [auth, authAdmin], (req, res, next) => {
                     value
                 })
 
-                DataTable.save()
-                         .then(() => {
-                             return res.send(fieldThresholds)
-                         })
-                         .catch(next)
+                table.save()
+                    .then(() => {
+                        return res.send(fieldThresholds)
+                    })
+                    .catch(next)
              })
              .catch(next)
 })
@@ -365,12 +363,12 @@ router.put('/:id/:threshId/remove', [auth, authAdmin], (req, res, next) => {
 
                 delThresh.remove()
 
-                DataTable.save()
-                         .then(() => {
-                             return res.status(ThresholdSuccessDelete)
-                                       .send(ThresholdSuccessDelete.msg)
-                         })
-                         .catch(next)
+                table.save()
+                    .then(() => {
+                        return res.status(ThresholdSuccessDelete.status)
+                                .send(ThresholdSuccessDelete.msg)
+                    })
+                    .catch(next)
 
             })
             .catch(next)

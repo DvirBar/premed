@@ -3,13 +3,22 @@ const bagrutGroupArgs = [
         name: 'ציון',
         role: 'grade',
         varName: 'grade',
-        type: 'field'
+        type: 'field',
+        dataType: 'num'
     },
     {
         name: 'יחידות',
         role: 'units',
         varName: 'units',
-        type: 'field'
+        type: 'field',
+        dataType: 'num'
+    },
+    {
+        name: 'סוג',
+        role: 'type',
+        varName: 'type',
+        type: 'field',
+        dataType: 'str'
     }
 ]
 

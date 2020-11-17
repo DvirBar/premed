@@ -28,7 +28,7 @@ const { DataFieldNotExist } = dataFieldMessages;
 const { PathNotExist } = pathsMessages;
 const { UniNotExist } = uniMessages;
 
-import storedCalcs from '../../utils/calcsIndex';
+import storedCalcs from '../../utils/calcs/calcsIndex';
 
 // @route   GET api/calculations/storedCalcs
 // @desc    Get stored calculations

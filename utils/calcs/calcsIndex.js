@@ -1,5 +1,5 @@
 import args from './calcsArgs';
-import * as calcs from './storedCalcs';
+import * as hujiCalcs from './huji/calcs'
 
 
 const {
@@ -11,7 +11,7 @@ const storedCalcs = [
     {
         id: "hujiFinal",
         name: "סכם העברית (בגרות)",
-        func: calcs.hujiFinal,
+        func: hujiCalcs.hujiFinal,
         args: [
             huji.bagrut,
             psycho,
@@ -21,7 +21,7 @@ const storedCalcs = [
     {
         id: "bagrutHuji",
         name: "ממוצע בגרות העברית",
-        func: calcs.hujiBargut,
+        func: hujiCalcs.hujiBargut,
         args: bagrut
     }
 ]

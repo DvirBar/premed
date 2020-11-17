@@ -23,7 +23,7 @@ const uniMessages = require('../../messages/universities');
 const { DataFieldSuccessDelete, DataFieldNotExist, 
     InvalidFieldType, InvalidDataType, InvalidValidatorType, 
     ValidatorTypeRequired, MinMaxRequired, ValidatorNotExist,
-    CalcDetailRequired, OptionNotExist } = dataFieldMessages;
+    CalcDetailRequired } = dataFieldMessages;
 const { DataGroupNotExist } = dataGroupMessages;
 const { PathNotExist } = pathMessages; 
 const { UniNotExist } = uniMessages;
@@ -134,11 +134,14 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                             dataType: dataType,
                             path: pathId,
                             group: groupId,
-                            validators: {
-                                validType: dataObj.defVal
-                            },
                             university: uniId
                         })
+
+                        if(dataObj.defVal) {
+                            newField.validators = {
+                                validType: dataObj.defVal
+                            }
+                        }
 
                         if(storedCalc) {
                             newField.calcOutput = {
@@ -211,6 +214,7 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                     if(!field)
                         return res.status(DataFieldNotExist.status)
                                     .send(DataFieldNotExist.msg)
+
                     
                     University.findById(uniId)
                             .then(uni => {
@@ -218,13 +222,13 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
                                 return res.status(UniNotExist.status)
                                             .send(UniNotExist.msg)
                                 
-                            field = {
+                            field.set({
                                 ...field,
                                 name,
                                 fieldType,
-                                group,
+                                group: groupId,
                                 uni
-                            }
+                            })
                             
                             if(storedCalc) {
                                 newField.calcOutput = {

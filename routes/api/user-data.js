@@ -24,8 +24,8 @@ const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
-import storedCalcs from '../../utils/calcsIndex';
-import executeCalc from '../../utils/executeCalc';
+import storedCalcs from '../../utils/calcs/calcsIndex';
+import executeCalc from '../../utils/calcs/executeCalc';
 
 // @route   GET api/userdata/user
 // @desc    Get one user data
@@ -177,10 +177,10 @@ router.post('/simulateCalcs', auth, (req, res, next) => {
     let resultArray = []
 
     for(let calc of storCalcs) {
-        let calcResult
+        let calcObj
 
         try {
-            calcResult = executeCalc(calc, values)
+            calcObj = executeCalc(calc, values)
         }
 
         catch(error) {
@@ -189,7 +189,7 @@ router.post('/simulateCalcs', auth, (req, res, next) => {
        
         resultArray.push({
             calc,
-            result: calcResult
+            result: calcObj.value
         })
     }
 
@@ -399,6 +399,127 @@ router.put('/insertdata', auth, (req, res, next) => {
             .catch(next); // Find user data
 })
 
+// @route   PUT api/calculations/execCalc
+// @desc    Execute calculation
+// @access  Private
+router.put('/execCalc', auth, (req, res, next) => {
+    const {
+        calcsToExec
+    } = req.body
+
+    const userId = res.locals.user.id;
+
+    UserData.findOne({ user: userId })
+    .populate({
+        path: 'tables.dataVals.field',
+        populate: { path: 'group' }
+    })
+    .populate('tables.table')
+    .then(data => {
+        if(!data)
+            return {
+                status: DataNotExist.status,
+                msg: DataNotExist.msg
+            }
+            
+        const enabledTable = data.tables.find(curTable => 
+            curTable.table.enabled) 
+        let values = enabledTable.dataVals
+        let updatedValue = []
+        // Assign calc value to the relevant field
+        DataField.find({ calcOutput: { $exists: true }})
+        .populate('calcOutput')
+        .then(async(fields) => {
+
+            let newCalcs = []
+            for(let calcLevel of calcsToExec) {
+                for(let storCalcId of calcLevel) {
+                    const storCalc = storedCalcs.find(calc => 
+                        calc.id === storCalcId)
+                    
+                    let calcObj = {}
+
+                    try {
+                        calcObj = await executeCalc(storCalc, values)
+                    }
+            
+                    catch(err) {
+                        return res.status(err.status).send(err.msg)
+                    }
+
+                    const field = fields.find(thisField => 
+                        thisField.calcOutput.storedCalc === storCalcId)
+                    
+                    const fieldId = field._id
+                    const calcOutput = field.calcOutput
+                
+                    const payload = calcObj.payload
+
+                    const dataVal = values.find(val => 
+                        val.field.equals(fieldId))
+
+                    // If the user already has a value for the field
+                    if(dataVal) {
+                        if(!calcOutput.isSuggestion) {
+                            dataVal.value = calcObj.value;
+                        }
+
+                        else {
+                            dataVal.suggestValue = calcObj.value;
+                        }
+
+                        dataVal.payload = payload ? payload : {}
+                    }
+                    
+                    // If the field is yet to have a value
+                    else {
+                        if(!calcOutput.isSuggestion) {
+                            values.push({
+                                field: fieldId,
+                                value: calcObj.value,
+                                payload: payload ? payload : {}
+                            })
+                        }
+    
+                        else {
+                            values.push({
+                                field: fieldId,
+                                suggestValue: calcObj.value,
+                                payload: payload ? payload : {}
+                            })
+                        }
+                    }
+                    await data.save()
+                        .then(async(data) => {
+                            async function populateAndGroup() {
+                                await data
+                                    .populate("tables.table.field")
+                                    .populate("tables.dataVals.field")
+                                    .execPopulate();
+                                values = data.tables.find(curTable => 
+                                    curTable.table.enabled).dataVals
+                                const newValue = values.find(val => 
+                                    val.field._id.equals(fieldId))
+               
+                                newCalcs.push(Object.assign(
+                                    newValue, 
+                                    { payload: calcObj.payload }
+                                ))
+                            }
+
+                            await populateAndGroup()
+                        })
+                        .catch(next);
+                    }
+            }
+            return res.send(newCalcs)
+        })
+        .catch(next);
+    })
+    .catch(next)
+})
+
+
 
 // @route   PUT api/userdata/toggleEnabled
 // @desc    Toggle data enabled status
@@ -440,108 +561,6 @@ router.put('/toggleEnabled/:tableId', auth, (req, res, next) => {
             })
             .catch(next); // Find user data
 })
-
-
-// @route   PUT api/calculations/execCalc
-// @desc    Execute calculation
-// @access  Private
-router.put('/execCalc/:storCalcId', auth, (req, res, next) => {
-
-    const storCalcId = req.params.storCalcId;
-    const storCalc = storedCalcs.find(calc => calc.id === storCalcId);
-    const userId = res.locals.user.id;
-
-    UserData.findOne({ user: userId })
-    .populate({
-        path: 'tables.dataVals.field',
-        populate: { path: 'group' }
-    })
-    .populate('tables.table')
-    .then(data => {
-        if(!data)
-            return {
-                status: DataNotExist.status,
-                msg: DataNotExist.msg
-            }
-            
-        const enabledTable = data.tables.find(curTable => 
-            curTable.table.enabled) 
-        const values = enabledTable.dataVals
-
-        let calcResult;
-
-        try {
-            calcResult = executeCalc(storCalc, values)
-        }
-
-        catch(err) {
-            return res.status(err.status).send(err.msg)
-        }
-    
-        // Assign calc value to the relevant field
-        DataField.find({ calcOutput: { $exists: true }})
-            .populate('calcOutput')
-            .then(fields => {
-                const calcField = fields.find(field => 
-                field.calcOutput.calc === storCalc.id)
-
-                const calcOutput = calcField.calcOutput
-            
-                let found = false
-                const fieldId = calcField._id
-            
-                // If the user already has a value for the field
-                for(let item of values) {
-                    if(item.field.equals(fieldId)) {
-
-                        if(!calcOutput.isSuggestion) {
-                            item.value = calcResult;
-                        }
-                        else {
-                            item.suggestValue = calcResult;
-                        }
-                        found = true;
-                        break;
-                    }
-                }
-    
-                // If the field is yet to have a value
-                if(!found) {
-                    if(!calcOutput.isSuggestion) {
-                        values.push({
-                            field: fieldId,
-                            value: calcResult
-                        })
-                    }
-
-                    else {
-                        values.push({
-                            field: fieldId,
-                            suggestValue: calcResult
-                        })
-                    }
-                }
-
-            data.save()
-            .then(data => {
-                async function populateData() {
-                    await data.populate("tables.table.field").execPopulate();
-                    const valueObj = data.tables.find(curTable => 
-                        curTable.table.enabled)
-                    .dataVals.find(val => 
-                        val.field._id.equals(fieldId))
-
-                    return res.send(valueObj)
-                }
-                populateData();
-            })
-            .catch(next);
-        })
-        .catch(next);
-    })
-    .catch(next)
-})
-
 
 
 // @route   DELETE api/userdata/:userId

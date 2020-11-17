@@ -28,7 +28,12 @@ const DataFieldSchema = new Schema({
         required: true
     },
     fieldOptions: [{
-        type: String
+        name: {
+            type: String
+        },
+        value: {
+            type: String
+        }
     }],
     path: {
         type: ObjectId,
