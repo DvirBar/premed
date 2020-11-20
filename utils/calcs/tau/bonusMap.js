@@ -2,15 +2,16 @@ import args from '../calcsArgs';
 
 const bonusMap = {
     math: {
-        '5': {
-            'exam': 35,
-            'project': 25
-        },
-        '4': 15
+        '5': 35,
+        '4': 12.5
+    },
+    eng: {
+        '5': 25,
+        '4': 12.5
     },
     midBonus: {
         '5': 25,
-        '4': 15
+        '4': 10
     },
     lowBonus: {
         '5': 20,
@@ -22,8 +23,7 @@ const bonusMap = {
 const getBonus = (subj, subjObj) => {
     const {
         units,
-        grade,
-        type
+        grade
     } = subjObj.values;
 
     const bonusGroups = subjObj.groups
@@ -32,11 +32,11 @@ const getBonus = (subj, subjObj) => {
         return 0;
 
     if(subj === 'math') {
-        if(units === 5) {
-            return bonusMap.math['5'][type]
-        }
+        return bonusMap.math[units]
+    }
 
-        return bonusMap.math['4']
+    if(subj === 'eng') {
+        return bonusMap.eng[units]
     }
 
     if(bonusGroups?.includes('midBonus')) {

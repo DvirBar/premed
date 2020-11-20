@@ -425,7 +425,7 @@ router.put('/execCalc', auth, (req, res, next) => {
         const enabledTable = data.tables.find(curTable => 
             curTable.table.enabled) 
         let values = enabledTable.dataVals
-        let updatedValue = []
+
         // Assign calc value to the relevant field
         DataField.find({ calcOutput: { $exists: true }})
         .populate('calcOutput')
