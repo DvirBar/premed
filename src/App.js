@@ -5,7 +5,6 @@ import Router from './components/routing/Router';
 import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
-import { getPaths } from './redux/actions/paths';
 import { getSteps } from './redux/actions/steps';
 import { getPages } from './redux/actions/pages';
 import { getAnc } from './redux/actions/anouncements';
@@ -16,6 +15,7 @@ import 'moment/locale/he';
 import Footer from './components/layout/Footer';
 import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
+import { getBaseData } from './redux/actions/basedata';
 
 axios.defaults.baseURL = 'http://10.0.0.28:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
@@ -26,7 +26,7 @@ function App() {
 
   
   useEffect(() => {
-    dispatch(getPaths());
+    dispatch(getBaseData());
     dispatch(getSteps());
     dispatch(getPages());
     dispatch(getAnc());
@@ -46,18 +46,12 @@ function App() {
 
   moment.locale('he');
 
-
-  const [paths, setPaths] = useState([])
   const selPaths = useSelector(state => state.paths);
-  const fetchedPaths = selPaths.paths;
+  const paths = selPaths.paths;
   const loadPaths = selPaths.loading;
   const loadSteps = useSelector(state => state.steps.loading);
   const loadPages = useSelector(state => state.pages.loading);
   const loadAncs = useSelector(state => state.ancs.loading);
-
-  useEffect(() => { // Bind selector to local state
-    setPaths(fetchedPaths)
-  }, [fetchedPaths])
 
   if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs)
     return <Loadbar loadfull={true} />

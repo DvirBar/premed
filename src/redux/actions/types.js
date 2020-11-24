@@ -14,6 +14,10 @@ export const INIT_MESSAGE = 'INIT_MESSAGE';
 export const GET_MESSAGE = 'GET_MESSAGE';
 export const GET_ERROR = 'GET_ERROR';
 
+// Server data
+export const BASE_DATA_LOADING = 'BASE_DATA_LOADING';
+export const BASE_DATA_SUCCESS = 'BASE_DATA_SUCCESS';
+
 // Paths
 export const PATH_LOADING = 'PATH_LOADING';
 export const PATH_SUCCESS = 'PATH_SUCCESS';

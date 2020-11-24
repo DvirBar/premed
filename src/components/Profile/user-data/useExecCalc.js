@@ -109,7 +109,6 @@ function useExecCalc(missingArgs) {
                     item.map(calc => calc.calcOutput.storedCalc))
             
                 dispatch(executeCalc(calcSequence))
-                console.log(calcSequence);
             }
         }
     }, [changedField])
