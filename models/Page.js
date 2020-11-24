@@ -15,8 +15,7 @@ const PageSchema = new Schema({
         unique: true
     },
     paths: [{
-        type: ObjectId,
-        ref: 'Path'
+        type: String
     }],
     links: [{
         name: {

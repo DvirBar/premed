@@ -36,16 +36,6 @@ router.get('/', auth, (req, res, next) => {
             .catch(next)
 })
 
-// // @route   GET api/ancgroups
-// // @desc    Get all anouncement groups with subscribers
-// // @access  Admin
-// router.get('/', [auth, authAdmin], (req, res, next) => { 
-//     AncGroup.find()
-//         .then(group => res.json(group))
-//         .catch(next)
-// })
-
-
 // @route   GET api/ancgroups/:userId/subscribes
 // @desc    Get all user subscriptions
 // @access  Private

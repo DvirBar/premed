@@ -1,24 +1,71 @@
+import { staticDataTypes } from '../allowedTypes'
+
+const {
+    fieldTypes,
+    dataTypes,
+    validationTypes
+} = staticDataTypes
+
 const bagrutGroupArgs = [
     {
         name: 'ציון',
-        role: 'grade',
-        varName: 'grade',
-        type: 'field',
-        dataType: 'num'
+        id: 'grade',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        validators: [
+            {
+                value: validationTypes.isPosNum,
+            },
+            {
+                value: validationTypes.numRange,
+                min: '40',
+                max: '100'
+            }
+        ]
     },
     {
         name: 'יחידות',
-        role: 'units',
-        varName: 'units',
-        type: 'field',
-        dataType: 'num'
+        id: 'units',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.select,
+        fieldOptions: [
+            {
+                name: '1',
+                value: '1',
+            },
+            {
+                name: '2',
+                value: '2',
+            },
+            {
+                name: '3',
+                value: '3',
+            },
+            {
+                name: '4',
+                value: '4',
+            },
+            {
+                name: '5',
+                value: '5',
+            },
+        ]
     },
     {
         name: 'סוג',
-        role: 'type',
-        varName: 'type',
-        type: 'field',
-        dataType: 'str'
+        id: 'type',
+        dataType: dataTypes.str,
+        fieldType: fieldTypes.select,
+        fieldOptions: [
+            {
+                name: 'מבחן',
+                value: 'exam',
+            },
+            {
+                name: 'עבודה',
+                value: 'project',
+            }
+        ]
     }
 ]
 
@@ -33,26 +80,10 @@ export const bagrutTypes = [
     }
 ]
 
-
-const args = {
-    psycho: {
-        name: 'פסיכומטרי',
-        role: 'psycho',
-        varName: 'psycho',
-        type: 'field'
-    },
-    mor: {
-        name: 'מו"ר',
-        role: 'mor',
-        varName: 'mor',
-        type: 'field'
-    },
-/////////////////////////////////////////////////////
-    bagrut: [{
+export const bagrut = [
+    {
         name: 'מתמטיקה',
-        role: 'math',
-        varName: 'math',
-        type: 'group',
+        id: 'math',
         config: {
             huji: ['isRequired'],
             tech: ['isRequired'],
@@ -63,9 +94,7 @@ const args = {
     },
     {
         name: 'אנגלית',
-        role: 'eng',
-        varName: 'eng',
-        type: 'group',
+        id: 'eng',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midbonus'],
@@ -76,9 +105,7 @@ const args = {
     },
     {
         name: 'עברית',
-        role: 'heb',
-        varName: 'heb',
-        type: 'group',
+        id: 'heb',
         config: {
             uniqueBagType: true,
             jew: {
@@ -98,9 +125,7 @@ const args = {
     },
     {
         name: 'ערבית',
-        role: 'arab',
-        varName: 'arab',
-        type: 'group',
+        id: 'arab',
         config: {
             uniqueBagType: true,
             jew: {
@@ -120,9 +145,7 @@ const args = {
     },
     {
         name: 'היסטוריה',
-        role: 'history',
-        varName: 'history',
-        type: 'group',
+        id: 'history',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midBonus'],
@@ -133,9 +156,7 @@ const args = {
     },
     {
         name: 'תנ"ך',
-        role: 'bible',
-        varName: 'bible',
-        type: 'group',
+        id: 'bible',
         config: {
             jew: {
                 huji: ['midBonus'],
@@ -156,9 +177,7 @@ const args = {
     },
     {
         name: 'ספרות',
-        role: 'lit',
-        varName: 'lit',
-        type: 'group',
+        id: 'lit',
         config: {
             uniqueBagType: true,
             jew: {
@@ -179,9 +198,7 @@ const args = {
     },
     {
         name: 'אזרחות',
-        role: 'civics',
-        varName: 'civics',
-        type: 'group',
+        id: 'civics',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired'],
@@ -192,9 +209,7 @@ const args = {
     },
     {
         name: 'פיזיקה',
-        role: 'physics',
-        varName: 'physics',
-        type: 'group',
+        id: 'physics',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -206,9 +221,7 @@ const args = {
     },
     {
         name: 'ביולוגיה',
-        role: 'bio',
-        varName: 'bio',
-        type: 'group',
+        id: 'bio',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -220,9 +233,7 @@ const args = {
     },
     {
         name: 'כימיה',
-        role: 'chem',
-        varName: 'chem',
-        type: 'group',
+        id: 'chem',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -234,9 +245,7 @@ const args = {
     },
     {
         name: 'מחשבת ישראל',
-        role: 'thought',
-        varName: 'thought',
-        type: 'group',
+        id: 'thought',
         config: {
             uniqueBagType: true,
             jew: {
@@ -252,10 +261,7 @@ const args = {
     },
     {
         name: 'מדעי המחשב',
-        role: 'compSci',
-        varName: 'compSci',
-        
-        type: 'group',
+        id: 'compSci',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -264,10 +270,7 @@ const args = {
     },
     {
         name: 'ביוטכנולוגיה',
-        role: 'biotech',
-        varName: 'biotech',
-        
-        type: 'group',
+        id: 'bioTech',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -276,10 +279,7 @@ const args = {
     },
     {
         name: 'מערכות ביוטכנולגיה',
-        role: 'biotechSys',
-        varName: 'biotechSys',
-        
-        type: 'group',
+        id: 'biotechSys', 
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -288,10 +288,7 @@ const args = {
     },
     {
         name: 'בקרת מכונות',
-        role: 'contMach',
-        varName: 'contMach',
-        
-        type: 'group',
+        id: 'contMach',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -300,10 +297,7 @@ const args = {
     },
     {
         name: 'אלקטרוניקה ומחשבים',
-        role: 'electNcomp',
-        varName: 'electNcomp',
-        
-        type: 'group',
+        id: 'electNcomp',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -312,9 +306,7 @@ const args = {
     },
     {
         name: 'מדעי ההנדסה',
-        role: 'enginSci',
-        varName: 'enginSci',
-        type: 'group',
+        id: 'engineSci',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -323,10 +315,7 @@ const args = {
     },
     {
         name: 'בינה מלאכותית ומערכות מומחה',
-        role: 'aiCont',
-        varName: 'aiCont',
-        
-        type: 'group',
+        id: 'aiCont',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -335,10 +324,7 @@ const args = {
     },
     {
         name: 'גרפיקה ממוחשבת',
-        role: 'graphics',
-        varName: 'graphics',
-        
-        type: 'group',
+        id: 'graphics',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -347,10 +333,7 @@ const args = {
     },
     {
         name: 'תכנון ותכנות מערכות',
-        role: 'planProg',
-        varName: 'planProg',
-        
-        type: 'group',
+        id: 'planProg', 
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -359,10 +342,7 @@ const args = {
     },
     {
         name: 'תכנון יישומים מנהליים',
-        role: 'admApp',
-        varName: 'admApp',
-        
-        type: 'group',
+        id: 'admApp',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -371,9 +351,7 @@ const args = {
     },
     {
         name: 'ידיעת העם והמדינה',
-        role: 'yediat',
-        varName: 'yediat',
-        type: 'group',
+        id: 'yediat',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -382,9 +360,7 @@ const args = {
     },
     {
         name: 'תולדות עם ישראל',
-        role: 'amIsr',
-        varName: 'amIsr',
-        type: 'group',
+        id: 'amIsr',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -393,9 +369,7 @@ const args = {
     },
     {
         name: 'מורשת דרוזית',
-        role: 'druze',
-        varName: 'druze',
-        type: 'group',
+        id: 'druze',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -404,9 +378,7 @@ const args = {
     },
     {
         name: 'מורשת איסלאם',
-        role: 'islam',
-        varName: 'islam',
-        type: 'group',
+        id: 'islam',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -415,9 +387,7 @@ const args = {
     },
     {
         name: 'מורשת נוצרית',
-        role: 'christ',
-        varName: 'christ',
-        type: 'group',
+        id: 'christ',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -426,24 +396,11 @@ const args = {
     },
     {
         name: 'מקצוע אחר',
-        role: 'other',
-        varName: 'other',
+        id: 'otherBagrut',
         config: {
             isOptional: true
         },
-        type: 'group',
         fields: bagrutGroupArgs,
         multiVals: true
     }
-], 
-    huji: {
-        bagrut: {
-            name: 'בגרות - העברית',
-            role: 'bagrut-huji',
-            varName: 'bagrut',
-            type: 'field'    
-        }
-    }
-}
-
-export default args;
+]

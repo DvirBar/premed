@@ -1,5 +1,3 @@
-import args from '../calcsArgs';
-
 const bonusMap = {
     math: {
         '5': 35,

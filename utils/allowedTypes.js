@@ -1,77 +1,81 @@
-const allowedTypes = {
+export const staticDataTypes = {
+    fieldTypes: {
+        checkbox: {
+            name: "תיבת סימון",
+            value:"checkbox"
+        },
+        textbox: {
+            name: "שדה טקסט",
+            value: "textbox"
+        },
+        select: {
+            name: "בחירה",
+            value: "select"
+        }
+    },
+    dataTypes: {
+        num: {
+            name: "מספר",
+            value: 'num',
+            defVal: 'isPosNum'
+        },
+        str: {
+            name: 'מחרוזת',
+            value: 'str'
+        },
+        date: {
+            name: 'תאריך',
+            value: 'date',
+            defVal: 'isDate'
+        }
+    },
+    validationTypes: {
+        isRequired: {
+            name: "שדה דרוש",
+            value: "isRequired",
+            description: "בודק שהשדה אינו ריק"
+        },
+        isPosNum: {
+            name: "מספר חיובי",
+            value: "isPosNum",
+            description: "בודק שהערך שמולא הוא גם מספר וגם חיובי"
+        },
+        isInt: {
+            name: "מספר שלם",
+            value: "isInt",
+            description: "בודק שהערך שמולא הוא מספר שלם"
+        },
+        numRange: {
+            name: "טווח מספרים",
+            value: "numRange",
+            description: "בודק שהערך נמצא בטווח מספרים"
+        },
+        isDate: {
+            name: "תאריך",
+            value: "isDate",
+            description: "בודק שהערך הוא תאריך תקין"
+        },
+        isHebrew: {
+            name: "עברית בלבד",
+            value: "isHebrew",
+            description: "בודק שהערך בעברית בלבד, ללא סימני פיסוק"
+        },
+        isEnglish: {
+            name: "אנגלית בלבד",
+            value: "isEnglish",
+            description: "בודק שהערך באנגלית בלבד, ללא סימני פיסוק"
+        },
+        isName: {
+            name: "שם",
+            value: "isName",
+            description: "בודק שהערך הוא שם, ללא סימני פיסוק"
+        }
+    }
+}
+
+
+export const allowedTypes = {
     types: {
-        fieldTypes: [
-            {
-                name: "תיבת סימון",
-                value:"checkbox"
-            },
-            {
-                name: "שדה טקסט",
-                value: "textbox"
-            },
-            {
-                name: "בחירה",
-                value: "select"
-            }
-        ],
-        dataTypes: [
-            {
-                name: "מספר",
-                value: 'num',
-                defVal: 'isPosNum'
-            },
-            {
-                name: 'מחרוזת',
-                value: 'str'
-            },
-            {
-                name: 'תאריך',
-                value: 'date',
-                defVal: 'isDate'
-            }
-        ],
-        validationTypes: [
-            {
-                name: "שדה דרוש",
-                value: "isRequired",
-                description: "בודק שהשדה אינו ריק"
-            },
-            {
-                name: "מספר חיובי",
-                value: "isPosNum",
-                description: "בודק שהערך שמולא הוא גם מספר וגם חיובי"
-            },
-            {
-                name: "מספר שלם",
-                value: "isInt",
-                description: "בודק שהערך שמולא הוא מספר שלם"
-            },
-            {
-                name: "טווח מספרים",
-                value: "numRange",
-                description: "בודק שהערך נמצא בטווח מספרים"
-            },
-            {
-                name: "תאריך",
-                value: "isDate",
-                description: "בודק שהערך הוא תאריך תקין"
-            },
-            {
-                name: "עברית בלבד",
-                value: "isHebrew",
-                description: "בודק שהערך בעברית בלבד, ללא סימני פיסוק"
-            },
-            {
-                name: "אנגלית בלבד",
-                value: "isEnglish",
-                description: "בודק שהערך באנגלית בלבד, ללא סימני פיסוק"
-            },
-            {
-                name: "שם",
-                value: "name",
-                description: "בודק שהערך הוא שם, ללא סימני פיסוק"
-            }
-        ],
         inquiryStatusTypes: [
             {
                 name: 'נשלח',
@@ -132,5 +136,3 @@ const allowedTypes = {
         return false;
     } 
 }
-
-module.exports = allowedTypes;

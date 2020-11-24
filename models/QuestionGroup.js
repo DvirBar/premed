@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // Create schema
 const QuestionGroupSchema = new Schema({
@@ -10,8 +9,7 @@ const QuestionGroupSchema = new Schema({
         unique: true
     },
     path: {
-        type: ObjectId,
-        ref: 'Path'
+        type: String
     },
     questions: [{
         question: {

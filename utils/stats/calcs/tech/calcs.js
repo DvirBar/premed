@@ -1,5 +1,5 @@
-import { getBestAverage } from '../storedCalcs/methods'
-import args from '../calcsArgs';
+import { getBestAverage } from '../methods'
+import { bagrut } from '../../dataGroups';
 import getBonus from './bonusMap';
 
 export const techBagrut = (params, uSettings) => {
@@ -10,7 +10,7 @@ export const techBagrut = (params, uSettings) => {
     /* Get average of required subjects and store 
         not required in an array */
     for(let subj in params) {
-        const config = args.bagrut.find(arg => arg.varName === subj).config;
+        const config = bagrut.find(arg => arg.varName === subj).config;
         let techGroups
 
         // Get huji config group

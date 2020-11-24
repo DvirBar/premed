@@ -12,7 +12,7 @@ const inquiryMessages = require('../../messages/inquiries');
 const { NotExist, InquiryNotOwned, StatusInvalid, 
     SuccessDelete } = inquiryMessages;
 
-const allowedTypes = require('../../utils/allowedTypes'); 
+import { allowedTypes } from '../../utils/allowedTypes';
 const { StatusNotExist } = require('../../messages/inquiries');
 const { inquiryStatusTypes, inquiryTypes } = allowedTypes.types;
 const { isType } = allowedTypes;

@@ -5,8 +5,10 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Models
 const Step = require('../../models/Step');
-const Path = require('../../models/Path');
 const modelName = 'step';
+
+import internalData from '../../utils/internalData';
+const { paths } = internalData;
 
 // Errors
 const stepsMessages = require('../../messages/steps');
@@ -53,45 +55,48 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 
     const userId = res.locals.user.id;
 
-    Path.findById(pathId)
-        .then(path => {
-            if(!path) return res.status(PathNotExist.status).send(PathNotExist.msg);
+    const path = paths.find(path => path._id === path)
+    if(!path) 
+        return res.status(PathNotExist.status)
+                  .send(PathNotExist.msg);
 
-            Step.findById(parentId)
-                .then(parent => {
-                    if(!parent && parentId) return res.status(ParentNotExist.status).send(ParentNotExist.msg);
-                    
-                    Step.findById(prevId)
-                    .then(prevStep => {
-                        if(prevId) {
-                            if(!prevStep) 
-                                return res.status(PrevStepNotExist.status).send(PrevStepNotExist.msg)
+    Step.findById(parentId)
+        .then(parent => {
+            if(!parent && parentId) 
+                return res.status(ParentNotExist.status)
+                            .send(ParentNotExist.msg);
+            
+            Step.findById(prevId)
+            .then(prevStep => {
+                if(prevId) {
+                    if(!prevStep) 
+                        return res.status(PrevStepNotExist.status)
+                                    .send(PrevStepNotExist.msg)
 
-                            if((parentId && prevStep.parent != parentId) || prevStep.path != pathId)
-                            // Check that the linked step has the same parent and path
-                                return res.status(StrangerLinking.status).send(StrangerLinking.msg)
-                        }
-                        
-                        // Create new step
-                        const newStep = new Step({
-                            name: name,
-                            prev: prevId,
-                            parent: parentId,
-                            path: pathId,
-                            author: userId
-                        })
-
-                        newStep.save()
-                                .then(step => {
-                                        return res.send(step)
-                                    })
-                                .catch(next)     
-                        })
-                    .catch(next)    
+                    if((parentId && prevStep.parent != parentId) || prevStep.path != pathId)
+                    // Check that the linked step has the same parent and path
+                        return res.status(StrangerLinking.status)
+                                    .send(StrangerLinking.msg)
+                }
+                
+                // Create new step
+                const newStep = new Step({
+                    name: name,
+                    prev: prevId,
+                    parent: parentId,
+                    path: pathId,
+                    author: userId
                 })
-                .catch(next)
-            })
-        .catch(next);
+
+                newStep.save()
+                        .then(step => {
+                                return res.send(step)
+                            })
+                        .catch(next)     
+                })
+            .catch(next)    
+        })
+        .catch(next)
 })
 
 // @route   PUT api/steps/:id
@@ -112,7 +117,9 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
     Step.findById(stepId)
         .then(step => {
-            if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
+            if(!step) 
+                return res.status(StepNotExist.status)
+                          .send(StepNotExist.msg);
 
 
             Step.findById(parentId)

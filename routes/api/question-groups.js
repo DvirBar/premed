@@ -5,8 +5,10 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Question group model
 const QuestionGroup = require('../../models/QuestionGroup');
-const Path = require('../../models/Path');
 const modelName = 'question group';
+
+import internalData from '../../utils/internalData';
+const { paths } = internalData;
 
 // Errors
 const questionGroupMessages = require('../../messages/question-groups');
@@ -47,19 +49,17 @@ router.get('/', (req, res, next) => {
 router.get('/path/:pathId', (req, res, next) => { 
     const pathId = req.params.pathId
 
-    Path.findById(pathId)
-        .then(path => {
-            if(!path && pathId) 
-                return res.status(PathNotExist.status)
-                          .send(PathNotExist.msg)
+    const path = paths.find(path => path._id === pathId)
+    
+    if(!path && pathId) 
+        return res.status(PathNotExist.status)
+                    .send(PathNotExist.msg)
 
-            QuestionGroup.find({ path: pathId })
-                        .then(groups => {
-                            return res.send(groups)
-                        })
-                        .catch(next) // Find group by path              
-        })
-        .catch(next); // Find path
+    QuestionGroup.find({ path: pathId })
+                .then(groups => {
+                    return res.send(groups)
+                })
+                .catch(next) // Find group by path              
 })
 
 // @route   POST api/questgroups
@@ -74,26 +74,24 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
 
     res.locals.model = modelName;
 
-    Path.findById(pathId)
-        .then(path => {
-            if(!path && pathId)
-                return res.status(PathNotExist.status)
-                          .send(PathNotExist.msg)
-                
-            // Create new question group
-            const newGroup = new QuestionGroup({
-                name: name,
-                path: pathId,
-                read_more: readmore
-            })
+    const path = paths.find(path => path._id === pathId)
 
-            newGroup.save()
-                    .then(group => { 
-                        return res.send(group) 
-                    })
-                    .catch(next) // Save group         
-        })
-        .catch(next); // Find path
+    if(!path && pathId)
+        return res.status(PathNotExist.status)
+                    .send(PathNotExist.msg)
+        
+    // Create new question group
+    const newGroup = new QuestionGroup({
+        name: name,
+        path: pathId,
+        read_more: readmore
+    })
+
+    newGroup.save()
+            .then(group => { 
+                return res.send(group) 
+            })
+            .catch(next) // Save group         
 })
 
 // @route   PUT api/questgroups/:id
@@ -117,25 +115,23 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             return res.status(QuestionGroupNotExist.status)
                       .send(QuestionGroupNotExist.msg)
 
-        Path.findById(pathId)
-            .then(path => {
-                if(!path && pathId)
-                    return res.status(PathNotExist.status)
-                            .send(PathNotExist.msg)
-           
-                    group.name = name;
-                    group.path = pathId;
-                    group.read_more = readmore;
+        const path = paths.find(path => path._id === pathId)
+        if(!path && pathId)
+            return res.status(PathNotExist.status)
+                    .send(PathNotExist.msg)
+    
+        group.name = name;
+        group.path = pathId;
+        group.read_more = readmore;
 
-                    group.save()
-                        .then(group => {
-                            return res.send(group)              
-                        })
-                        .catch(next) // Save group
-                    })
-                    .catch(next); // Find path
+        group.save()
+            .then(group => {
+                return res.send(group)              
             })
-        .catch(next); // Find group
+            .catch(next) // Save group
+                
+        })
+    .catch(next); // Find group
 });
 
 // @route   PUT api/questgroups/:id/addQuestion

@@ -21,14 +21,15 @@ import sections from '../routes/api/sections';
 import steps from '../routes/api/steps';
 import pages from '../routes/api/pages';
 import topics from '../routes/api/topics';
-import datagroups from '../routes/api/data-groups';
-import datafields from '../routes/api/data-fields';
+// import datagroups from '../routes/api/data-groups';
+// import datafields from '../routes/api/data-fields';
 import universities from '../routes/api/universities';
-import calculations from '../routes/api/calculations';
-import userdata from '../routes/api/user-data';
+// import calculations from '../routes/api/calculations';
+// import userdata from '../routes/api/user-data';
 import datatables from '../routes/api/data-tables';
 import questgroups from '../routes/api/question-groups';
 import inquiries from '../routes/api/inquiries';
+import serverdata from '../routes/api/server-data';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -38,14 +39,15 @@ app.use('/api/sections', sections);
 app.use('/api/steps', steps);
 app.use('/api/pages', pages);
 app.use('/api/topics', topics);
-app.use('/api/datagroups', datagroups);
-app.use('/api/datafields', datafields);
+// app.use('/api/datagroups', datagroups);
+// app.use('/api/datafields', datafields);
 app.use('/api/universities', universities);
-app.use('/api/calculations', calculations);
-app.use('/api/userdata', userdata);
+// app.use('/api/calculations', calculations);
+// app.use('/api/userdata', userdata);
 app.use('/api/datatables', datatables);
 app.use('/api/questgroups', questgroups);
-app.use('/api/inquiries', inquiries)
+app.use('/api/inquiries', inquiries);
+app.use('/api/serverdata', serverdata);
 
 // Exit middlewares
 app.use(errorHandler);

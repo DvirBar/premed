@@ -10,8 +10,7 @@ const AncGroupSchema = new Schema({
         unique: true
     },
     path: {
-        type: ObjectId,
-        ref: 'Path'
+        type: String
     },
     subscribers: [{
         userId: {

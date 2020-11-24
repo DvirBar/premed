@@ -20,9 +20,7 @@ const StepSchema = new Schema({
         ref: 'Step'
     },
     path: {
-        type: ObjectId,
-        required: [true, 'Path is required'],
-        ref: 'Path'
+        type: String
     },
     author: {
         type: ObjectId,
