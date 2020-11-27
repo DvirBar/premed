@@ -14,7 +14,7 @@ function ValidatePath() {
         dispatch(getOneUserData());
     }, [])
 
-    const { data, loading, softLoading } = useSelector(state => 
+    const { data, loading, softLoading, selTable } = useSelector(state => 
         state.userdata);
 
 
@@ -29,7 +29,7 @@ function ValidatePath() {
                     <SoftLoadbar message="שמירה מתבצעת" />
                }
 
-                <UserStats data={data} />
+                <UserStats data={data} selTable={selTable} />
                 <Calculator />
             </Fragment>
         )

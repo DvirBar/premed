@@ -1,5 +1,5 @@
 export const getAllStoredCalcs = state => {
-    return state.calcs.storedCalcs
+    return state.statsinputs.calcs
 }
 
 export const getCalcsByFields = (calcs, fields) => {

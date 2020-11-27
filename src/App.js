@@ -15,7 +15,7 @@ import 'moment/locale/he';
 import Footer from './components/layout/Footer';
 import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
-import { getBaseData } from './redux/actions/basedata';
+import { getBaseData, getStatsInputs } from './redux/actions/basedata';
 
 axios.defaults.baseURL = 'http://10.0.0.28:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';

@@ -17,6 +17,8 @@ export const GET_ERROR = 'GET_ERROR';
 // Server data
 export const BASE_DATA_LOADING = 'BASE_DATA_LOADING';
 export const BASE_DATA_SUCCESS = 'BASE_DATA_SUCCESS';
+export const STATS_INPUTS_LOADING = 'STATS_INPUTS_LOADING';
+export const STATS_INPUTS_SUCCESS = 'STATS_INPUTS_SUCCESS';
 
 // Paths
 export const PATH_LOADING = 'PATH_LOADING';

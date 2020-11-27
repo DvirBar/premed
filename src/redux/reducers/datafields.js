@@ -11,7 +11,7 @@ import {
     DATA_FIELD_VALID_DELETE,
     DATA_FIELD_OPTION_ADD,
     DATA_FIELD_OPTION_DELETE,
-    DATA_FIELD_ASSIGN_ROLE
+    DATA_FIELD_ASSIGN_ROLE,
 } from '../actions/types';
 
 const initialState = {

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDataFields, getAllowedTypes } from '../../../redux/actions/datafields';
-import { getDataGroups } from '../../../redux/actions/datagroups';
-import { getCalcs, getStoredCalcs } from '../../../redux/actions/calculations';
 import InlineSelect from '../../common/InlineSelect';
-import AssignArgs from './calcs/AssignArgs';
-import AddDataField from './data-fields/AddDataField';
-import AddDataGroup from './data-groups/AddDataGroup';
 import UniSelect from './unis/UniSelect';
 import Loadbar from '../../layout/Loadbar';
 import MainList from './MainList';
+import { getStatsInputs } from '../../../redux/actions/basedata';
+import { statsInputsSelector } from '../../../redux/selectors/statsinputs';
 
 function Stats() {
     // TODO: Filter basic fields to not be calc output
@@ -29,43 +25,19 @@ function Stats() {
 
     // Get types 
     useEffect(() => {
-        dispatch(getAllowedTypes());
-        dispatch(getDataGroups());
-        dispatch(getDataFields());
-        // dispatch(getCalcs());
-        dispatch(getStoredCalcs());
+        dispatch(getStatsInputs())
     }, [])
-
 
     // Paths
     const pathSelector = useSelector(state => state.paths);
     const paths = pathSelector.paths;
     const loadPaths = pathSelector.loading;
 
-
-    // Groups
-    const groups = useSelector(state => state.datagroups.groups);
-
-
-    // Data Fields
-    const { fields, types } = useSelector(state => state.datafields);
-
-    // Stored calcs
-    const calcsSelector = useSelector(state => state.calcs);
-    const storedCalcs = calcsSelector.storedCalcs;
-    const loadCalcs = calcsSelector.loading;
-
-    // // Calcs
-    // const calcsSelector = useSelector(state => state.calcs);
-    // const fetchedCalcs = calcsSelector.calcs;
-    // const { storedCalcs } = calcsSelector;
-    // const [calcs, setCalcs] = useState(fetchedCalcs);
-
-    // //// Bind selector to local state
-    // useEffect(() => {
-    //     setCalcs(fetchedCalcs)
-    // }, [fetchedCalcs])
-
+    const {
+        fields,
+        groups,
+        calcs
+    } = useSelector(statsInputsSelector)
 
     // Universities
     const unisSelector = useSelector(state => state.unis)
@@ -111,13 +83,6 @@ function Stats() {
             setPathGroups(filtGroups)
         }
 
-        // if(calcs) {
-        //     let filtCalcs = calcs.filter(calc => 
-        //         calc.path === selPath.value)
-
-        //     setPathCalcs(filtCalcs)
-        // }
-
         if(fields) {
             let filtFields = fields.filter(field =>
                 field.path === selPath.value)
@@ -128,53 +93,26 @@ function Stats() {
     const selectUni = option => {
         setSelUni(option.value)
     }
-    
-    if(paths && paths.length === 0)
-        return <p className="no-resource-error">יש להוסיף מסלולים תחילה</p>
 
-    else if(!paths || loadPaths || loadUnis || loadCalcs)
+    if(!unis || loadUnis)
         return <Loadbar />
         
     return (
         <div className="stats-admin">    
-            <p className="top-bar">
-                <InlineSelect
-                selected={selPath}
-                selectOption={selectOption}
-                options={pathOptions} />
+            <InlineSelect
+            selected={selPath}
+            selectOption={selectOption}
+            options={pathOptions} />  
 
-                <AssignArgs 
-                storedCalcs={storedCalcs}
-                fields={fields}
-                groups={groups} />    
-            </p>    
-
-            <p className="stats-add-buttons"> 
-                <AddDataField 
-                path={selPath}
-                types={types}
-                unis={unis} /> 
-
-                <AddDataGroup 
-                path={selPath}
-                groups={pathGroups} />
-
-                {/* <AddCalc 
-                path={selPath}
-                unis={pathUnis}
-                storedCalcs={storedCalcs} /> */}
-
-                {selPath.value && unis?.length !== 0 &&
-                    <UniSelect
-                    pathUnis={pathUnis}
-                    selectUni={selectUni} />
-                }   
-            </p>
+            {selPath.value && unis?.length !== 0 &&
+                <UniSelect
+                pathUnis={pathUnis}
+                selectUni={selectUni} />
+            }   
     
             <MainList
             fields={pathFields}
             groups={pathGroups}
-            types={types}
             selUni={selUni} />
         </div>
     )

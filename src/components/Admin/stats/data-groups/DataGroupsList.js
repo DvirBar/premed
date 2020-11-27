@@ -2,18 +2,13 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import DataGroupItem from './DataGroupItem';
 
-function DataGroupsList({ groups, groupFields, types }) {
+function DataGroupsList({ groups }) {
     return (
-        // Recursive call to DataGroupItem
         <Fragment>
-            {groups.map (group => 
-                !group.parent &&
-                    <DataGroupItem 
-                    key={group._id}
-                    group={group}
-                    groups={groups}
-                    fields={groupFields}
-                    types={types} />  
+            {groups.map(group => 
+                <DataGroupItem 
+                key={group._id}
+                group={group} />  
             )}
         </Fragment>
     )

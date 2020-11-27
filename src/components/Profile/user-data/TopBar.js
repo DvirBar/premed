@@ -8,13 +8,9 @@ import DataPathsList from './DataPathsList';
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
     const [enabled, setEnabled] = useState(false);
-    const [tables, setTables] = useState([]);
     
     useEffect(() => {
-        setEnabled(data.tables.find(table => 
-            table.table._id === tableId).enabled)
-        setTables(data.tables.map(table => 
-            table.table))
+        setEnabled(data.tableData.enabled)
     }, [data])
 
     const options = [
@@ -36,7 +32,7 @@ function TopBar({ data, tableId, changeTable, paths }) {
     return (
         <div className="top-bar">
             <TableSelect 
-            tables={tables}
+            tables={data.tables}
             table={tableId}
             changeTable={changeTable} />
 

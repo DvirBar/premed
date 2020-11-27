@@ -1,28 +1,30 @@
 import {
-    UNI_LOADING,
-    BASE_DATA_SUCCESS
+    STATS_INPUTS_LOADING,
+    STATS_INPUTS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
     loading: false,
-    unis: []
+    fields: [],
+    groups: [],
+    calcs: []
 }
 
 export default function(state = initialState, action) {
     const payload = action.payload;
 
     switch(action.type) {
-        case UNI_LOADING:
+        case STATS_INPUTS_LOADING:
             return {
                 ...state,
                 loading: true
             }
 
-        case BASE_DATA_SUCCESS:
+        case STATS_INPUTS_SUCCESS: 
             return {
                 ...state,
                 loading: false,
-                unis: payload.universities
+                ...payload
             }
 
         default:

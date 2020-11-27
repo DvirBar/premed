@@ -16,6 +16,7 @@ import userdata, * as dataSelectors from './userdata';
 import datatables from './datatables';
 import questgroups, * as questGroupsSelectors from './questgroups';
 import inquiries from './inquiries';
+import statsinputs from './statsinputs';
 
 const appReducer = combineReducers({
     auth,
@@ -34,7 +35,8 @@ const appReducer = combineReducers({
     userdata,
     datatables,
     questgroups,
-    inquiries
+    inquiries,
+    statsinputs
 });
 
 const rootReducer = (state, action) => {

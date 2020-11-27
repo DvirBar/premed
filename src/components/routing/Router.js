@@ -7,7 +7,7 @@ import AdminRoute from './AdminRoute';
 import Default from '../Default';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
-// import Profile from '../profile/Profile';
+import Profile from '../profile/Profile';
 import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage';
@@ -30,7 +30,7 @@ const Router = () => {
                 <Route exact path="/" component={Default} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                {/* <ProtectedRoute path="/profile" component={Profile} /> */}
+                <ProtectedRoute path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route path="/steps" component={Steps} />
                 {/* <ProtectedRoute path="/stats" component={Stats} /> */}

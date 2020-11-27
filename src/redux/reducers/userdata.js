@@ -57,7 +57,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: payload
+                data: payload.data,
+                selTable: payload.selTable
             }
 
         case USER_DATA_ERROR:

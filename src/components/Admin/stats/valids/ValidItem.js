@@ -1,18 +1,13 @@
 import React from 'react';
 
-function ValidItem({ valid , validTypes }) {
-
-    const validator = validTypes?.find(curValid => 
-        curValid.value === valid.validType)
-
+function ValidItem({ valid }) {
     return (
         <span className="valid-item">
             <span className="valid-name">
-                {validator?.name}
+                {valid.name}
             </span>
-            {valid.validType === 'numRange' && 
+            {valid.value.value === 'numRange' && 
                 <span>
-
                     ({valid.min} -
                     {valid.max}) 
                 </span>

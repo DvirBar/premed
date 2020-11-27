@@ -23,6 +23,7 @@ export const getMessage = msg => {
 
 
 export const getError = error => {
+    console.log(error);
     if(error.response) {
         return {
             type: GET_ERROR,

@@ -10,4 +10,9 @@ export const getUnisByPath = pathId => createSelector(
         unis => unis.filter(uni => 
             uni.paths.find(path => path._id === pathId)))
 
+export const getUnisByPaths = pathIds => createSelector(
+    state => state.unis.unis, 
+    unis => unis.filter(uni => 
+        uni.paths.find(path => pathIds.includes(path))))
+
 

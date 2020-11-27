@@ -50,14 +50,21 @@ export const copyDataSimulation = () => dispatch => {
 }
 
 // Get one user data
-export const getOneUserData = () => dispatch => {
+export const getOneUserData = tableId => dispatch => {
     dispatch(dataLoad());
 
-    axios.get('api/userdata/user')
+    const body = JSON.stringify({
+        tableId
+    })
+
+    axios.post('api/userdata/user', body)
          .then(res => { 
              dispatch({
                 type: USER_DATA_SUCCESS,
-                payload: res.data
+                payload: {
+                    data: res.data,
+                    selTable: tableId
+                }
             })})
          .catch(err => {
              dispatch(dataError());

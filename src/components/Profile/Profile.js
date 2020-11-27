@@ -27,8 +27,6 @@ function Profile() {
         setSelectedLink(url)
     }
 
-    console.log(selectedLink);
-
     return (
         <div className="user-profile">
             <div className="top-content-nav">

@@ -8,6 +8,7 @@ function ChoosePath() {
     const [defaultValues, setDefaultValues] = useState({
         pathIds: []
     })
+    
     const paths = useSelector(state => state.paths.paths)
     
     const {
@@ -16,11 +17,6 @@ function ChoosePath() {
         values,
         errors
     } = useForm(addUserData, defaultValues)
-
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
 
     return (
         <form onSubmit={handleSubmit} className="choose-path">

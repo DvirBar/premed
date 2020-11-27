@@ -1,14 +1,22 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormInputBorder from '../../common/FormInputBorder';
 import { insertData } from '../../../redux/actions/userdata';
 import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
+import { getFieldVal } from '../../../redux/selectors/userdata';
 
 
-function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldValids, disabled }) {
+function MatchFormFragment({ field, fieldType, defValue, disabled }) {
+    const {
+        _id,
+        name, 
+        fieldOptions,
+        validators
+    } = field
+
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -20,19 +28,12 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     }, [defValue]);
 
     useEffect(() => {
-        setOptions(fieldOptions.map(option => ({
-                name: option.name,
-                value: option.value
-            })))
-    }, [fieldOptions])
-
-    useEffect(() => {
         if((!error || error.length === 0) && isSubmitting) {
             const dataObj = {
                 fieldId: name,
                 value
             }
-            dispatch(insertData(dataObj))
+            // dispatch(insertData(dataObj))
             setIsSubmitting(false)
             setError('')
         }
@@ -48,7 +49,7 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     }
 
     useEffect(() => {
-        if(type !== 'textbox') {
+        if(fieldType !== 'textbox') {
             addData()
         }
     }, [value])
@@ -56,8 +57,8 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
     const addData = () => {
         if(value && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
-            if(fieldValids.length !== 0)
-                setError(validateForm(value, fieldValids))
+            if(validators.length !== 0)
+                setError(validateForm(value, validators))
             
             else {
                 setError(undefined)
@@ -73,13 +74,12 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
         }
     }
     
-    switch(type) {
+    switch(fieldType) {
         case 'textbox': 
             return <div>
                         <FormInputBorder 
-                        title={title}
-                        type={type}
-                        name={name}
+                        title={name}
+                        name={_id}
                         value={value}
                         onChange={changeData}
                         onBlur={addData}
@@ -90,12 +90,12 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
         case 'select': 
             return <div>
                         <Dropdown 
-                        title={title}
-                        options={options}
+                        title={name}
+                        options={fieldOptions}
                         defaultOption={options.find(option => 
                             option.value === defValue)}
                         placeholder="בחירה"
-                        name={name}
+                        name={_id}
                         width='10rem'
                         onChange={changeData} /> 
                    </div>
@@ -104,8 +104,8 @@ function MatchFormFragment({ title, name, defValue, type, fieldOptions, fieldVal
         case 'checkbox': 
             return <div>
                         <Checkbox 
-                        name={name}
-                        label={title}
+                        name={_id}
+                        label={name}
                         onChange={changeData}
                         value={{on: true, off: false}}
                         checked={defValue ? true : false} />

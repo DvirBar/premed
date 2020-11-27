@@ -19,7 +19,7 @@ function NavigateDataSections({ paths, unis, changeSection }) {
 
                             <span className="path-uni-list">
                                 {unis?.map(uni => 
-                                    uni.paths.find(curPath => curPath === path._id) &&
+                                    uni.paths.find(curPath => curPath === path) &&
                                         <span 
                                         className="section-item"
                                         onClick={() => changeSection(path, uni)}>
@@ -42,7 +42,7 @@ function NavigateDataSections({ paths, unis, changeSection }) {
                     {paths.map(path => 
                         <Fragment>
                             {unis?.map(uni => 
-                                uni.paths.find(curPath => curPath === path._id) &&
+                                uni.paths.find(curPath => curPath === path) &&
                                     <span 
                                     className="section-item"
                                     onClick={() => changeSection(path, uni)}>

@@ -9,20 +9,10 @@ function DataFieldsList({ allFields, selUni, types }) {
     /* Filter fields to match selected unis and check 
     that it is no a part of group or a calc */
     useEffect(() => {
-        if(selUni) {
-            setFields(allFields.filter(field => 
-                field.university &&
-                field.university._id === selUni 
-                && !field.group
-            ))
-        }
-
-        else {
-            setFields(allFields.filter(field => 
-                !field.university
-                && !field.group
-            ))
-        }
+        setFields(allFields.filter(field => 
+            field.uni === selUni
+        ))
+    
     }, [selUni, allFields])
 
 
