@@ -1,5 +1,5 @@
 import { getBestAverage } from '../methods'
-import { bagrut } from '../../dataGroups';
+import { bagrut } from '../../groups/bagrut';
 import getBonus from './bonusMap';
 
 export const techBagrut = (params, uSettings) => {

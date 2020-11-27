@@ -1,4 +1,4 @@
-import { staticDataTypes } from '../allowedTypes'
+import { staticDataTypes } from '../../allowedTypes'
 
 const {
     fieldTypes,
@@ -13,11 +13,9 @@ const bagrutGroupArgs = [
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [
+            validationTypes.isPosNum,
             {
-                value: validationTypes.isPosNum,
-            },
-            {
-                value: validationTypes.numRange,
+                ...validationTypes.numRange,
                 min: '40',
                 max: '100'
             }

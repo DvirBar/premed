@@ -1,4 +1,4 @@
-import { bagrut } from '../../dataGroups';
+import { bagrut } from '../../groups/bagrut';
 import getBonus from './bonusMap';
 import { getBestAverage } from "../methods";
 

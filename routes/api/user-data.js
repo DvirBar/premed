@@ -24,31 +24,53 @@ const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
-import storedCalcs from '../../utils/calcs/calcsIndex';
-import executeCalc from '../../utils/calcs/executeCalc';
+import storedCalcs from '../../utils/stats/calcs/storedCalcs';
+import executeCalc from '../../utils/stats/calcs/executeCalc';
+
+
+const findLatestTable = tables => {
+    return tables.sort((a, b) => 
+        new Date(b.last_updated).getTime() - 
+        new Date(a.last_updated).getTime())[0]
+}
 
 // @route   GET api/userdata/user
 // @desc    Get one user data
 // @access  Private
-router.get('/user', auth, (req, res, next) => {
+router.post('/user', auth, (req, res, next) => {
+    const {
+        tableId
+    } = req.body;
+
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-            .populate({
-                path: 'tables.dataVals.field',
-                populate: { 
-                    path: 'calcOutput', 
-                    path: 'group'
-                }
-            })
-            .populate('tables.paths')
             .populate('tables.table')
             .then(data => {
                 if(!data) 
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg);
                 
-                return res.send(data);
+                let tableData
+                
+                if(tableId)
+                    tableData = data.tables.find(tableObj =>
+                        tableObj.table._id.equals(tableId))
+                
+                else {
+                    tableData = data.tables.find(tableObj => 
+                        tableObj.enabled)
+                    
+                    if(!tableData)
+                        tableData = findLatestTable(data.tables)
+                }
+    
+                const obj = {
+                    tableData,
+                    transfer_suggested: data.transfer_suggested,
+                    tables: data.tables.map(tableObj => tableObj.table)
+                }
+                return res.send(obj);
             })
             .catch(next)
 })
@@ -137,15 +159,7 @@ router.post('/', auth, (req, res, next) => {
                             newData.save()
                                     .then(data => {
                                         async function populateData() {
-                                            await data.populate({
-                                                path: 'tables.dataVals.field',
-                                                populate: { 
-                                                    path: 'calcOutput', 
-                                                    path: 'group'
-                                                }
-                                            })
-                                            .populate('tables.paths')
-                                            .populate('tables.table')
+                                            await data.populate('tables.table')
                                             .execPopulate();
                 
                                             return res.send(data); 
@@ -238,14 +252,7 @@ router.put('/editpaths', auth, (req, res, next) => {
                 data.save()
                     .then(data => {
                         async function populateData() {
-                            await data.populate({
-                                path: 'tables.dataVals.field',
-                                populate: { 
-                                    path: 'calcOutput', 
-                                    path: 'group'
-                                }
-                            }).populate('tables.paths')
-                            .populate('tables.table')
+                            await data.populate('tables.table')
                             .execPopulate();
 
                             const editedTable = data.tables.find(table => 
@@ -302,13 +309,9 @@ router.put('/switchtable', auth, (req, res, next) => {
                             data.transfer_suggested = false;
 
                             async function populateData() {
-                                await data.populate({
-                                    path: 'tables.dataVals.field',
-                                    populate: { 
-                                        path: 'calcOutput', 
-                                        path: 'group'
-                                    }
-                                }).populate('tables.paths').execPopulate();
+                                await data
+                                .populate('tables.paths')
+                                .execPopulate();
                             
                                 return res.send(data.tables.find(curTable => 
                                     curTable.table._id === table._id))
@@ -377,13 +380,9 @@ router.put('/insertdata', auth, (req, res, next) => {
                             data.save()
                                 .then(data => {
                                     async function populateData() {
-                                        await data.populate({
-                                            path: 'tables.dataVals.field',
-                                            populate: { 
-                                                path: 'calcOutput', 
-                                                path: 'group'
-                                            }
-                                        }).populate('tables.table').execPopulate();
+                                        await data
+                                        .populate('tables.table')
+                                        .execPopulate();
                                         const valueObj = data.tables.find(curTable => 
                                             curTable.table.enabled)
                                             .dataVals.find(val => 
@@ -410,10 +409,6 @@ router.put('/execCalc', auth, (req, res, next) => {
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-    .populate({
-        path: 'tables.dataVals.field',
-        populate: { path: 'group' }
-    })
     .populate('tables.table')
     .then(data => {
         if(!data)

@@ -15,8 +15,7 @@ const UserDataSchema = new Schema({
             ref: 'DataTable'
         },
         paths: [{
-            type: ObjectId,
-            ref: 'Path'
+            type: String
         }],
         enabled: {
             type: Boolean,
@@ -28,8 +27,13 @@ const UserDataSchema = new Schema({
                 ref: 'DataTable'
             },
             field: {
-                type: ObjectId,
-                ref: 'DataField'
+                type: String
+            },
+            group: {
+                type: String
+            },
+            calc: {
+                type: String
             },
             value: {
                 type: String

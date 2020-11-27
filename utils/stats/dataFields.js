@@ -1,4 +1,5 @@
 import { staticDataTypes } from '../allowedTypes'
+import storedCalcs from './calcs/storedCalcs'
 
 const {
     fieldTypes,
@@ -9,7 +10,7 @@ const {
 export const fields = [
     {
         name: 'פסיכומטרי',
-        id: 'psycho',
+        _id: 'psycho',
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [
@@ -25,15 +26,13 @@ export const fields = [
     },
     {
         name: 'מו"ר',
-        id: 'mor',
+        _id: 'mor',
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [
+            validationTypes.isPosNum,
             {
-                value: validationTypes.isPosNum,
-            },
-            {
-                value: validationTypes.numRange,
+                ...validationTypes.numRange,
                 min: '150',
                 max: '250'
             }
