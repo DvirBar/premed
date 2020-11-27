@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import EditDataPaths from './EditDataPaths'
 
-function DataPathsList({ paths }) {
+function DataPathsList({ paths, tableId }) {
     const [displayEdit, setDisplayEdit] = useState(false)
     
     const toggleEdit = open => {
@@ -27,6 +27,7 @@ function DataPathsList({ paths }) {
             userPaths={paths}
             display={displayEdit}
             toggleModal={toggleEdit}
+            tableId={tableId}
             title='עריכת מסלולים' />
         </div>
     )

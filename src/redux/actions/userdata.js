@@ -63,7 +63,7 @@ export const getOneUserData = tableId => dispatch => {
                 type: USER_DATA_SUCCESS,
                 payload: {
                     data: res.data,
-                    selTable: tableId
+                    selTable: tableId || res.data.tableData.table._id
                 }
             })})
          .catch(err => {
@@ -156,19 +156,20 @@ export const insertDataSimulation = (field, value) => dispatch => {
 }
 
 // Edit user paths
-export const editUserDataPaths = data => dispatch => {
+export const editUserDataPaths = (tableId, data) => dispatch => {
     dispatch(dataLoad());
 
     // Request body
     const body = JSON.stringify(data);
 
-    axios.put('api/userdata/editpaths', body)
+    axios.put(`api/userdata/editpaths/${tableId}`, body)
          .then(res => 
             dispatch({
                 type: USER_DATA_UPDATE_PATHS,
-                /* { table: _id,
-                     paths: [pathIds] } */
-                payload: res.data
+                payload: {
+                    paths: res.data,
+                    tableId
+                }
              }))
          .catch(err => {
              dispatch(dataError())

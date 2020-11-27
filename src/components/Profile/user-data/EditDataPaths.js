@@ -6,10 +6,10 @@ import Modal from '../../layout/Modal'
 import { useSelector } from 'react-redux';
 
 
-function EditDataPaths({ userPaths, display, toggleModal, title }) {
+function EditDataPaths({ userPaths, display, toggleModal, tableId, title }) {
     const [defaultValues, setDefaultValues] = useState({})
     const allPaths = useSelector(state => state.paths.paths)
-
+    console.log(tableId);
     useEffect(() => {
         setDefaultValues({
             pathIds: userPaths?.map(path => path._id)
@@ -21,7 +21,7 @@ function EditDataPaths({ userPaths, display, toggleModal, title }) {
         handleSubmit,
         values,
         errors
-    } = useForm(editUserDataPaths, defaultValues)
+    } = useForm(editUserDataPaths, defaultValues, tableId)
 
     return (
         <Modal

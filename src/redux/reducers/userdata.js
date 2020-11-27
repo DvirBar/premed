@@ -54,6 +54,7 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_SUCCESS: 
+            console.log(payload);
             return {
                 ...state,
                 loading: false,
@@ -136,20 +137,16 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_UPDATE_PATHS:
-            console.log(payload);
             return {
                 ...state,
                 loading: false,
                 data: {
-                    ...state.data,
-                    tables: state.data.tables.map(table => 
-                                table.table._id === payload.table._id
-                                ? table = {
-                                    ...table,
-                                    table: payload.table,
-                                    paths: payload.paths
-                                } 
-                                : table)
+                    ...state.data,//
+                    tableData: state.data.tableData.table._id === payload.tableId &&
+                        {
+                            ...state.data.tableData,
+                            paths: payload.paths
+                        }
                 }
             }
 

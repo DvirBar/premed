@@ -12,7 +12,7 @@ function DataSection({ paths, selPath, selUni }) {
 
     // Dispatch actions to get data
     useEffect(() => {
-        dispatch(getStatsInputs(paths))
+        dispatch(getStatsInputs(paths.map(path => path._id)))
     }, [paths])
 
     // Fields

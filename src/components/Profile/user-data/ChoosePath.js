@@ -18,6 +18,8 @@ function ChoosePath() {
         errors
     } = useForm(addUserData, defaultValues)
 
+    console.log(paths);
+
     return (
         <form onSubmit={handleSubmit} className="choose-path">
             <p className="title">בחירת מסלול</p>
