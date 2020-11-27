@@ -161,8 +161,17 @@ router.post('/', auth, (req, res, next) => {
                                         async function populateData() {
                                             await data.populate('tables.table')
                                             .execPopulate();
+
+                                            const obj = {
+                                                data: {
+                                                    tableData: data.tables[0],
+                                                    transfer_suggested: false,
+                                                    tables: data.tables.map(tableObj => tableObj.table)
+                                                },
+                                                selTable: table._id
+                                            }
                 
-                                            return res.send(data); 
+                                            return res.send(obj); 
                                         }
                                         populateData();       
                                     })
