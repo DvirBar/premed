@@ -49,4 +49,9 @@ const internalData = {
     ]
 }
 
+export const populatePaths = pathIds => {
+    return pathIds.map(pathId => internalData.paths.find(path =>
+        path._id === pathId))
+}
+
 export default internalData

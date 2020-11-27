@@ -17,6 +17,8 @@ const pathsMessages = require('../../messages/paths');
 
 import dataTablesMessages from '../../messages/data-tables';
 
+import { populatePaths } from '../../utils/internalData';
+
 
 const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
     NoEnabledTable, UserDataNotInTable, ArgsInsuffice } = dataMessages;
@@ -66,7 +68,10 @@ router.post('/user', auth, (req, res, next) => {
                 }
     
                 const obj = {
-                    tableData,
+                    tableData: {
+                        ...tableData.toObject(),
+                        paths: populatePaths(tableData.paths)
+                    },
                     transfer_suggested: data.transfer_suggested,
                     tables: data.tables.map(tableObj => tableObj.table)
                 }
@@ -232,30 +237,29 @@ router.post('/simulateCalcs', auth, (req, res, next) => {
 })
 
 
-// @route   PUT api/userdata/editpaths
+// @route   PUT api/userdata/editpaths/:tableId
 // @desc    Update data group
 // @access  Private
-router.put('/editpaths', auth, (req, res, next) => {
-    const { 
+router.put('/editpaths/:tableId', auth, (req, res, next) => {
+    const {
         pathIds
     } = req.body;
 
+    const tableId = req.params.tableId
     res.locals.model = modelName;
 
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-            .populate('tables.table')
-            .select('_id enabled')
             .then(data => {
             // Check that group exists
                 if(!data) 
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg)
-                                
+
                 // Find the enabled table             
-                const dataTable = data.tables.find(table => 
-                    table.table.enabled)              
+                const dataTable = data.tables.find(tableObj => 
+                    tableObj.table.equals(tableId))              
                 dataTable.paths = pathIds
 
                 data.save()
@@ -264,12 +268,9 @@ router.put('/editpaths', auth, (req, res, next) => {
                             await data.populate('tables.table')
                             .execPopulate();
 
-                            const editedTable = data.tables.find(table => 
-                                table.table.enabled)
-                            return res.send({
-                                table: editedTable.table,
-                                paths: editedTable.paths
-                            }); 
+                            const editedTable = data.tables.find(tableObj => 
+                                tableObj.table._id.equals(tableId))
+                            return res.send(populatePaths(editedTable.paths)) 
                         }
                         populateData();              
                     })

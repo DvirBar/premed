@@ -37,5 +37,20 @@ export const fields = [
                 max: '250'
             }
         ]
+    },
+    {
+        name: 'אנליטי',
+        _id: 'analytic',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        paths: ['four-year'],
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
     }
 ]
