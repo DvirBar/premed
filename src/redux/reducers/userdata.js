@@ -132,7 +132,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: payload
+                ...payload
             }
 
         case USER_DATA_UPDATE_PATHS:
