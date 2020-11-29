@@ -41,7 +41,6 @@ const storedCalcs = [
         isSuggestion: true,
         validators: [
             validationTypes.isPosNum,
-            validationTypes.isInt,
             {
                 ...validationTypes.numRange,
                 min: '58',

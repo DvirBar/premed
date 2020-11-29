@@ -16,6 +16,11 @@ const fieldsMessages = require('../../messages/data-fields');
 const pathsMessages = require('../../messages/paths');
 
 import dataTablesMessages from '../../messages/data-tables';
+import { fields } from '../../utils/stats/dataFields';
+import groups from '../../utils/stats/groups/dataGroups';
+import storedCalcs from '../../utils/stats/calcs/storedCalcs';
+
+/* TODO: Check imports and finish data insert */
 
 import { populatePaths } from '../../utils/internalData';
 
@@ -26,7 +31,6 @@ const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
-import storedCalcs from '../../utils/stats/calcs/storedCalcs';
 import executeCalc from '../../utils/stats/calcs/executeCalc';
 
 
@@ -79,7 +83,6 @@ router.post('/user', auth, (req, res, next) => {
             })
             .catch(next)
 })
-
 
 
 
@@ -166,10 +169,12 @@ router.post('/', auth, (req, res, next) => {
                                         async function populateData() {
                                             await data.populate('tables.table')
                                             .execPopulate();
-
                                             const obj = {
                                                 data: {
-                                                    tableData: data.tables[0],
+                                                    tableData: {
+                                                        ...data.tables[0].toObject(),
+                                                        paths: populatePaths(data.tables[0].paths)
+                                                    },
                                                     transfer_suggested: false,
                                                     tables: data.tables.map(tableObj => tableObj.table)
                                                 },
@@ -335,17 +340,20 @@ router.put('/switchtable', auth, (req, res, next) => {
 });
 
 
-// @route   PUT api/userdata/insertdata
+// @route   PUT api/userdata/insertdata/:tableId
 // @desc    Insert data 
 // @access  Private
-router.put('/insertdata', auth, (req, res, next) => {
+router.put('/insertdata/:tableId', auth, (req, res, next) => {
     const {
         fieldId,
+        groupId,
+        isCalc,
         value
     } = req.body;
 
+    const tableId = req.params.tableId
     const userId = res.locals.user.id
-
+    
     UserData.findOne({ user: userId })
             .populate('tables.table')
             .then(data => {
@@ -353,57 +361,48 @@ router.put('/insertdata', auth, (req, res, next) => {
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg)
                 
-                const enabledTable = data.tables.find(curTable => curTable.table.enabled)
+                const enabledTable = data.tables.find(curTable => 
+                    curTable.table.enabled && curTable.table._id.equals(tableId))
 
                 if(!enabledTable)
                     return res.status(NoEnabledTable.status)
                               .send(NoEnabledTable.msg)
                     
-                DataField.findById(fieldId)
-                         .then(field => {
-                            if(!field)
-                                return res.status(DataFieldNotExist.status)
-                                          .send(DataFieldNotExist.msg)
-
-                            const values = enabledTable.dataVals
-                            let found = false
+                
+                const values = enabledTable.dataVals
+                let found = false
                             
             // If the user already has a value for the field
-                            for(let item of values) {
-                                if(item.field.equals(fieldId)) {
-                                    item.value = value;
-                                    found = true;
-                                    break;
-                                }
-                            }
+                for(let item of values) {
+                    if(item.field === fieldId && item.group === groupId) {
+                        item.value = value;
+                        found = true;
+                        break;
+                    }
+                }
 
             // If the field is yet to have a value
-                            if(!found) {
-                                values.push({
-                                    field: fieldId,
-                                    value
-                                })
-                            }
+                if(!found) {
+                    values.push({
+                        field: fieldId,
+                        group: groupId,
+                        isCalc: isCalc,
+                        value
+                    })
+                }
 
-                            enabledTable.last_updated = Date.now();
+                enabledTable.last_updated = Date.now();
 
-                            data.save()
-                                .then(data => {
-                                    async function populateData() {
-                                        await data
-                                        .populate('tables.table')
-                                        .execPopulate();
-                                        const valueObj = data.tables.find(curTable => 
-                                            curTable.table.enabled)
-                                            .dataVals.find(val => 
-                                                val.field._id.equals(fieldId))
-                                        return res.send(valueObj); 
-                                    }
-                                    populateData();
-                                })
-                                .catch(next); // Save user data
-                         })
-                         .catch(next); // Find data field
+                data.save()
+                    .then(data => {
+                        const valueObj = data.tables.find(curTable => 
+                            curTable.table.enabled)
+                            .dataVals.find(val => 
+                                val.field === fieldId && 
+                                val.group === groupId)
+                        return res.send(valueObj); 
+                    })
+                    .catch(next); // Save user data
             })
             .catch(next); // Find user data
 })

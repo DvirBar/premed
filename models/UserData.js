@@ -32,8 +32,8 @@ const UserDataSchema = new Schema({
             group: {
                 type: String
             },
-            calc: {
-                type: String
+            isCalc: {
+                type: Boolean
             },
             value: {
                 type: String
