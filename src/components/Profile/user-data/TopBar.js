@@ -8,7 +8,7 @@ import DataPathsList from './DataPathsList';
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
     const [enabled, setEnabled] = useState(false);
-    console.log(tableId);
+
     useEffect(() => {
         setEnabled(data.tableData.enabled)
     }, [data])

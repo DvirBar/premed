@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 
 function NavigateDataSections({ paths, unis, changeSection }) {
+    console.log(unis);
+    console.log(paths);
     return (
         <div className="navigate-data-sections">
             {paths.length > 1 
@@ -19,7 +21,7 @@ function NavigateDataSections({ paths, unis, changeSection }) {
 
                             <span className="path-uni-list">
                                 {unis?.map(uni => 
-                                    uni.paths.find(curPath => curPath === path) &&
+                                    uni.paths.includes(path._id) &&
                                         <span 
                                         className="section-item"
                                         onClick={() => changeSection(path, uni)}>
@@ -42,7 +44,7 @@ function NavigateDataSections({ paths, unis, changeSection }) {
                     {paths.map(path => 
                         <Fragment>
                             {unis?.map(uni => 
-                                uni.paths.find(curPath => curPath === path) &&
+                                uni.paths.includes(path._id) &&
                                     <span 
                                     className="section-item"
                                     onClick={() => changeSection(path, uni)}>

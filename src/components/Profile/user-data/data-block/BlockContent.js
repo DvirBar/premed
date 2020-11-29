@@ -6,7 +6,8 @@ function BlockContent({ fields, calcs }) {
         <div className="data-block-content">
             {fields?.map(field => 
                 <FormFragment
-                field={field} />
+                field={field}
+                isCalc={false} />
             )}
 
             {calcs?.map(calc =>

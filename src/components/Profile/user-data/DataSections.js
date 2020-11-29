@@ -10,7 +10,7 @@ import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getUnisByPaths } from '../../../redux/selectors/unis';
 
 function DataSections({ paths }) {
-    const unis = useSelector(getUnisByPaths(paths))
+    const unis = useSelector(getUnisByPaths(paths.map(path => path._id)))
 
     // Change section on navigation
     const [selUni, setSelUni] = useState()
@@ -20,6 +20,8 @@ function DataSections({ paths }) {
         setSelUni(uni)
         setSelPath(path)
     }
+
+    console.log(unis);
 
     const storedCalcs = useSelector(getAllStoredCalcs)
 

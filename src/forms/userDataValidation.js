@@ -5,7 +5,7 @@ export default function validateForm(value, fieldValids) {
     
     if(fieldValids.length !== 0) {
         for(let valid of fieldValids) {
-            const validate = validators[valid.validType];
+            const validate = validators[valid.value];
             error = validate(value, valid)      
             
             if(error && error.length !== 0) break;

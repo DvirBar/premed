@@ -53,6 +53,7 @@ export default function(state = initialState, action) {
                 softLoading: true
             }
 
+        case USER_DATA_ADD:
         case USER_DATA_SUCCESS: 
             console.log(payload);
             return {
@@ -76,7 +77,7 @@ export default function(state = initialState, action) {
                 selTable: payload
             }
  
-        case COPY_DATA_SIMULATION: 
+        case COPY_DATA_SIMULATION: {
             const table = state.data.tables.find(thisTable => 
                 thisTable.table._id === state.selTable)
             console.log(state.selTable);
@@ -87,6 +88,7 @@ export default function(state = initialState, action) {
                     payload.fields.find(field =>
                         field._id === val.field._id))
             }
+        }
 
         case SIMULATE_CALCS: 
             return {
@@ -129,19 +131,12 @@ export default function(state = initialState, action) {
                 tableData: payload
             }
 
-        case USER_DATA_ADD:
-            return {
-                ...state,
-                loading: false,
-                ...payload
-            }
-
         case USER_DATA_UPDATE_PATHS:
             return {
                 ...state,
                 loading: false,
                 data: {
-                    ...state.data,//
+                    ...state.data,
                     tableData: state.data.tableData.table._id === payload.tableId &&
                         {
                             ...state.data.tableData,
@@ -171,37 +166,38 @@ export default function(state = initialState, action) {
                 }
             }
 
-        case USER_DATA_INSERT:
+        case USER_DATA_INSERT: {
+            const dataVals = state.data.tableData.dataVals
             return {
                 ...state,
                 softLoading: false,
                 data: {
                     ...state.data,
-                    tables:
-                        state.data.tables.map(table => 
-                            table.table.enabled 
+                    tableData:
+                        state.selTable === payload.tableId
                         ? {
-                            ...table,
+                            ...state.data.tableData,
                             last_updated: new Date(Date.now()),
                             dataVals: 
-                                table.dataVals.length === 0
-                                ?  table.dataVals = [payload]
+                                dataVals.length === 0
+                                ?  [payload.dataVal]
 
-                                : (table.dataVals.find(value => 
-                                    value.field._id === payload.field._id) 
+                                : (dataVals.find(value => 
+                                    value.field === payload.dataVal.field &&
+                                    value.group === payload.dataVal.group) 
 
-                                    ? table.dataVals.map(value => 
-                                        value.field._id === payload.field._id ? 
-                                        payload : value)
+                                    ? dataVals.map(value => 
+                                        value.field === payload.dataVal.field ? 
+                                        payload.dataVal : value)
                                     
-                                    : [...table.dataVals, payload])
+                                    : [...dataVals, payload.dataVal])
                             }
 
-                        : table
-                        )
+                        : state.data.tableData
                 },
                 changedField: payload
             }
+        }
 
         case EXEC_CALC:
             let dataToInsert = []

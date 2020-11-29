@@ -6,10 +6,10 @@ import { insertData } from '../../../redux/actions/userdata';
 import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
-import { getFieldVal } from '../../../redux/selectors/userdata';
+import { getFieldVal, selTableSelector } from '../../../redux/selectors/userdata';
 
 
-function MatchFormFragment({ field, fieldType, defValue, disabled }) {
+function MatchFormFragment({ field, groupId, isCalc, fieldType, defValue, disabled }) {
     const {
         _id,
         name, 
@@ -21,19 +21,22 @@ function MatchFormFragment({ field, fieldType, defValue, disabled }) {
     const [value, setValue] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
-    const [options, setOptions] = useState([]);
 
     useEffect(() => {
         setValue(defValue);
     }, [defValue]);
 
+    const selTable = useSelector(selTableSelector)
+
     useEffect(() => {
         if((!error || error.length === 0) && isSubmitting) {
             const dataObj = {
-                fieldId: name,
+                fieldId: _id,
+                groupId,
+                isCalc,
                 value
             }
-            // dispatch(insertData(dataObj))
+            dispatch(insertData(selTable, dataObj))
             setIsSubmitting(false)
             setError('')
         }
@@ -57,8 +60,10 @@ function MatchFormFragment({ field, fieldType, defValue, disabled }) {
     const addData = () => {
         if(value && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
-            if(validators.length !== 0)
+            if(validators.length !== 0) {
                 setError(validateForm(value, validators))
+            }
+                
             
             else {
                 setError(undefined)
@@ -92,7 +97,7 @@ function MatchFormFragment({ field, fieldType, defValue, disabled }) {
                         <Dropdown 
                         title={name}
                         options={fieldOptions}
-                        defaultOption={options.find(option => 
+                        defaultOption={fieldOptions.find(option => 
                             option.value === defValue)}
                         placeholder="בחירה"
                         name={_id}

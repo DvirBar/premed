@@ -194,18 +194,21 @@ export const switchTable = () => dispatch => {
 }
 
 // Insert new data to user data collection
-export const insertData = data => dispatch => {
+export const insertData = (tableId, data) => dispatch => {
     dispatch(dataLoadSoft());
     // TODO: Prompt user on successful save 
     
     // Request body
     const body = JSON.stringify(data);
 
-    axios.put('api/userdata/insertdata', body)
+    axios.put(`api/userdata/insertdata/${tableId}`, body)
          .then(res => 
             dispatch({
                 type: USER_DATA_INSERT,
-                payload: res.data
+                payload: {
+                    tableId,
+                    dataVal: res.data
+                }
              }))
          .catch(err => {
              console.log(err);

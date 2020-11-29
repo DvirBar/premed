@@ -17,7 +17,7 @@ export function isNotEmail(value, message) {
 }
 
 export function isNotValidName(value, message) {
-    const pattern = RegExp('[a-zA-Z]+')
+    const pattern = RegExp('[a-zA-Zא-ת]+')
     if(!pattern.test(value)) 
         return message
 }
@@ -39,8 +39,8 @@ export function isInt(value) {
 }
 
 export function numRange(value, valid) {
-    const min = valid.min;
-    const max = valid.max;
+    const min = Number(valid.min);
+    const max = Number(valid.max);
 
     const message = "הערך חייב להיות בין " + min + " ל- " + max
 

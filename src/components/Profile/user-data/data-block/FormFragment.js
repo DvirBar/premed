@@ -6,12 +6,13 @@ import MatchFormFragment from '../MatchFormFragment'
 
 function FormFragment({ field, isCalc }) {
     const dataVal = useSelector(
-        getFieldVal(field._id, field.group, isCalc && field._id))
+        getFieldVal(field._id, field.group))
 
     return (
         <div className="form-fragment">
             <MatchFormFragment
             field={field}
+            isCalc={isCalc}
             fieldType={field.fieldType.value}
             defValue={dataVal?.value}
             disabled={isCalc && field.isSuggetion} />
