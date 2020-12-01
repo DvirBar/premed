@@ -6,6 +6,10 @@ export const getAllStoredCalcs = state => {
     return state.statsinputs.calcs
 }
 
+export const getGroups = state => {
+    return state.statsinputs.groups
+}
+
 export const getInputsByUni = uniId => createSelector(
     state => state.statsinputs,
     inputs => {

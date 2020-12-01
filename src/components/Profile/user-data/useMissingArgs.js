@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { getGroupFields } from '../../../redux/reducers';
+import { getGroups } from '../../../redux/selectors/statsinputs';
 
-const useMissingArgs = (storedCalcs, dataVals) => {
+const useMissingArgs = (storedCalcs, dataVals, selType) => {
     const [missingArgs, setMissingArgs] = useState([])
-    const groupFields = useSelector(state => 
-        getGroupFields(state.datafields.fields))
+    const groups = useSelector(getGroups)
 
     useEffect(() => {
         let tempArgs = []
@@ -13,26 +13,42 @@ const useMissingArgs = (storedCalcs, dataVals) => {
         if(storedCalcs && storedCalcs.length !== 0 && dataVals) {
             let missing = []
 
+            // Loop through stored calc and find missing args
             for(let storedCalc of storedCalcs) {
                 const groupArgs = storedCalc?.args?.filter(arg => 
                     arg.type === "group")
     
                 missing = storedCalc?.args?.filter(arg => {
-                    if(arg.type === "group" && groupArgs) {
-                        let roleGroupFields = groupFields.filter(field => 
-                            field.group.role === arg.role);
-                
-                        for(let field of roleGroupFields) {
+
+                // If the arg is a group
+                if(arg.type === "group" && groupArgs) {
+                    const group = groups.find(group => 
+                        group._id === arg._id)
+
+                    /* Get group config according to group type 
+                    if provided, and check if arg is optional */
+                    const isOptional = group.config?.uniqueGroupType
+                    ?   group.config[selType]?.isOptional
+                    :   group.config?.isOptional
+
+                    if(!isOptional) {
+                        const groupFields = group.fields
+            
+                        /* Loop through group fields and find with they 
+                        all have values if not, return arg */
+                        for(let field of groupFields) {
                             if(!dataVals.find(val => 
-                                val.field?._id === field._id)) {
+                                val.field === field._id &&
+                                val.group === arg._id)) {
                                 return arg
-                            }}}
-        
-                    else if(!dataVals?.find(val => 
-                        val.field?.role === arg.role)) {
+                        }}}
+                }
+                    
+                // If the argument is not a group, find if the field has a value 
+                    else if(!dataVals.find(val => 
+                        val.field === arg._id)) {
                         return arg;
-                    }
-                })
+                    }})
 
                 /* If missing args array is not empty, insert the array 
                     to the relevant calc */
@@ -40,7 +56,7 @@ const useMissingArgs = (storedCalcs, dataVals) => {
                     tempArgs = [
                         ...tempArgs,
                         {
-                            calc: storedCalc.id,
+                            calc: storedCalc._id,
                             missing
                         }
                     ]

@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 
 export const selTableSelector = state => state.userdata.selTable
 
+export const getDataVals = state => state.userdata.data.tableData.dataVals
+
 export const getFieldVal = (fieldId, groupId) => createSelector(
     state => state.userdata.data.tableData.dataVals,
     vals => {

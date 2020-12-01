@@ -8,6 +8,7 @@ import useExecCalc from './useExecCalc';
 import { getStatsInputs } from '../../../redux/actions/basedata';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getUnisByPaths } from '../../../redux/selectors/unis';
+import { getDataVals } from '../../../redux/selectors/userdata';
 
 function DataSections({ paths }) {
     const unis = useSelector(getUnisByPaths(paths.map(path => path._id)))
@@ -21,14 +22,13 @@ function DataSections({ paths }) {
         setSelPath(path)
     }
 
-    console.log(unis);
-
     const storedCalcs = useSelector(getAllStoredCalcs)
+    const dataVals = useSelector(getDataVals)
 
-    // // Listen and execute calcs
-    // const missingArgs = useMissingArgs(storedCalcs, dataVals)
-    
-    // useExecCalc(missingArgs)
+    // Listen and execute calcs
+    const missingArgs = useMissingArgs(storedCalcs, dataVals, 'jew')
+ 
+    useExecCalc(missingArgs)
 
     return (
         <Fragment>

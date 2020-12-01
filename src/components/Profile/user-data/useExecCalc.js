@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
-import { getAllStoredCalcs } from '../../../redux/selectors/calcs';
+import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getCalcFields } from '../../../redux/selectors/datafields';
 
 /* This function finds calcs that are dependent on other calcs, and 
 that have no other missing args except the other calcs */
-const getNextCalcs = (stagedLevel, calcs, storedCalcs, missingArgs) => {
+const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
     const nextCalcs = []
 
-    for(let calc of calcs) {
-        const storedCalc = storedCalcs.find(storCalc => 
-            storCalc.id === calc.calcOutput.storedCalc)
-
+    for(let calc of storedCalcs) {
         /* If first calc is an arg of stored calc and it hasn't got
         other args missing */
-        if(storedCalc.args.find(arg =>
+        if(calc.args.find(arg =>
             stagedLevel.find(stagedCalc => 
-                stagedCalc.role === arg.role))) {
+                stagedCalc._id === arg._id))) {
 
+            // Find the calcs missing args
             const calcMissingArgs = missingArgs.find(missingCalc => 
-                missingCalc.calc === storedCalc.id)?.missing
+                missingCalc.calc === calc._id)?.missing
             
             let foundBadArg = false;
 
@@ -29,12 +27,14 @@ const getNextCalcs = (stagedLevel, calcs, storedCalcs, missingArgs) => {
                 for(let missingArg of calcMissingArgs) {
                     let found = false
 
-                        for(let stagedCalc of stagedLevel) {
-                            if(stagedCalc.role === missingArg.role) {
-                                found = true
-                                break;
-                            }
+                    /* For each missing arg loop through staged calcs */
+                    for(let stagedCalc of stagedLevel) {
+                        if(stagedCalc._id === missingArg._id) {
+                            found = true
+                            break;
                         }
+                    }
+
                     if(!found) {
                         foundBadArg = true
                         break
@@ -52,7 +52,7 @@ const getNextCalcs = (stagedLevel, calcs, storedCalcs, missingArgs) => {
     if(nextCalcs.length === 0)
         return []
     
-    return [nextCalcs, ...getNextCalcs(nextCalcs, calcs, storedCalcs, missingArgs)]
+    return [nextCalcs, ...getNextCalcs(nextCalcs, storedCalcs, missingArgs)]
 }
 
 /* This hook gets a changed field and only executes 
@@ -63,35 +63,26 @@ function useExecCalc(missingArgs) {
     const changedField = useSelector(state => 
         state.userdata.changedField)
 
-    const calcs = useSelector(state => 
-        getCalcFields(state.datafields.fields))
     const storedCalcs = useSelector(getAllStoredCalcs)
 
     useEffect(() => {
         if(missingArgs && changedField) {
-            const fieldGroup = changedField.field?.group
-            let relevantCalcs
-
-            if(fieldGroup) {
-                relevantCalcs = calcs.filter(calc => 
-                    storedCalcs.find(storedCalc => 
-                        storedCalc.id === calc.calcOutput.storedCalc)
-                    .args.find(arg => arg.role === fieldGroup.role))
-            }
-            
-            else {
-                relevantCalcs = calcs.filter(calc => 
-                    storedCalcs.find(storedCalc => 
-                        storedCalc.id === calc.calcOutput.storedCalc)
-                    .args.find(arg => arg.role === changedField.role))
-            }
+            const groupId = changedField.group
+            const fieldId = changedField.field
+    
+            const relevantCalcs = storedCalcs
+            .filter(storCalc => 
+                storCalc.args.find(arg =>
+                    arg.type === "group" && arg._id === groupId ||
+                    arg._id === fieldId))
+            .map(calc => calc._id)
         
             let firstCalcs = [];
         
             for(let calc of relevantCalcs) {
                 // Check that stored calc hasn't got missing args
                 const found = missingArgs.find(arg => 
-                        arg.calc === calc.calcOutput.storedCalc)
+                        arg.calc === calc._id)
     
                 if(!found) {
                     firstCalcs.push(calc)
@@ -99,15 +90,11 @@ function useExecCalc(missingArgs) {
             }
 
             if(firstCalcs.length > 0) {
-                let calcSequence = [firstCalcs, ...getNextCalcs(
+                const calcSequence = [firstCalcs, ...getNextCalcs(
                     firstCalcs, 
-                    calcs, 
                     storedCalcs, 
                     missingArgs)]
 
-                calcSequence = calcSequence.map(item => 
-                    item.map(calc => calc.calcOutput.storedCalc))
-            
                 dispatch(executeCalc(calcSequence))
             }
         }

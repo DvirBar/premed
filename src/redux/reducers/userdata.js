@@ -195,20 +195,19 @@ export default function(state = initialState, action) {
 
                         : state.data.tableData
                 },
-                changedField: payload
+                changedField: payload.dataVal
             }
         }
 
         case EXEC_CALC:
             let dataToInsert = []
             let dataToUpdate = []
-            const dataVals = state.data.tables.find(table =>
-                table.enabled).dataVals
+            const dataVals = state.data.tableData.dataVals
 
             if(dataVals.length > 0) {
                 for(let item of payload) {
                     if(dataVals.find(dataVal => 
-                        dataVal.field._id === item.field._id))
+                        dataVal.field === item.field))
                         dataToUpdate.push(item)
                     
                     else {
@@ -223,30 +222,26 @@ export default function(state = initialState, action) {
                 softLoading: false,
                 data: {
                     ...state.data,
-                    tables:
-                        state.data.tables.map(table => 
-                            table.table.enabled 
-                        ? {
-                            ...table,
+                    tableData:
+                        {
+                            ...state.data.tableData,
                             last_updated: new Date(Date.now()),
                             dataVals: 
-                                table.dataVals.length === 0
-                                ?  table.dataVals = [payload]
+                                dataVals.length === 0
+                                ?  [payload]
 
                                 : 
-                                [...table.dataVals.map(dataVal => {
+                                [...dataVals.map(dataVal => {
                                     const uptItem = dataToUpdate.find(payItem => 
-                                        payItem.field._id === dataVal.field._id)
+                                        payItem.field === dataVal.field)
 
                                     if(uptItem)
                                         return uptItem
 
                                     return dataVal
                                 }), ...dataToInsert]
-                            }
-
-                        : table
-                        )
+                        }
+                        
                 },
                 changedField: undefined
             }

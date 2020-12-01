@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
 
 function NavigateDataSections({ paths, unis, changeSection }) {
-    console.log(unis);
-    console.log(paths);
     return (
         <div className="navigate-data-sections">
             {paths.length > 1 
