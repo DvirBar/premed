@@ -419,106 +419,94 @@ router.put('/execCalc', auth, (req, res, next) => {
 
     UserData.findOne({ user: userId })
     .populate('tables.table')
-    .then(data => {
+    .then(async(data) => {
         if(!data)
-            return {
-                status: DataNotExist.status,
-                msg: DataNotExist.msg
-            }
+            return res.status(DataNotExist.status)
+                      .send(DataNotExist.msg)
             
         const enabledTable = data.tables.find(curTable => 
             curTable.table.enabled) 
         let values = enabledTable.dataVals
 
         // Assign calc value to the relevant field
-        DataField.find({ calcOutput: { $exists: true }})
-        .populate('calcOutput')
-        .then(async(fields) => {
+        // DataField.find({ calcOutput: { $exists: true }})
+        // .populate('calcOutput')
+        // .then(async(fields) => {
 
-            let newCalcs = []
-            for(let calcLevel of calcsToExec) {
-                for(let storCalcId of calcLevel) {
-                    const storCalc = storedCalcs.find(calc => 
-                        calc.id === storCalcId)
-                    
-                    let calcObj = {}
-
-                    try {
-                        calcObj = await executeCalc(storCalc, values)
-                    }
-            
-                    catch(err) {
-                        return res.status(err.status).send(err.msg)
-                    }
-
-                    const field = fields.find(thisField => 
-                        thisField.calcOutput.storedCalc === storCalcId)
-                    
-                    const fieldId = field._id
-                    const calcOutput = field.calcOutput
+        let newCalcs = []
+        for(let calcLevel of calcsToExec) {
+            for(let storCalcId of calcLevel) {
+                const storCalc = storedCalcs.find(calc => 
+                    calc._id === storCalcId)
                 
-                    const payload = calcObj.payload
+                let calcObj = {}
 
-                    const dataVal = values.find(val => 
-                        val.field.equals(fieldId))
+                try {
+                    calcObj = await executeCalc(storCalc, values, 'jew')
+                }
+        
+                catch(err) {
+                    return res.status(err.status).send(err.msg)
+                }
+            
+                const payload = calcObj.payload
 
-                    // If the user already has a value for the field
-                    if(dataVal) {
-                        if(!calcOutput.isSuggestion) {
-                            dataVal.value = calcObj.value;
-                        }
+                const dataVal = values.find(val => 
+                    val.field === storCalcId)
 
-                        else {
-                            dataVal.suggestValue = calcObj.value;
-                        }
-
-                        dataVal.payload = payload ? payload : {}
+                // If the user already has a value for the field
+                if(dataVal) {
+                    if(!storCalc.isSuggestion) {
+                        dataVal.value = calcObj.value;
                     }
-                    
-                    // If the field is yet to have a value
+
                     else {
-                        if(!calcOutput.isSuggestion) {
-                            values.push({
-                                field: fieldId,
-                                value: calcObj.value,
-                                payload: payload ? payload : {}
-                            })
-                        }
-    
-                        else {
-                            values.push({
-                                field: fieldId,
-                                suggestValue: calcObj.value,
-                                payload: payload ? payload : {}
-                            })
-                        }
+                        dataVal.suggestValue = calcObj.value;
                     }
-                    await data.save()
-                        .then(async(data) => {
-                            async function populateAndGroup() {
-                                await data
-                                    .populate("tables.table.field")
-                                    .populate("tables.dataVals.field")
-                                    .execPopulate();
-                                values = data.tables.find(curTable => 
-                                    curTable.table.enabled).dataVals
-                                const newValue = values.find(val => 
-                                    val.field._id.equals(fieldId))
-               
-                                newCalcs.push(Object.assign(
-                                    newValue, 
-                                    { payload: calcObj.payload }
-                                ))
-                            }
 
-                            await populateAndGroup()
-                        })
-                        .catch(next);
+                    dataVal.payload = payload ? payload : {}
+                }
+                
+                // If the field is yet to have a value
+                else {
+                    const isSuggestion = storCalc.isSuggestion
+                    let valObj = {
+                        field: storCalcId,
+                        isCalc: true,
+                        payload: payload ? payload : {}
                     }
-            }
-            return res.send(newCalcs)
-        })
-        .catch(next);
+
+                    if(!isSuggestion)
+                        valObj.value = calcObj.value
+
+                    else
+                        valObj.suggestValue = calcObj.value
+
+                    values.push(valObj)
+                }
+                await data.save()
+                    .then(async(data) => {
+                        async function populateAndGroup() {
+                            await data
+                                .populate("tables.table")
+                                .execPopulate();
+                            values = data.tables.find(curTable => 
+                                curTable.table.enabled).dataVals
+                            const newValue = values.find(val => 
+                                val.field === storCalcId)
+            
+                            newCalcs.push(Object.assign(
+                                newValue, 
+                                { payload: calcObj.payload }
+                            ))
+                        }
+
+                        await populateAndGroup()
+                    })
+                    .catch(next);
+                }
+        }
+        return res.send(newCalcs)
     })
     .catch(next)
 })

@@ -4,7 +4,7 @@ import { bagrut } from '../../groups/bagrut';
 
 export const hujiFinal = (params) => {
     const {
-        'bagrut': bagrut,
+        'bagrutHuji': bagrut,
         'psycho': psycho,
         'mor': mor
     } = params
@@ -39,11 +39,11 @@ export const hujiBargut = (params, uSettings) => {
     /* Get average of required subjects and store 
         not required in an array */
     for(let subj in params) {
-        const config = bagrut.find(arg => arg.id === subj).config;
+        const config = bagrut.find(arg => arg._id === subj).config;
         let hujiGroups
 
         // Get huji config group
-        if(config.uniqueBagType) {
+        if(config.uniqueGroupType) {
             hujiGroups = config[uSettings.bagType].huji
         }
         

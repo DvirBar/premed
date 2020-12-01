@@ -14,7 +14,7 @@ export const tauBargut = (params, uSettings) => {
         let tauGroups
 
         // Get huji config group
-        if(config.uniqueBagType) {
+        if(config.uniqueGroupType) {
             tauGroups = config[uSettings.bagType].tau
         }
         

@@ -9,7 +9,7 @@ const {
 const bagrutGroupArgs = [
     {
         name: 'ציון',
-        id: 'grade',
+        _id: 'grade',
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [
@@ -23,7 +23,7 @@ const bagrutGroupArgs = [
     },
     {
         name: 'יחידות',
-        id: 'units',
+        _id: 'units',
         dataType: dataTypes.num,
         fieldType: fieldTypes.select,
         fieldOptions: [
@@ -51,7 +51,7 @@ const bagrutGroupArgs = [
     },
     {
         name: 'סוג',
-        id: 'type',
+        _id: 'type',
         dataType: dataTypes.str,
         fieldType: fieldTypes.select,
         fieldOptions: [
@@ -81,7 +81,7 @@ export const bagrutTypes = [
 export const bagrut = [
     {
         name: 'מתמטיקה',
-        id: 'math',
+        _id: 'math',
         config: {
             huji: ['isRequired'],
             tech: ['isRequired'],
@@ -92,7 +92,7 @@ export const bagrut = [
     },
     {
         name: 'אנגלית',
-        id: 'eng',
+        _id: 'eng',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midbonus'],
@@ -103,9 +103,9 @@ export const bagrut = [
     },
     {
         name: 'עברית',
-        id: 'heb',
+        _id: 'heb',
         config: {
-            uniqueBagType: true,
+            uniqueGroupType: true,
             jew: {
                 huji: ['isRequired', 'midBonus'],
                 tech: ['isRequired', 'midBonus'],
@@ -123,9 +123,9 @@ export const bagrut = [
     },
     {
         name: 'ערבית',
-        id: 'arab',
+        _id: 'arab',
         config: {
-            uniqueBagType: true,
+            uniqueGroupType: true,
             jew: {
                 isOptional: true,
                 huji: ['midBonus'],
@@ -143,7 +143,7 @@ export const bagrut = [
     },
     {
         name: 'היסטוריה',
-        id: 'history',
+        _id: 'history',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midBonus'],
@@ -154,7 +154,7 @@ export const bagrut = [
     },
     {
         name: 'תנ"ך',
-        id: 'bible',
+        _id: 'bible',
         config: {
             jew: {
                 huji: ['midBonus'],
@@ -175,9 +175,9 @@ export const bagrut = [
     },
     {
         name: 'ספרות',
-        id: 'lit',
+        _id: 'lit',
         config: {
-            uniqueBagType: true,
+            uniqueGroupType: true,
             jew: {
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
@@ -196,7 +196,7 @@ export const bagrut = [
     },
     {
         name: 'אזרחות',
-        id: 'civics',
+        _id: 'civics',
         config: {
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired'],
@@ -207,7 +207,7 @@ export const bagrut = [
     },
     {
         name: 'פיזיקה',
-        id: 'physics',
+        _id: 'physics',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -219,7 +219,7 @@ export const bagrut = [
     },
     {
         name: 'ביולוגיה',
-        id: 'bio',
+        _id: 'bio',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -231,7 +231,7 @@ export const bagrut = [
     },
     {
         name: 'כימיה',
-        id: 'chem',
+        _id: 'chem',
         config: {
             isOptional: true,
             huji: ['midBonus'],
@@ -243,9 +243,9 @@ export const bagrut = [
     },
     {
         name: 'מחשבת ישראל',
-        id: 'thought',
+        _id: 'thought',
         config: {
-            uniqueBagType: true,
+            uniqueGroupType: true,
             jew: {
                 replaceble: 'lit',
                 huji: ['midBonus']
@@ -259,7 +259,7 @@ export const bagrut = [
     },
     {
         name: 'מדעי המחשב',
-        id: 'compSci',
+        _id: 'compSci',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -268,7 +268,7 @@ export const bagrut = [
     },
     {
         name: 'ביוטכנולוגיה',
-        id: 'bioTech',
+        _id: 'bioTech',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -277,7 +277,7 @@ export const bagrut = [
     },
     {
         name: 'מערכות ביוטכנולגיה',
-        id: 'biotechSys', 
+        _id: 'biotechSys', 
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -286,7 +286,7 @@ export const bagrut = [
     },
     {
         name: 'בקרת מכונות',
-        id: 'contMach',
+        _id: 'contMach',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -295,7 +295,7 @@ export const bagrut = [
     },
     {
         name: 'אלקטרוניקה ומחשבים',
-        id: 'electNcomp',
+        _id: 'electNcomp',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -304,7 +304,7 @@ export const bagrut = [
     },
     {
         name: 'מדעי ההנדסה',
-        id: 'engineSci',
+        _id: 'engineSci',
         config: {
             isOptional: true,
             tech: ['tech','combBonus', 'midBonus']
@@ -313,7 +313,7 @@ export const bagrut = [
     },
     {
         name: 'בינה מלאכותית ומערכות מומחה',
-        id: 'aiCont',
+        _id: 'aiCont',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -322,7 +322,7 @@ export const bagrut = [
     },
     {
         name: 'גרפיקה ממוחשבת',
-        id: 'graphics',
+        _id: 'graphics',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -331,7 +331,7 @@ export const bagrut = [
     },
     {
         name: 'תכנון ותכנות מערכות',
-        id: 'planProg', 
+        _id: 'planProg', 
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -340,7 +340,7 @@ export const bagrut = [
     },
     {
         name: 'תכנון יישומים מנהליים',
-        id: 'admApp',
+        _id: 'admApp',
         config: {
             isOptional: true,
             tech: ['projectBonus']
@@ -349,7 +349,7 @@ export const bagrut = [
     },
     {
         name: 'ידיעת העם והמדינה',
-        id: 'yediat',
+        _id: 'yediat',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -358,7 +358,7 @@ export const bagrut = [
     },
     {
         name: 'תולדות עם ישראל',
-        id: 'amIsr',
+        _id: 'amIsr',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -367,7 +367,7 @@ export const bagrut = [
     },
     {
         name: 'מורשת דרוזית',
-        id: 'druze',
+        _id: 'druze',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -376,7 +376,7 @@ export const bagrut = [
     },
     {
         name: 'מורשת איסלאם',
-        id: 'islam',
+        _id: 'islam',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -385,7 +385,7 @@ export const bagrut = [
     },
     {
         name: 'מורשת נוצרית',
-        id: 'christ',
+        _id: 'christ',
         config: {
             isOptional: true,
             tech: ['isRequired']
@@ -394,7 +394,7 @@ export const bagrut = [
     },
     {
         name: 'מקצוע אחר',
-        id: 'otherBagrut',
+        _id: 'otherBagrut',
         config: {
             isOptional: true
         },

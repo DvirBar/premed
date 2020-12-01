@@ -14,7 +14,7 @@ export const bguBargut = (params, uSettings) => {
         let bguGroups
 
         // Get huji config group
-        if(config.uniqueBagType) {
+        if(config.uniqueGroupType) {
             bguGroups = config[uSettings.bagType].bgu
         }
         

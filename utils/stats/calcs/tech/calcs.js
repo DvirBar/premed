@@ -14,7 +14,7 @@ export const techBagrut = (params, uSettings) => {
         let techGroups
 
         // Get huji config group
-        if(config.uniqueBagType) {
+        if(config.uniqueGroupType) {
             techGroups = config[uSettings.bagType].tech
         }
         

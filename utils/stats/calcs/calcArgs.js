@@ -2,19 +2,19 @@ import { bagrut } from '../groups/bagrut';
 
 const args = {
     psycho: {
-        id: 'psycho',
+        _id: 'psycho',
         type: 'field'
     },
     mor: {
-        id: 'mor',
+        _id: 'mor',
         type: 'field'
     },
     bagrut: bagrut.map(item => ({
-        id: item.id,
+        _id: item._id,
         type: 'group'
     })),
     bagrutHuji: {
-        id: 'bagrutHuji',
+        _id: 'bagrutHuji',
         type: 'calcs'
     }
 }

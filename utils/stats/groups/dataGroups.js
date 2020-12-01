@@ -5,11 +5,12 @@ const groups = [
         _id: 'bagrut',
         name: 'בגרות',
         types: bagrutTypes,
-        paths: ['six-year']
+        paths: ['six-year'],
+        isParent: true
     },
     ...bagrut.map(bagItem => ({
         ...bagItem,
-        group: 'bagrut',
+        parent: 'bagrut',
         paths: ['six-year']
     }))
 ]

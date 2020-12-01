@@ -7,7 +7,8 @@ import { staticDataTypes } from '../../allowedTypes';
 
 const {
     validationTypes,
-    fieldTypes 
+    fieldTypes,
+    dataTypes 
 } = staticDataTypes
 
 const {
@@ -53,5 +54,6 @@ const storedCalcs = [
 
 export default storedCalcs.map(calc => ({
     ...calc,
-    fieldType: fieldTypes.textbox
+    fieldType: fieldTypes.textbox,
+    dataType: dataTypes.num
 }));

@@ -1,56 +1,70 @@
 const dataMessages = require('../../../messages/user-data');
 const { ArgsInsuffice } = dataMessages;
+import groups from '../groups/dataGroups';
 
-const executeCalc = async(storCalc, values) => {
+const executeCalc = async(storCalc, values, selType) => {
     const params = {}
 
     for(let arg of storCalc.args) {
+
             /* If arg is a group, map its nested 
             arguments and create a group object */
             if(arg.type === "group") {
+                // Check that arg is not optional
+                const group = groups.find(group => group._id === arg._id)
+
+                /* Get group config according to group type 
+                    if provided, and check if arg is optional */
+                const isOptional = group.config?.uniqueGroupType
+                ?   group.config[selType]?.isOptional
+                :   group.config?.isOptional
+                
+                
                 // Object for the group's nested arguments
                 let groupArgs = {} 
 
                 // Find all values that belong to the group
                 const groupVals = values.filter(val => 
-                    val.field.group?.role === arg.role)
+                    val.group?._id === arg._id)
                 
                 // Check that all group fields have a value
                 if(groupVals.length !== arg.fields.length) {
-                    throw new Error({ 
-                        status: ArgsInsuffice.status,
-                        msg: ArgsInsuffice.msg
-                     })
-                }
-                
+                    if(!isOptional)
+                        throw new Error({ 
+                            status: ArgsInsuffice.status,
+                            msg: ArgsInsuffice.msg
+                        })
+
                 // Iterate all group fields
-                for(let value of groupVals) {
-                    let valField = value.field 
+                for(let groupVal of groupVals) {
 
                     /* Match value role to group field role and create a 
                     key-value pair of its argument's name and numeric value */
                     const argObj = arg.fields.find(argField => 
-                        argField.role === valField.role) 
+                        argField._id === groupVal.field) 
                     const {
-                        varName,
+                        _id,
                         dataType
                     } = argObj
 
-                    if(dataType && dataType === 'num') {
-                        groupArgs[varName] = Number(value.value)
+                    
+
+                    if(dataType && dataType.value === 'num') {
+                        groupArgs[_id] = Number(groupVal.value)
                     }
 
                     else {
-                        groupArgs[varName] = value.value
+                        groupArgs[_id] = groupVal.value
                     }
                 }
                 
-                params[arg.varName] = groupArgs
+                params[arg._id] = groupArgs
+            }
         }
 
         else {
             const argValue = values.find(val => 
-                val.field.role === arg.role)
+                val.field === arg._id)
 
             if(!argValue)
                 throw {
@@ -58,7 +72,7 @@ const executeCalc = async(storCalc, values) => {
                     msg: ArgsInsuffice.msg
                 }
 
-            params[arg.varName] = argValue.value || argValue.suggestValue
+            params[arg._id] = argValue.value || argValue.suggestValue
         }
     }
 
