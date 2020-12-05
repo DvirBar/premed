@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const authAdmin = require('../../middleware/authAdmin');
+const fs = require('fs')
 
 // Models
 const UserData = require('../../models/UserData');
@@ -446,7 +447,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                 }
         
                 catch(err) {
-                    return res.status(err.status).send(err.msg)
+                    return res.status(err.status || 500).send(err.msg)
                 }
             
                 const payload = calcObj.payload

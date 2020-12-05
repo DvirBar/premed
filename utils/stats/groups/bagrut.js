@@ -156,6 +156,7 @@ export const bagrut = [
         name: 'תנ"ך',
         _id: 'bible',
         config: {
+            uniqueGroupType: true,
             jew: {
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
@@ -247,7 +248,7 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
-                replaceble: 'lit',
+                replaceable: 'lit',
                 huji: ['midBonus']
             },
             arab: {
@@ -262,6 +263,7 @@ export const bagrut = [
         _id: 'compSci',
         config: {
             isOptional: true,
+            huji: ['midBonus'],
             tech: ['tech','combBonus', 'midBonus']
         },
         fields: bagrutGroupArgs

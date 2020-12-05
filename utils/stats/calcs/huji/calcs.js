@@ -31,7 +31,7 @@ export const hujiFinal = (params) => {
     }
 }
 
-export const hujiBargut = (params, uSettings) => {
+export const hujiBargut = (params, bagType) => {
     let subjSum = 0;
     let unitsCounter = 0;
     let notRequired = {}
@@ -44,7 +44,7 @@ export const hujiBargut = (params, uSettings) => {
 
         // Get huji config group
         if(config.uniqueGroupType) {
-            hujiGroups = config[uSettings.bagType].huji
+            hujiGroups = config[bagType].huji
         }
         
         else {
@@ -57,7 +57,7 @@ export const hujiBargut = (params, uSettings) => {
                 grade
             } = params[subj]
 
-            subjObj = {
+            const subjObj = {
                 values: params[subj],
                 groups: hujiGroups
             }
@@ -81,6 +81,7 @@ export const hujiBargut = (params, uSettings) => {
     }
 
     let result = getBestAverage(baseAvg, notRequired, 127, 20, getBonus)
+
     result = {
         ...result,
         value: (result.value).toFixed(1)

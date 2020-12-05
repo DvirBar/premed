@@ -6,18 +6,20 @@ const executeCalc = async(storCalc, values, selType) => {
     const params = {}
 
     for(let arg of storCalc.args) {
-
             /* If arg is a group, map its nested 
             arguments and create a group object */
             if(arg.type === "group") {
                 // Check that arg is not optional
                 const group = groups.find(group => group._id === arg._id)
+                const config = group.config?.uniqueGroupType
+                ?   group.config[selType]
+                :   group.config
+                
 
                 /* Get group config according to group type 
                     if provided, and check if arg is optional */
-                const isOptional = group.config?.uniqueGroupType
-                ?   group.config[selType]?.isOptional
-                :   group.config?.isOptional
+                const isOptional = config.isOptional
+                const replaceable = config.replaceable
                 
                 
                 // Object for the group's nested arguments
@@ -25,41 +27,63 @@ const executeCalc = async(storCalc, values, selType) => {
 
                 // Find all values that belong to the group
                 const groupVals = values.filter(val => 
-                    val.group?._id === arg._id)
-                
+                    val.group === arg._id);
+
                 // Check that all group fields have a value
-                if(groupVals.length !== arg.fields.length) {
-                    if(!isOptional)
-                        throw new Error({ 
-                            status: ArgsInsuffice.status,
-                            msg: ArgsInsuffice.msg
-                        })
+                if(!isOptional && 
+                    group.fields && 
+                    groupVals?.length !== group.fields.length) {
+                        let skip = false
+                        
+                        if(replaceable) {
+                            const vals = values.filter(val => 
+                                val.group === replaceable)
+                            
+                            const repGroup = groups.find(thisGroup => 
+                                thisGroup._id === replaceable)
 
-                // Iterate all group fields
-                for(let groupVal of groupVals) {
-
-                    /* Match value role to group field role and create a 
-                    key-value pair of its argument's name and numeric value */
-                    const argObj = arg.fields.find(argField => 
-                        argField._id === groupVal.field) 
-                    const {
-                        _id,
-                        dataType
-                    } = argObj
-
+                            if(vals.length === repGroup.fields?.length) {
+                                skip = true
+                            }
+                                
+                        }
                     
-
-                    if(dataType && dataType.value === 'num') {
-                        groupArgs[_id] = Number(groupVal.value)
-                    }
-
-                    else {
-                        groupArgs[_id] = groupVal.value
-                    }
+                        if(!skip) {
+                            console.log(arg._id);
+                            throw new Error({ 
+                                status: ArgsInsuffice.status,
+                                msg: ArgsInsuffice.msg
+                            })
+                        }   
                 }
-                
-                params[arg._id] = groupArgs
-            }
+                               
+                if(group.fields && 
+                    groupVals?.length === group.fields.length) {
+                    // Iterate all group fields
+                    for(let groupVal of groupVals) {
+                        /* Match value role to group field role and create a 
+                        key-value pair of its argument's name and numeric value */
+                        const argObj = group.fields.find(argField => 
+                            argField._id === groupVal.field && 
+                            group._id === groupVal.group) 
+
+                        const {
+                            _id,
+                            dataType
+                        } = argObj
+
+                        if(dataType && dataType.value === 'num') {
+                            groupArgs[_id] = Number(groupVal.value)
+                        }
+
+                        else {
+                            groupArgs[_id] = groupVal.value
+                        }
+                    }
+                    
+                    params[arg._id] = groupArgs
+                }
+            
         }
 
         else {
@@ -77,7 +101,15 @@ const executeCalc = async(storCalc, values, selType) => {
     }
 
     // Execute calculation
-    return storCalc.func(params);
+    try {
+        return storCalc.func(params, selType);
+    }
+
+    catch(err) {
+        console.log(err);
+        return
+    }
+    
 }
 
 export default executeCalc;

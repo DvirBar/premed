@@ -20,20 +20,22 @@ export const getBestAverage = (baseAvg, argsObj, maxGrade, minUnits, getBonus, c
                 }
             }
         }
+
         // Calculate argument grade with bonus
         let newArg = {
-            ...args[argName],
+            ...argsObj[argName],
             values: {
-                ...args[argName].values,
-                grade: args[argName].grade + getBonus(argName, argsObj[argName], config)
+                ...argsObj[argName].values,
+                grade: argsObj[argName].values.grade + getBonus(argName, argsObj[argName], config)
             }   
         }
+
 
         /* If argument average is greater than or equal to 
             cumulative average, add it */
         if(newArg.values.grade >= cumAvg) {
             cumulAvg = {
-                grade: addToAvg(cumulAvg, newArg),
+                grade: addToAvg(cumulAvg, newArg.values),
                 units: units + newArg.values.units
             }
         }
@@ -44,6 +46,7 @@ export const getBestAverage = (baseAvg, argsObj, maxGrade, minUnits, getBonus, c
                 name: argName
             })
         }
+
     }
 
     // if units number is still less than minimum
