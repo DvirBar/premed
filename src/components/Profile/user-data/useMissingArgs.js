@@ -4,7 +4,7 @@ import { getGroupFields } from '../../../redux/reducers';
 import { getGroups } from '../../../redux/selectors/statsinputs';
 
 const useMissingArgs = (storedCalcs, dataVals, selType) => {
-    const [missingArgs, setMissingArgs] = useState([])
+    const [missingArgs, setMissingArgs] = useState()
     const groups = useSelector(getGroups)
 
     useEffect(() => {
@@ -17,19 +17,24 @@ const useMissingArgs = (storedCalcs, dataVals, selType) => {
             for(let storedCalc of storedCalcs) {
                 const groupArgs = storedCalc?.args?.filter(arg => 
                     arg.type === "group")
+
+                let replaceables = []
     
                 missing = storedCalc?.args?.filter(arg => {
+                 
 
                 // If the arg is a group
                 if(arg.type === "group" && groupArgs) {
                     const group = groups.find(group => 
                         group._id === arg._id)
 
+                    const config = group.config.uniqueGroupType
+                    ?   group.config[selType]
+                    :   group.config
+
                     /* Get group config according to group type 
                     if provided, and check if arg is optional */
-                    const isOptional = group.config?.uniqueGroupType
-                    ?   group.config[selType]?.isOptional
-                    :   group.config?.isOptional
+                    const isOptional = config.isOptional
 
                     if(!isOptional) {
                         const groupFields = group.fields
@@ -40,6 +45,16 @@ const useMissingArgs = (storedCalcs, dataVals, selType) => {
                             if(!dataVals.find(val => 
                                 val.field === field._id &&
                                 val.group === arg._id)) {
+
+                                if(config && config.replaceable) {
+                                    const replaceObj = {
+                                        arg,
+                                        replaceItem: config.replaceable
+                                    }
+                                    replaceables.push(replaceObj)
+                                    return false;
+                                }
+                            
                                 return arg
                         }}}
                 }
@@ -49,6 +64,14 @@ const useMissingArgs = (storedCalcs, dataVals, selType) => {
                         val.field === arg._id)) {
                         return arg;
                     }})
+
+                if(replaceables.length !== 0) {
+                    replaceables = replaceables.filter(item => 
+                        missing.find(arg => 
+                            item.replaceItem === arg._id))
+                }
+                
+                missing = [...missing, ...replaceables.map(item => item.arg)]
 
                 /* If missing args array is not empty, insert the array 
                     to the relevant calc */
@@ -62,12 +85,12 @@ const useMissingArgs = (storedCalcs, dataVals, selType) => {
                     ]
                 }
             }
+            setMissingArgs(tempArgs)
         }
-
-        setMissingArgs(tempArgs)
-    }, [dataVals])
+    }, [dataVals, storedCalcs])
     
     return missingArgs
+    
 }
 
 export default useMissingArgs

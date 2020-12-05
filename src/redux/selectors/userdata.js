@@ -17,3 +17,17 @@ export const getFieldVal = (fieldId, groupId) => createSelector(
             val.field === fieldId)
     }
 )
+
+export const getGroupVals = groupId => createSelector(
+    state => state.userdata.data.tableData.dataVals,
+    vals => vals.filter(val => val.group === groupId)
+)
+
+// export const getGroupsVals = state => 
+//     state.userdata.data.tableData.dataVals.filter(val => val.group)
+
+
+export const getGroupsVals = createSelector(
+    state => state.userdata.data.tableData.dataVals,
+    vals => vals.filter(val => val.group)
+)

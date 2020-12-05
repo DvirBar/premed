@@ -55,7 +55,6 @@ export default function(state = initialState, action) {
 
         case USER_DATA_ADD:
         case USER_DATA_SUCCESS: 
-            console.log(payload);
             return {
                 ...state,
                 loading: false,
@@ -80,7 +79,6 @@ export default function(state = initialState, action) {
         case COPY_DATA_SIMULATION: {
             const table = state.data.tables.find(thisTable => 
                 thisTable.table._id === state.selTable)
-            console.log(state.selTable);
             return {
                 ...state,
                 loading: false,
@@ -187,8 +185,10 @@ export default function(state = initialState, action) {
                                     value.group === payload.dataVal.group) 
 
                                     ? dataVals.map(value => 
-                                        value.field === payload.dataVal.field ? 
-                                        payload.dataVal : value)
+                                        value.field === payload.dataVal.field &&
+                                        value.group === payload.dataVal.group
+                                        
+                                        ? payload.dataVal : value)
                                     
                                     : [...dataVals, payload.dataVal])
                             }
@@ -206,7 +206,8 @@ export default function(state = initialState, action) {
 
             if(dataVals.length > 0) {
                 for(let item of payload) {
-                    if(dataVals.find(dataVal => 
+                    if(dataVals.find(dataVal =>
+                        dataVal.isCalc && 
                         dataVal.field === item.field))
                         dataToUpdate.push(item)
                     
@@ -233,11 +234,12 @@ export default function(state = initialState, action) {
                                 : 
                                 [...dataVals.map(dataVal => {
                                     const uptItem = dataToUpdate.find(payItem => 
+                                        dataVal.isCalc &&
                                         payItem.field === dataVal.field)
 
                                     if(uptItem)
                                         return uptItem
-
+                                    
                                     return dataVal
                                 }), ...dataToInsert]
                         }
@@ -306,8 +308,6 @@ export const filterData = (state, ordering) => {
         if(filter.field.type === 'num') {
             const min = Number(filter.min);
             const max = Number(filter.max);
-
-            console.log(filteredData);
 
             if(min && max) {
                 filteredData = filteredData.filter(data => 

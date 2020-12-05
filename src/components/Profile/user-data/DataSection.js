@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getStatsInputs } from '../../../redux/actions/basedata';
 import { getFieldsByPaths } from '../../../redux/actions/datafields';
@@ -23,25 +23,34 @@ function DataSection({ paths, selPath, selUni }) {
         calcs
     } = useSelector(getInputsByUni(selUni && selUni._id));
 
+    const getChildren = group => {
+        return groups.filter(thisGroup => 
+            thisGroup.parent === group._id)
+    }
+
     if(loading)
         return <Loadbar />
 
     return (
         <Fragment>
             <DataBlock
+            title={selUni?.name || 'כללי'}
             fields={fields}
-            groups={groups}
-            calcs={calcs}
-            uni={selUni} />
+            calcs={calcs} />
 
-            {/* {!selUni && 
-                <DataBlock
-                fields={fields.filter(field =>
-                    field.group && !field.university)}
-                groups={groups.filter(group => paths.find(curPath => 
-                    curPath._id === group.path) || !group.path)} 
-                dataVals={dataVals} />
-            } */}
+            {groups &&
+            groups.map(group => 
+                !group.parent && 
+                    <DataBlock
+                    key={group._id}
+                    title={group.name}
+                    fields={group.fields}
+                    calcs={calcs}
+                    group={group}
+                    groups={getChildren(group)}
+                    getChildren={getChildren} />
+                )
+            }
         </Fragment>
     )
 }

@@ -1,66 +1,83 @@
-import React, { Fragment } from 'react';
-import CalcBlock from './CalcBlock';
-import BlockContent from './data-block/BlockContent';
-import MatchFormFragment from './MatchFormFragment';
+import React, { Fragment, useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getGroupsVals } from '../../../redux/selectors/userdata';
+import FormFragment from './data-block/FormFragment';
+import GroupsList from './data-block/GroupsList';
+import OptionalGroup from './data-block/OptionalGroup';
+import StagedGroups from './data-block/StagedGroups';
 
-function DataBlock({ tableId, fields, groups, calcs, uni }) {
+function DataBlock({ title, fields, groups, calcs, getChildren }) {
+    let reqGroups = []
+    let optGroups = []
+    let unUsedGroups = []
 
-    // // When groups are passed
-    // if(groups) {
-    //     return (
-    // <Fragment>
-    // {groups.map(parentGroup =>   // Map top level groups
-    //         !parentGroup.parent &&
+    const groupsVals = useSelector(getGroupsVals)
+    
+    if(groups) {
+        for(let group of groups) {
+            const config = group.config?.uniqueGroupType
+            ?   group.config['jew']
+            :   group.config
+    
+            if(config && !config.isOptional) {
+                reqGroups.push(group)
+            }
+    
+            else {
+                if(groupsVals.find(val => val.group === group._id)) {
+                    optGroups.push(group)
+                }
 
-    //     <div className="data-block">
-    //         <div className="block-header">
-    //             <p className="block-name">בגרויות</p>
-    //         </div>
-    //         <div className="data-block-content group">
-    //             <div className="groups-list">
-    //             {groups.map(group =>  // Map child groups
-    //                 group.parent === parentGroup._id && 
-
-    //                 <div className="group-item">
-    //                     <div className="group-name">
-    //                         {group.name}:
-    //                     </div>
-
-    //                     {fields.map(field => 
-    //                         field.group._id === group._id &&
-    //                             <MatchFormFragment
-    //                             title={field.name}
-    //                             name={field._id}
-    //                             type={field.fieldType}
-    //                             defValue={dataVals.find(val => 
-    //                                 val.field?._id === field._id)?.value}
-    //                             fieldOptions={field.fieldOptions}
-    //                             fieldValids={field.validators} />
-    //                             )}
-    //                 </div>
-    //             )}
-    //             </div>
-    //         </div>
-    //     </div>
-    // )}
-    // </Fragment>
-    //     )
-    // }
-
+                else {
+                    unUsedGroups.push(group)
+                }
+            }
+        }
+    }
 
     return (
-        <Fragment>
-             <div className="data-block">
-                <div className="block-header">
-                    {uni 
-                    ? <span>{uni.name}</span>
-                    : <span>כללי</span>}
-                </div>
-                <BlockContent 
-                fields={fields}
-                calcs={calcs} />         
+        <div className="data-block">
+            <div className="block-header">
+                {title}
             </div>
-        </Fragment>
+            <div className="data-block-content">
+                {fields?.map(field => 
+                    <FormFragment
+                    key={field._id}
+                    field={field}
+                    isCalc={false} />
+                )}
+
+                {calcs?.map(calc =>
+                    <FormFragment
+                    key={calc._id}
+                    field={calc}
+                    isCalc={true} />
+                )}
+
+                {groups && groups.length !== 0 && 
+                <div className="groups-block">
+                    {reqGroups?.map(group => 
+                        <GroupsList
+                        group={group}
+                        groups={getChildren(group)}
+                        getChildren={getChildren} />
+                    )}
+
+                    {optGroups?.map(group =>
+                        <OptionalGroup
+                        group={group}
+                        groups={getChildren(group)}
+                        getChildren={getChildren} />
+                    )}
+
+                    <StagedGroups 
+                    groups={unUsedGroups}
+                    getChildren={getChildren} />
+                </div>
+                }
+            </div>
+        </div>
     )
 }
 

@@ -21,3 +21,10 @@ export const getInputsByUni = uniId => createSelector(
         }
     }
 )
+
+
+export const getGroupById = groupId => createSelector(
+    state => state.statsinputs.groups,
+    groups => groups.find(group => group._id === groupId)
+)
+

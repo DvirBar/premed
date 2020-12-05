@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
-import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
+import { getAllStoredCalcs, getGroupById, getGroups } from '../../../redux/selectors/statsinputs';
 import { getCalcFields } from '../../../redux/selectors/datafields';
+import { getGroupVals } from '../../../redux/selectors/userdata';
 
 /* This function finds calcs that are dependent on other calcs, and 
 that have no other missing args except the other calcs */
@@ -14,7 +15,7 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
         other args missing */
         if(calc.args.find(arg =>
             stagedLevel.find(stagedCalc => 
-                stagedCalc._id === arg._id))) {
+                stagedCalc === arg._id))) {
 
             // Find the calcs missing args
             const calcMissingArgs = missingArgs.find(missingCalc => 
@@ -29,7 +30,7 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
 
                     /* For each missing arg loop through staged calcs */
                     for(let stagedCalc of stagedLevel) {
-                        if(stagedCalc._id === missingArg._id) {
+                        if(stagedCalc === missingArg._id) {
                             found = true
                             break;
                         }
@@ -37,13 +38,13 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
 
                     if(!found) {
                         foundBadArg = true
-                        break
+                        break;
                     }  
                 }
             }
 
             if(!foundBadArg) {
-                nextCalcs.push(calc)
+                nextCalcs.push(calc._id)
             }
         }
     }
@@ -53,6 +54,14 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
         return []
     
     return [nextCalcs, ...getNextCalcs(nextCalcs, storedCalcs, missingArgs)]
+}
+
+// This function checks if an optional field
+const checkChangedFieldArgs = (group, groupVals) => {
+    if(!group || group.fields.length === groupVals.length)
+        return true
+
+    return false
 }
 
 /* This hook gets a changed field and only executes 
@@ -65,6 +74,9 @@ function useExecCalc(missingArgs) {
 
     const storedCalcs = useSelector(getAllStoredCalcs)
 
+    const group = useSelector(getGroupById(changedField?.group || undefined))
+    const groupVals = useSelector(getGroupVals(changedField?.group || undefined))
+
     useEffect(() => {
         if(missingArgs && changedField) {
             const groupId = changedField.group
@@ -73,7 +85,7 @@ function useExecCalc(missingArgs) {
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>
-                    arg.type === "group" && arg._id === groupId ||
+                    (arg.type === "group" && arg._id === groupId) ||
                     arg._id === fieldId))
             .map(calc => calc._id)
         
@@ -82,19 +94,21 @@ function useExecCalc(missingArgs) {
             for(let calc of relevantCalcs) {
                 // Check that stored calc hasn't got missing args
                 const found = missingArgs.find(arg => 
-                        arg.calc === calc._id)
+                        arg.calc === calc)
     
-                if(!found) {
-                    firstCalcs.push(calc)
+                if(!found &&
+                    checkChangedFieldArgs(group, groupVals)) {
+                    firstCalcs.push(calc) 
                 }
             }
+          
 
             if(firstCalcs.length > 0) {
                 const calcSequence = [firstCalcs, ...getNextCalcs(
                     firstCalcs, 
                     storedCalcs, 
                     missingArgs)]
-
+                    
                 dispatch(executeCalc(calcSequence))
             }
         }

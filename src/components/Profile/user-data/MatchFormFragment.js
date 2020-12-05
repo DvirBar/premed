@@ -6,10 +6,17 @@ import { insertData } from '../../../redux/actions/userdata';
 import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
-import { getFieldVal, selTableSelector } from '../../../redux/selectors/userdata';
+import { selTableSelector } from '../../../redux/selectors/userdata';
 
 
-function MatchFormFragment({ field, groupId, isCalc, fieldType, defValue, disabled }) {
+function MatchFormFragment({ 
+    field, 
+    groupId, 
+    isCalc, 
+    fieldType, 
+    defValue, 
+    disabled 
+}) {
     const {
         _id,
         name, 
@@ -60,10 +67,9 @@ function MatchFormFragment({ field, groupId, isCalc, fieldType, defValue, disabl
     const addData = () => {
         if(value && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
-            if(validators.length !== 0) {
+            if(validators && validators.length !== 0) {
                 setError(validateForm(value, validators))
-            }
-                
+            }   
             
             else {
                 setError(undefined)

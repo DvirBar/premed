@@ -4,14 +4,15 @@ import { getFieldVal } from '../../../../redux/selectors/userdata'
 import CalcBlock from '../CalcBlock'
 import MatchFormFragment from '../MatchFormFragment'
 
-function FormFragment({ field, isCalc }) {
+function FormFragment({ field, isCalc, group }) {
     const dataVal = useSelector(
-        getFieldVal(field._id, field.group))
+        getFieldVal(field._id, group?._id))
 
     return (
         <div className="form-fragment">
             <MatchFormFragment
             field={field}
+            groupId={group?._id}
             isCalc={isCalc}
             fieldType={field.fieldType.value}
             defValue={dataVal?.value}
