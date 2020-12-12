@@ -1,4 +1,5 @@
 import React from 'react'
+import ToolTip from './ToolTip'
 
 function FloatButton({ onClick, toolTip, className, children}) {
     return (
@@ -7,9 +8,7 @@ function FloatButton({ onClick, toolTip, className, children}) {
         ?   `float-button-wrapper ${className}`
         :   'float-button-wrapper'} 
         onClick={onClick}>
-            <div className="tool-tip">
-                {toolTip}
-            </div>
+            <ToolTip text={toolTip} />
             <div className="float-button">
                 { children }
             </div>

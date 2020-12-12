@@ -1,7 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import FormFragment from './FormFragment'
+import { useSelector } from 'react-redux'
+import { getGroupVals } from '../../../../redux/selectors/userdata'
+import RemoveVals from './RemoveVals'
 
 function GroupFields({ group }) {
+    const groupVals = useSelector(getGroupVals(group._id))
+
     return (
         <div className="group-fields">
             <div className="group-name">
@@ -14,6 +19,13 @@ function GroupFields({ group }) {
                 isCalc={false}
                 group={group} />
             )}
+
+            {groupVals.length !== 0 &&
+                <RemoveVals 
+                groupId={group._id}
+                cusGroupParent={group.cusGroupParent}
+                removeAll={true} />
+            }
         </div>
     )
 }

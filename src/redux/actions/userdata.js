@@ -12,6 +12,7 @@ import {
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
+    USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
     ADD_CUSTOM_GROUP,
@@ -287,6 +288,35 @@ export const addCustomGroup = (data, tableId) => dispatch => {
              dispatch(dataError())
              dispatch(getError(err))
          })
+}
+
+export const removeValue = (data, tableId) => dispatch => {
+    const body = JSON.stringify(data)
+
+    dispatch(dataLoadSoft())
+
+    axios.put(`api/userdata/removedata/${tableId}`, body)
+         .then(res => {
+            const changed = {
+                group: data.groupId,
+                cusGroupParent: data.cusGroupParent,
+                field: data.fieldId
+            }
+            dispatch({
+                type: USER_DATA_REMOVE,
+                payload: {
+                    tableId,
+                    data,
+                    changed
+                }
+            })
+
+            dispatch(getMessage(res.data))
+        })
+        .catch(err => {
+            dispatch(dataError())
+            dispatch(getError(err))
+        })
 }
 
 export const filterData = filter => dispatch => {

@@ -13,7 +13,7 @@
 .group-fields {
     width: 70rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr) 5rem;
     align-items: center;
     align-content: center;
     border-bottom: 1px solid #ddd;
@@ -36,6 +36,10 @@
         &:first-child {
             justify-self: start;
         }
+    }
+
+    &:hover > .remove-vals {
+        opacity: 1;
     }
 }
 
@@ -65,3 +69,9 @@
         color: $main-color;
     }
 }
+
+.remove-vals {
+    justify-self: start;
+    opacity: 0;
+}
+

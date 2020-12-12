@@ -1,0 +1,30 @@
+.tool-tip {
+    $tool-tip-color: #303030d0;
+    position: relative;
+    width: 8rem;
+    height: 2.5rem;
+    padding: 0.5rem;
+    background-color: $tool-tip-color;
+    color: #fff;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    top: 0;
+    transition: transform 0.2s ease-in-out;
+    transform: scale(0);
+    transform-origin: bottom right;
+
+    &::before {
+        $size: 0.5rem;
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        content: '';
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-top: $size solid $tool-tip-color;
+    }
+}

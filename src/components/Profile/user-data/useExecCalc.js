@@ -69,8 +69,10 @@ calcs that depend on that field */
 function useExecCalc(missingArgs) {
     const dispatch = useDispatch()
 
-    const changedField = useSelector(state => 
-        state.userdata.changedField)
+    const {changedField, dataRemoved} = useSelector(state => 
+        state.userdata)
+
+    
 
     const storedCalcs = useSelector(getAllStoredCalcs)
 
@@ -82,6 +84,7 @@ function useExecCalc(missingArgs) {
 
     useEffect(() => {
         if(missingArgs && changedField) {
+            console.log(missingArgs);
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>
@@ -97,7 +100,8 @@ function useExecCalc(missingArgs) {
                         arg.calc === calc)
     
                 if(!found &&
-                    checkChangedFieldArgs(group, groupVals)) {
+                    (checkChangedFieldArgs(group, groupVals) || 
+                    dataRemoved)) {
                     firstCalcs.push(calc) 
                 }
             }

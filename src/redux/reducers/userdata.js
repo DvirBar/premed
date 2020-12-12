@@ -12,6 +12,7 @@ import {
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
+    USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
     ADD_CUSTOM_GROUP,
@@ -28,6 +29,7 @@ const initialState = {
     data: {},
     selTable: null,
     changedField: {},
+    dataRemoved: false,
     simulatedData: [],
     ordering: {
         filters: [],
@@ -200,6 +202,34 @@ export default function(state = initialState, action) {
             }
         }
 
+        case USER_DATA_REMOVE: {
+            const payData = payload.data
+            return {
+                ...state,
+                softLoading: false,
+                data: {
+                    ...state.data,
+                    tableData: 
+                        state.selTable === payload.tableId
+                        ? {
+                            ...state.data.tableData,
+                            last_updated: new Date(Date.now()),
+                            dataVals: 
+                                state.data.tableData.dataVals.filter(val =>
+                                    payData.removeAll
+                                    ?   val.group !== payData.groupId
+                                    :   val.group !== payData.groupId &&
+                                        val.filter !== payData.fieldId
+                                )
+                        }
+                        
+                        : state.data.tableData
+                },
+                changedField: payload.changed,
+                dataRemoved: true
+            }
+        }
+
         case EXEC_CALC:
             let dataToInsert = []
             let dataToUpdate = []
@@ -246,7 +276,8 @@ export default function(state = initialState, action) {
                         }
                         
                 },
-                changedField: undefined
+                changedField: undefined,
+                dataRemoved: false
             }
         
         case ADD_CUSTOM_GROUP: 

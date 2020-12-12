@@ -194,6 +194,11 @@ ul {
 
 .material-icons {
     cursor: pointer;
+    color: #777373;
+
+    &.remove:hover {
+        color: $error-color;
+    }
 }
 
 .content-wrapper {
@@ -256,6 +261,7 @@ th {
 @import 'layout/loadbar';
 @import 'layout/toplinks';
 @import 'layout/floatButton';
+@import 'layout/toolTip';
 
 @import 'common/dropdown';
 @import 'common/dropdownmenu';
