@@ -15,7 +15,7 @@ const userDataMessages = {
     },
     NoEnabledTable: {
         msg: {
-            en: 'There is not as enabled table to assign values to',
+            en: 'No enabled table available to assign values to',
             he: 'אין טבלה פעילה שניתן להזין אליה נתונים'
         },
         status: 400
@@ -32,6 +32,13 @@ const userDataMessages = {
         msg: {
             en: 'User data is not available in the requested table',
             he: 'נתוני המשתמש לא זמינים בטבלה המבוקשת'
+        },
+        status: 404
+    },
+    ReqDataNotExist: {
+        msg: {
+            en: 'Data requested is unavailable',
+            he: 'הנתונים המבוקשים לא קיימים'
         },
         status: 404
     },

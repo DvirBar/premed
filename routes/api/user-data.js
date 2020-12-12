@@ -27,9 +27,8 @@ import { populatePaths } from '../../utils/internalData';
 
 
 const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
-    NoEnabledTable, UserDataNotInTable, ArgsInsuffice } = dataMessages;
+    NoEnabledTable, UserDataNotInTable, ReqDataNotExist } = dataMessages;
 const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;    
-const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
 import executeCalc from '../../utils/stats/calcs/executeCalc/executeCalc';
@@ -408,6 +407,74 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
                     .catch(next); // Save user data
             })
             .catch(next); // Find user data
+})
+
+// @route   PUT api/userdata/removedata/:tableId
+// @desc    Remove data 
+// @access  Private
+router.put('/removedata/:tableId', auth, (req, res, next) => { 
+    const {
+        fieldId,
+        groupId,
+        removeAll
+    } = req.body
+
+    const tableId = req.params.tableId
+    const userId = res.locals.user.id
+    
+    UserData.findOne({ user: userId })
+            .populate('tables.table')
+            .then(async(data) => {
+                // Return ERROR(404) if data for user wasn't found
+                if(!data)
+                    return res.status(DataNotExist.status)
+                              .send(DataNotExist.msg)
+
+                // Get requested table and enabled table
+                const enabledTable = data.tables.find(curTable => 
+                    curTable.table.enabled && 
+                    curTable.table._id.equals(tableId))
+
+                // Return ERROR(404) if no table for the user was found
+                if(!enabledTable)
+                    return res.status(UserDataNotInTable.status)
+                              .send(UserDataNotInTable.msg)
+
+                const values = enabledTable.dataVals
+                
+                /* If removeAll is true, remove all values associated 
+                with group ID */
+                if(removeAll) {
+                    const valueIdsToRemove = values.filter(val => 
+                        val.group === groupId).map(val => val._id)
+
+                    if(valueIdsToRemove.length === 0)
+                        return res.status(ReqDataNotExist.status)
+                                  .send(ReqDataNotExist.msg)
+
+                    for(let valId of valueIdsToRemove) {
+                        values.id(valId).remove()
+                    }
+                }
+
+                else if(fieldId) {
+                    const valueToRemove = values.find(val => 
+                        val.group === groupId && val.field === fieldId)
+
+                    if(!valueToRemove)
+                        return res.status(ReqDataNotExist.status)
+                                .send(ReqDataNotExist.msg)
+                    
+                    valueToRemove.remove()    
+                }
+
+                data.save()
+                    .then(() => {
+                        return res.send(enabledTable)
+                    })
+                    .catch(next) // Save data
+            })
+            .catch(next) // Find user data
 })
 
 // @route   PUT api/calculations/execCalc

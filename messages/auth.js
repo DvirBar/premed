@@ -13,7 +13,6 @@ const authMessages = {
         },
         status: 400
     },
-    
     UserDoesNotExist: {
         msg: {
             en: 'User Does not exist',
@@ -21,7 +20,6 @@ const authMessages = {
         },
         status: 404
     },
-
     NotAuthorizedSelf: {
         msg: {
             en: 'Users are not authorized to delete themselves',
