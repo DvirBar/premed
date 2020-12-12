@@ -14,6 +14,7 @@ import {
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
+    ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
     FILTER_DATA,
     REMOVE_FILTER_DATA,
@@ -269,6 +270,22 @@ export const deleteUserData = userId => dispatch => {
          .catch(err => {
             dispatch(dataError())
             dispatch(getError(err))
+         })
+}
+
+export const addCustomGroup = (data, tableId) => dispatch => {
+    const body = JSON.stringify(data) 
+
+    dispatch(dataLoadSoft())
+
+    axios.put(`api/userdata/addCustomGroup/${tableId}`, body)
+         .then(res => dispatch({
+             type: ADD_CUSTOM_GROUP,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(dataError())
+             dispatch(getError(err))
          })
 }
 

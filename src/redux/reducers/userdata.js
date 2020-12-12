@@ -14,6 +14,7 @@ import {
     USER_DATA_INSERT,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
+    ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
     FILTER_DATA,
     REMOVE_FILTER_DATA,
@@ -246,6 +247,21 @@ export default function(state = initialState, action) {
                         
                 },
                 changedField: undefined
+            }
+        
+        case ADD_CUSTOM_GROUP: 
+            console.log(payload);
+            return {
+                ...state,
+                softLoading: false,
+                data: {
+                    ...state.data,
+                    tableData: {
+                        ...state.data.tableData,
+                        last_updated: new Date(Date.now()),
+                        customGroups: payload
+                    }
+                }
             }
 
         case FILTER_DATA: { // Use brackets to define scope

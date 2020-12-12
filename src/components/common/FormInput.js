@@ -10,7 +10,17 @@ function FormInput({
     error,
     disabled,
     onClick,
+    onEnter,
     width }) {
+
+    const execOnEnter = e => {
+        if(onEnter && e.key === "Enter" && 
+            value && value !== '') {
+            console.log("exec");
+            onEnter()
+        }
+    } 
+
     return (
         <div 
         className={error ? "form-text-input error" : "form-text-input"}
@@ -25,6 +35,7 @@ function FormInput({
             onChange={onChange}
             disabled={disabled || false}
             style={width && {width: width}}
+            onKeyPress={e => execOnEnter(e)}
             />
             <label for={name || ''} className="label">{label}</label>
             {error &&

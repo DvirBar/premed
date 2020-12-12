@@ -15,7 +15,8 @@ function MatchFormFragment({
     isCalc, 
     fieldType, 
     defValue, 
-    disabled 
+    disabled,
+    cusGroupParent,
 }) {
     const {
         _id,
@@ -41,6 +42,7 @@ function MatchFormFragment({
                 fieldId: _id,
                 groupId,
                 isCalc,
+                cusGroupParent,
                 value
             }
             dispatch(insertData(selTable, dataObj))

@@ -74,14 +74,14 @@ function useExecCalc(missingArgs) {
 
     const storedCalcs = useSelector(getAllStoredCalcs)
 
-    const group = useSelector(getGroupById(changedField?.group || undefined))
+    const groupId = changedField?.cusGroupParent || changedField?.group 
+    const fieldId = changedField?.field
+
+    const group = useSelector(getGroupById(groupId || undefined))
     const groupVals = useSelector(getGroupVals(changedField?.group || undefined))
 
     useEffect(() => {
         if(missingArgs && changedField) {
-            const groupId = changedField.group
-            const fieldId = changedField.field
-    
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>

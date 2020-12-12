@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getGroupsVals } from '../../../redux/selectors/userdata';
+import { getCustomGroups, getGroupsVals } from '../../../redux/selectors/userdata';
+import CustomGroup from './data-block/CustomGroup';
 import FormFragment from './data-block/FormFragment';
 import GroupsList from './data-block/GroupsList';
 import OptionalGroup from './data-block/OptionalGroup';
@@ -12,6 +13,7 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
     let unUsedGroups = []
 
     const groupsVals = useSelector(getGroupsVals)
+    const customGroups = useSelector(getCustomGroups)
     
     if(groups) {
         for(let group of groups) {
@@ -24,7 +26,9 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
             }
     
             else {
-                if(groupsVals.find(val => val.group === group._id)) {
+                const groupVal = groupsVals.find(val => 
+                    val.group === group._id)
+                if(groupVal && !group.multiVals) {
                     optGroups.push(group)
                 }
 
@@ -69,6 +73,12 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
                         group={group}
                         groups={getChildren(group)}
                         getChildren={getChildren} />
+                    )}
+
+                    {customGroups?.map(group =>
+                        <CustomGroup
+                        customGroup={group}
+                        groups={groups} />
                     )}
 
                     <StagedGroups 

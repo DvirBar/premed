@@ -1,23 +1,37 @@
 import React, { useState } from 'react'
+import AddCustomGroup from './AddCustomGroup';
 import AddStagedGroup from './AddStagedGroup'
 import ChooseStagedGroup from './ChooseStagedGroup'
 import GroupsList from './GroupsList'
 import StagedGroupsList from './StagedGroupsList'
 
 function StagedGroups({ groups, getChildren }) {
-    const [displayChoose, setDisplayChoose] = useState(false)
+    const statuses = {
+        addButton: 'addButton',
+        choose: 'choose',
+        addGroup: 'addGroup',
+    }
+    const [displayStatus, setDisplayStatus] = useState(statuses.addButton)
+    const [selMultiGroup, setSelMultiGroup] = useState('')
     const [stagedGroupsList, setStagedGroupsList] = useState([])
 
     const chooseGroup = chosenGroup => {
         const group = groups.find(group => 
             group._id === chosenGroup.value)
+        
+        if(group.multiVals) {
+            setSelMultiGroup(group._id)
+            setDisplayStatus(statuses.addGroup)
+        }
 
-        setStagedGroupsList([...stagedGroupsList, group])
-        setDisplayChoose(false)
+        else {
+            setStagedGroupsList([...stagedGroupsList, group])
+            setDisplayStatus(statuses.addButton)
+        }
     }
 
-    const toggleDisplay = toggle => {
-        setDisplayChoose(toggle)
+    const changeDisplayStatus = status => {
+        setDisplayStatus(status)
     }
 
     return (
@@ -29,14 +43,23 @@ function StagedGroups({ groups, getChildren }) {
                 getChildren={getChildren} />
             )}
 
-            {displayChoose
-            ?   <ChooseStagedGroup 
+            {displayStatus === statuses.addButton &&
+                <AddStagedGroup 
+                changeStatus={changeDisplayStatus}
+                statuses={statuses} />
+            }
+
+            {displayStatus === statuses.choose &&
+                <ChooseStagedGroup 
                 chooseGroup={chooseGroup}
                 groups={groups} />
-            :   <AddStagedGroup 
-                // onClick={() => setDisplayChoose(true)}
-                toggleDisplay={toggleDisplay} 
-                />
+            }
+            
+            {displayStatus === statuses.addGroup &&
+                <AddCustomGroup
+                changeStatus={changeDisplayStatus}
+                statuses={statuses}
+                selMultiGroup={selMultiGroup} />
             }
         </div>
     )
