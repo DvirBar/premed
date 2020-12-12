@@ -48,7 +48,7 @@ export const hujiBargut = (params, bagType) => {
         }
         
         else {
-            hujiGroups = config.huji
+            hujiGroups = config.huji || []
         }
 
         if(hujiGroups?.includes('isRequired')) {
@@ -67,9 +67,21 @@ export const hujiBargut = (params, bagType) => {
         }
 
         else {
-            notRequired[subj] = {
-                values: params[subj],
-                groups: hujiGroups
+            if(params[subj].multiVals) {
+                const paramsVals = params[subj].values
+                for(let param in paramsVals) {
+                    notRequired[param] = {
+                        values: paramsVals[param],
+                        groups: hujiGroups
+                    } 
+                }
+            }
+
+            else {
+                notRequired[subj] = {
+                    values: params[subj],
+                    groups: hujiGroups
+                }
             }
         }
     }

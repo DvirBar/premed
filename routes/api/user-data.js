@@ -32,7 +32,7 @@ const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;
 const { DataFieldNotExist } = fieldsMessages;
 const { PathNotExist } = pathsMessages;
 
-import executeCalc from '../../utils/stats/calcs/executeCalc';
+import executeCalc from '../../utils/stats/calcs/executeCalc/executeCalc';
 
 
 const findLatestTable = tables => {
@@ -349,6 +349,7 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
         fieldId,
         groupId,
         isCalc,
+        cusGroupParent,
         value
     } = req.body;
 
@@ -387,7 +388,8 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
                     values.push({
                         field: fieldId,
                         group: groupId,
-                        isCalc: isCalc,
+                        isCalc,
+                        cusGroupParent,
                         value
                     })
                 }
@@ -429,11 +431,6 @@ router.put('/execCalc', auth, (req, res, next) => {
             curTable.table.enabled) 
         let values = enabledTable.dataVals
 
-        // Assign calc value to the relevant field
-        // DataField.find({ calcOutput: { $exists: true }})
-        // .populate('calcOutput')
-        // .then(async(fields) => {
-
         let newCalcs = []
         for(let calcLevel of calcsToExec) {
             for(let storCalcId of calcLevel) {
@@ -443,11 +440,16 @@ router.put('/execCalc', auth, (req, res, next) => {
                 let calcObj = {}
 
                 try {
-                    calcObj = await executeCalc(storCalc, values, 'jew')
+                    calcObj = await executeCalc(
+                        storCalc, 
+                        values, 
+                        'jew', 
+                        enabledTable.customGroups)
                 }
         
                 catch(err) {
-                    return res.status(err.status || 500).send(err.msg)
+                    console.log(err);
+                    return res.status(err.status || 500).send(err.message)
                 }
             
                 const payload = calcObj.payload
@@ -516,7 +518,7 @@ router.put('/execCalc', auth, (req, res, next) => {
 
 // @route   PUT api/userdata/toggleEnabled
 // @desc    Toggle data enabled status
-// @access  Admin
+// @access  Private
 router.put('/toggleEnabled/:tableId', auth, (req, res, next) => {
 
     const userId = res.locals.user.id
@@ -553,6 +555,58 @@ router.put('/toggleEnabled/:tableId', auth, (req, res, next) => {
                             .catch(next) // Find data table
             })
             .catch(next); // Find user data
+})
+
+// @route   PUT api/userdata/addCustomGroup
+// @desc    Add new custom groups
+// @access  Private
+router.put('/addCustomGroup/:tableId', auth, (req, res, next) => {
+    const {
+        name,
+        group
+    } = req.body
+
+    const userId = res.locals.user.id
+    const tableId = req.params.tableId
+
+    UserData.findOne({ user: userId })
+            .then(data => {
+                if(!data)
+                    return res.status(DataNotExist.status)
+                              .send(DataNotExist.msg)
+
+                DataTable.findById(tableId)
+                .then(table => {
+                    if(!table)
+                        return res.status(DataTableNotExist.status)
+                                .send(DataTableNotExist.msg)
+                    
+                    const userTable = data.tables.find(curTable => 
+                        curTable.table.equals(tableId))
+
+                    if(!userTable) 
+                        return res.status(UserDataNotInTable.status)
+                                  .send(UserDataNotInTable.msg)
+
+                    const customGroup = {
+                        name,
+                        group
+                    }
+
+                    const customGroups = userTable.customGroups
+
+                    customGroups.push(customGroup)
+                    userTable.last_updated = Date.now();
+
+                    data.save()
+                        .then(() => {
+                            return res.send(customGroups)
+                        })
+                        .catch(next)
+                })
+                .catch(next)
+            })
+            .catch(next) 
 })
 
 

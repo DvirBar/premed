@@ -1,12 +1,12 @@
 const authAdmin = (req, res, next) => {
     try {
         if(!res.locals.user.isAdmin)
-            return res.status(401).json({ msg: 'You are unauthorized!' })
+            return res.status(403).send({ msg: 'You are unauthorized!' })
         
         next();
     }
     catch(e) {
-        return res.status(500).json({ msg: 'Internal server error' })
+        return res.status(500).send({ msg: 'Internal server error' })
     }       
 }
 

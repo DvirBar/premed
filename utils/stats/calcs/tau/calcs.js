@@ -38,9 +38,28 @@ export const tauBargut = (params, uSettings) => {
         }
 
         else {
-            notRequired[subj] = {
-                values: params[subj],
-                groups: tauGroups
+            if(params.multiVals) {
+                for(let param of params[subj])
+                    notRequired[subj] = {
+                        values: param,
+                        groups: tauGroups
+                    }
+            }
+                
+            else {
+                if(params[subj].multiVals) {
+                    for(let param of params) {
+                        notRequired[subj] = {
+                            values: param,
+                            groups: tauGroups
+                        } 
+                    }
+                }
+                
+                notRequired[subj] = {
+                    values: params[subj],
+                    groups: tauGroups
+                }
             }
         }
     }

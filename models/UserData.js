@@ -32,6 +32,9 @@ const UserDataSchema = new Schema({
             group: {
                 type: String
             },
+            cusGroupParent: {
+                type: String
+            },
             isCalc: {
                 type: Boolean
             },
@@ -43,6 +46,14 @@ const UserDataSchema = new Schema({
             },
             payload: {
                 type: Mixed
+            }
+        }],
+        customGroups: [{
+            name: {
+                type: String
+            },
+            group: {
+                type: String
             }
         }],
         last_updated: {

@@ -1,6 +1,6 @@
 export const getBestAverage = (baseAvg, argsObj, maxGrade, minUnits, getBonus, config) => {
     let cumulAvg = baseAvg;
-    let omittedArgs = []
+    let omittedArgs = [];
 
     /* If a grade is greater than average grade, it will increase average.
         This loop finds grades that increase base average and adds them 
