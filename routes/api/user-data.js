@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const authAdmin = require('../../middleware/authAdmin');
-const fs = require('fs')
 
 // Models
 const UserData = require('../../models/UserData');
@@ -17,8 +16,6 @@ const fieldsMessages = require('../../messages/data-fields');
 const pathsMessages = require('../../messages/paths');
 
 import dataTablesMessages from '../../messages/data-tables';
-import { fields } from '../../utils/stats/dataFields';
-import groups from '../../utils/stats/groups/dataGroups';
 import storedCalcs from '../../utils/stats/calcs/storedCalcs';
 
 /* TODO: Check imports and finish data insert */
@@ -26,8 +23,9 @@ import storedCalcs from '../../utils/stats/calcs/storedCalcs';
 import { populatePaths } from '../../utils/internalData';
 
 
-const { SuccessDelete, UserDataAlreadyExist, DataNotExist,
-    NoEnabledTable, UserDataNotInTable, ReqDataNotExist } = dataMessages;
+const { SuccessDelete, ValuesDeleteSuccess, UserDataAlreadyExist, 
+    DataNotExist, NoEnabledTable, UserDataNotInTable, 
+    ReqDataNotExist, CustomGroupNotExist } = dataMessages;
 const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;    
 const { PathNotExist } = pathsMessages;
 
@@ -416,6 +414,7 @@ router.put('/removedata/:tableId', auth, (req, res, next) => {
     const {
         fieldId,
         groupId,
+        cusGroupParent,
         removeAll
     } = req.body
 
@@ -448,12 +447,24 @@ router.put('/removedata/:tableId', auth, (req, res, next) => {
                     const valueIdsToRemove = values.filter(val => 
                         val.group === groupId).map(val => val._id)
 
-                    if(valueIdsToRemove.length === 0)
+                    if(valueIdsToRemove.length === 0 && !cusGroupParent)
                         return res.status(ReqDataNotExist.status)
                                   .send(ReqDataNotExist.msg)
 
                     for(let valId of valueIdsToRemove) {
                         values.id(valId).remove()
+                    }
+                    
+                    // If group is custom, remove custom group
+                    if(cusGroupParent) {
+                        const groupToDel = enabledTable.customGroups.find(group =>
+                            group._id.equals(groupId))
+
+                        if(!groupToDel)
+                            return res.status(cusGroupParent.status)
+                                      .send(cusGroupParent.msg)
+
+                        groupToDel.remove()
                     }
                 }
 
@@ -470,7 +481,8 @@ router.put('/removedata/:tableId', auth, (req, res, next) => {
 
                 data.save()
                     .then(() => {
-                        return res.send(enabledTable)
+                        return res.status(ValuesDeleteSuccess.status)
+                                  .send(ValuesDeleteSuccess.msg)
                     })
                     .catch(next) // Save data
             })
@@ -515,8 +527,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                 }
         
                 catch(err) {
-                    console.log(err);
-                    return res.status(err.status || 500).send(err.message)
+                    return res.status(err.status || 500).send(err.msg)
                 }
             
                 const payload = calcObj.payload
@@ -657,7 +668,7 @@ router.put('/addCustomGroup/:tableId', auth, (req, res, next) => {
 
                     const customGroup = {
                         name,
-                        group
+                        cusGroupParent: group
                     }
 
                     const customGroups = userTable.customGroups

@@ -6,6 +6,13 @@ const userDataMessages = {
         },
         status: 200
     },
+    ValuesDeleteSuccess: {
+        msg: {
+            en: 'Values deleted successfully',
+            he: 'הנתונים נמחקו בהצלחה'
+        },
+        status: 200
+    },
     UserDataAlreadyExist: {
         msg: {
             en: 'User data already exists',
@@ -53,6 +60,13 @@ const userDataMessages = {
         msg: {
             en: 'Data do not exist for this user or user does not exist',
             he: 'הנתונים לא קיימים עבור המשתמש, או שהמשתמש לא קיים'
+        },
+        status: 404
+    },
+    CustomGroupNotExist: {
+        msg: {
+            en: 'Custom group does not exist',
+            he: 'לא נמצאה הקבוצה'
         },
         status: 404
     }

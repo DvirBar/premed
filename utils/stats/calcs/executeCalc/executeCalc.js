@@ -15,7 +15,13 @@ const executeCalc = async(storCalc, values, selType, customGroups) => {
             const group = groups.find(group => group._id === arg._id)
 
             if(!group.isMultiVal && !group.multiVals) {
-                Object.assign(params, getGroupVals(group, values, arg, selType))
+                try {
+                    Object.assign(params, getGroupVals(group, values, arg, selType))
+                }
+
+                catch(err) {
+                    throw err
+                }
             }
             
             else if (group.multiVals) {
@@ -43,7 +49,6 @@ const executeCalc = async(storCalc, values, selType, customGroups) => {
     }
 
     catch(err) {
-        console.log(err);
         return
     }
     

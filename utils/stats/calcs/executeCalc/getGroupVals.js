@@ -1,3 +1,6 @@
+const dataMessages = require('../../../../messages/user-data');
+const { ArgsInsuffice } = dataMessages;
+
 const getGroupVals = (group, values, arg, selType) => {
     const config = group.config?.uniqueGroupType
                 ?   group.config[selType]
@@ -37,11 +40,10 @@ const getGroupVals = (group, values, arg, selType) => {
             }
         
             if(!skip) {
-                console.log(arg._id);
-                throw new Error({ 
+                throw { 
                     status: ArgsInsuffice.status,
                     msg: ArgsInsuffice.msg
-                })
+                }
             }   
     }
                     

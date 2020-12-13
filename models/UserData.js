@@ -52,7 +52,7 @@ const UserDataSchema = new Schema({
             name: {
                 type: String
             },
-            group: {
+            cusGroupParent: {
                 type: String
             }
         }],
