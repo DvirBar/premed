@@ -58,6 +58,7 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
 
 // This function checks if an optional field
 const checkChangedFieldArgs = (group, groupVals) => {
+    console.log("here");
     if(!group || group.fields.length === groupVals.length)
         return true
 
@@ -69,10 +70,8 @@ calcs that depend on that field */
 function useExecCalc(missingArgs) {
     const dispatch = useDispatch()
 
-    const {changedField, dataRemoved} = useSelector(state => 
+    const { changedField, dataRemoved } = useSelector(state => 
         state.userdata)
-
-    
 
     const storedCalcs = useSelector(getAllStoredCalcs)
 
@@ -84,7 +83,6 @@ function useExecCalc(missingArgs) {
 
     useEffect(() => {
         if(missingArgs && changedField) {
-            console.log(missingArgs);
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>
@@ -112,11 +110,11 @@ function useExecCalc(missingArgs) {
                     firstCalcs, 
                     storedCalcs, 
                     missingArgs)]
-                    
+                 
                 dispatch(executeCalc(calcSequence))
             }
         }
-    }, [changedField])
+    }, [missingArgs])
 }
 
 export default useExecCalc

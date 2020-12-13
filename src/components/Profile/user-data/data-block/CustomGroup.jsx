@@ -3,7 +3,7 @@ import GroupsList from './GroupsList'
 
 function CustomGroup({ customGroup, groups }) {
     const fields = groups.find(groupItem => 
-        groupItem._id === customGroup.group).fields
+        groupItem._id === customGroup.cusGroupParent).fields
 
     const group = {
         ...customGroup,

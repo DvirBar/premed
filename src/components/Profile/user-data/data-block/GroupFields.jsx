@@ -4,8 +4,12 @@ import { useSelector } from 'react-redux'
 import { getGroupVals } from '../../../../redux/selectors/userdata'
 import RemoveVals from './RemoveVals'
 
-function GroupFields({ group }) {
+function GroupFields({ group, isStaged, removeStagedGroup }) {
     const groupVals = useSelector(getGroupVals(group._id))
+    let displayRemove = false
+
+    if(group.cusGroupParent || groupVals.length !== 0 || isStaged)
+        displayRemove = true
 
     return (
         <div className="group-fields">
@@ -20,11 +24,13 @@ function GroupFields({ group }) {
                 group={group} />
             )}
 
-            {groupVals.length !== 0 &&
+            {displayRemove &&
                 <RemoveVals 
                 groupId={group._id}
                 cusGroupParent={group.cusGroupParent}
-                removeAll={true} />
+                removeAll={true}
+                removeStagedGroup={removeStagedGroup}
+                isStaged={isStaged} />
             }
         </div>
     )

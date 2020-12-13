@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCustomGroups, getGroupsVals } from '../../../redux/selectors/userdata';
 import CustomGroup from './data-block/CustomGroup';
@@ -11,6 +11,16 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
     let reqGroups = []
     let optGroups = []
     let unUsedGroups = []
+    const [stagedGroupsList, setStagedGroupsList] = useState([])
+
+    const addStagedGroup = group => {
+        setStagedGroupsList([...stagedGroupsList, group])
+    }
+
+    const removeStagedGroup = groupId => {
+        setStagedGroupsList(stagedGroupsList.filter(stagedGroup =>
+            stagedGroup._id !== groupId))
+    }
 
     const groupsVals = useSelector(getGroupsVals)
     const customGroups = useSelector(getCustomGroups)
@@ -20,7 +30,7 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
             const config = group.config?.uniqueGroupType
             ?   group.config['jew']
             :   group.config
-    
+
             if(config && !config.isOptional) {
                 reqGroups.push(group)
             }
@@ -28,7 +38,10 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
             else {
                 const groupVal = groupsVals.find(val => 
                     val.group === group._id)
-                if(groupVal && !group.multiVals) {
+                
+                const isStaged = stagedGroupsList.find(stagedGroup =>
+                    stagedGroup._id === group._id)
+                if(groupVal && !group.multiVals && !isStaged) {
                     optGroups.push(group)
                 }
 
@@ -82,6 +95,9 @@ function DataBlock({ title, fields, groups, calcs, getChildren }) {
                     )}
 
                     <StagedGroups 
+                    addStagedGroup={addStagedGroup}
+                    removeStagedGroup={removeStagedGroup}
+                    stagedGroupsList={stagedGroupsList}
                     groups={unUsedGroups}
                     getChildren={getChildren} />
                 </div>

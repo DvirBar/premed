@@ -1,7 +1,13 @@
 import React, { Fragment } from 'react'
+import { removeValue } from '../../../../redux/actions/userdata'
 import GroupFields from './GroupFields'
 
-function GroupsList({ group, groups, getChildren }) {
+function GroupsList({ 
+    group, 
+    groups, 
+    getChildren, 
+    isStaged,
+    removeStagedGroup }) {
     return (
         <div className="groups-list">
             {groups.length !== 0 
@@ -14,11 +20,15 @@ function GroupsList({ group, groups, getChildren }) {
                     key={group._id}
                     group={group}
                     groups={getChildren(group)}
-                    getChildren={getChildren}/>
+                    getChildren={getChildren}
+                    isStaged={isStaged}
+                    removeStagedGroup={removeStagedGroup} />
                 </Fragment>)
             
             :   <GroupFields
-                group={group} />
+                group={group}
+                isStaged={isStaged}
+                removeStagedGroup={removeStagedGroup} />
             }
         </div>
     )

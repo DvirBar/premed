@@ -5,15 +5,20 @@ import ChooseStagedGroup from './ChooseStagedGroup'
 import GroupsList from './GroupsList'
 import StagedGroupsList from './StagedGroupsList'
 
-function StagedGroups({ groups, getChildren }) {
+function StagedGroups({ 
+    groups, 
+    getChildren, 
+    addStagedGroup,
+    removeStagedGroup, 
+    stagedGroupsList }) {
     const statuses = {
         addButton: 'addButton',
         choose: 'choose',
         addGroup: 'addGroup',
     }
+
     const [displayStatus, setDisplayStatus] = useState(statuses.addButton)
-    const [selMultiGroup, setSelMultiGroup] = useState('')
-    const [stagedGroupsList, setStagedGroupsList] = useState([])
+    const [selMultiGroup, setSelMultiGroup] = useState('')  
 
     const chooseGroup = chosenGroup => {
         const group = groups.find(group => 
@@ -25,7 +30,7 @@ function StagedGroups({ groups, getChildren }) {
         }
 
         else {
-            setStagedGroupsList([...stagedGroupsList, group])
+            addStagedGroup(group)
             setDisplayStatus(statuses.addButton)
         }
     }
@@ -40,7 +45,9 @@ function StagedGroups({ groups, getChildren }) {
                 <GroupsList
                 group={group}
                 groups={getChildren(group)}
-                getChildren={getChildren} />
+                getChildren={getChildren}
+                isStaged={true}
+                removeStagedGroup={removeStagedGroup} />
             )}
 
             {displayStatus === statuses.addButton &&

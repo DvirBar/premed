@@ -2,21 +2,32 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeValue } from '../../../../redux/actions/userdata'
 import { selTableSelector } from '../../../../redux/selectors/userdata'
-import ToolTip from '../../../layout/ToolTip'
 
-function RemoveVals({ groupId, cusGroupParent, fieldId, removeAll, text }) {
+function RemoveVals({ 
+    groupId, 
+    cusGroupParent, 
+    fieldId, 
+    removeAll,
+    isStaged, 
+    removeStagedGroup }) {
     const dispatch = useDispatch()
     const selTable = useSelector(selTableSelector)
     
     const execRemoveVals = () => {
-        const data = {
-            groupId,
-            cusGroupParent,
-            fieldId,
-            removeAll
+        if(!isStaged) {
+            const data = {
+                groupId,
+                cusGroupParent,
+                fieldId,
+                removeAll
+            }
+    
+            dispatch(removeValue(data, selTable))    
         }
 
-        dispatch(removeValue(data, selTable))
+        else {
+            removeStagedGroup(groupId)
+        }
     }
 
     return (

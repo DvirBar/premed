@@ -17,7 +17,7 @@ function FormFragment({ field, isCalc, group }) {
             fieldType={field.fieldType.value}
             defValue={dataVal?.value}
             disabled={isCalc && field.isSuggetion}
-            cusGroupParent={group?.group} />
+            cusGroupParent={group?.cusGroupParent} />
 
             {isCalc && field.isSuggetion &&
                 <CalcBlock

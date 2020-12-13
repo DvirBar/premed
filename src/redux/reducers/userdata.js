@@ -220,7 +220,12 @@ export default function(state = initialState, action) {
                                     ?   val.group !== payData.groupId
                                     :   val.group !== payData.groupId &&
                                         val.filter !== payData.fieldId
-                                )
+                                ),
+                            customGroups: payData.cusGroupParent
+                            ?   state.data.tableData.customGroups.filter(group => 
+                                group._id !== payData.groupId)
+
+                            :   state.data.tableData.customGroups
                         }
                         
                         : state.data.tableData
