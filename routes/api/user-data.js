@@ -8,11 +8,11 @@ const UserData = require('../../models/UserData');
 const DataField = require('../../models/DataField');
 const DataTable = require('../../models/DataTable');
 const Path = require('../../models/Path');
+import groups from '../../utils/stats/groups/dataGroups';
 const modelName = 'user data';
 
 // Errors
 const dataMessages = require('../../messages/user-data');
-const fieldsMessages = require('../../messages/data-fields');
 const pathsMessages = require('../../messages/paths');
 
 import dataTablesMessages from '../../messages/data-tables';
@@ -382,11 +382,23 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
 
             // If the field is yet to have a value
                 if(!found) {
+                    let isType
+                    if(groupId) {
+                        const groupField = groups.find(group => 
+                            group._id === groupId).fields.find(field =>
+                                fieldId === field._id)
+
+                        if(groupField.isType) {
+                            isType = true
+                        }
+                    }
+                    
                     values.push({
                         field: fieldId,
                         group: groupId,
                         isCalc,
                         cusGroupParent,
+                        isType,
                         value
                     })
                 }

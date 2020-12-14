@@ -38,6 +38,9 @@ const UserDataSchema = new Schema({
             isCalc: {
                 type: Boolean
             },
+            isType: {
+                type: Boolean
+            },
             value: {
                 type: String
             },

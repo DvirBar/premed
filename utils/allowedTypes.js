@@ -11,6 +11,10 @@ export const staticDataTypes = {
         select: {
             name: "בחירה",
             value: "select"
+        },
+        toggle: {
+            name: "מתג",
+            value: "toggle"
         }
     },
     dataTypes: {
