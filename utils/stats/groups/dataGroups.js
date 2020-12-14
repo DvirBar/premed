@@ -19,12 +19,12 @@ const groups = [
                 isType: true,
                 fieldOptions: [
                     {
-                        name: 'יהודי',
-                        value: 'jew',
-                    },
-                    {
                         name: 'ערבי',
                         value: 'arab',
+                    },
+                    {
+                        name: 'יהודי',
+                        value: 'jew',
                     }
                 ]
             },

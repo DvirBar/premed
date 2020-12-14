@@ -53,7 +53,7 @@ const bagrutGroupArgs = [
         name: 'סוג',
         _id: 'type',
         dataType: dataTypes.str,
-        fieldType: fieldTypes.select,
+        fieldType: fieldTypes.toggle,
         fieldOptions: [
             {
                 name: 'מבחן',
@@ -69,12 +69,12 @@ const bagrutGroupArgs = [
 
 export const bagrutTypes = [
     {
-        name: 'יהודי',
-        value: 'jew'
-    },
-    {
         name: 'ערבי',
         value: 'arab'
+    },
+    {
+        name: 'יהודי',
+        value: 'jew'
     }
 ]
 
