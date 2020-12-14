@@ -7,6 +7,7 @@ import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
 import { selTableSelector } from '../../../redux/selectors/userdata';
+import ToggleSwitch from '../../common/ToggleSwitch';
 
 
 function MatchFormFragment({ 
@@ -55,9 +56,13 @@ function MatchFormFragment({
     }, [error])
 
     const changeData = event => {
-        setValue(event.target 
-            ? event.target.value
-            : event.value)
+        const value = event.target 
+        ? event.target.value
+        : event.value 
+            ?   event.value
+            :   event
+
+        setValue(value)
     }
 
     useEffect(() => {
@@ -124,7 +129,13 @@ function MatchFormFragment({
                         checked={defValue ? true : false} />
                    </div>
                     
-        
+        case 'toggle':
+            return <div>
+                        <ToggleSwitch
+                        options={fieldOptions}
+                        onChange={changeData}
+                        value={defValue} />
+                   </div>               
         default:
             return <Fragment></Fragment>
     }

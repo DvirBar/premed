@@ -163,7 +163,10 @@ export default function(state = initialState, action) {
                 softLoading: false,
                 data: {
                     ...state.data,
-                    enabled: payload.enabled
+                    tableData: {
+                        ...state.data.tableData,
+                        enabled: payload.enabled
+                    }
                 }
             }
 

@@ -58,7 +58,6 @@ const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
 
 // This function checks if an optional field
 const checkChangedFieldArgs = (group, groupVals) => {
-    console.log("here");
     if(!group || group.fields.length === groupVals.length)
         return true
 
@@ -83,6 +82,7 @@ function useExecCalc(missingArgs) {
 
     useEffect(() => {
         if(missingArgs && changedField) {
+            console.log(missingArgs);
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>

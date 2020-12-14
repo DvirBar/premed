@@ -27,11 +27,12 @@ export const getGroupVals = groupId => createSelector(
     vals => vals.filter(val => val.group === groupId)
 )
 
-// export const getGroupsVals = state => 
-//     state.userdata.data.tableData.dataVals.filter(val => val.group)
-
-
 export const getGroupsVals = createSelector(
     state => state.userdata.data.tableData.dataVals,
     vals => vals.filter(val => val.group)
+)
+
+export const getSelTypes = createSelector(
+    state => state.userdata.data.tableData.dataVals,
+    vals => vals.filter(val => val.isType)
 )

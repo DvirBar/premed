@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { getGroupFields } from '../../../redux/reducers';
 import { getGroups } from '../../../redux/selectors/statsinputs';
+import { getSelTypes } from '../../../redux/selectors/userdata';
 
-const useMissingArgs = (storedCalcs, dataVals, selType) => {
+const useMissingArgs = (storedCalcs, dataVals) => {
     const [missingArgs, setMissingArgs] = useState()
     const groups = useSelector(getGroups)
+    const selTypes = useSelector(getSelTypes)
 
     useEffect(() => {
         let tempArgs = []
@@ -28,8 +30,11 @@ const useMissingArgs = (storedCalcs, dataVals, selType) => {
                     const group = groups.find(group => 
                         group._id === arg._id)
 
+                    const selType = selTypes.find(type => 
+                        type.field === group.typeId)?.value
+
                     const config = group.config.uniqueGroupType
-                    ?   group.config[selType]
+                    ?   selType ? group.config[selType] : group.config
                     :   group.config
 
                     /* Get group config according to group type 

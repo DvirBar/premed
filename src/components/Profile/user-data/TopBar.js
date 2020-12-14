@@ -7,11 +7,6 @@ import DataPathsList from './DataPathsList';
 
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
-    const [enabled, setEnabled] = useState(false);
-
-    useEffect(() => {
-        setEnabled(data.tableData.enabled)
-    }, [data])
 
     const options = [
         {
@@ -41,7 +36,7 @@ function TopBar({ data, tableId, changeTable, paths }) {
                 <ToggleSwitch
                 options={options}
                 onChange={toggleOptions}
-                value={enabled} />
+                value={data.tableData.enabled} />
             </div>
 
             <DataPathsList paths={paths} tableId={tableId} />
