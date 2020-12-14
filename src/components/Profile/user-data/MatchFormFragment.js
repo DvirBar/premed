@@ -130,11 +130,17 @@ function MatchFormFragment({
                    </div>
                     
         case 'toggle':
-            return <div>
+            return <div className="switch-block">
+                        {name &&
+                            <span className="switch-name">
+                                {name}
+                            </span>
+                        }
                         <ToggleSwitch
                         options={fieldOptions}
                         onChange={changeData}
-                        value={defValue} />
+                        value={defValue}
+                        className="indent" />
                    </div>               
         default:
             return <Fragment></Fragment>

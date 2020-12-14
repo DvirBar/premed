@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function ToggleSwitch({ options, onChange, value }) {
+function ToggleSwitch({ options, onChange, value, className }) {
     const [isChanging, setIsChanging] = useState(false);
     // Binded to value - used for optimistic updating
     const [isOn, setIsOn] = useState(false)
@@ -32,7 +32,9 @@ function ToggleSwitch({ options, onChange, value }) {
     }
 
     return (
-        <p className="toggle-switch">
+        <p className={className 
+            ?   "toggle-switch " + className
+            :   "toggle-switch"}>
             <span>{options[1].name}</span>
             <span className="toggle-button" onClick={() => handleChange()}>
                 <span className={isOn
