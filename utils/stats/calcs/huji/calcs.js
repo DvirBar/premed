@@ -1,6 +1,7 @@
 import { getBestAverage } from "../methods";
 import getBonus from "./bonusMap";
-import { bagrut } from '../../groups/bagrut';
+import groups from "../../groups/dataGroups";
+import getGroupConfig from "../../groups/getGroupConfig";
 
 export const hujiFinal = (params) => {
     const {
@@ -31,7 +32,7 @@ export const hujiFinal = (params) => {
     }
 }
 
-export const hujiBargut = (params, bagType) => {
+export const hujiBargut = (params, values) => {
     let subjSum = 0;
     let unitsCounter = 0;
     let notRequired = {}
@@ -39,17 +40,9 @@ export const hujiBargut = (params, bagType) => {
     /* Get average of required subjects and store 
         not required in an array */
     for(let subj in params) {
-        const config = bagrut.find(arg => arg._id === subj).config;
-        let hujiGroups
-
-        // Get huji config group
-        if(config.uniqueGroupType) {
-            hujiGroups = config[bagType].huji
-        }
-        
-        else {
-            hujiGroups = config.huji || []
-        }
+        const group = groups.find(thisGroup => thisGroup._id === subj)
+        const config = getGroupConfig(values, group)
+        let hujiGroups = config.huji || []
 
         if(hujiGroups?.includes('isRequired')) {
             const {

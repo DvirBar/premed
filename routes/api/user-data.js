@@ -535,12 +535,12 @@ router.put('/execCalc', auth, (req, res, next) => {
                 try {
                     calcObj = await executeCalc(
                         storCalc, 
-                        values, 
-                        'jew', 
+                        values,  
                         enabledTable.customGroups)
                 }
         
                 catch(err) {
+                    console.log(err);
                     return res.status(err.status || 500).send(err.msg)
                 }
             

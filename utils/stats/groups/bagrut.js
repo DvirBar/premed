@@ -180,6 +180,7 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
+                replaceable: 'thought',
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
                 tau: ['isRequired', 'midBonus'],

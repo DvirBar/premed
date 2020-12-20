@@ -5,7 +5,7 @@ import getGroupVals from './getGroupVals';
 import getMultiVals from './getMultiVals';
 
 
-const executeCalc = async(storCalc, values, selType, customGroups) => {
+const executeCalc = async(storCalc, values, customGroups) => {
     const params = {}
 
     for(let arg of storCalc.args) {
@@ -16,7 +16,7 @@ const executeCalc = async(storCalc, values, selType, customGroups) => {
 
             if(!group.isMultiVal && !group.multiVals) {
                 try {
-                    Object.assign(params, getGroupVals(group, values, arg, selType))
+                    Object.assign(params, getGroupVals(groups, group, values, arg))
                 }
 
                 catch(err) {
@@ -45,7 +45,7 @@ const executeCalc = async(storCalc, values, selType, customGroups) => {
 
     // Execute calculation
     try {
-        return storCalc.func(params, selType);
+        return storCalc.func(params, values);
     }
 
     catch(err) {
