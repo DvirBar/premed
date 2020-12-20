@@ -14,7 +14,7 @@ const useMissingArgs = (storedCalcs, dataVals) => {
 
         if(storedCalcs && storedCalcs.length !== 0 && dataVals) {
             let missing = []
-
+            
             // Loop through stored calc and find missing args
             for(let storedCalc of storedCalcs) {
                 const groupArgs = storedCalc?.args?.filter(arg => 

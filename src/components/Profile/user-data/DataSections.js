@@ -27,6 +27,8 @@ function DataSections({ paths }) {
 
     // Listen and execute calcs
     const missingArgs = useMissingArgs(storedCalcs, dataVals, 'jew')
+
+    console.log(missingArgs);
  
     useExecCalc(missingArgs)
 
