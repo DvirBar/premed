@@ -384,8 +384,10 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
                 if(!found) {
                     let isType
                     if(groupId) {
-                        const groupField = groups.find(group => 
-                            group._id === groupId).fields.find(field =>
+                        const groupField = groups.find(group =>
+                            cusGroupParent 
+                            ?  group._id === cusGroupParent
+                            :  group._id === groupId).fields.find(field =>
                                 fieldId === field._id)
 
                         if(groupField.isType) {
