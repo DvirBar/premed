@@ -1,39 +1,34 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { removeValue } from '../../../../redux/actions/userdata'
+import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import { selTableSelector } from '../../../../redux/selectors/userdata'
+import { GroupsContext } from './GroupsContext'
 
 function RemoveVals({ 
     groupId, 
     cusGroupParent, 
     fieldId, 
     removeAll,
-    isStaged, 
-    removeStagedGroup }) {
-    const dispatch = useDispatch()
+    isStaged }) {
     const selTable = useSelector(selTableSelector)
+    const {
+        execRemoveVals
+    } = useContext(GroupsContext)
     
-    const execRemoveVals = () => {
-        if(!isStaged) {
-            const data = {
-                groupId,
-                cusGroupParent,
-                fieldId,
-                removeAll
-            }
-    
-            dispatch(removeValue(data, selTable))    
+    const removeVals = () => {
+        const data = {
+            groupId,
+            cusGroupParent,
+            fieldId,
+            removeAll
         }
 
-        else {
-            removeStagedGroup(groupId)
-        }
+        execRemoveVals(data, isStaged, selTable)
     }
 
     return (
         <div className="remove-vals">
             <i 
-            onClick={() => execRemoveVals()}
+            onClick={() => removeVals()}
             className="material-icons remove">
                 close
             </i>

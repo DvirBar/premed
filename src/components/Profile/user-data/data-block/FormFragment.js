@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
-import { getFieldVal } from '../../../../redux/selectors/userdata'
 import CalcBlock from '../CalcBlock'
 import MatchFormFragment from '../MatchFormFragment'
+import { GroupsContext } from './GroupsContext'
 
 function FormFragment({ field, isCalc, group }) {
+    const {
+        getFieldVal
+    } = useContext(GroupsContext)
+
     const dataVal = useSelector(
         getFieldVal(field._id, group?._id))
 

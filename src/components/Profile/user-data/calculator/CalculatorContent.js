@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getFieldsByArgs } from '../../../../redux/selectors/datafields';
 import { useDispatch, useSelector } from 'react-redux';
 import useMissingArgs from '../useMissingArgs';
 import Loadbar from '../../../layout/Loadbar';
 import CalcsBlock from './CalcsBlock'
-import ArgsFieldsBlock from './ArgsFieldsBlock';
-import { getCalcsByFields } from '../../../../redux/selectors/calcs';
 import { copyToSimulate, simulateCalcs } from '../../../../redux/actions/userdata';
+import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
+import ArgsBlock from './ArgsBlock';
 
 function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
-    const storedCalcs = useSelector(state => 
-        getCalcsByFields(state.calcs.storedCalcs, chosenCalcs))
+    const {
+        fields,
+        groups,
+        calcs
+    } = useSelector(getInputsByArgs(chosenCalcs))
 
-    const fields = useSelector(state => 
-        getFieldsByArgs(state.datafields.fields, storedCalcs))
 
     /* Disable calcs that are also arguments to prevent 
         calculation inconsistency */
@@ -36,13 +36,12 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
             dispatch(copyToSimulate(selTable, fields))
     }, [chosenCalcs])
 
-
     // Find missing args and define calcs simulation function
-    const missingArgs = useMissingArgs(storedCalcs, simulatedData)
+    const missingArgs = useMissingArgs(chosenCalcs, simulatedData.values, 'jew')
 
     const simulateExecCalcs = () => {
-        const notMissingCalcs = storedCalcs.filter(calc =>
-            !missingArgs.find(item => item.calc === calc.id))
+        const notMissingCalcs = chosenCalcs.filter(calc =>
+            !missingArgs.find(item => item.calc === calc._id))
     
         if(notMissingCalcs.length !== 0) {
             const dataObj = {
@@ -68,10 +67,12 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
                     בחירת שקלולים
                 </span>
             </div>
-
-            <ArgsFieldsBlock 
+            <ArgsBlock
             fields={fields}
+            groups={groups}
+            calcs={calcs}
             simulateExecCalcs={simulateExecCalcs} />
+            
             <CalcsBlock 
             calcs={chosenCalcs}
             disabledCalcs={disabledCalcs} />

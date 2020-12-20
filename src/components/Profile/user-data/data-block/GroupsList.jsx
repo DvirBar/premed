@@ -1,13 +1,11 @@
 import React, { Fragment } from 'react'
-import { removeValue } from '../../../../redux/actions/userdata'
 import GroupFields from './GroupFields'
 
 function GroupsList({ 
     group, 
     groups, 
     getChildren, 
-    isStaged,
-    removeStagedGroup }) {
+    isStaged }) {
     return (
         <div className="groups-list">
             {groups.length !== 0 
@@ -21,14 +19,12 @@ function GroupsList({
                     group={group}
                     groups={getChildren(group)}
                     getChildren={getChildren}
-                    isStaged={isStaged}
-                    removeStagedGroup={removeStagedGroup} />
+                    isStaged={isStaged} />
                 </Fragment>)
             
             :   <GroupFields
                 group={group}
-                isStaged={isStaged}
-                removeStagedGroup={removeStagedGroup} />
+                isStaged={isStaged} />
             }
         </div>
     )

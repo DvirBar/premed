@@ -17,7 +17,7 @@ import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
 import { getBaseData, getStatsInputs } from './redux/actions/basedata';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'http://10.0.0.28:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 function App() {
@@ -27,10 +27,6 @@ function App() {
   
   useEffect(() => {
     dispatch(getBaseData());
-    dispatch(getSteps());
-    dispatch(getPages());
-    dispatch(getAnc());
-    dispatch(getQuestGroups());
     dispatch(getTables())
 
     if(auth) {
@@ -49,11 +45,8 @@ function App() {
   const selPaths = useSelector(state => state.paths);
   const paths = selPaths.paths;
   const loadPaths = selPaths.loading;
-  const loadSteps = useSelector(state => state.steps.loading);
-  const loadPages = useSelector(state => state.pages.loading);
-  const loadAncs = useSelector(state => state.ancs.loading);
 
-  if(!auth || auth.loading || loadPaths || loadSteps || loadPages || loadAncs)
+  if(!auth || auth.loading || loadPaths)
     return <Loadbar loadfull={true} />
 
     return (

@@ -11,7 +11,13 @@ function FormInput({
     disabled,
     onClick,
     onEnter,
-    width }) {
+    width,
+    limit }) {
+
+    const changeInput = e => {
+        if(!limit || e.target.value.length <= limit) 
+            onChange(e)
+    }
 
     const execOnEnter = e => {
         if(onEnter && e.key === "Enter" && 
@@ -32,7 +38,7 @@ function FormInput({
             name={name || ''} 
             id={name || ''}
             value={value || ''}
-            onChange={onChange}
+            onChange={e => changeInput(e)}
             disabled={disabled || false}
             style={width && {width: width}}
             onKeyPress={e => execOnEnter(e)}

@@ -9,6 +9,9 @@ import {
     COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
     INSERT_DATA_SIMULATION,
+    REMOVE_SIMULATED_VALUES,
+    ADD_SIMULATED_GROUP,
+    REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -48,6 +51,30 @@ export const copyDataSimulation = () => dispatch => {
 
     return {
         type: COPY_DATA_SIMULATION
+    }
+}
+
+export const removeSimulatedValues = (id, isGroup) => {
+    return {
+        type: REMOVE_SIMULATED_VALUES,
+        payload: {
+            _id: id,
+            isGroup
+        }
+    }
+}
+
+export const addSimulatedGroup = group => {
+    return {
+        type: ADD_SIMULATED_GROUP,
+        payload: group
+    }
+}
+
+export const removeSimulatedGroup = id => {
+    return {
+        type: REMOVE_SIMULATED_GROUP,
+        payload: id
     }
 }
 
@@ -140,18 +167,18 @@ export const simulateCalcs = data => dispatch => {
                 payload: res.data
              })})
          .catch(err => {
-             console.log(err);
              dispatch(dataError())
              dispatch(getError(err))
             })
 }
 
 // Insert data to simulation vals
-export const insertDataSimulation = (field, value) => dispatch => {
+export const insertDataSimulation = (field, group, value) => dispatch => {
     dispatch({
         type: INSERT_DATA_SIMULATION,
         payload: {
             field,
+            group,
             value
         }
     })
@@ -196,7 +223,7 @@ export const switchTable = () => dispatch => {
 }
 
 // Insert new data to user data collection
-export const insertData = (tableId, data) => dispatch => {
+export const insertData = (data, tableId) => dispatch => {
     dispatch(dataLoadSoft());
     // TODO: Prompt user on successful save 
     

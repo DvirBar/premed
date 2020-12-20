@@ -14,7 +14,7 @@ function ChooseStagedGroup({ groups, chooseGroup }) {
         title="מקצועות"
         width='25rem'
         onChange={chooseGroup}
-        placeholder="בחירה" />
+        placeholder="בחירה" />    
     )
 }
 

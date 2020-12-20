@@ -5,6 +5,22 @@ export const getUnisFields = (unis, calcFields) => {
         field.university === uni._id))
 }
 
+export const getUnisByInputs = (fields, groups, calcs) => createSelector(
+    state => state.unis.unis,
+    unis => {
+        return unis.filter(uni => {
+        if(fields?.find(field => field.uni === uni._id))
+            return true
+
+        if(groups?.find(group => group.uni === uni._id))
+            return true
+
+        if(calcs?.find(calc => calc.uni === uni._id))
+            return true
+    })
+}
+)
+
 export const getUnisByPath = pathId => createSelector(
         state => state.unis.unis, 
         unis => unis.filter(uni => 
@@ -14,5 +30,11 @@ export const getUnisByPaths = pathIds => createSelector(
     state => state.unis.unis, 
     unis => unis.filter(uni => 
         uni.paths.find(path => pathIds.includes(path))))
+
+export const getUnisByCalcs = calcs => createSelector(
+    state => state.unis.unis,
+    unis => unis.filter(uni =>
+        calcs.find(calc => calc.uni === uni._id))
+)
 
 

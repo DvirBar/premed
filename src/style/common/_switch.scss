@@ -17,13 +17,18 @@
         .switch {
             position: absolute;
             left: 0;
-            bottom: -3.5px;
-            -webkit-transition: .3s;
-            transition: .3s;
+            bottom: -2.5px;
             border-radius: 50%;
             width: 2.5rem;
             height: 2.5rem;
             background-color: $main-color;
+            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease;
+
+            &.no-value {
+                transform: translateX(10px);
+                background-color: $main-color-light;
+            }
 
             &.on {
                 transform: translateX(19px);

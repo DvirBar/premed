@@ -1,0 +1,46 @@
+.args-fields-block {
+    padding: 2rem 0;
+
+    .no-uni-section {
+        display: flex;
+        flex-direction: column;
+        row-gap: 4rem;
+    }
+
+    .groups-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+        border-radius: 0.5rem;
+        
+        .group-item {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+        }
+
+        .group-name {
+            color: $main-color;
+        }
+
+        .fields-list {
+            padding-right: 2rem;
+        }
+    }
+
+    .fields-list {
+        display: flex;
+        column-gap: 2rem;
+        align-items: center;
+
+        .switch-block {
+            .switch-name {
+                color: $main-color;
+            }
+            
+            .indent {
+                padding-right: 1rem;
+            }
+        }
+    }
+}

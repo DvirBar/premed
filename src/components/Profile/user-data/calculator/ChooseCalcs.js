@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { getUnisFields } from '../../../../redux/selectors/unis';
-import { getCalcFields } from '../../../../redux/selectors/datafields';
+import { getUnisByCalcs } from '../../../../redux/selectors/unis';
 import ChooseCalcsOption from './ChooseCalcsOption';
+import { getAllStoredCalcs } from '../../../../redux/selectors/statsinputs';
 
 function ChooseCalcs({ chosenCalcs, chooseCalc, togglePickCalcs }) {
 
-    const calcFields = useSelector(state => 
-        getCalcFields(state.datafields.fields))
+    const calcs = useSelector(getAllStoredCalcs)
 
-    const calcUnis = useSelector(state => 
-        getUnisFields(state.unis.unis, calcFields))
+    const calcUnis = useSelector(getUnisByCalcs(calcs))
 
     const [error, setError] = useState('')
 
@@ -42,8 +40,8 @@ function ChooseCalcs({ chosenCalcs, chooseCalc, togglePickCalcs }) {
                             {uni.name}
                         </span>
                         <div className="calcs-options-list">
-                            {calcFields.map(calc => 
-                            calc.university === uni._id &&
+                            {calcs.map(calc => 
+                            calc.uni === uni._id &&
                                 <ChooseCalcsOption 
                                 key={calc._id}
                                 chooseCalc={chooseCalc}

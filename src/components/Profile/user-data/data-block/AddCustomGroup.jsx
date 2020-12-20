@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCustomGroup } from '../../../../redux/actions/userdata';
 import { selTableSelector } from '../../../../redux/selectors/userdata';
 import FormInput from '../../../common/FormInput';
+import { GroupsContext } from './GroupsContext';
 
 
-function AddCustomGroup({ changeStatus, statuses, selMultiGroup }) {
+function AddCustomGroup({ 
+    changeStatus, 
+    statuses, 
+    selMultiGroup, 
+     }) {
     const [groupName, setGroupName] = useState('')
     const selTable = useSelector(selTableSelector)
-    const dispatch = useDispatch()
+    const {
+        newCustomGroup
+    } = useContext(GroupsContext)
 
     const addGroup = () => {
         const dataObj = {
             name: groupName,
             group: selMultiGroup
         }
-        dispatch(addCustomGroup(dataObj, selTable))
+
+        newCustomGroup(dataObj, selTable)
         changeStatus(statuses.addButton)
     }
 
@@ -26,6 +34,7 @@ function AddCustomGroup({ changeStatus, statuses, selMultiGroup }) {
         name="name"
         value={groupName}
         onEnter={addGroup}
+        limit='30'
         onChange={e => setGroupName(e.target.value)} />
     )
 }

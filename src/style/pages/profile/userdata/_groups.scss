@@ -43,11 +43,28 @@
     }
 }
 
-.staged-groups {
+.staged-groups {    
     width: 70rem;
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
+    
+    .staged-groups-choose {
+        display: flex;
+        align-items: center;
+        column-gap: 2rem;
+    }
+
+    .cancel-new-group {
+        cursor: pointer;
+        color: $main-color;
+        font-size: 1.8rem;
+        border-bottom: 1px solid transparent;
+
+        &:hover {
+            border-bottom: 1px solid $main-color; 
+        }
+    }
 }
 
 .add-staged-group {

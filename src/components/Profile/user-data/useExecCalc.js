@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
 import { getAllStoredCalcs, getGroupById, getGroups } from '../../../redux/selectors/statsinputs';
 import { getCalcFields } from '../../../redux/selectors/datafields';
-import { getGroupVals } from '../../../redux/selectors/userdata';
+import { getGroupValsReal } from '../../../redux/selectors/userdata';
 
 /* This function finds calcs that are dependent on other calcs, and 
 that have no other missing args except the other calcs */
@@ -78,11 +78,10 @@ function useExecCalc(missingArgs) {
     const fieldId = changedField?.field
 
     const group = useSelector(getGroupById(groupId || undefined))
-    const groupVals = useSelector(getGroupVals(changedField?.group || undefined))
+    const groupVals = useSelector(getGroupValsReal(changedField?.group || undefined))
 
     useEffect(() => {
         if(missingArgs && changedField) {
-            console.log(missingArgs);
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>

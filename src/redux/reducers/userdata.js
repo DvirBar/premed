@@ -9,6 +9,9 @@ import {
     COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
     INSERT_DATA_SIMULATION,
+    REMOVE_SIMULATED_VALUES,
+    ADD_SIMULATED_GROUP,
+    REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
     USER_DATA_INSERT,
@@ -30,7 +33,10 @@ const initialState = {
     selTable: null,
     changedField: {},
     dataRemoved: false,
-    simulatedData: [],
+    simulatedData: {
+        values: [],
+        customGroups: []
+    },
     ordering: {
         filters: [],
         sort: {
@@ -79,50 +85,92 @@ export default function(state = initialState, action) {
                 selTable: payload
             }
  
-        case COPY_DATA_SIMULATION: {
-            const table = state.data.tables.find(thisTable => 
-                thisTable.table._id === state.selTable)
+        case COPY_DATA_SIMULATION: 
             return {
                 ...state,
                 loading: false,
-                simulatedData: table.dataVals.filter(val => 
-                    payload.fields.find(field =>
-                        field._id === val.field._id))
+                simulatedData: {
+                    values: state.data.tableData.dataVals,
+                    customGroups: state.data.tableData.customGroups
+                }
             }
-        }
 
         case SIMULATE_CALCS: 
             return {
                 ...state,
                 softLoading: false,
-                simulatedData: [
-                    ...state.simulatedData.filter(dataItem =>
-                        !payload.find(item =>
-                            item.field._id === dataItem.field._id)),
-                    
-                    ...payload.map(item => ({
-                        field: item.field,
-                        value: (item.result).toString()
-                    }))
-                ]
+                simulatedData: {
+                    ...state.simulatedData,
+                    values: [
+                        ...state.simulatedData.values.filter(dataItem =>
+                            !payload.find(item =>
+                                item.field._id === dataItem.field._id)),
+                        
+                        ...payload.map(item => ({
+                            field: item.field,
+                            value: (item.result).toString()
+                        }))
+                    ]
+                }
+                
             }    
 
         case INSERT_DATA_SIMULATION: 
             return {
                 ...state,
                 softLoading: false,
-                simulatedData:
-                state.simulatedData.find(dataItem => 
-                    dataItem.field._id === payload.field._id)
-                ?   state.simulatedData.map(dataItem =>
-                    dataItem.field._id === payload.field._id
-                    ?   {
-                            ...dataItem,
-                            value: payload.value
-                        }
-                    :   dataItem)
-                
-                :   [...state.simulatedData, payload]
+                simulatedData: {
+                    ...state.simulatedData,
+                    values:   
+                    state.simulatedData.values.find(dataItem =>
+                        dataItem.group === payload.group &&
+                        dataItem.field === payload.field)
+                        ?   state.simulatedData.values.map(dataItem =>
+                            dataItem.group === payload.group &&
+                            dataItem.field === payload.field
+                            ?   {
+                                    ...dataItem,
+                                    value: payload.value
+                                }
+                            :   dataItem)
+                        
+                        :   [...state.simulatedData.values, payload]
+                }
+            }
+
+        case REMOVE_SIMULATED_VALUES:
+            return {
+                ...state,
+                simulatedData: {
+                    ...state.simulatedData,
+                    values: state.simulatedData.values.filter(val =>
+                        payload.isGroup
+                        ?   val.group !== payload._id
+                        :   val.field !== payload._id
+                    )
+                }
+            }
+
+        case ADD_SIMULATED_GROUP: 
+            return {
+                ...state,
+                simulatedData: {
+                    ...state.simulatedData,
+                    customGroups: [
+                        ...state.simulatedData.customGroups,
+                        payload
+                    ]
+                }
+            }
+
+        case REMOVE_SIMULATED_GROUP: 
+            return {
+                ...state,
+                simulatedData: {
+                    ...state.simulatedData,
+                    customGroups: state.simulatedData.customGroups.filter(group => 
+                        group._id !== payload)
+                }
             }
 
         case USER_DATA_PATH_SUCCESS:

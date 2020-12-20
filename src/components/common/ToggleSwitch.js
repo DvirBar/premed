@@ -3,27 +3,15 @@ import PropTypes from 'prop-types';
 
 function ToggleSwitch({ options, onChange, value, className }) {
     const [isChanging, setIsChanging] = useState(false);
-    // Binded to value - used for optimistic updating
-    const [isOn, setIsOn] = useState(false)
-
-    useEffect(() => {
-        if(value === options[1].value)
-            setIsOn(true)
-
-        else
-            setIsOn(false)
-    }, [value])
 
     const handleChange = () => {
         let changeTo
 
         if(value === options[0].value) {
-            setIsOn(true)
             changeTo = options[1].value
         }
 
         else {
-            setIsOn(false)
             changeTo = options[0].value
         }
 
@@ -36,9 +24,18 @@ function ToggleSwitch({ options, onChange, value, className }) {
             ?   "toggle-switch " + className
             :   "toggle-switch"}>
             <span>{options[1].name}</span>
-            <span className="toggle-button" onClick={() => handleChange()}>
-                <span className={isOn
-                ? "switch on" : "switch"}></span>
+            <span 
+            className={value 
+            ?   "toggle-button"
+            :   "toggle-button no-value"} 
+            onClick={() => handleChange()}>
+                <span className={value
+                ? value === options[1].value
+                    ? "switch on"
+                    : "switch"
+                : "switch no-value" 
+                
+                }></span>
             </span>
             <span>{options[0].name}</span>
         </p>

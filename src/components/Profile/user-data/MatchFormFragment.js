@@ -1,13 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormInputBorder from '../../common/FormInputBorder';
-import { insertData } from '../../../redux/actions/userdata';
 import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
 import validateForm from '../../../forms/userDataValidation';
 import { selTableSelector } from '../../../redux/selectors/userdata';
 import ToggleSwitch from '../../common/ToggleSwitch';
+import { GroupsContext } from './data-block/GroupsContext';
 
 
 function MatchFormFragment({ 
@@ -17,7 +17,7 @@ function MatchFormFragment({
     fieldType, 
     defValue, 
     disabled,
-    cusGroupParent,
+    cusGroupParent
 }) {
     const {
         _id,
@@ -26,7 +26,10 @@ function MatchFormFragment({
         validators
     } = field
 
-    const dispatch = useDispatch();
+    const {
+        commitOnChange
+    } = useContext(GroupsContext)
+    
     const [value, setValue] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -46,7 +49,7 @@ function MatchFormFragment({
                 cusGroupParent,
                 value
             }
-            dispatch(insertData(selTable, dataObj))
+            commitOnChange(dataObj, selTable)
             setIsSubmitting(false)
             setError('')
         }
