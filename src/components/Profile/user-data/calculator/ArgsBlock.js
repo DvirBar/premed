@@ -4,9 +4,12 @@ import { getUnisByInputs } from '../../../../redux/selectors/unis'
 import GroupsProvider from '../data-block/GroupsContext'
 import DataBlock from '../DataBlock'
 
-function ArgsBlock({ fields, groups, calcs, changeStartSimulate }) {
-    const unis = useSelector(getUnisByInputs(fields, groups, calcs))
-
+function ArgsBlock({ 
+    fields, 
+    groups, 
+    calcs, 
+    unis, 
+    changeStartSimulate }) {
     const getChildren = group => {
         return groups.filter(thisGroup => 
             thisGroup.parent === group._id)

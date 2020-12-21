@@ -31,14 +31,11 @@ export const getFieldValReal = (fieldId, groupId) => createSelector(
 export const getFieldValSimulated = (fieldId, groupId) => createSelector(
     state => state.userdata.simulatedData.values,
     vals => {
-        if(groupId) {
-            return vals.find(val => 
-                val.group === groupId && 
-                val.field === fieldId)
-        }
-
         return vals.find(val => 
+            val.group === groupId && 
             val.field === fieldId)
+        // return vals.find(val => 
+        //     val.field === fieldId)
     }
 )
 

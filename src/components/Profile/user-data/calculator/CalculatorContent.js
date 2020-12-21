@@ -8,6 +8,7 @@ import { copyToSimulate, simulateCalcs } from '../../../../redux/actions/userdat
 import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
 import useSimulateExecCalcs from './useSimulateExecCalcs';
+import { getUnisByInputs } from '../../../../redux/selectors/unis';
 
 function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
     const {
@@ -15,6 +16,8 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
         groups,
         calcs
     } = useSelector(getInputsByArgs(chosenCalcs))
+
+    const unis = useSelector(getUnisByInputs(fields, groups, chosenCalcs))
 
     /* Disable calcs that are also arguments to prevent 
         calculation inconsistency */
@@ -69,11 +72,12 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
             fields={fields}
             groups={groups}
             calcs={calcs}
+            unis={unis}
             changeStartSimulate={changeStartSimulate} />
             
             <CalcsBlock 
             calcs={chosenCalcs}
-            disabledCalcs={disabledCalcs} />
+            unis={unis} />
         </div>
     )
 }
