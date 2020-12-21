@@ -5,7 +5,6 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Models
 const UserData = require('../../models/UserData');
-const DataField = require('../../models/DataField');
 const DataTable = require('../../models/DataTable');
 const Path = require('../../models/Path');
 import groups from '../../utils/stats/groups/dataGroups';
@@ -192,51 +191,48 @@ router.post('/', auth, (req, res, next) => {
 })
 
 
-// @route   Post api/userdata/simulateCalcs
+// @route   POST api/userdata/simulateCalcs
 // @desc    Simulate calculations
 // @access  Private
-router.post('/simulateCalcs', auth, (req, res, next) => {
+router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
     const {
         values,
-        calcIds
+        calcsToExec,
+        customGroups
     } = req.body
-
-    // Find all stored calcs that should be executed
-    const storCalcs = storedCalcs.filter(calc =>
-        calcIds.includes(calc.id))
     
     let resultArray = []
 
-    for(let calc of storCalcs) {
-        let calcObj
+    for(let calcLevel of calcsToExec) {
+        for(let storCalcId of calcLevel) {
+            const storCalc = storedCalcs.find(calc => 
+                calc._id === storCalcId)
+            
+            let calcObj = {}
 
-        try {
-            calcObj = executeCalc(calc, values)
-        }
+            try {
+                calcObj = await executeCalc(
+                    storCalc, 
+                    values,  
+                    customGroups)
+            }
+    
+            catch(err) {
+                console.log(err);
+                return res.status(err.status || 500).send(err.msg)
+            }
 
-        catch(error) {
-            return res.status(error.status).send(error.msg)
+            const resultObj = {
+                ...calcObj,
+                isCalc: true,
+                field: storCalcId
+            }
+
+            resultArray.push(resultObj)
         }
-       
-        resultArray.push({
-            calc,
-            result: calcObj.value
-        })
     }
 
-    // Find relevant outputfield
-    DataField.find({ calcOutput: { $exists: true }})
-        .populate('calcOutput')
-        .then(fields => {
-            resultArray = resultArray.map(item => ({
-                field: fields.find(field => 
-                    field.calcOutput.storedCalc === item.calc.id),
-                result: item.result
-            }))
-
-            return res.send(resultArray)
-        })
-        .catch(next)    
+    res.status(200).send(resultArray)                                 
 })
 
 

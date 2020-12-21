@@ -14,6 +14,7 @@ const bagrutGroupArgs = [
         fieldType: fieldTypes.textbox,
         validators: [
             validationTypes.isPosNum,
+            validationTypes.isInt,
             {
                 ...validationTypes.numRange,
                 min: '40',

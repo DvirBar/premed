@@ -1,6 +1,3 @@
-const dataMessages = require('../../../../messages/user-data');
-const { ArgsInsuffice } = dataMessages;
-
 const getMultiVals = (parentGroup, values, customGroups) => {
     let multiVals = {}
 
@@ -8,7 +5,7 @@ const getMultiVals = (parentGroup, values, customGroups) => {
     for(let group of customGroups) {
         const cusGroupVals = values.filter(val => 
             val.cusGroupParent === parentGroup._id
-            && group._id.equals(val.group))    
+            && group._id.toString() === val.group)    
 
         if(cusGroupVals.length === parentGroup.fields.length) {
             let valsObj = {}
