@@ -95,25 +95,49 @@ export default function(state = initialState, action) {
                 }
             }
 
-        case SIMULATE_CALCS: 
+        case SIMULATE_CALCS: {
+            let dataToUpdate = []
+            let dataToInsert = []
+
+            const values = state.simulatedData.values
+
+            for(let item of payload) {
+                if(values.find(val => 
+                    item.field === val.field &&
+                    val.isCalc)) {
+                    dataToUpdate.push(item)
+                }
+
+                else {
+                    dataToUpdate.push(item)
+                }
+            }
+
             return {
                 ...state,
                 softLoading: false,
                 simulatedData: {
                     ...state.simulatedData,
                     values: [
-                        ...state.simulatedData.values.filter(dataItem =>
-                            !payload.find(item =>
-                                item.field._id === dataItem.field._id)),
-                        
-                        ...payload.map(item => ({
-                            field: item.field,
-                            value: (item.result).toString()
-                        }))
+                        ...values.map(val => {
+                            const item = dataToUpdate.find(payItem => 
+                                payItem.field === val.field && val.isCalc)
+
+                            if(item) {
+                                return {
+                                    ...val,
+                                    value: item?.value
+                                }
+                            }
+
+                            return val
+                        }),
+                        ...dataToInsert 
                     ]
                 }
-                
             }    
+        }
+            
 
         case INSERT_DATA_SIMULATION: 
             return {

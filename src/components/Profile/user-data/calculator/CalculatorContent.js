@@ -7,6 +7,7 @@ import CalcsBlock from './CalcsBlock'
 import { copyToSimulate, simulateCalcs } from '../../../../redux/actions/userdata';
 import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
+import useSimulateExecCalcs from './useSimulateExecCalcs';
 
 function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
     const {
@@ -14,7 +15,6 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
         groups,
         calcs
     } = useSelector(getInputsByArgs(chosenCalcs))
-
 
     /* Disable calcs that are also arguments to prevent 
         calculation inconsistency */
@@ -37,21 +37,19 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
     }, [chosenCalcs])
 
     // Find missing args and define calcs simulation function
-    const missingArgs = useMissingArgs(chosenCalcs, simulatedData.values, 'jew')
-
-    const simulateExecCalcs = () => {
-        const notMissingCalcs = chosenCalcs.filter(calc =>
-            !missingArgs.find(item => item.calc === calc._id))
+    const missingArgs = useMissingArgs(chosenCalcs, simulatedData.values)
     
-        if(notMissingCalcs.length !== 0) {
-            const dataObj = {
-                values: simulatedData,
-                calcIds: notMissingCalcs.map(calc => calc.id)
-            }
-            dispatch(simulateCalcs(dataObj))
-        }
+    const [startSimulate, setStartSimulate] = useState(false)
+    const changeStartSimulate = status => {
+        setStartSimulate(status)
     }
 
+    useSimulateExecCalcs(
+        chosenCalcs,
+        missingArgs, 
+        startSimulate, 
+        changeStartSimulate)
+    
     if(loading)
         return <Loadbar />
 
@@ -71,7 +69,7 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
             fields={fields}
             groups={groups}
             calcs={calcs}
-            simulateExecCalcs={simulateExecCalcs} />
+            changeStartSimulate={changeStartSimulate} />
             
             <CalcsBlock 
             calcs={chosenCalcs}

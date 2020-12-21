@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSimulatedGroup, insertDataSimulation, removeSimulatedGroup, removeSimulatedValues } from '../../../../redux/actions/userdata';
+import { addSimulatedGroup, insertDataSimulation, removeSimulatedGroup, removeSimulatedValues, simulateCalcs } from '../../../../redux/actions/userdata';
 import { v4 as uuidv4 } from 'uuid'
 import { getCustomGroupsSimulated, getFieldValSimulated, getGroupsValsReal, getGroupValsSimulated, getSimulatedVals } from '../../../../redux/selectors/userdata';
 
@@ -22,10 +22,11 @@ const useSimulatedData = () => {
         const {
             fieldId,
             groupId,
+            cusGroupParent,
             value 
         } = dataObj
 
-        dispatch(insertDataSimulation(fieldId, groupId, value))
+        dispatch(insertDataSimulation(fieldId, groupId, cusGroupParent, value))
     }, [])
 
     const execRemoveVals = (data, isStaged) => {

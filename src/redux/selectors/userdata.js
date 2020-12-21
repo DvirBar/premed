@@ -66,6 +66,3 @@ export const getSelTypes = createSelector(
     state => state.userdata.data.tableData.dataVals,
     vals => vals.filter(val => val.isType)
 )
-
-export const getSimulatedGroups = state => 
-    state.userdata.data.simulatedData.customGroups

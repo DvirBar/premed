@@ -4,7 +4,7 @@ import { getUnisByInputs } from '../../../../redux/selectors/unis'
 import GroupsProvider from '../data-block/GroupsContext'
 import DataBlock from '../DataBlock'
 
-function ArgsBlock({ fields, groups, calcs, simulateExecCalcs }) {
+function ArgsBlock({ fields, groups, calcs, changeStartSimulate }) {
     const unis = useSelector(getUnisByInputs(fields, groups, calcs))
 
     const getChildren = group => {
@@ -45,7 +45,7 @@ function ArgsBlock({ fields, groups, calcs, simulateExecCalcs }) {
                         
                     </div>
                 )}
-                <button onClick={() => simulateExecCalcs()}>
+                <button onClick={() => changeStartSimulate(true)}>
                     חישוב
                 </button>
             </div>

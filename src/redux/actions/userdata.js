@@ -156,11 +156,20 @@ export const copyToSimulate = (tableId, fields) => dispatch => {
 }
 
 // Simulate calculations and get results
-export const simulateCalcs = data => dispatch => {
+export const simulateCalcs = (
+    calcsToExec, 
+    values, 
+    customGroups, 
+    tableId) => dispatch => {
     // Request body
-    const body = JSON.stringify(data);
 
-    axios.post('api/userdata/simulateCalcs', body)
+    const body = JSON.stringify({
+        calcsToExec,
+        values,
+        customGroups
+    });
+
+    axios.post(`api/userdata/simulateCalcs/${tableId}`, body)
          .then(res => {
              dispatch ({
                 type: SIMULATE_CALCS,
@@ -173,12 +182,13 @@ export const simulateCalcs = data => dispatch => {
 }
 
 // Insert data to simulation vals
-export const insertDataSimulation = (field, group, value) => dispatch => {
+export const insertDataSimulation = (field, group, cusGroupParent, value) => dispatch => {
     dispatch({
         type: INSERT_DATA_SIMULATION,
         payload: {
             field,
             group,
+            cusGroupParent,
             value
         }
     })

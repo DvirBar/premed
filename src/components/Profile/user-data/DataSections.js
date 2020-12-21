@@ -1,11 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Loadbar from '../../layout/Loadbar';
+import React, { Fragment, useState } from 'react';
+import { useSelector } from 'react-redux';
 import NavigateDataSections from './NavigateDataSections';
 import DataSection from './DataSection';
 import useMissingArgs from './useMissingArgs';
 import useExecCalc from './useExecCalc';
-import { getStatsInputs } from '../../../redux/actions/basedata';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getUnisByPaths } from '../../../redux/selectors/unis';
 import { getDataVals } from '../../../redux/selectors/userdata';
@@ -27,8 +25,6 @@ function DataSections({ paths }) {
 
     // Listen and execute calcs
     const missingArgs = useMissingArgs(storedCalcs, dataVals, 'jew')
-
-    console.log(missingArgs);
  
     useExecCalc(missingArgs)
 

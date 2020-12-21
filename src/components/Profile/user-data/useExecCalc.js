@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
-import { getAllStoredCalcs, getGroupById, getGroups } from '../../../redux/selectors/statsinputs';
-import { getCalcFields } from '../../../redux/selectors/datafields';
+import { getAllStoredCalcs, getGroupById } from '../../../redux/selectors/statsinputs';
 import { getGroupValsReal } from '../../../redux/selectors/userdata';
 
 /* This function finds calcs that are dependent on other calcs, and 
 that have no other missing args except the other calcs */
-const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
+export const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
     const nextCalcs = []
 
     for(let calc of storedCalcs) {
@@ -109,6 +108,9 @@ function useExecCalc(missingArgs) {
                     firstCalcs, 
                     storedCalcs, 
                     missingArgs)]
+
+
+                console.log(calcSequence);
                  
                 dispatch(executeCalc(calcSequence))
             }
