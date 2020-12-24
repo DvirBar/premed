@@ -1,10 +1,7 @@
-import getGroupConfig from '../../groups/getGroupConfig';
 const dataMessages = require('../../../../messages/user-data');
 const { ArgsInsuffice } = dataMessages;
 
-const getGroupVals = (groups, group, values, arg) => {
-   const config = getGroupConfig(values, group)
-                
+const getGroupVals = (groups, group, values, arg, config) => {             
     /* Get group config according to group type 
         if provided, and check if arg is optional */
     const isOptional = config.isOptional

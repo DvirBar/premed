@@ -84,6 +84,7 @@ export const bagrut = [
         name: 'מתמטיקה',
         _id: 'math',
         config: {
+            minUnits: 3,
             huji: ['isRequired'],
             tech: ['isRequired'],
             tau: ['isReuired'],
@@ -95,6 +96,7 @@ export const bagrut = [
         name: 'אנגלית',
         _id: 'eng',
         config: {
+            minUnits: 4,
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midbonus'],
             tau: ['isRequired'],
@@ -108,12 +110,14 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
+                minUnits:2,
                 huji: ['isRequired', 'midBonus'],
                 tech: ['isRequired', 'midBonus'],
                 tau: ['isRequired'],
                 bgu: ['isRequired']
             },
             arab: {
+                minUnits: 2,
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
                 tau: ['isRequired'],
@@ -133,6 +137,7 @@ export const bagrut = [
                 tech: ['midBonus']
             },
             arab: {
+                minUnits: 3,
                 huji: ['isRequired', 'midBonus'],
                 tau: ['isRequired', 'midBonus'],
                 tech: ['isRequired', 'midBonus'],
@@ -146,6 +151,7 @@ export const bagrut = [
         name: 'היסטוריה',
         _id: 'history',
         config: {
+            minUnits: 2,
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired', 'midBonus'],
             tau: ['isRequired', 'midBonus'],
@@ -159,6 +165,7 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
+                minUnits: 2,
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
                 tau: ['isRequired', 'midBonus'],
@@ -181,6 +188,7 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
+                minUnits: 2,
                 replaceable: 'thought',
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
@@ -201,6 +209,7 @@ export const bagrut = [
         name: 'אזרחות',
         _id: 'civics',
         config: {
+            minUnits: 2,
             huji: ['isRequired', 'midBonus'],
             tech: ['isRequired'],
             tau: ['isRequired'],
@@ -250,6 +259,7 @@ export const bagrut = [
         config: {
             uniqueGroupType: true,
             jew: {
+                minUnits: 2,
                 replaceable: 'lit',
                 huji: ['midBonus']
             },

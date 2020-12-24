@@ -1,8 +1,10 @@
 const dataMessages = require('../../../../messages/user-data');
 const { ArgsInsuffice } = dataMessages;
 import groups from '../../groups/dataGroups';
+import getGroupConfig from '../../groups/getGroupConfig';
 import getGroupVals from './getGroupVals';
 import getMultiVals from './getMultiVals';
+import execCalcMessages from '../../../../messages/exec-calcs'
 
 
 const executeCalc = async(storCalc, values, customGroups) => {
@@ -16,7 +18,8 @@ const executeCalc = async(storCalc, values, customGroups) => {
 
             if(!group.isMultiVal && !group.multiVals) {
                 try {
-                    Object.assign(params, getGroupVals(groups, group, values, arg))
+                    const config = getGroupConfig(values, group)
+                    Object.assign(params, getGroupVals(groups, group, values, arg, config))
                 }
 
                 catch(err) {
