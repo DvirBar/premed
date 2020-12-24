@@ -34,7 +34,7 @@ function DataSection({ paths, selPath, selUni }) {
         return <Loadbar />
 
     return (
-        <GroupsProvider isSimulated={false}>
+        <Fragment>
             <DataBlock
             title={selUni?.name || 'כללי'}
             fields={fields}
@@ -53,7 +53,7 @@ function DataSection({ paths, selPath, selUni }) {
                     getChildren={getChildren} />
                 )
             }
-        </GroupsProvider>
+        </Fragment>
     )
 }
 

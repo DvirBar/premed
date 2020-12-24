@@ -4,12 +4,14 @@ import {
     USER_DATA_SUCCESS,
     USER_DATA_PATH_SUCCESS,
     USER_DATA_ERROR,
+    VALID_ERROR,
     USER_DATA_ADD,
     CHANGE_TABLE,
     COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
     INSERT_DATA_SIMULATION,
     REMOVE_SIMULATED_VALUES,
+    VALID_ERROR_SIMULATED,
     ADD_SIMULATED_GROUP,
     REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
@@ -35,7 +37,8 @@ const initialState = {
     dataRemoved: false,
     simulatedData: {
         values: [],
-        customGroups: []
+        customGroups: [],
+        errors: []
     },
     ordering: {
         filters: [],
@@ -67,7 +70,10 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                data: payload.data,
+                data: {
+                    ...payload.data,
+                    errors: []
+                },
                 selTable: payload.selTable
             }
 
@@ -90,6 +96,7 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 simulatedData: {
+                    ...state.simulatedData,
                     values: state.data.tableData.dataVals,
                     customGroups: state.data.tableData.customGroups
                 }
@@ -196,6 +203,26 @@ export default function(state = initialState, action) {
                         group._id !== payload)
                 }
             }
+
+        case VALID_ERROR: {
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    errors: payload
+                }
+            }
+        }
+
+        case VALID_ERROR_SIMULATED: {
+            return {
+                ...state,
+                simulatedData: {
+                    ...state.simulatedData,
+                    errors: payload
+                }
+            }
+        }
 
         case USER_DATA_PATH_SUCCESS:
             return {

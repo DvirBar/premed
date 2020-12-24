@@ -7,6 +7,7 @@ import useExecCalc from './useExecCalc';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getUnisByPaths } from '../../../redux/selectors/unis';
 import { getDataVals } from '../../../redux/selectors/userdata';
+import useDataValidation from './data-block/useDataValidation';
 
 function DataSections({ paths }) {
     const unis = useSelector(getUnisByPaths(paths.map(path => path._id)))
@@ -24,9 +25,11 @@ function DataSections({ paths }) {
     const dataVals = useSelector(getDataVals)
 
     // Listen and execute calcs
-    const missingArgs = useMissingArgs(storedCalcs, dataVals, 'jew')
+    // const missingArgs = useMissingArgs(storedCalcs, dataVals, 'jew')
+
+    useDataValidation(storedCalcs, dataVals)
  
-    useExecCalc(missingArgs)
+    useExecCalc()
 
     return (
         <Fragment>

@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { executeCalc } from '../../../redux/actions/userdata';
 import { getAllStoredCalcs, getGroupById } from '../../../redux/selectors/statsinputs';
 import { getGroupValsReal } from '../../../redux/selectors/userdata';
+import { GroupsContext } from './data-block/GroupsContext';
 
 /* This function finds calcs that are dependent on other calcs, and 
 that have no other missing args except the other calcs */
-export const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
+export const getNextCalcs = (stagedLevel, storedCalcs, validErrors) => {
     const nextCalcs = []
 
     for(let calc of storedCalcs) {
@@ -16,20 +17,20 @@ export const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
             stagedLevel.find(stagedCalc => 
                 stagedCalc === arg._id))) {
 
-            // Find the calcs missing args
-            const calcMissingArgs = missingArgs.find(missingCalc => 
-                missingCalc.calc === calc._id)?.missing
-            
+            const calcErrorArgs = validErrors.find(err => 
+                err.calc === calc._id)?.payload
+
+            // Find the calcs valid errors
             let foundBadArg = false;
 
-            if(calcMissingArgs) {
-                 // Check that the only missing args are staged calcs
-                for(let missingArg of calcMissingArgs) {
+            if(calcErrorArgs) {
+                 // Check that the only valid errors are staged calcs
+                for(let errorArg of calcErrorArgs) {
                     let found = false
-
-                    /* For each missing arg loop through staged calcs */
+ 
+                    /* For each valid error loop through staged calcs */
                     for(let stagedCalc of stagedLevel) {
-                        if(stagedCalc === missingArg._id) {
+                        if(stagedCalc === errorArg._id) {
                             found = true
                             break;
                         }
@@ -52,7 +53,7 @@ export const getNextCalcs = (stagedLevel, storedCalcs, missingArgs) => {
     if(nextCalcs.length === 0)
         return []
     
-    return [nextCalcs, ...getNextCalcs(nextCalcs, storedCalcs, missingArgs)]
+    return [nextCalcs, ...getNextCalcs(nextCalcs, storedCalcs, validErrors)]
 }
 
 // This function checks if an optional field
@@ -65,8 +66,13 @@ const checkChangedFieldArgs = (group, groupVals) => {
 
 /* This hook gets a changed field and only executes 
 calcs that depend on that field */
-function useExecCalc(missingArgs) {
+function useExecCalc() {
+    const {
+        getValidErrors
+    } = useContext(GroupsContext)
+
     const dispatch = useDispatch()
+    const validErrors = useSelector(getValidErrors)
 
     const { changedField, dataRemoved } = useSelector(state => 
         state.userdata)
@@ -80,7 +86,7 @@ function useExecCalc(missingArgs) {
     const groupVals = useSelector(getGroupValsReal(changedField?.group || undefined))
 
     useEffect(() => {
-        if(missingArgs && changedField) {
+        if(validErrors && changedField) {
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>
@@ -92,8 +98,8 @@ function useExecCalc(missingArgs) {
         
             for(let calc of relevantCalcs) {
                 // Check that stored calc hasn't got missing args
-                const found = missingArgs.find(arg => 
-                        arg.calc === calc)
+                const found = validErrors.find(err => 
+                        err.calc === calc)
     
                 if(!found &&
                     (checkChangedFieldArgs(group, groupVals) || 
@@ -107,7 +113,7 @@ function useExecCalc(missingArgs) {
                 const calcSequence = [firstCalcs, ...getNextCalcs(
                     firstCalcs, 
                     storedCalcs, 
-                    missingArgs)]
+                    validErrors)]
 
 
                 console.log(calcSequence);
@@ -115,7 +121,7 @@ function useExecCalc(missingArgs) {
                 dispatch(executeCalc(calcSequence))
             }
         }
-    }, [missingArgs])
+    }, [validErrors])
 }
 
 export default useExecCalc

@@ -9,6 +9,7 @@ import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
 import useSimulateExecCalcs from './useSimulateExecCalcs';
 import { getUnisByInputs } from '../../../../redux/selectors/unis';
+import useDataValidation from '../data-block/useDataValidation';
 
 function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
     const {
@@ -40,8 +41,8 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
     }, [chosenCalcs])
 
     // Find missing args and define calcs simulation function
-    const missingArgs = useMissingArgs(chosenCalcs, simulatedData.values)
-    
+    useDataValidation(chosenCalcs, simulatedData.values)
+
     const [startSimulate, setStartSimulate] = useState(false)
     const changeStartSimulate = status => {
         setStartSimulate(status)
@@ -49,7 +50,6 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
 
     useSimulateExecCalcs(
         chosenCalcs,
-        missingArgs, 
         startSimulate, 
         changeStartSimulate)
     

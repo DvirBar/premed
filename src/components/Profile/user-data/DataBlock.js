@@ -19,7 +19,8 @@ function DataBlock({
 }) {
     const {
         customGroups,
-        stagedGroupsList
+        stagedGroupsList,
+        isSimulated
     } = useContext(GroupsContext)
 
     const {
@@ -29,10 +30,14 @@ function DataBlock({
     } = useSortGroups(group, groups, stagedGroupsList)
 
     return (
-        <div className="data-block">
-            <div className="block-header">
-                {title}
-            </div>
+        <div className={isSimulated
+        ?   "data-block simulated"
+        :   "data-block not-simulated"}>
+            {title &&
+                <div className="block-header">
+                    {title}
+                </div>
+            }
             <div className="data-block-content">
                 {fields?.map(field => 
                     <FormFragment

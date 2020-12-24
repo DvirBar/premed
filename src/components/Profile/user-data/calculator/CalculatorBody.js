@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ChooseCalcs from './ChooseCalcs';
 import Modal from '../../../layout/Modal';
 import CalculatorContent from './CalculatorContent';
+import GroupsProvider from '../data-block/GroupsContext';
 
 function CalculatorBody({ display, toggleModal }) {
     const [chosenCalcs, setChosenCalcs] = useState([])
@@ -34,9 +35,13 @@ function CalculatorBody({ display, toggleModal }) {
                 chooseCalc={chooseCalc}
                 togglePickCalcs={togglePickCalcs} />
             
-            :   <CalculatorContent
+            :   
+            <GroupsProvider isSimulated={true}>
+                <CalculatorContent
                 chosenCalcs={chosenCalcs}
                 togglePickCalcs={togglePickCalcs} />
+            </GroupsProvider>
+                
             }
         </Modal>
     )

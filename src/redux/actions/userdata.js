@@ -4,6 +4,7 @@ import {
     USER_DATA_SUCCESS,
     USER_DATA_PATH_SUCCESS,    
     USER_DATA_ERROR,
+    VALID_ERROR,
     USER_DATA_ADD,
     CHANGE_TABLE,
     COPY_DATA_SIMULATION,
@@ -11,6 +12,7 @@ import {
     INSERT_DATA_SIMULATION,
     REMOVE_SIMULATED_VALUES,
     ADD_SIMULATED_GROUP,
+    VALID_ERROR_SIMULATED,
     REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
@@ -131,6 +133,20 @@ export const addUserData = data => dispatch => {
              dispatch(dataError())
              dispatch(getError(err))
             })
+}
+
+export const validError = errors => dispatch => {
+    dispatch({
+        type: VALID_ERROR,
+        payload: errors
+    })
+}
+
+export const validErrorSimulated = error => dispatch => {
+    dispatch({
+        type: VALID_ERROR_SIMULATED,
+        payload: error
+    })
 }
 
 // Change selected data table

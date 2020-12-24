@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { simulateCalcs } from '../../../../redux/actions/userdata';
 import { getCustomGroupsSimulated, getSimulatedGroups, getSimulatedVals, selTableSelector } from '../../../../redux/selectors/userdata';
+import { GroupsContext } from '../data-block/GroupsContext';
 import { getNextCalcs } from '../useExecCalc';
 
-const isFirstCalc = (calc, missingArgs) => {
-    return !missingArgs.find(item => item.calc === calc._id) &&
+const isFirstCalc = (calc, validErrors) => {
+    return !validErrors.find(item => item.calc === calc._id) &&
            !calc.args.find(arg => arg.type === 'calc')
 }
 
@@ -19,7 +20,6 @@ const DepOnChosenCalc = (calc, chosenCalcs) => {
 
 function useSimulateExecCalcs(
     chosenCalcs, 
-    missingArgs, 
     startSimulate, 
     changeStartSimulate) {
 
@@ -27,16 +27,21 @@ function useSimulateExecCalcs(
     const selTable = useSelector(selTableSelector)
     const values = useSelector(getSimulatedVals);
     const customGroups = useSelector(getCustomGroupsSimulated);
+    const {
+        getValidErrors
+    } = useContext(GroupsContext)
+
+    const validErrors = useSelector(getValidErrors)
 
     useEffect(() => {
         if(startSimulate) {
-            /* Find calcs that doesn't have missing args 
+            /* Find calcs that doesn't have valid errors
             and that don't have calcs as args */
             let firstCalcs = []
             let nextCalcs = []
 
             for(let calc of chosenCalcs) {
-                if(isFirstCalc(calc, missingArgs) && 
+                if(isFirstCalc(calc, validErrors) && 
                    !DepOnChosenCalc(calc, chosenCalcs)) 
                     firstCalcs.push(calc._id)
 
@@ -48,7 +53,7 @@ function useSimulateExecCalcs(
                 const calcSequence = [firstCalcs, ...getNextCalcs(
                     firstCalcs,
                     nextCalcs,
-                    missingArgs
+                    validErrors
                 )]
         
                 dispatch(simulateCalcs(

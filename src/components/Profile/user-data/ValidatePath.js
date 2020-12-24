@@ -5,6 +5,7 @@ import Loadbar from '../../layout/Loadbar';
 import SoftLoadbar from '../../layout/SoftLoadBar';
 import Calculator from './calculator/Calculator';
 import ChoosePath from './ChoosePath';
+import GroupsProvider from './data-block/GroupsContext';
 import UserStats from './UserStats';
 
 function ValidatePath() {
@@ -28,8 +29,9 @@ function ValidatePath() {
                {softLoading &&
                     <SoftLoadbar message="שמירה מתבצעת" />
                }
-
-                <UserStats data={data} selTable={selTable} />
+                <GroupsProvider isSimulated={false}>
+                    <UserStats data={data} selTable={selTable} />
+                </GroupsProvider>
                 <Calculator />
             </Fragment>
         )

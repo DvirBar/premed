@@ -55,3 +55,9 @@ export const getInputsByArgs = (chosenCalcs) => createSelector(
         }
     }
 )
+
+export const getCalcWithGroupArgs = createSelector(
+    state => state.statsinputs.calcs,
+    calcs => calcs.filter(calc => calc.args.find(arg => 
+        arg.type === 'group'))
+)

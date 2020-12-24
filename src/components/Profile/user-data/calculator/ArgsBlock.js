@@ -17,42 +17,40 @@ function ArgsBlock({
 
    
     return (
-        <GroupsProvider isSimulated={true}>
-            <div className="args-fields-block">
-                <div className="no-uni-section">
-                    <div className="no-groups">
-                        <DataBlock 
-                        fields={fields}
-                        calcs={calcs} />   
-                    </div>
-
-                    {groups &&
-                    groups.map(group => 
-                        !group.parent && 
-                            <DataBlock
-                            key={group._id}
-                            title={group.name}
-                            fields={group.fields}
-                            calcs={calcs}
-                            group={group}
-                            groups={getChildren(group)}
-                            getChildren={getChildren} />
-                        )
-                    }
+        <div className="args-fields-block">
+            <div className="no-uni-section">
+                <div className="no-groups">
+                    <DataBlock 
+                    fields={fields}
+                    calcs={calcs} />   
                 </div>
 
-                {unis.map(uni => 
-                    <div 
-                    key={uni._id}
-                    className="fields-list">
-                        
-                    </div>
-                )}
-                <button onClick={() => changeStartSimulate(true)}>
-                    חישוב
-                </button>
+                {groups &&
+                groups.map(group => 
+                    !group.parent && 
+                        <DataBlock
+                        key={group._id}
+                        title={group.name}
+                        fields={group.fields}
+                        calcs={calcs}
+                        group={group}
+                        groups={getChildren(group)}
+                        getChildren={getChildren} />
+                    )
+                }
             </div>
-        </GroupsProvider>
+
+            {unis.map(uni => 
+                <div 
+                key={uni._id}
+                className="fields-list">
+                    
+                </div>
+            )}
+            <button onClick={() => changeStartSimulate(true)}>
+                חישוב
+            </button>
+        </div>
     )
 }
 
