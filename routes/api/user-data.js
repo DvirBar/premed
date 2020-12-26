@@ -343,7 +343,8 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
         groupId,
         isCalc,
         cusGroupParent,
-        value
+        value,
+        suggestedAccepted
     } = req.body;
 
     const tableId = req.params.tableId
@@ -372,6 +373,10 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
                     if(item.field === fieldId && item.group === groupId) {
                         item.value = value;
                         found = true;
+                        if(suggestedAccepted) {
+                            item.suggestedAccepted = true
+                        }
+
                         break;
                     }
                 }
@@ -390,15 +395,21 @@ router.put('/insertdata/:tableId', auth, (req, res, next) => {
                             isType = true
                         }
                     }
-                    
-                    values.push({
+
+                    let newVal = {
                         field: fieldId,
                         group: groupId,
                         isCalc,
                         cusGroupParent,
                         isType,
                         value
-                    })
+                    }
+
+                    if(suggestedAccepted) {
+                        newVal.suggestedAccepted = true
+                    }
+
+                    values.push(newVal)
                 }
 
                 enabledTable.last_updated = Date.now();
@@ -536,7 +547,6 @@ router.put('/execCalc', auth, (req, res, next) => {
                 }
         
                 catch(err) {
-                    console.log(err);
                     return res.status(err.status || 500).send(err.msg)
                 }
             
@@ -552,7 +562,13 @@ router.put('/execCalc', auth, (req, res, next) => {
                     }
 
                     else {
-                        dataVal.suggestValue = calcObj.value;
+                        if(dataVal.suggestValue &&
+                        Number(dataVal.suggestValue) !== 
+                        Number(calcObj.value)) {
+                            dataVal.suggestedAccepted = false
+                        }
+
+                        dataVal.suggestValue = calcObj.value;    
                     }
 
                     dataVal.payload = payload ? payload : {}
@@ -570,8 +586,11 @@ router.put('/execCalc', auth, (req, res, next) => {
                     if(!isSuggestion)
                         valObj.value = calcObj.value
 
-                    else
+                    else {
                         valObj.suggestValue = calcObj.value
+                        valObj.suggestedAccepted = false
+                    }
+                       
 
                     values.push(valObj)
                 }

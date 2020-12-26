@@ -47,6 +47,9 @@ const UserDataSchema = new Schema({
             suggestValue: {
                 type: String
             },
+            suggestedAccepted: {
+                type: Boolean
+            },
             payload: {
                 type: Mixed
             }
