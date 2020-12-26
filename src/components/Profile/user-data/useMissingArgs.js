@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getGroups } from '../../../redux/selectors/statsinputs';
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { getGroups, getFieldsAndCalcs } from '../../../redux/selectors/statsinputs';
 import { getSelTypes } from '../../../redux/selectors/userdata';
 import getGroupConfig from './data-block/getGroupConfig';
-import { GroupsContext } from './data-block/GroupsContext';
 import { hasGroupValues } from './data-block/useDataValidation';
 
 
 const useMissingArgs = (storedCalcs, dataVals) => {
     const [missingArgs, setMissingArgs] = useState()
     const groups = useSelector(getGroups)
+    const fields = useSelector(getFieldsAndCalcs)
     const selTypes = useSelector(getSelTypes)
     const [finished, setFinished] = useState(false)
 
@@ -17,57 +17,72 @@ const useMissingArgs = (storedCalcs, dataVals) => {
         let tempArgs = []
 
         if(storedCalcs && storedCalcs.length !== 0 && dataVals) {
-            let missing = []
-            
             // Loop through stored calc and find missing args
             for(let storedCalc of storedCalcs) {
+                let missing = []
+                const args = storedCalc?.args || []
+
                 const groupArgs = storedCalc?.args?.filter(arg => 
                     arg.type === "group")
 
-    
-                missing = storedCalc?.args?.filter(arg => {
-                 
-                // If the arg is a group
-                if(arg.type === "group" && groupArgs) {
-                    const group = groups.find(group => 
-                        group._id === arg._id)
+                for(let arg of args) {
+                    // If the arg is a group
+                    if(arg.type === "group" && groupArgs) {
+                        const group = groups.find(group => 
+                            group._id === arg._id)
 
-                    const config = getGroupConfig(group, selTypes)
+                        const config = getGroupConfig(group, selTypes)
 
-                    /* Get group config according to group type 
-                    if provided, and check if arg is optional */
-                    const isOptional = config.isOptional
+                        /* Get group config according to group type 
+                        if provided, and check if arg is optional */
+                        const isOptional = config.isOptional
 
-                    if(!isOptional) {
+                        if(!isOptional) {
                         /* Loop through group fields and find with they 
                         all have values if not, return arg */
-                        if(!hasGroupValues(dataVals, group)) {
-                            /* If missing arg is replaceble check that 
-                            the replaceble group has values */
-                            if(config && config.replaceable) {
-                                const repGroup = groups.find(group =>
-                                    group._id === config.replaceable)
+                            if(!hasGroupValues(dataVals, group)) {
+                                /* If missing arg is replaceble check that 
+                                the replaceble group has values */
+                                if(config && config.replaceable) {
+                                    const repGroup = groups.find(group =>
+                                        group._id === config.replaceable)
 
-                                if(!hasGroupValues(dataVals, repGroup)) {
-                                    return arg
+                                    if(!hasGroupValues(dataVals, repGroup)) {
+                                        missing.push({
+                                            ...arg,
+                                            name: group.name,
+                                            replaceable: repGroup.name
+                                        })
+
+                                        break
+                                    }
+
+
                                 }
-
-                                return false
+                                else {
+                                    missing.push({
+                                        ...arg,
+                                        name: group.name
+                                    })
+                                }
+                                
                             }
-
-                            return arg
-                        }
-                }}
-                    
-                // If the argument is not a group, find if the field has a value 
+                    }}
+                        
+                    /* If the argument is not a group, 
+                    find if the field has a value */
                     else if(!dataVals.find(val => 
                         val.field === arg._id)) {
-                        return arg;
+                        const field = fields.find(field => 
+                            field._id === arg._id)
+                        missing.push({
+                            ...arg,
+                            name: field.name
+                        })
                     }
-                })
-            
-                /* If missing args array is not empty, insert the array 
-                    to the relevant calc */
+                }
+                /* If missing args array is not empty, 
+                insert the array to the relevant calc */
                 if(missing.length !== 0) {
                     tempArgs = [
                         ...tempArgs,

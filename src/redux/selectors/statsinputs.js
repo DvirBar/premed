@@ -11,6 +11,13 @@ export const getGroups = state => {
     return state.statsinputs.groups
 }
 
+export const getFieldsAndCalcs = state => {
+    return [
+        ...state.statsinputs.fields,
+        ...state.statsinputs.calcs
+    ]
+}
+
 export const getInputsByUni = uniId => createSelector(
     state => state.statsinputs,
     inputs => {

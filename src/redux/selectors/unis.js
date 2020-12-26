@@ -37,4 +37,9 @@ export const getUnisByCalcs = calcs => createSelector(
         calcs.find(calc => calc.uni === uni._id))
 )
 
+export const getUniById = uniId => createSelector(
+    state => state.unis.unis,
+    unis => unis.find(uni => uni._id === uniId)
+)
+
 

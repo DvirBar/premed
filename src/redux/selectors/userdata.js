@@ -64,23 +64,22 @@ export const getSelTypes = createSelector(
     vals => vals.filter(val => val.isType)
 )
 
-const getErrorByCalc = (errors, calcId, type) => {
+const getErrorByCalc = (errors, calcId) => {
     if(errors.length === 0)
         return undefined
 
     return errors.find(err => 
-        err.calc === calcId
-        && err.type === type)
+        err.calc === calcId)
 }
 
-export const getRealErrorByCalc = (calcId, type) => createSelector(
+export const getRealErrorByCalc = calcId => createSelector(
     state => state.userdata.data.errors,
-    errors => getErrorByCalc(errors, calcId, type)
+    errors =>  getErrorByCalc(errors, calcId)
 )
 
-export const getSimErrorByCalc = (calcId, type) => createSelector(
+export const getSimErrorByCalc = calcId => createSelector(
     state => state.userdata.simuldatedData.errors,
-    errors => getErrorByCalc(errors, calcId, type)
+    errors => getErrorByCalc(errors, calcId)
 )
 
 export const getRealValidErrors = state => 

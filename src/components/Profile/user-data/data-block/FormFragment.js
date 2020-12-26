@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
-import CalcBlock from '../CalcBlock'
+import CalcBlock from './calc-block/CalcBlock'
 import MatchFormFragment from '../MatchFormFragment'
 import { GroupsContext } from './GroupsContext'
 
@@ -23,10 +23,11 @@ function FormFragment({ field, isCalc, group }) {
             disabled={isCalc && field.isSuggetion}
             cusGroupParent={group?.cusGroupParent} />
 
-            {isCalc && field.isSuggetion &&
+            {isCalc &&
                 <CalcBlock
-                field={field}
-                defValue={dataVal?.suggestValue} />
+                calc={field}
+                value={dataVal?.suggestValue}
+                suggestedAccepted={dataVal?.suggestedAccepted} />
             }
         </div>
     )
