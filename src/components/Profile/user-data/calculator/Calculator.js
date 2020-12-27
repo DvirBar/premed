@@ -20,9 +20,12 @@ function Calculator() {
                         calculate
                     </i>
                 </FloatButton>
-                <CalculatorBody
-                display={displayCalc}
-                toggleModal={toggleCalc} />
+                {displayCalc &&
+                    <CalculatorBody
+                    display={displayCalc}
+                    toggleModal={toggleCalc} />
+                }
+                
             </div>
         </Fragment>
     )

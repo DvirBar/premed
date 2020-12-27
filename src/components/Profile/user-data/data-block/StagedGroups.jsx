@@ -43,7 +43,6 @@ function StagedGroups({
 
     return (
         <div className="staged-groups">
-           
             {stagedGroupsList.map(group =>
                 <GroupsList
                 group={group}

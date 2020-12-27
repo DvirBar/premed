@@ -1,20 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { getUnisByInputs } from '../../../../redux/selectors/unis'
-import GroupsProvider from '../data-block/GroupsContext'
 import DataBlock from '../DataBlock'
 
 function ArgsBlock({ 
     fields, 
     groups, 
     calcs, 
-    unis, 
-    changeStartSimulate }) {
+    unis }) {
+
     const getChildren = group => {
         return groups.filter(thisGroup => 
             thisGroup.parent === group._id)
     }
-
    
     return (
         <div className="args-fields-block">
@@ -25,7 +21,7 @@ function ArgsBlock({
                     calcs={calcs} />   
                 </div>
 
-                {groups &&
+                {groups.length > 0 &&
                 groups.map(group => 
                     !group.parent && 
                         <DataBlock
@@ -47,9 +43,7 @@ function ArgsBlock({
                     
                 </div>
             )}
-            <button onClick={() => changeStartSimulate(true)}>
-                חישוב
-            </button>
+            
         </div>
     )
 }

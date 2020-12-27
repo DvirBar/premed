@@ -2,8 +2,20 @@
     margin: auto;
     width: 900px;
 
+    @media only screen and(max-width: 900px) {
+        width: 100%;
+    }
+
     .profile-container {
         border-top: 3rem;
+
+        @media only screen and(max-width: 600px) {
+            input:focus ~ .calculator {
+                display: none;
+            }
+        }
+        
+
         & > div:not(.loadbar-soft):not(.calculator) {
             animation: opacity-load 0.5s ease;
             background-color: #fff;

@@ -40,6 +40,7 @@ function DataBlock({
             }
             <div className="data-block-content">
                 {fields?.map(field => 
+                    (!field.isType || !isSimulated) &&
                     <FormFragment
                     key={field._id}
                     field={field}
@@ -54,7 +55,7 @@ function DataBlock({
                     isCalc={true} />
                 )}
 
-                {groups && groups.length !== 0 && 
+                {groups && groups.length > 0 && 
                 <div className="groups-block">
                     {reqGroups?.map(group => 
                         <GroupsList

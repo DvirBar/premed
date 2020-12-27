@@ -6,7 +6,8 @@ import { GroupsContext } from './GroupsContext'
 
 function GroupFields({ group, isStaged, removeStagedGroup, insertData }) {
     const {
-        getGroupVals
+        getGroupVals,
+        isSimulated
     } = useContext(GroupsContext)
 
     const groupVals = useSelector(getGroupVals(group._id))

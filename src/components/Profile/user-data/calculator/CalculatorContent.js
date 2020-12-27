@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import useMissingArgs from '../useMissingArgs';
 import Loadbar from '../../../layout/Loadbar';
-import CalcsBlock from './CalcsBlock'
-import { copyToSimulate, simulateCalcs } from '../../../../redux/actions/userdata';
+import CalcsBlock from './CalcsBlock';
+import { copyToSimulate } from '../../../../redux/actions/userdata';
 import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
 import useSimulateExecCalcs from './useSimulateExecCalcs';
@@ -18,15 +17,10 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
         calcs
     } = useSelector(getInputsByArgs(chosenCalcs))
 
-    const unis = useSelector(getUnisByInputs(fields, groups, chosenCalcs))
-
-    /* Disable calcs that are also arguments to prevent 
-        calculation inconsistency */
-    const [disabledCalcs, setDisabledCalcs] = useState([])
-    useEffect(() => {
-        setDisabledCalcs(chosenCalcs.filter(calc => 
-            fields.find(field => field._id === calc._id)))
-    }, [chosenCalcs])
+    const unis = useSelector(getUnisByInputs(
+        fields, 
+        groups, 
+        chosenCalcs))
 
     const { 
         loading, 
@@ -72,12 +66,12 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
             fields={fields}
             groups={groups}
             calcs={calcs}
-            unis={unis}
-            changeStartSimulate={changeStartSimulate} />
+            unis={unis} />
             
             <CalcsBlock 
             calcs={chosenCalcs}
-            unis={unis} />
+            unis={unis}
+            changeStartSimulate={changeStartSimulate} />
         </div>
     )
 }

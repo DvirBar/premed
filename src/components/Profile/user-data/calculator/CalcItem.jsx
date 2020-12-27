@@ -1,18 +1,27 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { getFieldValSimulated } from '../../../../redux/selectors/userdata'
-import FormInputBorder from '../../../common/FormInputBorder'
 
-function CalcItem({ calc }) {
+function CalcItem({ calc, uniColor }) {
     const valueObj = useSelector(getFieldValSimulated(calc._id))
-    console.log(valueObj);
+    const backgroundStyle = {
+        backgroundColor: uniColor + '30'
+    }
+
     return (
-        <FormInputBorder
-        label={calc.name}
-        type='text'
-        name={calc._id}
-        value={valueObj && (valueObj.value || valueObj.suggestValue)}
-        disabled={true} />
+        <div 
+        style={backgroundStyle}
+        className="calculator-calc-item">
+            <p className="calc-name">
+                {calc.name}
+            </p>
+            <p 
+            className="calc-value">
+                {valueObj && 
+                (valueObj.value || 
+                valueObj.suggestValue)}
+            </p>
+        </div>
     )
 }
 

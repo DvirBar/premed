@@ -45,9 +45,21 @@ export const getInputsByArgs = (chosenCalcs) => createSelector(
             calc.args.find(arg => 
                 arg.type === 'field' && arg._id === field._id)))
 
-        const groupsArr = groups?.filter(group => chosenCalcs.find(calc =>
-            calc.args.find(arg => !group.parent ||
-                arg.type === 'group' && arg._id === group._id)))
+        let groupsArr = groups?.filter(group => chosenCalcs.find(calc =>
+            calc.args.find(arg =>
+                 arg.type === 'group' && arg._id === group._id)))
+
+        let parents = groups.filter(group => {
+            for(let groupItem of groupsArr) {
+                if(groupItem.parent === group._id)
+                    return true
+
+                return false
+            }
+        })
+
+        groupsArr.push.apply(groupsArr, parents)
+
 
         const calcsArr = calcs?.filter(calc => chosenCalcs.find(chosenCalc =>
             chosenCalc.args.find(arg => 

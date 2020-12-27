@@ -43,12 +43,12 @@ const useSimulatedData = () => {
         removeStagedGroup(data.groupId)
     }
 
-    const [stagedGroupsList, setStagedGroupsList] = useState([])
-
     const removeStagedGroup = groupId => {
         setStagedGroupsList(stagedGroupsList.filter(stagedGroup =>
             stagedGroup._id !== groupId))
     }
+
+    const [stagedGroupsList, setStagedGroupsList] = useState([])
 
     const addStagedGroup = group => {
         setStagedGroupsList([...stagedGroupsList, group])
