@@ -202,6 +202,7 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
     } = req.body
     
     let resultArray = []
+    let stagedValues = values
 
     for(let calcLevel of calcsToExec) {
         for(let storCalcId of calcLevel) {
@@ -213,7 +214,7 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
             try {
                 calcObj = await executeCalc(
                     storCalc, 
-                    values,  
+                    stagedValues,  
                     customGroups)
             }
     
@@ -226,6 +227,14 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
                 isCalc: true,
                 field: storCalcId
             }
+
+            stagedValues = stagedValues.map(val => {
+                if(val.field === resultObj.field) {
+                    val.value = resultObj.value
+                }
+
+                return val
+            })
 
             resultArray.push(resultObj)
         }

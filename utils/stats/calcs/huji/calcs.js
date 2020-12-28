@@ -8,6 +8,8 @@ export const hujiFinal = params => {
         'psycho': psycho,
         'mor': mor
     } = params
+
+    console.log(bagrut);
     
     // Standard bagrut grade
     const B = 3.9630 * (bagrut/10) - 20.0621;
