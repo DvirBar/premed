@@ -53,6 +53,8 @@
     }
 
     .calcs-list {
+        display: flex;
+        column-gap: 5rem;
         overflow-y: auto;
         flex-wrap: wrap;
         height: 10rem;
