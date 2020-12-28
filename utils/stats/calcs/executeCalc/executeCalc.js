@@ -52,9 +52,9 @@ const executeCalc = async(storCalc, values, customGroups) => {
     }
 
     catch(err) {
-        return
+        console.log(err);
+        throw err
     }
-    
 }
 
 export default executeCalc;

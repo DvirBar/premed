@@ -218,7 +218,6 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
             }
     
             catch(err) {
-                console.log(err);
                 return res.status(err.status || 500).send(err.msg)
             }
 

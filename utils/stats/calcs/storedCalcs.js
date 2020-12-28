@@ -48,6 +48,57 @@ const storedCalcs = [
                 max: '127'
             }
         ]
+    },
+    {
+        _id: "bagrutTau",
+        name: "ממוצע בגרות",
+        func: tauCalcs.tauBargut,
+        args: bagrut,
+        uni: 'tau',
+        paths: ['six-year'],
+        isSuggestion: true,
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '40',
+                max: '115'
+            }
+        ]
+    },
+    {
+        _id: "bagrutTech",
+        name: "ממוצע בגרות",
+        func: techCalcs.techBagrut,
+        args: bagrut,
+        uni: 'tech',
+        paths: ['six-year'],
+        isSuggestion: true,
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '60',
+                max: '119'
+            }
+        ]
+    }, 
+    {
+        _id: "bagrutBgu",
+        name: "ממוצע בגרות",
+        func: bguCalcs.bguBargut,
+        args: bagrut,
+        uni: 'bgu',
+        paths: ['six-year'],
+        isSuggestion: true,
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '50',
+                max: '130'
+            }
+        ]
     }
 ]
 

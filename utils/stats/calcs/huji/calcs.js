@@ -1,9 +1,8 @@
-import { getBestAverage } from "../methods";
+import getBestAverage from "../executeCalc/getBestAverage";
 import getBonus from "./bonusMap";
-import groups from "../../groups/dataGroups";
-import getGroupConfig from "../../groups/getGroupConfig";
+import getBaseAvg from "../executeCalc/getBaseAvg";
 
-export const hujiFinal = (params) => {
+export const hujiFinal = params => {
     const {
         'bagrutHuji': bagrut,
         'psycho': psycho,
@@ -33,58 +32,11 @@ export const hujiFinal = (params) => {
 }
 
 export const hujiBargut = (params, values) => {
-    let subjSum = 0;
-    let unitsCounter = 0;
-    let notRequired = {}
+    const { 
+        baseAvg,
+        notRequired
+    } = getBaseAvg(params, values, 'huji', getBonus)
     
-    /* Get average of required subjects and store 
-        not required in an array */
-    for(let subj in params) {
-        const group = groups.find(thisGroup => thisGroup._id === subj)
-        const config = getGroupConfig(values, group)
-        let hujiGroups = config.huji || []
-
-        if(hujiGroups?.includes('isRequired')) {
-            const {
-                units,
-                grade
-            } = params[subj]
-
-            const subjObj = {
-                values: params[subj],
-                groups: hujiGroups
-            }
-
-            subjSum += (grade + getBonus(subj, subjObj)) * units
-            unitsCounter += units
-        }
-
-        else {
-            if(params[subj].multiVals) {
-                const paramsVals = params[subj].values
-                for(let param in paramsVals) {
-                    notRequired[param] = {
-                        values: paramsVals[param],
-                        groups: hujiGroups
-                    } 
-                }
-            }
-
-            else {
-                notRequired[subj] = {
-                    values: params[subj],
-                    groups: hujiGroups
-                }
-            }
-        }
-    }
-
-    // Get average of required subjects
-    let baseAvg = {
-        grade: subjSum / unitsCounter,
-        units: unitsCounter
-    }
-
     let result = getBestAverage(baseAvg, notRequired, 127, 20, getBonus)
 
     result = {

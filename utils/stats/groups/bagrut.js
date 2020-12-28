@@ -87,7 +87,7 @@ export const bagrut = [
             minUnits: 3,
             huji: ['isRequired'],
             tech: ['isRequired'],
-            tau: ['isReuired'],
+            tau: ['isRequired'],
             bgu: ['isRequired']
         },
         fields: bagrutGroupArgs
@@ -98,7 +98,7 @@ export const bagrut = [
         config: {
             minUnits: 4,
             huji: ['isRequired', 'midBonus'],
-            tech: ['isRequired', 'midbonus'],
+            tech: ['isRequired', 'midBonus'],
             tau: ['isRequired'],
             bgu: ['isRequired']
         },
