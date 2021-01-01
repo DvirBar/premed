@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DeclineCalc({ accepted}) {
+function DeclineCalc({ accepted }) {
     return (
         <div className={`calc-button decline 
         ${accepted ? 'accepted' : ''}`}>

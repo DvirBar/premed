@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect'
-import { getFieldsByArgs } from './datafields'
 
 export const statsInputsSelector = state => state.statsinputs
 
@@ -36,7 +35,7 @@ export const getGroupById = groupId => createSelector(
     groups => groups.find(group => group._id === groupId)
 )
 
-export const getInputsByArgs = (chosenCalcs) => createSelector(
+export const getInputsByArgs = chosenCalcs => createSelector(
     state => state.statsinputs.fields,
     state => state.statsinputs.groups,
     state => state.statsinputs.calcs,

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormInputBorder from '../../common/FormInputBorder';
 import Dropdown from '../../common/Dropdown';
@@ -8,6 +8,7 @@ import validateForm from '../../../forms/userDataValidation';
 import { selTableSelector } from '../../../redux/selectors/userdata';
 import ToggleSwitch from '../../common/ToggleSwitch';
 import { GroupsContext } from './data-block/GroupsContext';
+import DatePicker from '../../common/DatePicker';
 
 
 function MatchFormFragment({ 
@@ -144,7 +145,17 @@ function MatchFormFragment({
                         onChange={changeData}
                         value={defValue}
                         className="indent" />
-                   </div>               
+                   </div>  
+                   
+        case 'dateSelector':
+            return <div>
+                        <DatePicker
+                        label={name}
+                        name={_id}
+                        value={new Date(defValue)}
+                        onChange={changeData} />
+                </div>
+
         default:
             return <Fragment></Fragment>
     }

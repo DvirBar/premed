@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import CalcItem from './CalcItem';
+import { useSelector } from 'react-redux';
+import { getUnisByCalcs } from '../../../../redux/selectors/unis';
 
-export default function CalcsBlock({ calcs, unis, changeStartSimulate }) {
+export default function CalcsBlock({ calcs, changeStartSimulate }) {
     const [display, setDisplay] = useState(true)
 
+    const unis = useSelector(getUnisByCalcs(calcs))
 
     return (
         <Fragment>

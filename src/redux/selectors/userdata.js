@@ -78,7 +78,7 @@ export const getRealErrorByCalc = calcId => createSelector(
 )
 
 export const getSimErrorByCalc = calcId => createSelector(
-    state => state.userdata.simuldatedData.errors,
+    state => state.userdata.simulatedData.errors,
     errors => getErrorByCalc(errors, calcId)
 )
 

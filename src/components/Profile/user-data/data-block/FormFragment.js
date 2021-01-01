@@ -6,7 +6,8 @@ import { GroupsContext } from './GroupsContext'
 
 function FormFragment({ field, isCalc, group }) {
     const {
-        getFieldVal
+        getFieldVal,
+        isSimulated
     } = useContext(GroupsContext)
 
     const dataVal = useSelector(
@@ -23,7 +24,7 @@ function FormFragment({ field, isCalc, group }) {
             disabled={isCalc && field.isSuggetion}
             cusGroupParent={group?.cusGroupParent} />
 
-            {isCalc &&
+            {isCalc && !isSimulated &&
                 <CalcBlock
                 calc={field}
                 value={dataVal?.suggestValue}

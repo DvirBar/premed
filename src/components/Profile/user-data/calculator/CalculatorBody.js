@@ -38,10 +38,10 @@ function CalculatorBody({ display, toggleModal }) {
             :   
             <GroupsProvider isSimulated={true}>
                 <CalculatorContent
+                display={display}
                 chosenCalcs={chosenCalcs}
                 togglePickCalcs={togglePickCalcs} />
             </GroupsProvider>
-                
             }
         </Modal>
     )

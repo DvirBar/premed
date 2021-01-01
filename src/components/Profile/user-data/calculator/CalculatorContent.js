@@ -7,20 +7,14 @@ import { copyToSimulate } from '../../../../redux/actions/userdata';
 import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
 import useSimulateExecCalcs from './useSimulateExecCalcs';
-import { getUnisByInputs } from '../../../../redux/selectors/unis';
 import useDataValidation from '../data-block/useDataValidation';
 
-function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
+function CalculatorContent({ chosenCalcs, togglePickCalcs, display }) {
     const {
         fields,
         groups,
         calcs
     } = useSelector(getInputsByArgs(chosenCalcs))
-
-    const unis = useSelector(getUnisByInputs(
-        fields, 
-        groups, 
-        chosenCalcs))
 
     const { 
         loading, 
@@ -65,13 +59,13 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs }) {
             <ArgsBlock
             fields={fields}
             groups={groups}
-            calcs={calcs}
-            unis={unis} />
+            calcs={calcs} />
             
-            <CalcsBlock 
-            calcs={chosenCalcs}
-            unis={unis}
-            changeStartSimulate={changeStartSimulate} />
+            {display &&
+                <CalcsBlock 
+                calcs={chosenCalcs}
+                changeStartSimulate={changeStartSimulate} />
+            }
         </div>
     )
 }

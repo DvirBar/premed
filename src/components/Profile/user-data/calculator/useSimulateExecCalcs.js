@@ -6,8 +6,8 @@ import { GroupsContext } from '../data-block/GroupsContext';
 import { getNextCalcs } from '../useExecCalc';
 
 const isFirstCalc = (calc, validErrors) => {
-    return !validErrors.find(item => item.calc === calc._id) &&
-           !calc.args.find(arg => arg.type === 'calc')
+    return (!validErrors.find(item => item.calc === calc._id) &&
+           !calc.args.find(arg => arg.type === 'calc'))
 }
 
 /*  Check that one of the args of the calc is in chosen calcs. 
@@ -41,8 +41,8 @@ function useSimulateExecCalcs(
             let nextCalcs = []
 
             for(let calc of chosenCalcs) {
-                if(isFirstCalc(calc, validErrors) && 
-                   !DepOnChosenCalc(calc, chosenCalcs)) 
+                if((isFirstCalc(calc, validErrors) ||
+                   !DepOnChosenCalc(calc, chosenCalcs))) 
                     firstCalcs.push(calc._id)
 
                 else 

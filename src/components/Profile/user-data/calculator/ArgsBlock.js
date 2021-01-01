@@ -1,16 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { getUnisByInputs } from '../../../../redux/selectors/unis'
 import DataBlock from '../DataBlock'
+import UniItem from './UniItem'
 
 function ArgsBlock({ 
     fields, 
     groups, 
-    calcs, 
-    unis }) {
+    calcs }) {
 
     const getChildren = group => {
         return groups.filter(thisGroup => 
             thisGroup.parent === group._id)
     }
+
+    const unis = useSelector(getUnisByInputs(
+        fields,
+        groups,
+        calcs
+    ))
    
     return (
         <div className="args-fields-block">
@@ -36,13 +44,15 @@ function ArgsBlock({
                 }
             </div>
 
-            {unis.map(uni => 
-                <div 
+            {/* {unis.map(uni => 
+                <DataBlock
                 key={uni._id}
-                className="fields-list">
-                    
-                </div>
-            )}
+                title={uni.name}
+                fields={fields.filter(field => 
+                    field.uni === uni._id)}
+                calcs={calcs.filter(calc => 
+                    calc.uni === uni._id)} />            
+            )} */}
             
         </div>
     )

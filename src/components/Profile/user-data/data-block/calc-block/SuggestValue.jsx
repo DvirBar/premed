@@ -21,9 +21,8 @@ function SuggestValue({ calc, value }) {
 
     if(calc.credit) {
         const credit = 
-        `<p>תודה ל
-        <a href='${calc.credit.url}'>${calc.credit.name}</a>
-        על ביצוע הערכת השקלול
+        `<p>תודה ל<a href='${calc.credit.url}'>${calc.credit.name}</a>
+        על ביצוע הערכת השקלול.
         </p>`
 
         disclaimerEstimated = disclaimerEstTxt + credit

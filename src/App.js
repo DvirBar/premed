@@ -5,25 +5,20 @@ import Router from './components/routing/Router';
 import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
-import { getSteps } from './redux/actions/steps';
-import { getPages } from './redux/actions/pages';
-import { getAnc } from './redux/actions/anouncements';
-import { getQuestGroups } from './redux/actions/questgroups';
 import { getTables } from './redux/actions/datatables';
 import moment from 'moment';
 import 'moment/locale/he';
 import Footer from './components/layout/Footer';
 import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
-import { getBaseData, getStatsInputs } from './redux/actions/basedata';
+import { getBaseData } from './redux/actions/basedata';
 
-axios.defaults.baseURL = 'http://10.0.0.28:5000';
+axios.defaults.baseURL = 'http://10.0.0.18:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 function App() {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth)
-
   
   useEffect(() => {
     dispatch(getBaseData());
@@ -45,6 +40,7 @@ function App() {
   const selPaths = useSelector(state => state.paths);
   const paths = selPaths.paths;
   const loadPaths = selPaths.loading;
+  console.log(document.referrer);
 
   if(!auth || auth.loading || loadPaths)
     return <Loadbar loadfull={true} />

@@ -1,6 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCustomGroups, getGroupsVals, getSelTypes } from '../../../redux/selectors/userdata';
+import React, { useContext } from 'react';
 import CustomGroup from './data-block/CustomGroup';
 import FormFragment from './data-block/FormFragment';
 import { GroupsContext } from './data-block/GroupsContext';
