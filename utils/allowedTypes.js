@@ -15,6 +15,10 @@ export const staticDataTypes = {
         toggle: {
             name: "מתג",
             value: "toggle"
+        },
+        dateSelector: {
+            name: "בורר תאריכים",
+            value: "dateSelector"
         }
     },
     dataTypes: {

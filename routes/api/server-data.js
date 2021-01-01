@@ -3,10 +3,9 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 
 import internalData from '../../utils/internalData';
-import { fields } from '../../utils/stats/dataFields';
+import fields from '../../utils/stats/fields/dataFields';
 import groups from '../../utils/stats/groups/dataGroups';
 import storedCalcs from '../../utils/stats/calcs/storedCalcs';
-import { json } from 'express';
 
 // @route   GET api/serverdata/baseData
 // @desc    Get all paths

@@ -1,5 +1,10 @@
-import { staticDataTypes } from '../allowedTypes'
-import storedCalcs from './calcs/storedCalcs'
+import { staticDataTypes } from '../../allowedTypes'
+import taufields from './tau';
+import bgufields from './bgu';
+import hujifields from './huji';
+import techfields from './tech';
+import arielfields from './ariel';
+import biufields from './biu'
 
 const {
     fieldTypes,
@@ -7,7 +12,7 @@ const {
     validationTypes
 } = staticDataTypes
 
-export const fields = [
+const fields = [
     {
         name: 'פסיכומטרי',
         _id: 'psycho',
@@ -50,5 +55,13 @@ export const fields = [
                 max: '250'
             }
         ]
-    }
+    },
+    ...taufields,
+    ...bgufields,
+    ...hujifields,
+    ...techfields,
+    ...arielfields,
+    ...biufields
 ]
+
+export default fields

@@ -4,6 +4,19 @@ import getBaseAvg from '../executeCalc/getBaseAvg';
 import groups from '../../groups/dataGroups';
 import getGroupConfig from '../../groups/getGroupConfig';
 
+export const techInitial = params => {
+    const {
+        'bagrutTech': bagrut,
+        'psycho': psycho,
+    } = params
+
+    const techCog = 0.5 * bagrut + 0.075 * psycho - 19
+
+    return {
+        value: Math.floor(techCog * 100) / 100
+    }
+}
+
 export const techBagrut = (params, values) => {
     let hasSci = false
     let hasTech = false

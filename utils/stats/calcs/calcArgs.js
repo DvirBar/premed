@@ -15,7 +15,19 @@ const args = {
     })),
     bagrutHuji: {
         _id: 'bagrutHuji',
-        type: 'calcs'
+        type: 'calc'
+    },
+    bagrutTau: {
+        _id: 'bagrutTau',
+        type: 'calc'
+    },
+    bagrutTech: {
+        _id: 'bagrutTech',
+        type: 'calc'
+    },
+    bagrutBgu: {
+        _id: 'bagrutBgu',
+        type: 'calc'
     }
 }
 

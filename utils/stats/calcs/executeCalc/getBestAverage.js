@@ -39,8 +39,6 @@ const getBestAverage = (
         minimum units requirement has been satisfied */
     const isMax = cumAvg >= maxGrade && units >= minUnit
 
-    console.log(cumulAvg.grade);
-
     return {
         value: isMax ? maxGrade : cumulAvg.grade,
         payload: {

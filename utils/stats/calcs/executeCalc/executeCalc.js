@@ -48,7 +48,10 @@ const executeCalc = async(storCalc, values, customGroups) => {
 
     // Execute calculation
     try {
-        return storCalc.func(params, values);
+        return Promise.resolve(storCalc.func(params, values))
+        .then(result => {
+            return result
+        })
     }
 
     catch(err) {

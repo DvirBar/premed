@@ -2,15 +2,7 @@ import getBestAverage from "../executeCalc/getBestAverage";
 import getBonus from "./bonusMap";
 import getBaseAvg from "../executeCalc/getBaseAvg";
 
-export const hujiFinal = params => {
-    const {
-        'bagrutHuji': bagrut,
-        'psycho': psycho,
-        'mor': mor
-    } = params
-
-    console.log(bagrut);
-    
+const hujiCog = (bagrut, psycho) => {
     // Standard bagrut grade
     const B = 3.9630 * (bagrut/10) - 20.0621;
 
@@ -20,6 +12,31 @@ export const hujiFinal = params => {
     // Calculated cognitive grade for med school
     const ratioCog = 0.3 * B + 0.7 * P;
     const stdCog = 1.2235 * ratioCog - 4.4598;
+
+    return stdCog
+}
+
+export const hujiInitial = params => {
+    const {
+        'bagrutHuji': bagrut,
+        'psycho': psycho,
+    } = params
+
+    const stdCog = hujiCog(bagrut, psycho)
+     
+    return {
+        value: stdCog.toFixed(3)
+    }
+}
+
+export const hujiFinal = params => {
+    const {
+        'bagrutHuji': bagrut,
+        'psycho': psycho,
+        'mor': mor
+    } = params
+    
+    const stdCog = hujiCog(bagrut, psycho)
 
     // Standard mor grade
     const M = 0.0247 * mor + 21.0837

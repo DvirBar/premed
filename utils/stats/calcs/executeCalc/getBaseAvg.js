@@ -73,10 +73,6 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
         units: unitsCounter
     }
 
-    // console.log(uni);
-    // console.log(baseAvg);
-    // console.log(notRequired);
-
     return {
         baseAvg,
         notRequired
