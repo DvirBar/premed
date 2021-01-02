@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ChooseCalcs from './ChooseCalcs';
+import ChooseCalcs from './choose-calcs/ChooseCalcs';
 import Modal from '../../../layout/Modal';
 import CalculatorContent from './CalculatorContent';
 import GroupsProvider from '../data-block/GroupsContext';
@@ -25,6 +25,14 @@ function CalculatorBody({ display, toggleModal }) {
             setChosenCalcs([...chosenCalcs, calc]) 
     }
 
+    const clearCalcs = () => {
+        setChosenCalcs([])
+    }
+
+    const chooseAllCalcs = calcs => {
+        setChosenCalcs(calcs)
+    }
+
     return (
         <Modal
         display={display}
@@ -33,6 +41,8 @@ function CalculatorBody({ display, toggleModal }) {
             ?   <ChooseCalcs 
                 chosenCalcs={chosenCalcs}
                 chooseCalc={chooseCalc}
+                clearCalcs={clearCalcs}
+                chooseAllCalcs={chooseAllCalcs}
                 togglePickCalcs={togglePickCalcs} />
             
             :   

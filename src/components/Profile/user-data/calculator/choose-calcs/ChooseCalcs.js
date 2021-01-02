@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { getUnisByCalcs } from '../../../../redux/selectors/unis';
-import ChooseCalcsOption from './ChooseCalcsOption';
-import { getAllStoredCalcs } from '../../../../redux/selectors/statsinputs';
+import { getUnisByCalcs } from '../../../../../redux/selectors/unis';
+import { getAllStoredCalcs } from '../../../../../redux/selectors/statsinputs';
+import UniCalcsItem from './UniCalcsItem';
+import ChooseAllCalcs from './ChooseAllCalcs';
 
-function ChooseCalcs({ chosenCalcs, chooseCalc, togglePickCalcs }) {
+function ChooseCalcs({ 
+    chosenCalcs, 
+    chooseCalc, 
+    clearCalcs,
+    chooseAllCalcs,
+    togglePickCalcs }) {
 
     const calcs = useSelector(getAllStoredCalcs)
 
@@ -31,24 +37,23 @@ function ChooseCalcs({ chosenCalcs, chooseCalc, togglePickCalcs }) {
             <div className="choose-calcs-instructions">
                 בחרו את השקלולים שברצונכם לחשב:
             </div>
+
+            {calcs.length > 0 &&
+                <ChooseAllCalcs
+                chosenCalcs={chosenCalcs}
+                clearCalcs={clearCalcs}
+                chooseAllCalcs={chooseAllCalcs}
+                calcs={calcs} />                
+            }
+
             <div className="choose-calcs-list">
                 {calcUnis.map(uni => 
-                    <div
-                    key={uni._id} 
-                    className="uni-calcs-item">
-                        <span className="uni-name">
-                            {uni.name}
-                        </span>
-                        <div className="calcs-options-list">
-                            {calcs.map(calc => 
-                            calc.uni === uni._id &&
-                                <ChooseCalcsOption 
-                                key={calc._id}
-                                chooseCalc={chooseCalc}
-                                chosenCalcs={chosenCalcs}
-                                calc={calc} />)}
-                        </div>
-                    </div>
+                    <UniCalcsItem
+                    key={uni._id}
+                    uni={uni}
+                    calcs={calcs}
+                    chooseCalc={chooseCalc}
+                    chosenCalcs={chosenCalcs} />
                 )}
                
             </div>

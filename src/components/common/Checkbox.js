@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-function Checkbox({ name, label, value, onChange, checked, isMulti }) {
+function Checkbox({ 
+    name, 
+    label, 
+    value, 
+    onChange, 
+    checked, 
+    isMulti }) {
     const check = () => {
         if(name) {
             let dataObj = {}

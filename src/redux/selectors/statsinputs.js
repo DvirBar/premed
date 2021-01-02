@@ -59,11 +59,12 @@ export const getInputsByArgs = chosenCalcs => createSelector(
 
         groupsArr.push.apply(groupsArr, parents)
 
-
-        const calcsArr = calcs?.filter(calc => chosenCalcs.find(chosenCalc =>
+        const calcsArr = calcs?.filter(calc => 
+            !chosenCalcs.find(chosenCalc => 
+                chosenCalc._id === calc._id) &&
+            chosenCalcs.find(chosenCalc =>
             chosenCalc.args.find(arg => 
-                arg.type === 'calc' && arg._id === calc._id
-                && chosenCalc._id !== calc._id)))
+                arg.type === 'calc' && arg._id === calc._id)))
 
         
         return {

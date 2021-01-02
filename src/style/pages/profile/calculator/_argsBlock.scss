@@ -1,5 +1,9 @@
 .args-fields-block {
+    display:flex;
+    flex-direction: column;
+    row-gap: 2rem;
     padding: 2rem 0;
+    margin-bottom: 2rem;
 
     .groups-block {
         row-gap: 1rem;
