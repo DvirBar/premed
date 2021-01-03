@@ -92,12 +92,18 @@
         color: $main-color;
     }
 
-    .data-block-content {
-        padding: 2rem;
+    .data-block-fragment {
         display: flex;
         column-gap: 3rem;
         row-gap: 2rem;
         flex-wrap: wrap;
+    }
+
+    .data-block-content {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
     }
 }
 

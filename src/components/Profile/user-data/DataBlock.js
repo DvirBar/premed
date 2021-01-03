@@ -37,22 +37,26 @@ function DataBlock({
                 </div>
             }
             <div className="data-block-content">
-                {fields?.map(field => 
-                    (!field.isType || !isSimulated) &&
-                    <FormFragment
-                    key={field._id}
-                    field={field}
-                    group={group}
-                    isCalc={false} />
-                )}
-
-                {calcs?.map(calc =>
-                    <FormFragment
-                    key={calc._id}
-                    field={calc}
-                    isCalc={true} />
-                )}
-
+                <div className="data-block-fragment">
+                    {calcs?.map(calc =>
+                        <FormFragment
+                        key={calc._id}
+                        field={calc}
+                        isCalc={true} />
+                    )}
+                </div>
+                
+                <div className="data-block-fragment">
+                    {fields?.map(field => 
+                        (!field.isType || !isSimulated) &&
+                        <FormFragment
+                        key={field._id}
+                        field={field}
+                        group={group}
+                        isCalc={false} />
+                    )}
+                </div>
+                
                 {groups && groups.length > 0 && 
                 <div className="groups-block">
                     {reqGroups?.map(group => 

@@ -17,6 +17,21 @@ export const getFieldsAndCalcs = state => {
     ]
 }
 
+export const getInputsByUniAndPath = (uniId, pathId) => createSelector(
+    state => state.statsinputs,
+    inputs => {
+        return {
+            ...inputs,
+            fields: inputs.fields.filter(field => 
+                field.uni === uniId && (!pathId || field.paths.includes(pathId))),
+            groups: inputs.groups.filter(group => 
+                group.uni === uniId && (!pathId || group.paths.includes(pathId))),
+            calcs: inputs.calcs.filter(calc => 
+                calc.uni === uniId && (!pathId || calc.paths.includes(pathId)))
+        }
+    }
+)
+
 export const getInputsByUni = uniId => createSelector(
     state => state.statsinputs,
     inputs => {

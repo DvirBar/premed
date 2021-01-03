@@ -48,15 +48,18 @@ const Dropdown = ({ options, defaultOption, name, title,
         className="dropdown" 
         ref={ref}
         style={width ? widthStyle : {}}>
-            <p 
-            className="dropdown-main"
+            <fieldset
+            className={`dropdown-main ${display ? 'focus' : ''}`}
             onClick={() => toggleDrop()}>
-                <span className="dropdown-top">{title}</span>
-                <span className="dropdown-toggler">
-                    <span className={display ? "arrow arrow-down" : "arrow"}></span>
-                </span>
-                <span className="dropdown-selected">{selected?.name || ''}</span>
-            </p>
+                <legend className="dropdown-title">{title}</legend>
+                <p className="dropdown-selected">
+                    <span>{selected?.name || ''}</span>
+                    <span className="material-icons">
+                        expand_more
+                    </span>
+                </p>
+                
+            </fieldset>
             <ul 
             style={display ? paddingSelect : defaultStyle}
             className="dropdown-select" 
@@ -67,8 +70,9 @@ const Dropdown = ({ options, defaultOption, name, title,
                 onClick={() => selectData(option)}
                 className={option.forbidden && "forbidden-option"}
                 id={selected && option.value === selected.value ? "selected" : ""}>
-                    <span>{option.name}</span>
-                    <i className="material-icons">done</i>
+                    <div className="option-container">
+                        <span>{option.name}</span>
+                    </div>
                 </li>
                 )}
             </ul>
