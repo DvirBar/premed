@@ -1,13 +1,15 @@
 import {
     STATS_INPUTS_LOADING,
-    STATS_INPUTS_SUCCESS
+    STATS_INPUTS_SUCCESS,
+    GET_TABLE_SETCIONS
 } from '../actions/types';
 
 const initialState = {
     loading: false,
     fields: [],
     groups: [],
-    calcs: []
+    calcs: [],
+    tableSections: []
 }
 
 export default function(state = initialState, action) {
@@ -25,6 +27,13 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 ...payload
+            }
+
+        case GET_TABLE_SETCIONS:
+            return {
+                ...state,
+                loading: false,
+                tableSections: payload
             }
 
         default:

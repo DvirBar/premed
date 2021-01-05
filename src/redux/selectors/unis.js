@@ -24,7 +24,7 @@ export const getUnisByInputs = (fields, groups, calcs) => createSelector(
 export const getUnisByPath = pathId => createSelector(
         state => state.unis.unis, 
         unis => unis.filter(uni => 
-            uni.paths.find(path => path._id === pathId)))
+            uni.paths.includes(pathId)))
 
 export const getUnisByPaths = pathIds => createSelector(
     state => state.unis.unis, 

@@ -1,24 +1,15 @@
 import React, { Fragment, useEffect } from 'react';
 import DataTable from './DataTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFieldsByPaths } from '../../redux/actions/datafields';
-import { getUnisByPaths } from '../../redux/actions/universities';
 import { getStoredCalcs } from '../../redux/actions/calculations';
 import { getUsersDataByPathTable } from '../../redux/actions/userdata';
-import { getFilteredSortedData } from '../../redux/reducers'
 import Loadbar from '../layout/Loadbar';
 import { getTableById } from '../../redux/selectors/datatables';
 
 function PathStats({ pathId, tableId }) {
-    const table = useSelector(state => getTableById(state, tableId))
+    const table = useSelector(getTableById(tableId))
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getFieldsByPaths(pathId))
-        dispatch(getUnisByPaths(pathId))
-        dispatch(getStoredCalcs())
-    }, [pathId])
 
     useEffect(() => {
         if(tableId) {
@@ -26,23 +17,8 @@ function PathStats({ pathId, tableId }) {
         }
     }, [pathId, tableId])
 
-    // Fields
-    const fieldsSelector = useSelector(state => state.datafields)
-    const loadFields = fieldsSelector.loading
-    const { fields } = fieldsSelector
-    
-    // Unis
-    const unisSelector = useSelector(state => state.unis)
-    const loadUnis = unisSelector.loading
-    const { unis } = unisSelector
-    
     // User data
-    const data = useSelector(state => getFilteredSortedData(state.userdata))
     const loadData = useSelector(state => state.userdata.loading)
-
-    if(loadFields || loadUnis) {
-        return <Loadbar />
-    }
     
     return (
         <Fragment>
@@ -58,9 +34,7 @@ function PathStats({ pathId, tableId }) {
             :  loadData
                 ? <Loadbar />
                 : <DataTable 
-                    fields={fields}
-                    unis={unis} 
-                    data={data} />
+                    pathId={pathId} />
             }
 
         </Fragment>

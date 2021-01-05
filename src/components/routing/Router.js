@@ -11,7 +11,7 @@ import Profile from '../profile/Profile';
 import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage';
-// import Stats from '../stats/Stats';
+import Stats from '../stats/Stats';
 import Questions from '../questions/Questions';
 import Drive from '../drive/Drive';
 
@@ -33,7 +33,7 @@ const Router = () => {
                 <ProtectedRoute path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route path="/steps" component={Steps} />
-                {/* <ProtectedRoute path="/stats" component={Stats} /> */}
+                <ProtectedRoute path="/stats" component={Stats} />
                 <Route path="/qna" component={Questions} />
                 <ProtectedRoute path="/drive" component={Drive} />
                 <Route component={NoMatchPage} />  

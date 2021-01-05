@@ -2,6 +2,7 @@ import {
     BASE_DATA_SUCCESS,
     STATS_INPUTS_LOADING,
     STATS_INPUTS_SUCCESS,
+    GET_TABLE_SETCIONS
 } from './types';
 import axios from 'axios';
 import { getError } from './messages';
@@ -38,5 +39,16 @@ export const getStatsInputs = pathIds => dispatch => {
          })
          .catch(err => {
             dispatch(getError(err))
+         })
+}
+
+export const getTableSections = () => dispatch => {
+    axios.get('api/serverdata/tableSections')
+         .then(res => dispatch({
+             type: GET_TABLE_SETCIONS,
+             payload: res.data
+         }))
+         .catch(err => {
+             dispatch(getError(err))
          })
 }

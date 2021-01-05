@@ -15,7 +15,11 @@ function ValidatePath() {
         dispatch(getOneUserData());
     }, [])
 
-    const { data, loading, softLoading, selTable } = useSelector(state => 
+    const { 
+        data, 
+        loading, 
+        softLoading, 
+        selTable } = useSelector(state => 
         state.userdata);
 
 

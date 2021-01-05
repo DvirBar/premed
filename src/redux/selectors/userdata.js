@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+export const userdataSelector = state => state.userdata
+
 export const selTableSelector = state => state.userdata.selTable
 
 export const getDataVals = state => 
@@ -88,3 +90,26 @@ export const getRealValidErrors = state =>
 export const getSimValidErrors = state => 
     state.userdata.simulatedData.errors
 
+
+export const orderingSelector = createSelector(
+    userdataSelector,
+    userdata => userdata.ordering
+)
+
+export const getFieldFilters = fieldId => createSelector(
+    orderingSelector,
+    ordering => ordering.filters.find(filter =>
+        filter.field.id === fieldId)
+)
+
+export const getSort = (fieldId) => createSelector(
+    orderingSelector,
+    ordering => {
+        const sort = ordering.sort
+
+        if(sort.fieldId === fieldId)
+            return sort.type
+
+        return ''
+    } 
+)

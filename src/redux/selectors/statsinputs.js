@@ -1,6 +1,15 @@
 import { createSelector } from 'reselect'
 
 export const statsInputsSelector = state => state.statsinputs
+export const fieldsSelector = createSelector(
+    statsInputsSelector,
+    inputs => inputs.fields
+)
+
+export const calcsSelector = createSelector(
+    statsInputsSelector,
+    inputs => inputs.calcs
+)
 
 export const getAllStoredCalcs = state => {
     return state.statsinputs.calcs
@@ -16,6 +25,19 @@ export const getFieldsAndCalcs = state => {
         ...state.statsinputs.calcs
     ]
 }
+
+export const getFieldsAndCalcsByPath = pathId => createSelector(
+    fieldsSelector,
+    calcsSelector,
+    (fields, calcs) => {
+        return [
+            ...fields.filter(field => 
+                !field.paths || field.paths.includes(pathId)),
+            ...calcs.filter(calc => 
+                !calc.paths || calc.paths.includes(pathId))
+        ]
+    }
+)
 
 export const getInputsByUniAndPath = (uniId, pathId) => createSelector(
     state => state.statsinputs,
@@ -94,4 +116,9 @@ export const getCalcWithGroupArgs = createSelector(
     state => state.statsinputs.calcs,
     calcs => calcs.filter(calc => calc.args.find(arg => 
         arg.type === 'group'))
+)
+
+export const getTableSectionsByPath = pathId => createSelector(
+    statsInputsSelector,
+    inputs => inputs.tableSections[pathId]
 )

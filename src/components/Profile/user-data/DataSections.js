@@ -10,7 +10,8 @@ import { getDataVals } from '../../../redux/selectors/userdata';
 import useDataValidation from './data-block/useDataValidation';
 
 function DataSections({ paths }) {
-    const unis = useSelector(getUnisByPaths(paths.map(path => path._id)))
+    const unis = useSelector(getUnisByPaths(paths.map(path => 
+        path._id)))
 
     // Change section on navigation
     const [selUni, setSelUni] = useState()

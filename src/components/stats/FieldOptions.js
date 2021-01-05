@@ -1,138 +1,19 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { filterData, clearFilters, sortData } from '../../redux/actions/userdata';
 import Modal from '../layout/Modal';
 import Dropdown from '../common/Dropdown';
-import validateForm from '../../forms/userDataValidation';
 import BorderTextbox from '../common/BorderTextbox';
+import useDataOrdering from './data-table/field-options/useDataOrdering';
+import Filters from './data-table/field-options/filters/Filters';
+import SortFields from './data-table/field-options/SortFields';
 
-function FieldOptions({ field, ordering, display, toggleModal, title }) {
-    const dispatch = useDispatch();
+function FieldOptions({ 
+    display, 
+    toggleModal, 
+    title }) {
 
-    const [minVal, setMinVal] = useState('');
-    const [maxVal, setMaxVal] = useState('');
-    const [fieldOptions, setFieldOptions] = useState([]);
-    const [selOption, setSelOption] = useState('');
-    const [sort, setSort] = useState('');
-    const [error, setError] = useState({});
-
-    useEffect(() => {
-        if(field.fieldOptions) {
-            setFieldOptions(field.fieldOptions.map(option => ({
-                name: option,
-                value: option
-            })))
-        }
-    }, [field])
-
-    useEffect(() => {
-        let fieldFilter = ordering.filters.find(filter =>
-            filter.field.id === field._id)
-
-        setMinVal(fieldFilter?.min || '')
-        setMaxVal(fieldFilter?.max || '')
-        setSort(ordering.sort.fieldId === field._id 
-            ? ordering.sort.type : '')
-        setError({})
-    }, [field, ordering])
-
-
-    const handleChange = (event, callback) => {
-        const val = event.target.value
-        
-        if(!isNaN(val)) {
-            callback(val)
-        }
-    }
-
-
-
-    // Errors ////////////////////////////////////////////////
-    //// Check that the filter value is within min-max range
-    const validateFilterValue = (value, type) => {
-        if(value && value !== '') {
-            setError({
-                ...error,
-                [type]: validateForm(value, field.validators)
-            })
-        }
-        if(value === '')
-            setError({
-                ...error,
-                [type]: undefined
-            }) 
-    }
-
-    // Check that min is smaller than max
-    useEffect(() => {
-        if(!Object.values(error).find(val => val)) {
-            if(maxVal !== '' && maxVal !== '' && maxVal <= minVal) {
-                setError({ genError: 'הערך המינימלי חייב להיות קטן מהמקסימלי' })
-            }
-        }
-
-        else if(error.genError) {
-            setError({})
-        }
-    }, [minVal, maxVal])
-
-
-
-    const toggleSort = sortType => {
-        if(sort === sortType)
-            setSort(undefined)
-
-        else
-            setSort(sortType)
-    }
-
-    const selectOption = option => {
-        setSelOption(option.value)
-    }
-
-    const setDataOrdering = () => {
-        if(!Object.values(error).find(val => val)) {
-            if(maxVal !== '' || minVal !== '') {
-                const filter = {
-                    min: minVal,
-                    max: maxVal,
-                    field: {
-                        id: field._id,
-                        name: field.name,
-                        type: 'num'
-                    }
-                }
-    
-                dispatch(filterData(filter))
-            }
-    
-            if(selOption !== '') {
-                const filter = {
-                    text: selOption,
-                    field: {
-                        id: field.id,
-                        type: 'str'
-                    }
-                }
-    
-                dispatch(filterData(filter))
-            }
-    
-            if(sort) {
-                dispatch(sortData(sort, field._id))
-            }
-            
-            toggleModal(false)
-        }
-    }
-
-    const clearFilter = fieldId => {
-        dispatch(clearFilters(fieldId))
-    }
-
-    const clearAllFilters = () => {
-        dispatch(clearFilters())
-    }
+    const setDataOrdering = useDataOrdering(toggleModal)
 
     return (
         <Modal
@@ -140,84 +21,8 @@ function FieldOptions({ field, ordering, display, toggleModal, title }) {
         toggleModal={toggleModal}
         title={title}>
             <div className="field-options">
-                <div className="filters">
-                    <p className="filters-title">סינון:</p>
-                    <div className="filters-list">
-                        {ordering.filters.length === 0
-                        ? <p className="no-filters">
-                            אין מסננים
-                        </p>
-                        : ordering.filters.map(filter => 
-                            <span
-                            key={filter.field.id}
-                            className="filter-item">
-                                <span>{filter.field.name}</span>
-                                <i className="material-icons"
-                                onClick={() => clearFilter(filter.field.id)}>
-                                    close
-                                </i>
-                            </span>
-                            )
-                        }
-                    </div>
-                    <p 
-                    className="clear-all"
-                    onClick={() => clearAllFilters()}>איפוס סינון</p>
-                    
-                    <div className="filter-fields">
-                        {field.dataType === 'num' 
-                        ?   <Fragment>
-                                <BorderTextbox
-                                type="text" 
-                                value={minVal}
-                                onChange={e => handleChange(e, setMinVal)}
-                                onBlur={() => validateFilterValue(minVal, 'min')}
-                                placeholder="גדול מ-"
-                                error={error.min} />
-
-                                <BorderTextbox
-                                type="text" 
-                                value={maxVal}
-                                onChange={e => handleChange(e, setMaxVal)}
-                                onBlur={() => validateFilterValue(maxVal, 'max')}
-                                placeholder="קטן מ-"
-                                error={error.max} />
-
-                                <div className="general-error">
-                                    {error.genError}
-                                </div>
-                            </Fragment>
-                        : field.fieldOptions && field.fieldType === 'select' &&
-                            <Fragment>
-                                <Dropdown
-                                options={fieldOptions}
-                                title="סינון לפי"
-                                onChange={selectOption}
-                                placeholder="בחירה" />
-                            </Fragment>    
-                        }    
-                    </div>
-                </div>
-
-                <div className="sort">
-                    <p className="sort-title">מיון:</p>
-                    <div className="sort-fields">
-                        <span 
-                        className={sort === 'ascending'
-                        ? "sort-item selected"
-                        : "sort-item"}
-                        onClick={() => toggleSort('ascending')}>
-                            בסדר עולה
-                        </span>
-                        <span 
-                        className={sort === 'descending'
-                        ? "sort-item selected"
-                        : "sort-item"}
-                        onClick={() => toggleSort('descending')}>
-                            בסדר יורד
-                        </span>
-                    </div>
-                </div>
+                <Filters />
+                <SortFields />
                 <button onClick={() => setDataOrdering()}>החלה</button>
             </div>
         </Modal>

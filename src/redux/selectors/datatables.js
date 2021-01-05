@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect'; 
+
 export const getAllTables = state => {
     return state.datatables.tables
 }
@@ -8,9 +10,10 @@ export const getPriorityTable = state => {
     return tables.find(table => table.enabled) || tables[0]
 }
 
-export const getTableById = (state, tableId) => {
-    return state.datatables.tables.find(table => table._id === tableId)
-}
+export const getTableById = tableId => createSelector(
+    getAllTables,
+    tables => tables.find(table => table._id === tableId)
+)
 
 export const getThreshsByFieldAndType = (state, tableId, fieldId, type) => {
     const table = state.datatables.tables.find(table => 
