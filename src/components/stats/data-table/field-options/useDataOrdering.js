@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { filterData, sortData } from '../../../../redux/actions/userdata'
+import { isObjEmpty } from '../../../../utils/objects'
 import { FieldOptionsContext } from './FieldOptionsContext'
 
 function useDataOrdering(toggleModal) {
@@ -31,11 +32,12 @@ function useDataOrdering(toggleModal) {
                 dispatch(filterData(filter))
             }
     
-            if(selOption !== '') {
+            if(!isObjEmpty(selOption)) {
                 const filter = {
-                    text: selOption,
+                    text: selOption.value,
                     field: {
-                        id: field.id,
+                        id: field._id,
+                        name: field.name,
                         type: 'str'
                     }
                 }

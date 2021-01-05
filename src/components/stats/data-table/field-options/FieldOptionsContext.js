@@ -6,7 +6,7 @@ const FieldOptionsProvider = ({ children, field }) => {
     const [minVal, setMinVal] = useState('')
     const [maxVal, setMaxVal] = useState('')
     const [error, setError] = useState({});
-    const [selOption, setSelOption] = useState('');
+    const [selOption, setSelOption] = useState({});
     const [sort, setSort] = useState('');
 
     const changeMinVal = val => {
@@ -22,7 +22,7 @@ const FieldOptionsProvider = ({ children, field }) => {
     }
 
     const selectOption = option => {
-        setSelOption(option.value)
+        setSelOption(option)
     }
 
     const changeSort = val => {

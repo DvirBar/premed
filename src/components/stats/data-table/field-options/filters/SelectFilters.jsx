@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { getFieldFilters } from '../../../../../redux/selectors/userdata'
 import Dropdown from '../../../../common/Dropdown'
 import { FieldOptionsContext } from '../FieldOptionsContext'
 
@@ -8,7 +10,7 @@ function SelectFilters() {
         selectOption
     } = useContext(FieldOptionsContext)
 
-    const { fieldOptions } = field
+    const { fieldOptions } = field  
     
     return (
         <Dropdown

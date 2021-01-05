@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react'
 import validateForm from '../../../../../forms/userDataValidation'
+import { checkObjectKeys, isObjEmpty } from '../../../../../utils/objects'
 import BorderTextbox from '../../../../common/BorderTextbox'
 import { FieldOptionsContext } from '../FieldOptionsContext'
 
@@ -46,17 +47,22 @@ function NumFilters({ min, max }) {
             }) 
     }
 
-     // Check that min is smaller than max
-    useEffect(() => {
-        if(!Object.values(error).find(val => val)) {
-            if(maxVal !== '' && maxVal !== '' && maxVal <= minVal) {
+    const validateGenError = () => {
+        if(checkObjectKeys(error, ['genError']) || 
+           isObjEmpty(error) || error) {
+            if(maxVal !== '' && minVal !== '' && maxVal <= minVal) {
                 changeError({ genError: 'הערך המינימלי חייב להיות קטן מהמקסימלי' })
             }
-        }
 
-        else if(error.genError) {
-            changeError({})
+            else if(error.genError) {
+                changeError({})
+            }
         }
+    }
+
+     // Check that min is smaller than max
+    useEffect(() => {
+        validateGenError()
     }, [minVal, maxVal])
 
     return (

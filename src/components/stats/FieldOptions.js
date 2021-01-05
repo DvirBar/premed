@@ -1,18 +1,17 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { filterData, clearFilters, sortData } from '../../redux/actions/userdata';
+import React, { useContext } from 'react';
 import Modal from '../layout/Modal';
-import Dropdown from '../common/Dropdown';
-import BorderTextbox from '../common/BorderTextbox';
 import useDataOrdering from './data-table/field-options/useDataOrdering';
 import Filters from './data-table/field-options/filters/Filters';
 import SortFields from './data-table/field-options/SortFields';
+import { FieldOptionsContext } from './data-table/field-options/FieldOptionsContext';
 
 function FieldOptions({ 
     display, 
     toggleModal, 
     title }) {
 
+    const { field } = useContext(FieldOptionsContext)
+ 
     const setDataOrdering = useDataOrdering(toggleModal)
 
     return (
@@ -22,7 +21,9 @@ function FieldOptions({
         title={title}>
             <div className="field-options">
                 <Filters />
-                <SortFields />
+                {field.dataType?.value === 'num' &&
+                    <SortFields />
+                }
                 <button onClick={() => setDataOrdering()}>החלה</button>
             </div>
         </Modal>

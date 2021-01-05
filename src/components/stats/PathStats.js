@@ -19,6 +19,8 @@ function PathStats({ pathId, tableId }) {
 
     // User data
     const loadData = useSelector(state => state.userdata.loading)
+
+    const urlTableTitle = 'הצגת טבלת הנתונים ' + table?.name
     
     return (
         <Fragment>
@@ -28,7 +30,7 @@ function PathStats({ pathId, tableId }) {
                     href={table.url}
                     target="_blank"
                     className="external-table-link"
-                    rel="noopener noreferrer">הצגת טבלת הנתונים</a>
+                    rel="noopener noreferrer">{urlTableTitle}</a>
                 </p>
             
             :  loadData

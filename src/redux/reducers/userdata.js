@@ -483,7 +483,10 @@ export const filterData = (state, ordering) => {
             }
         }
 
-        if(filter.type === 'str') {
+        if(filter.field.type === 'str') {
+            // console.log("herer");
+            // console.log(fieldId);
+            // console.log(filter);
             filteredData = filteredData.filter(data => 
                 data.dataVals.find(val => 
                     val.field === fieldId && val.value === filter.text))
