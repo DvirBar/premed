@@ -26,8 +26,8 @@ export const getUnisByPath = pathId => {
 
 export const getInputsByUniAndPath = (uniId, pathId) => {
     const inputsArr = [
-        ...getByUniAndPath(fields, uniId, pathId),
-        ...getByUniAndPath(storedCalcs, uniId, pathId)
+        ...getByUniAndPath(storedCalcs, uniId, pathId),
+        ...getByUniAndPath(fields, uniId, pathId)
     ]
 
     return inputsArr
