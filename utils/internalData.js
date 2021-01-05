@@ -44,7 +44,7 @@ const internalData = {
             name: 'אריאל',
             paths: ['four-year'],
             _id: 'ariel',
-            color: '#531266'
+            color: '#059394'
         }
     ]
 }

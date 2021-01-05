@@ -2,11 +2,34 @@ import { staticDataTypes } from '../../allowedTypes';
 
 const {
     fieldTypes,
+    validationTypes,
     dataTypes,
 } = staticDataTypes
 
 
 const fields = [
+    {
+        name: 'סכם ראשוני',
+        _id: 'biuInitialFour',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        paths: ['four-year'],
+        uni: 'biu',
+        validators: [
+            validationTypes.isPosNum,
+        ]
+    },
+    {
+        name: 'סכם סופי',
+        _id: 'biuFinalFour',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        paths: ['four-year'],
+        uni: 'biu',
+        validators: [
+            validationTypes.isPosNum,
+        ]
+    },
     {
         name: 'סטטוס קבלה',
         _id: 'acceptStatusBui',

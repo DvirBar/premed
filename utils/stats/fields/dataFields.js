@@ -42,6 +42,16 @@ const fields = [
         ]
     },
     {
+        name: 'מכינה',
+        _id: 'prep',
+        paths: ['six-year'],
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        validators: [
+            validationTypes.isPosNum
+        ]
+    },
+    {
         name: 'אנליטי',
         _id: 'analytic',
         dataType: dataTypes.num,

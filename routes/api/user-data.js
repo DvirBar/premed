@@ -95,35 +95,27 @@ router.get('/:tableId/:pathId', auth, (req, res, next) => {
                  if(!table)
                     return res.status(DataTableNotExist.status)
                               .send(DataTableNotExist.msg)
-                
-                Path.findById(pathId)
-                .then(path => {
-                    if(!path)
-                        return res.status(PathNotExist.status)
-                                .send(PathNotExist.msg)
-                         
-                    UserData.find({ "tables.table": tableId })
-                    .select("-user")
-                    .then(dataItems => {
-                        // Filter tables that are not the table requested
-                        const tableUserData = dataItems.filter(item =>
-                            item.tables.find(curTable => 
-                                curTable.paths.includes(pathId) &&
-                                curTable.enabled && curTable.dataVals))
+                    
+                UserData.find({ "tables.table": tableId })
+                .select("-user")
+                .then(dataItems => {
+                    // Filter tables that are not the table requested
+                    const tableUserData = dataItems.filter(item =>
+                        item.tables.find(curTable => 
+                            curTable.paths.includes(pathId) &&
+                            curTable.enabled && curTable.dataVals))
 
-                        const tableData = tableUserData.map(item => ({
-                            _id: item._id,
-                            dataVals: item.tables.find(curTable => 
-                                curTable.table.equals(tableId)).dataVals
-                        }))
-                            
-                        return res.send(tableData)
-                    })
-                    .catch(next);                  
+                    const tableData = tableUserData.map(item => ({
+                        _id: item._id,
+                        dataVals: item.tables.find(curTable => 
+                            curTable.table.equals(tableId)).dataVals
+                    }))
+                        
+                    return res.send(tableData)
                 })
-                .catch(next);                      
-             })
-             .catch(next);
+                .catch(next);                  
+            })
+            .catch(next);                      
 })
  
 // @route   POST api/userdata
