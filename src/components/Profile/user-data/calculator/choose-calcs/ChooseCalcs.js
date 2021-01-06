@@ -38,12 +38,13 @@ function ChooseCalcs({
                 בחרו את השקלולים שברצונכם לחשב:
             </div>
 
-            {calcs.length > 0 &&
-                <ChooseAllCalcs
+            {calcs.length > 0
+            ?   <ChooseAllCalcs
                 chosenCalcs={chosenCalcs}
                 clearCalcs={clearCalcs}
                 chooseAllCalcs={chooseAllCalcs}
-                calcs={calcs} />                
+                calcs={calcs} /> 
+            :   <p>לא נמצאו שקלולים</p>               
             }
 
             <div className="choose-calcs-list">

@@ -1,38 +1,53 @@
 import React from 'react'
 import { 
-    matchPath, 
-    useLocation, 
+    generatePath,
     useRouteMatch } from 'react-router-dom'
 import PathsChoose from './PathsChoose'
 import SelectTable from './SelectTable'
 import TypeChoose from './TypeChoose'
 
-function Topbar({ tableId }) {
-    let { path } = useRouteMatch();
-    const location = useLocation();
-    
-    const match = matchPath(location.pathname, {
-        path: `${path}/:pathId/:tableId/:type`,
-        exact: true,
-        strict: false
-      });
-    let selPath, selTable
+function Topbar() {
+    const { path, params } = useRouteMatch()
+    const { tableId, pathId, type } = params
 
-    if(match && match.params) {
-        selPath = match.params.pathId
-        selTable = match.params.tableId 
+    const newPath = (pathId, tableId, type) => {
+        return generatePath(path, {
+            pathId,
+            tableId,
+            type
+        })
     }
+    
+    // const match = matchPath(location.pathname, {
+    //     path: `${path}/:pathId/:tableId/:type`,
+    //     exact: true,
+    //     strict: false
+    //   });
+    // let selPath, selTable
+
+    // if(match && match.params) {
+    //     selPath = match.params.pathId
+    //     selTable = match.params.tableId 
+    // }
 
 
     return (
         <div className="top-content-nav">
-            <PathsChoose tableId={tableId} />
+            <PathsChoose 
+            pathId={pathId}
+            tableId={tableId}
+            type={type}
+            newPath={newPath} />
             <SelectTable
-            pathId={selPath}
-            tableId={selTable} />
+            pathId={pathId}
+            tableId={tableId}
+            type={type}
+            newPath={newPath} />
             <TypeChoose 
-            pathId={selPath}
-            tableId={selTable} />
+            pathId={pathId}
+            tableId={tableId}
+            type={type}
+            newPath={newPath} />
         </div>
     )
 }

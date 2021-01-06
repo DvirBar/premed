@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTopics } from '../../redux/actions/topics';
 import TopLinks from '../layout/TopLinks';
@@ -7,6 +7,7 @@ import DriveRouter from './DriveRouter';
 
 function Drive() {
     let { path } = useRouteMatch();
+    const { pathname } = useLocation();
 
     const paths = useSelector(state => state.paths.paths)
 
@@ -21,20 +22,12 @@ function Drive() {
         dispatch(getTopics());
     }, [])
 
-    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
-    
-    const selectLink = url => {
-        setSelectedLink(url)
-    }
-
-
     return (
         <div className="drive-main">
             <div className="top-content-nav">
                 <TopLinks 
                 className="top-links-profile-nav"
-                selectLink={selectLink}
-                selected={selectedLink}>
+                selected={pathname}>
                     {linksList.map(link => 
                         <Link
                         className="profile-link" 

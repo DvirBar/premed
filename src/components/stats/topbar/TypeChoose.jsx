@@ -2,35 +2,29 @@ import React, { useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 import TopLinks from '../../layout/TopLinks'
 
-function TypeChoose({ pathId, tableId }) {
-    let { path } = useRouteMatch()
-
+function TypeChoose({ pathId, tableId, type, newPath }) {
     const linksList = [
         {
             name: 'טבלה',
-            url: `${path}/${pathId}/${tableId}/table`
+            url: newPath(pathId, tableId, 'table'),
+            id: 'table'
         },
         {
             name: 'סיפים',
-            url: `${path}/${pathId}/${tableId}/thresholds`
+            url: newPath(pathId, tableId, 'thresholds'),
+            id: 'thresholds'
         }
     ]
-
-    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
-    
-    const selectLink = url => {
-        setSelectedLink(url)
-    }
+ 
 
     return (
         <TopLinks 
         className="top-links-profile-nav"
-        selectLink={selectLink}
-        selected={selectedLink}>
+        selected={type}>
             {linksList.map(link => 
                 <Link
-                key={link.url}
-                id={link.url}
+                key={link.id}
+                id={link.id}
                 to={link.url}>
                     {link.name}
                 </Link>)}

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { useRouteMatch, Link } from 'react-router-dom';
+import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import TopLinks from '../layout/TopLinks';
+import { splitUrl } from '../routing/utils';
 import ProfileRouter from './ProfileRouter';
 
 function Profile() {
     let { path } = useRouteMatch();
+    const { pathname } = useLocation()
 
     const linksList = [
         {
-            url: path,
+            url: `${path}`,
             name: 'פרטים והגדרות'
         },
         {
@@ -21,19 +23,12 @@ function Profile() {
         }
     ]
 
-    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
-
-    const selectLink = url => {
-        setSelectedLink(url)
-    }
-
     return (
         <div className="user-profile">
             <div className="top-content-nav">
                 <TopLinks 
                 className="top-links-profile-nav"
-                selectLink={selectLink}
-                selected={selectedLink}>
+                selected={pathname}>
                     {linksList.map(link => 
                         <Link
                         className="profile-link" 

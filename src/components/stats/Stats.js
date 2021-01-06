@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useSelector } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { getPriorityTable } from '../../redux/selectors/datatables';
 import { getAllPaths } from '../../redux/selectors/paths';
 import Loadbar from '../layout/Loadbar';
@@ -10,8 +10,10 @@ import Topbar from './topbar/TopBar';
 function Stats() {
     let history = useHistory()
     let { path } = useRouteMatch()
+    const { pathname } = useLocation()
     const paths = useSelector(getAllPaths)
     const activeTable = useSelector(getPriorityTable)
+
 
     useEffect(() => {
         if(activeTable) {
@@ -26,7 +28,6 @@ function Stats() {
     return (
         <div className="stats-main">
             <Fragment>
-                <Topbar tableId={activeTable._id} />
                 <StatsRouter />
             </Fragment>
         </div>

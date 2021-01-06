@@ -1,35 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useLocation, useParams, useRouteMatch } from 'react-router-dom'
 import { getAllPaths } from '../../../redux/selectors/paths'
 import TopLinks from '../../layout/TopLinks'
 
-function PathsChoose({ tableId }) {
+function PathsChoose({ pathId, tableId, type, newPath }) {
     const paths = useSelector(getAllPaths)
-    let { path } = useRouteMatch()
 
     const linksList = paths.map(pathItem => ({
         name: pathItem.name,
-        url: `${path}/${pathItem._id}/${tableId}/table`
+        url: newPath(pathItem._id, tableId, type),
+        id: pathItem._id
     }))
-
-    const [selectedLink, setSelectedLink] = useState(linksList[0].url)
-    
-    const selectLink = url => {
-        setSelectedLink(url)
-    }
 
     return (
         <TopLinks 
         className="top-links-profile-nav"
-        selectLink={selectLink}
-        selected={selectedLink}>
+        selected={pathId}>
             {linksList.map(link => 
                 <Link
                 className="profile-link" 
                 key={link.url} 
                 to={link.url} 
-                id={link.url}>
+                id={link.id}>
                     {link.name}
                 </Link>
                 )}

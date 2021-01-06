@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function TopLinks({ className, children, selectLink, selected }) {
+function TopLinks({ className, children, selected }) {
     return (
         <ul className={className 
         ?   `top-links ${className}`
@@ -13,8 +13,7 @@ function TopLinks({ className, children, selectLink, selected }) {
                 : "link-item"}>
                     <span>
                         <span 
-                        className="span-hover"
-                        onClick={() => selectLink(child.props.id)}>
+                        className="span-hover">
                             {child}
                         </span>
                     </span>
