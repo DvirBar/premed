@@ -1,10 +1,10 @@
 import React from 'react'
 
-function AddStagedGroup({ changeStatus, statuses }) {
+function AddStagedGroup({ changeDisplay }) {    
     return (
         <div 
         className="add-staged-group"
-        onClick={() => changeStatus(statuses.choose)}>
+        onClick={() => changeDisplay(true)}>
             <i className="material-icons add">
                 add
             </i>

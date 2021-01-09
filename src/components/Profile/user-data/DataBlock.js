@@ -4,7 +4,7 @@ import FormFragment from './data-block/FormFragment';
 import { GroupsContext } from './data-block/GroupsContext';
 import GroupsList from './data-block/GroupsList';
 import OptionalGroup from './data-block/OptionalGroup';
-import StagedGroups from './data-block/StagedGroups';
+import StagedGroups from './data-block/staged-groups/StagedGroups';
 import useSortGroups from './data-block/useSortGroups';
 
 function DataBlock({ 
@@ -58,7 +58,8 @@ function DataBlock({
                 </div>
                 
                 {groups && groups.length > 0 && 
-                <div className="groups-block">
+                <div className={`groups-block
+                ${isSimulated ? 'simulated' : ''}`}>
                     {reqGroups?.map(group => 
                         <GroupsList
                         group={group}
@@ -78,7 +79,6 @@ function DataBlock({
                         customGroup={group}
                         groups={groups} />
                     )}
-
                     <StagedGroups 
                     groups={unUsedGroups}
                     getChildren={getChildren} />

@@ -56,12 +56,12 @@ function Navbar({ paths }) {
                 </span>
                 <ul className='links' style={showMenu ? showMenuStyle : hideMenuStyle}>
                     <li>
-                        <Link to={`/steps/${paths[0]._id}`}>
+                        <Link to={`/steps/${paths[0]?._id}`}>
                             <span>תהליך הקבלה</span>
                         </Link>
                     </li>
                     <li className="drive-links">
-                        <Link to={`/drive/${paths[0]._id}`}>
+                        <Link to={`/drive/${paths[0]?._id}`}>
                             <span>דרייב</span>
                         </Link>
                     </li>

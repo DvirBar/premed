@@ -60,11 +60,13 @@
     }
 }
 
-.staged-groups {    
+.staged-groups {   
     width: 70rem;
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
     
     @media only screen and(max-width: 768px) {
         display: flex;
@@ -78,21 +80,122 @@
         }
     }
     
-    .staged-groups-choose {
+    .choose-staged-group {
+        direction: ltr;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#fff, 0.3);
+        backdrop-filter: blur(8px);
         display: flex;
+        justify-content: center;
         align-items: center;
-        column-gap: 2rem;
-        height: 5.5rem;
-    }
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        overflow-y: scroll;
 
-    .cancel-new-group {
-        cursor: pointer;
-        color: $main-color;
-        font-size: 1.8rem;
-        border-bottom: 1px solid transparent;
+        .search-groups {
+            background-color: #fff;
+            padding: 2rem;
+            box-shadow: $default-shadow;
+            border-radius: 0.5rem;
+        }
 
-        &:hover {
-            border-bottom: 1px solid $main-color; 
+        &.display {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.2s ease;
+        }
+
+        .choose-staged-container {
+            width: 50rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            row-gap: 3rem;
+            direction: rtl;
+            position: relative;
+            padding: 3rem;
+        }
+
+        .cancel-staged {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            &:hover {
+                color: $main-color;
+            }
+        }
+
+        .choose-group-list {
+            background-color: #fff;
+            box-shadow: $default-shadow;
+            padding: 2rem;
+            height: 30rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 0.5rem;
+            color: $main-color;
+
+            &::-webkit-scrollbar {
+                transition: opacity 0.2s ease;
+                width: 0.5rem;
+            }
+            
+            &::-webkit-scrollbar-track {
+                padding: 0.1rem;
+                background-color: transparent
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(#aaa, 0);
+                border-radius: 1rem;
+                cursor: pointer;
+    
+                &:hover {
+                    background-color: rgba(#888, 0); 
+                }
+            }
+    
+            &:hover {
+                &::-webkit-scrollbar-thumb {
+                    background-color: #aaa;
+    
+                    &:hover {
+                        background-color: $main-color; 
+                    }
+                }
+            }    
+
+            .choose-group-item {
+                border-radius: 0.5rem;
+                transition: background-color 0.1s ease-in-out;
+                padding: 0.5rem;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba($main-color, 0.3);
+                }
+            }
+        }
+
+        .add-custom-group {
+            background-color: #fff;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 150ms ease-in-out;
+            border-radius: 0.5rem;
+            box-shadow: $default-shadow;
+
+            &.display {
+                opacity: 1;
+                visibility: visible;
+            }
         }
     }
 }

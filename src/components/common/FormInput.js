@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 function FormInput({ 
@@ -12,7 +12,8 @@ function FormInput({
     onClick,
     onEnter,
     width,
-    limit }) {
+    limit,
+    ref }) {
 
     const changeInput = e => {
         if(!limit || e.target.value.length <= limit) 
@@ -42,6 +43,7 @@ function FormInput({
             disabled={disabled || false}
             style={width && {width: width}}
             onKeyPress={e => execOnEnter(e)}
+            ref={ref}
             />
             <label for={name || ''} className="label">{label}</label>
             {error &&

@@ -1,4 +1,9 @@
 .calculator-content {
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: auto;
+
     .goto-pick-calcs {
         display: flex;
         color: $main-color;
