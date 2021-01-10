@@ -51,14 +51,25 @@ router.get('/user', auth, (req, res, next) => {
 // @access  Public
 router.post('/register', (req, res, next) => {
     const { 
+        firstName,
+        lastName,
+        username,
+        isStudent,
         email,
         password
     } = req.body;
 
     const newUser = new User({
+        firstName,
+        lastName,
+        username,
         email,
         password
     });
+
+    if(isStudent) { 
+        newUser.isStudent.isPending = true
+    }
 
     res.locals.model = modelName;
 
@@ -75,11 +86,15 @@ router.post('/register', (req, res, next) => {
                             { expiresIn: 3600 },
                             (err, token) => {
                                 if(err) throw err;
-                                res.json({
+                                res.send({
                                     token,
                                     user: { 
                                         id: user.id,
+                                        firstName: user.firstName,
+                                        lastName: user.lastName,
+                                        username: user.username,
                                         email: user.email,
+                                        isStudent: user.isStudent,
                                         isAdmin: user.isAdmin
                                     }
                                 });
@@ -121,6 +136,10 @@ router.post('/login', (req, res, next) => {
                                 token,
                                 user: { 
                                     id: user.id,
+                                    firstName: user.firstName,
+                                    lastName: user.lastName,
+                                    username: user.username,
+                                    isStudent: user.isStudent,
                                     email: user.email,
                                     prefs: user.prefs,
                                     isAdmin: user.isAdmin
@@ -139,15 +158,38 @@ router.post('/login', (req, res, next) => {
 // @access  Private
 router.put('/user', auth, (req, res, next) => {
     const {
+        firstName,
+        lastName,
+        username,
+        isStudent,
         email
     } = req.body
 
     res.locals.model = modelName;
-    const userId = res.locals.user.id
+    const userId = res.locals.user.id;
+
 
     User.findById(userId)
         .then(user => {
+            if(!user)
+                return res.status(UserDoesNotExist.status)
+                          .send(UserDoesNotExist.msg)
+
+            
+
             user.email = email;
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.username = username;
+
+            if(isStudent && !user.isStudent.status) {
+                user.isStudent.isPending = true
+            }
+
+            else {
+                user.isStudent.status = isStudent
+            }
+
             user.save()
                 .then(user => {
                     // TODO: send verification email 

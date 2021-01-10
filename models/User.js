@@ -3,6 +3,26 @@ const Schema = mongoose.Schema;
 
 // Create schema
 const UserSchema = new Schema({
+    firstName: {
+        type: String
+    },
+    lastName: {
+        type: String
+    },
+    username: {
+        type: String,
+        unique: true
+    },
+    isStudent: {
+        status: {
+            type: Boolean,
+            default: false
+        },
+        isPending: {
+            type: Boolean,
+            default: false
+        }
+    },
     email: {
         type: String,
         required: [true, 'Email is required'],

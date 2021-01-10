@@ -123,7 +123,8 @@ router.get('/:tableId/:pathId', auth, (req, res, next) => {
 // @access  Private
 router.post('/', auth, (req, res, next) => {
     const { 
-        pathIds
+        pathIds,
+        defaults
     } = req.body;
 
     const userId = res.locals.user.id
@@ -148,7 +149,8 @@ router.post('/', auth, (req, res, next) => {
                                 tables: [
                                     {
                                         table: table._id,
-                                        paths: pathIds
+                                        paths: pathIds,
+                                        dataVals: defaults
                                     }
                                 ]
                             })

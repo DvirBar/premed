@@ -17,6 +17,9 @@ const groups = [
                 dataType: dataTypes.str,
                 fieldType: fieldTypes.toggle,
                 isType: true,
+                isDefault: {
+                    qString: 'בחר/י את מגזר תעודת הבגרות שלך'
+                },
                 fieldOptions: [
                     {
                         name: 'ערבי',
