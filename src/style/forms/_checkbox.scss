@@ -19,12 +19,17 @@ $checkbox-color: $main-color;
         background-size: 0% 0%;
     
         transition: background-size 150ms ease-out, border 0.5s ease;
-        cursor: pointer;
+        
+        &.enabled {
+            &:hover {
+                border-color: $checkbox-color;
+                cursor: pointer;
+            }
+        }
     
     
         &:hover {
-            transition: border 0.5s ease;
-            border: 3px solid $checkbox-color;
+            transition: border 0.5s ease; 
         }
     
         .material-icons {
@@ -44,6 +49,10 @@ $checkbox-color: $main-color;
             .material-icons {
                 visibility: visible;
             }
+        }
+
+        .checkbox-label {
+            color: $main-color;
         }
     }
 }

@@ -6,31 +6,34 @@ function Checkbox({
     value, 
     onChange, 
     checked, 
-    isMulti }) {
+    isMulti,
+    disabled }) {
     const check = () => {
-        if(name) {
-            let dataObj = {}
-
-            if(isMulti) {
-                dataObj = {
-                    name,
-                    value: value,
-                    type: "multiValue"
-                }    
-            }
-
-            else {
-                dataObj = {
-                    name,
-                    value: !checked
+        if(!disabled) {
+            if(name) {
+                let dataObj = {}
+    
+                if(isMulti) {
+                    dataObj = {
+                        name,
+                        value: value,
+                        type: "multiValue"
+                    }    
                 }
+    
+                else {
+                    dataObj = {
+                        name,
+                        value: !checked
+                    }
+                }
+    
+                onChange(dataObj)
             }
-
-            onChange(dataObj)
-        }
-        
-        else {
-            onChange(!checked)
+            
+            else {
+                onChange(!checked)
+            }
         }
     }
 
@@ -53,7 +56,8 @@ function Checkbox({
     // }, [isChanging, isChecked])
 
     return (
-        <div className="checkbox-elem">
+        <div className={`checkbox-elem 
+        ${disabled ? '' : 'enabled'}`}>
              <div 
             className={checked
                 ? "checkbox checked"

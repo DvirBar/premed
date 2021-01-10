@@ -13,6 +13,22 @@ export const config = {
             // isNotStrongPass: { message: 'הסיסמה חלשה מדי' }
         },
 
+        firstName: {
+            isRequired: { message: 'דרוש שם פרטי' },
+            isNotHebName: { message: 'שם לא תקין'}
+        },
+
+        lastName: {
+            isRequired: { message: 'דרוש שם משפחה' },
+            isNotHebName: { message: 'שם משפחה לא תקין'}
+        },
+
+        username: {
+            isRequired: { message: 'דרוש שם משתמש' },
+            atLeastFour: { message: 'שם המשתמש חייב להיות באורך ארבעה תווים לפחות'},
+            isNotUsername: { message: 'שם משתמש לא תקין'}
+        },
+
         name: {
             isRequired: { message: 'יש להזין שם' },
         },

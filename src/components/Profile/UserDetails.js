@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
-import EditUser from './EditUser';
+import UserBasicData from './user-details/UserBasicData';
+import { selectUser } from '../../redux/selectors/auth';
 
 function UserDetails() {
-    const [user, setUser] = useState({})
-    const fetchedUser = useSelector(state => state.auth.user)
-
-    useEffect(() => {
-        setUser(fetchedUser)
-    }, [fetchedUser])
+    const user = useSelector(selectUser)
 
     return (
         <div>
-            <EditUser user={user} />
+            <UserBasicData
+            user={user} />
         </div>
     )
 }

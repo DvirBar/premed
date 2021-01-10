@@ -2,6 +2,7 @@ $main-color: #486974;
 $main-color-light: #bfc9cc;
 $error-color: #c01b1b;
 $okay-color: #1b922f;
+$pending-color: #e79806;
 $default-shadow:
 0 2px 6px 0 rgba(0, 0, 0, 0.2), 
 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -290,6 +291,7 @@ th {
 @import 'pages/drive';
 @import 'pages/profile/index';
 @import 'pages/stats/index';
+@import 'pages/auth/index';
 @import 'pages/questions';
 
 @import 'admin/admin';

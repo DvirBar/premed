@@ -6,6 +6,12 @@ export function isRequired(value, message) {
         return message
 }
 
+export function atLeastFour(value, message) {
+    if(value.length < 4) {
+        return message
+    }
+}
+
 export function isRequiredArray(values, message) {
     if(values.length === 0)
         return message
@@ -16,8 +22,22 @@ export function isNotEmail(value, message) {
         return message;
 }
 
+export function isNotHebName(value, message) {
+    const pattern = new RegExp('^[א-ת]+[-]*[א-ת]+$')
+    if(!pattern.test(value)) {
+        return message
+    }
+}
+
+export function isNotUsername(value, message) {
+    const pattern = RegExp('^[a-zA-Z0-9]+[_.-]*[a-zA-Z0-9]+$')
+    if(!pattern.test(value)) {
+        return message
+    }
+}
+
 export function isNotValidName(value, message) {
-    const pattern = RegExp('[a-zA-Zא-ת]+')
+    const pattern = RegExp('^[a-zA-Zא-ת]+$')
     if(!pattern.test(value)) 
         return message
 }

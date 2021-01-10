@@ -4,9 +4,14 @@ import { Redirect } from 'react-router-dom';
 import useForm from '../../forms/useForm';
 import { register } from '../../redux/actions/auth';
 import FormInput from '../common/FormInput';
+import Checkbox from '../common/Checkbox';
 
 const Register = () => {
     const [defaultValues, setDefaultValues] = useState({
+        firstName: '',
+        lastName: '',
+        username: '',
+        isStudent: false,
         email: '',
         password: ''
     });
@@ -43,6 +48,35 @@ const Register = () => {
                 {message.msg &&
                 <p className="form-error">{message.msg}</p>}
 
+                <div className="name-block">
+                    <FormInput
+                    type="text"
+                    label="שם"
+                    name="firstName"
+                    value={values.firstName}
+                    onChange={handleChange}
+                    error={errors.firstName}
+                    limit='20' />
+
+                    <FormInput
+                    type="text"
+                    label="שם משפחה"
+                    name="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                    error={errors.lastName}
+                    limit='20'/>
+                </div>
+
+                <FormInput
+                type="text"
+                label="שם משתמש"
+                name="username"
+                value={values.username}
+                onChange={handleChange}
+                error={errors.username}
+                limit='20'/>
+                
                 <FormInput
                 type="email"
                 label='דואר אלקטרוני' 
@@ -58,6 +92,12 @@ const Register = () => {
                 value={values.password}
                 onChange={handleChange}
                 error={errors.password} />
+
+                <Checkbox
+                name="isStudent"
+                label="אני סטודנט/ית"
+                onChange={handleChange}
+                checked={values.isStudent} />
     
                 <button type="submit">הירשם</button>
             </form>
