@@ -27,6 +27,7 @@
     "googleapis": "^39.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.7",
+    "mongoose-autopopulate": "^0.12.3",
     "node-fetch": "^2.6.1",
     "querystring": "^0.2.0"
   },

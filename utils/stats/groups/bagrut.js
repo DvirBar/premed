@@ -168,7 +168,7 @@ export const bagrut = [
                 minUnits: 2,
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
-                tau: ['isRequired', 'midBonus'],
+                tau: ['midBonus'],
                 bgu: ['isRequired', 'midBonus']
             },
             arab: {
@@ -192,7 +192,7 @@ export const bagrut = [
                 replaceable: 'thought',
                 huji: ['midBonus'],
                 tech: ['isRequired', 'midBonus'],
-                tau: ['isRequired', 'midBonus'],
+                tau: ['midBonus'],
                 bgu: ['isRequired', 'midBonus']
             },
             arab: {

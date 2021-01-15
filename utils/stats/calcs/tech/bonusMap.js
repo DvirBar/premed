@@ -42,7 +42,12 @@ const getBonus = (subj, subjObj, config) => {
     }
 
     if(type === 'exam') {
-        if(config?.useCombo && bonusGroups?.includes('combBonus')) {
+        if(config?.useCombo 
+            && bonusGroups?.includes('combBonus')
+            && config.comboCount < 2) {
+            config.comboCount ++
+            console.log(subj);
+            console.log(config.comboCount);
             return bonusMap.combBonus[units]
         }
     

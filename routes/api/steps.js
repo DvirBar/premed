@@ -10,6 +10,7 @@ const modelName = 'step';
 import internalData from '../../utils/internalData';
 const { paths } = internalData;
 
+import fields from '../../utils/stats/fields/dataFields';
 // Errors
 const stepsMessages = require('../../messages/steps');
 const pathsMessages = require('../../messages/paths');
@@ -17,18 +18,6 @@ const { SuccessDelete, StepNotExist, ParentNotExist,
     PrevStepNotExist, StrangerLinking } = stepsMessages;
 const { PathNotExist } = pathsMessages;
 
-// @route   GET api/steps/:id
-// @desc    Get step by id
-// @access  Public
-router.get('/:id',  [auth, authAdmin], (req, res, next) => {
-    Step.findById(req.params.id)
-        .then(step => {
-            if(!step) return res.status(StepNotExist.status).send(StepNotExist.msg);
-            
-            return res.send(step);
-        })
-        .catch(next)
-})
 
 // @route   GET api/steps
 // @desc    Get all steps
@@ -40,15 +29,39 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
+// @route   GET api/steps/:pathId/:uniId
+// @desc    Get steps by path and uni
+// @access  Public
+router.get('/:pathId/:uniId', async(req, res, next) => { 
+    const pathId = req.params.pathId
+    const uniId = req.params.uniId
+
+    try {
+        const steps = await Step.find({$and: [
+            { path: pathId }, 
+            { 'uniData.uni': uniId}
+        ]}).select('-author')
+
+        return steps
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+
 // @route   POST api/steps
 // @desc    Create new step
 // @access  Admin
-router.post('/', [auth, authAdmin], (req, res, next) => {
+router.post('/', [auth, authAdmin], async(req, res, next) => {
     const { 
         name,
         prevId,
         parentId,
-        pathId
+        isFinal,
+        pathId,
+        uniIds
     } = req.body;
 
     res.locals.model = modelName;
@@ -60,43 +73,70 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
         return res.status(PathNotExist.status)
                   .send(PathNotExist.msg);
 
-    Step.findById(parentId)
-        .then(parent => {
-            if(!parent && parentId) 
+    let parentStep
+
+    if(parentId) {
+        try {
+            parentStep = await Step.findById(parentId)
+            if(!parentStep) {
                 return res.status(ParentNotExist.status)
-                            .send(ParentNotExist.msg);
-            
-            Step.findById(prevId)
-            .then(prevStep => {
-                if(prevId) {
-                    if(!prevStep) 
-                        return res.status(PrevStepNotExist.status)
-                                    .send(PrevStepNotExist.msg)
+                        .send(ParentNotExist.msg)
+            }
+        }
+        
+        catch(err) {
+            next(err)
+        }
+    }
 
-                    if((parentId && prevStep.parent != parentId) || prevStep.path != pathId)
-                    // Check that the linked step has the same parent and path
-                        return res.status(StrangerLinking.status)
-                                    .send(StrangerLinking.msg)
-                }
-                
-                // Create new step
-                const newStep = new Step({
-                    name: name,
-                    prev: prevId,
-                    parent: parentId,
-                    path: pathId,
-                    author: userId
-                })
+    if((parentId && prevStep.parent != parentId) || 
+    prevStep.path != pathId)
+        // Check that the linked step has the same parent and path
+        return res.status(StrangerLinking.status)
+                    .send(StrangerLinking.msg)
 
-                newStep.save()
-                        .then(step => {
-                                return res.send(step)
-                            })
-                        .catch(next)     
-                })
-            .catch(next)    
+    let prevStep
+    if(prevId) {
+        prevStep = await Step.findById(parentId)
+
+        try {
+            if(!prevStep) {
+                return res.status(PrevStepNotExist.status)
+                            .send(PrevStepNotExist.msg)
+            }
+        }
+        
+        catch(err) {
+            next(err)
+        }
+    }
+
+    // Create new step
+    const newStep = new Step({
+        name: name,
+        prev: {
+            step: prevId
+        },
+        parent: parentId,
+        path: pathId,
+        author: userId
+    })
+
+    for(let uniId of uniIds) {
+        newStep.uniData.push({
+            uni: uniId,
+            isFinal
         })
-        .catch(next)
+    }
+
+    try {
+        const step = await newStep.save()
+        return res.status(201).send(step)
+    }
+
+    catch(err) {
+        next(err)
+    }
 })
 
 // @route   PUT api/steps/:id
@@ -157,6 +197,105 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
             })
         .catch(next);
 })
+
+// @route   PUT api/steps/:id
+// @desc    Add data to prev link
+// @access  Admin
+router.put('/:id/addPrevData', [auth, authAdmin], async(req, res, next) => {
+    const {
+        fieldId,
+        decriptionStepId,
+        descriptionStepRatio
+    } = req.body;
+
+    const stepId = req.params.id
+
+    let step
+
+    try {
+        step = await Step.findById(stepId)
+    }
+
+    catch(err) {
+        next(err)
+    }
+
+    if(!step) {
+        return res.status(StepNotExist.status)
+                  .send(StepNotExist.msg)
+    }
+
+    const field = fields.find(thisField => 
+        thisField._id === fieldId) 
+
+    step.prev = {
+        ...step.prev,
+        field: fieldId,
+        description: {
+            ...step.prev.description,
+            step: decriptionStepId,
+            ratio: descriptionStepRatio
+        }
+    }
+
+    try {
+        const resStep = await step.save()
+    
+        return res.status(200).send({
+            ...resStep.prev,
+            field: field
+        })    
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/addUniContent
+// @desc    Add specific university content
+// @access  Admin
+router.put('/:id/:uniId/addUniContent', [auth, authAdmin], async(req, res, next) => {
+    const {
+        content,
+        isFinal
+    } = req.body;
+
+    const stepId = req.params.id
+    const uniId = req.params.uniId
+
+    let step 
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) 
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+    }
+
+    catch(err) {
+        next(err)
+    }
+
+    const uniData = step.uniData.find(dataItem => 
+        dataItem.uni === uniId)
+
+    uniData = {
+        ...uniData,
+        content,
+        isFinal
+    }
+
+    try {
+        await step.save()
+        return res.status(200).send(uniData)
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
 
 // @route   DELETE api/steps/:id
 // @desc    Delete step

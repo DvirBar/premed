@@ -14,10 +14,10 @@ const getBestAverage = (
     maxGrade, 
     minUnits) => {
     let cumulAvg = baseAvg;
-    const cumAvg = cumulAvg.grade
-    const units = cumulAvg.units
 
     const args = sortByGrades(notRequired)
+
+    // console.log(args);
 
     let counter = 0
     
@@ -25,10 +25,11 @@ const getBestAverage = (
     greater than or equal to cumulative average, or units are
     lower than minimum units specified */
     while(counter < args.length && 
-        args[counter].values.grade >= cumulAvg.grade || 
-        units < minUnits) {
+        (args[counter].values.grade >= cumulAvg.grade || 
+        cumulAvg.units < minUnits))
+        { 
         cumulAvg.grade = addToAvg(cumulAvg, args[counter].values)
-        cumulAvg.units = units + args[counter].values.units
+        cumulAvg.units = cumulAvg.units + args[counter].values.units
 
         counter ++
     }
@@ -37,13 +38,14 @@ const getBestAverage = (
 
     /* If grade has reached maximum grade and 
         minimum units requirement has been satisfied */
-    const isMax = cumAvg >= maxGrade && units >= minUnit
+    const isMax = cumulAvg.grade >= maxGrade && cumulAvg.grade >= minUnits
 
     return {
         value: isMax ? maxGrade : cumulAvg.grade,
         payload: {
-            units,
-            ommittedArgs
+            units: cumulAvg.units,
+            ommittedArgs,
+            isMax: isMax
         }
     }
 }
@@ -59,7 +61,7 @@ const addToAvg = (baseAvg, newArg) => {
 
 /* This function sorts arguments by their grades 
     in a descending order */
-const sortByGrades = args => {
+export const sortByGrades = args => {
     return args.sort(function(argA, argB) {
         const valB = argB.values.grade
         const valA = argA.values.grade
@@ -67,5 +69,6 @@ const sortByGrades = args => {
         return valB - valA 
     })
 }
+
 
 export default getBestAverage

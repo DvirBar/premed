@@ -30,6 +30,7 @@ import datatables from '../routes/api/data-tables';
 import questgroups from '../routes/api/question-groups';
 import inquiries from '../routes/api/inquiries';
 import serverdata from '../routes/api/server-data';
+import stepspath from '../routes/api/steps-path';
 
 app.use('/api/auth', auth);
 app.use('/api/paths', paths);
@@ -48,6 +49,7 @@ app.use('/api/datatables', datatables);
 app.use('/api/questgroups', questgroups);
 app.use('/api/inquiries', inquiries);
 app.use('/api/serverdata', serverdata);
+app.use('/api/stepspath', stepspath)
 
 // Exit middlewares
 app.use(errorHandler);

@@ -5,6 +5,7 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
     let subjSum = 0;
     let unitsCounter = 0;
     let notRequired = []
+    let comboSubj = []
 
     /* Get average of required subjects and store 
         not required in an array */
@@ -33,7 +34,7 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
             }
         }
 
-        else {
+        else if(!uniGroups.includes('combBonus')) {
             const subjObj = addBonusToGrade(
                 getBonus,
                 subjParams, 
@@ -65,8 +66,39 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
                 })
             }
         }
+
+        else {
+            comboSubj.push({
+                subjParams,
+                uniGroups,
+                subj,
+                values: subjParams
+            })
+        }
     }
 
+    const sortedSubj = sortByGrades(comboSubj)
+
+    for(let subjItem of sortedSubj) {
+        const {
+            subjParams,
+            uniGroups,
+            subj
+        } = subjItem
+
+        const subjObj = addBonusToGrade(
+            getBonus,
+            subjParams, 
+            uniGroups, 
+            subj, 
+            bonusConfig)
+
+        notRequired.push({
+            name: subj,
+            ...subjObj
+        })
+    }
+    
     // Get average of required subjects
     let baseAvg = {
         grade: subjSum / unitsCounter,
@@ -96,6 +128,15 @@ const addBonusToGrade = (
     subjObj.values.grade = grade + getBonus(subj, subjObj, bonusConfig)
 
     return subjObj
+}
+
+const sortByGrades = args => {
+    return args.sort(function(argA, argB) {
+        const valB = argB.values.grade
+        const valA = argA.values.grade
+
+        return valB - valA 
+    })
 }
 
 export default getBaseAvg

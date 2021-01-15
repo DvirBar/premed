@@ -88,7 +88,7 @@ const storedCalcs = [
             {
                 ...validationTypes.numRange,
                 min: '40',
-                max: '115'
+                max: '117'
             }
         ]
     },
@@ -140,7 +140,7 @@ const storedCalcs = [
             {
                 ...validationTypes.numRange,
                 min: '60',
-                max: '100'
+                max: '100.5'
             }
         ]
     }, 

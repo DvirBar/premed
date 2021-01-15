@@ -13,24 +13,27 @@ export const techInitial = params => {
     const techCog = 0.5 * bagrut + 0.075 * psycho - 19
 
     return {
-        value: Math.floor(techCog * 100) / 100
+        value: Math.ceil(techCog * 100) / 100
     }
 }
 
 export const techBagrut = (params, values) => {
     let hasSci = false
     let hasTech = false
+
+    let sciCounter = 0
     
     for(let argVar in params) {
         const group = groups.find(thisGroup => 
             thisGroup._id === argVar)
 
         const config = getGroupConfig(values, group)
-        let techGroups = config['tech'] 
+        let techGroups = config['tech']
 
         if(techGroups) {
             if(techGroups.includes('sci')) {
                 hasSci = true
+                sciCounter ++
             }
     
             if(techGroups.includes('tech')) {
@@ -39,10 +42,14 @@ export const techBagrut = (params, values) => {
         }
     }
 
-    const useCombo = (hasSci && hasTech) ? true : false
+    const useCombo = 
+    params['math'].units === 5 && 
+    (hasSci && hasTech || 
+    sciCounter >= 2) ? true : false
 
     const config = {
-        useCombo
+        useCombo,
+        comboCount: 0
     }
 
     const {
@@ -51,10 +58,10 @@ export const techBagrut = (params, values) => {
     } = getBaseAvg(params, values, 'tech', getBonus, config)
 
     let result = getBestAverage(baseAvg, notRequired, 119, 20, getBonus)
-    
+
     result = {
         ...result,
-        value: Math.floor(result.value * 10) / 10
+        value: Math.round(result.value * 10) / 10
     }
     return result
 }

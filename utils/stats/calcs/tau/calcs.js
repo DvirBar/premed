@@ -1,6 +1,5 @@
 import getBonus from './bonusMap';
 import getBestAverage  from "../executeCalc/getBestAverage";
-import groups from '../../groups/dataGroups';
 import getBaseAvg from '../executeCalc/getBaseAvg';
 import axios from 'axios';
 import qs from 'querystring';
@@ -14,12 +13,9 @@ export const tauInitial = async(params) => {
     const body = {
         txtBagrut:bagrut,
         txtPsicho:psycho,
-        ckBonus10:'0',
-        ckBonus5:'0',
-        ck016:'0',
-        facs:'01',
-        'Enter.x':'28',
-        'Enter.y':'6'
+        facs: '01',
+        'Enter.x': 49,
+        'Enter.y': 4
     }
 
     const config = {
@@ -32,11 +28,11 @@ export const tauInitial = async(params) => {
             qs.stringify(body), 
             config)
     .then(res => {
-        const regFindTags = new RegExp("<\s*td[^>]*>((.|\n)[^td]*?)<\s*/\s*td><\s*td[^>]*>((.|\n)[^td]*?)(ציון התאמה לפי)((.|\n)[^td]*?)<\s*/\s*td>")
+        const regFindTags = new RegExp(`<\s*td[^>]*>((.|\n)[^(td)]*?)<\s*\/\s*td><\s*td[^>]*>(&nbsp;ציון התאמה<span style='color:red'> ללא מור<\/span> ביה"ס )[^<]`)
         const tagContainers = res.data.match(regFindTags).toString()
-        const regFindGrade = /\d+/;
+        const regFindGrade = /\d{3}[.\d]*/;
         const grade = Number(tagContainers.match(regFindGrade))
- 
+
         return {
             value: grade
         }
@@ -50,7 +46,7 @@ export const tauBargut = (params, values) => {
         notRequired
     } = getBaseAvg(params, values, 'tau', getBonus)
 
-    let result = getBestAverage(baseAvg, notRequired, 115, 20, getBonus)
+    let result = getBestAverage(baseAvg, notRequired, 117, 20, getBonus)
 
     result = {
         ...result,

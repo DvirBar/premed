@@ -8,29 +8,65 @@ const StepSchema = new Schema({
         type: String,
         required: [true, 'Name is required']
     },
-    content: {
+    genContent: {
         type: String
-    },
-    prev: {
-        type: ObjectId,
-        ref: 'Step'
-    },
-    parent: {
-        type: ObjectId,
-        ref: 'Step'
     },
     path: {
-        type: String
+        type: String,
+        required: true
     },
     author: {
         type: ObjectId,
         required: [true, 'User is required'],
         ref: 'User'
     },
+    prev: {
+        field: {
+            type: String,
+            required: true
+        },
+        step: {
+            type: ObjectId,
+            ref: 'Step',
+            required: true
+        },
+        decription: [{
+            step: {
+                type: ObjectId,
+                ref: 'Step',
+                autopopulate: true
+            },
+            ratio: {
+                type: Number
+            }
+        }]
+    },
+    parent: {
+        type: ObjectId,
+        ref: 'Step'
+    }, 
+    uniData: [{
+        uni: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        content: {
+            type: String
+        },
+        isFinal: {
+            type: Boolean
+        }
+    }],
     last_edited: {
         type: Date,
+        required: true,
         default: Date.now
     }   
 })
+
+
+
+StepSchema.plugin(require('mongoose-autopopulate'))
 
 module.exports = mongoose.model('Step', StepSchema);
