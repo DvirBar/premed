@@ -4,7 +4,9 @@ import {
     STEP_ERROR,
     STEP_ADD,
     STEP_UPDATE,
-    STEP_DELETE
+    STEP_DELETE,
+    STEP_ADD_PREV_DATA,
+    STEP_ADD_UNI_CONTENT
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -89,6 +91,40 @@ export const editStep = (id, data) => dispatch => {
          .catch(err => {
             dispatch(getError(err))
             dispatch(stepError())
+         })
+}
+
+export const addPrevData = (id, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
+
+    axios.put(`api/steps/${id}/addPrevData`, body)
+         .then(res => dispatch({
+            type: STEP_ADD_PREV_DATA,
+            payload: {
+                id,
+                prevData: res.data
+            }}))
+         .catch(err => {
+             dispatch(getError(err))
+             dispatch(stepError())
+         })
+}
+
+export const addPrevData = (id, uniId, data) => dispatch => {
+    // Request body
+    const body = JSON.stringify(data)
+
+    axios.put(`api/steps/${id}/${uniId}/addUniContent`, body)
+         .then(res => dispatch({
+            type: STEP_ADD_UNI_CONTENT,
+            payload: {
+                id,
+                uniData: res.data
+            }}))
+         .catch(err => {
+             dispatch(getError(err))
+             dispatch(stepError())
          })
 }
 

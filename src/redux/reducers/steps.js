@@ -4,7 +4,9 @@ import {
     STEP_ERROR,
     STEP_ADD,
     STEP_UPDATE,
-    STEP_DELETE
+    STEP_DELETE,
+    STEP_ADD_PREV_DATA,
+    STEP_ADD_UNI_CONTENT
 } from '../actions/types';
 
 const initialState = {
@@ -47,6 +49,32 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 steps: state.steps.map(step => step._id === payload._id ? step = payload : step)
+            }
+
+        case STEP_ADD_PREV_DATA:
+            return {
+                ...state,
+                loading: false,
+                steps: state.steps.map(step => 
+                    step._id === payload.id
+                    ?   {
+                        ...step,
+                        prev: payload.prevData
+                    }
+                    :   step)
+            }
+
+        case STEP_ADD_UNI_CONTENT:
+            return {
+                ...state,
+                loading: false,
+                steps: state.steps.map(step => 
+                    step._id === payload.id
+                    ?   {
+                        ...step,
+                        uniData: payload.uniData
+                    }
+                    :   step)
             }
 
         case STEP_DELETE:
