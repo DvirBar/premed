@@ -30,19 +30,21 @@ router.get('/', (req, res, next) => {
 })
 
 // @route   GET api/steps/:pathId/:uniId
-// @desc    Get steps by path and uni
+// @desc    Get steps by path and unis
 // @access  Public
-router.get('/:pathId/:uniId', async(req, res, next) => { 
-    const pathId = req.params.pathId
-    const uniId = req.params.uniId
+router.post('/', async(req, res, next) => { 
+    const {
+        pathId,
+        uniIds
+    } = req.body
 
     try {
         const steps = await Step.find({$and: [
             { path: pathId }, 
-            { 'uniData.uni': uniId}
+            { 'uniData.uni': {$in: uniIds }}
         ]}).select('-author')
 
-        return steps
+        return res.status(200).send(steps)
     }
 
     catch(err) {
@@ -54,7 +56,7 @@ router.get('/:pathId/:uniId', async(req, res, next) => {
 // @route   POST api/steps
 // @desc    Create new step
 // @access  Admin
-router.post('/', [auth, authAdmin], async(req, res, next) => {
+router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
     const { 
         name,
         prevId,
@@ -68,7 +70,7 @@ router.post('/', [auth, authAdmin], async(req, res, next) => {
 
     const userId = res.locals.user.id;
 
-    const path = paths.find(path => path._id === path)
+    const path = paths.find(path => path._id === pathId)
     if(!path) 
         return res.status(PathNotExist.status)
                   .send(PathNotExist.msg);
@@ -89,21 +91,22 @@ router.post('/', [auth, authAdmin], async(req, res, next) => {
         }
     }
 
-    if((parentId && prevStep.parent != parentId) || 
-    prevStep.path != pathId)
-        // Check that the linked step has the same parent and path
-        return res.status(StrangerLinking.status)
-                    .send(StrangerLinking.msg)
-
     let prevStep
     if(prevId) {
-        prevStep = await Step.findById(parentId)
+        try {   
+            // Find previous step and check that it exists
+            prevStep = await Step.findById(prevId)
 
-        try {
             if(!prevStep) {
                 return res.status(PrevStepNotExist.status)
                             .send(PrevStepNotExist.msg)
             }
+
+            // Check that linked step has the same parent and path
+            if((parentId && prevStep.parent != parentId) || 
+            prevStep.path != pathId)
+                return res.status(StrangerLinking.status)
+                            .send(StrangerLinking.msg)
         }
         
         catch(err) {
@@ -114,9 +117,8 @@ router.post('/', [auth, authAdmin], async(req, res, next) => {
     // Create new step
     const newStep = new Step({
         name: name,
-        prev: {
-            step: prevId
-        },
+        prev: prevId,
+        uniData: [],
         parent: parentId,
         path: pathId,
         author: userId
@@ -142,70 +144,9 @@ router.post('/', [auth, authAdmin], async(req, res, next) => {
 // @route   PUT api/steps/:id
 // @desc    Update step
 // @access  Admin
-router.put('/:id', [auth, authAdmin], (req, res, next) => {
+router.put('/:id', [auth, authAdmin], async(req, res, next) => {
     const {
-        name,
-        content,
-        prevId,
-        parentId
-    } = req.body;
-
-    res.locals.model = modelName;
-
-    const stepId = req.params.id;
-    const userId = res.locals.user.id;
-
-    Step.findById(stepId)
-        .then(step => {
-            if(!step) 
-                return res.status(StepNotExist.status)
-                          .send(StepNotExist.msg);
-
-
-            Step.findById(parentId)
-            .then(parent => {
-                if(!parent && parentId) return res.status(ParentNotExist.status).send(ParentNotExist.msg);
-
-                Step.findById(prevId)
-                    .then(prevStep => {
-                        if(prevId) {
-                            if(!prevStep) 
-                                return res.status(PrevStepNotExist.status).send(PrevStepNotExist.msg)
-
-                            if(!step.path.equals(prevStep.path) || 
-                                prevStep.parent != parentId)
-                            // Check that prev has the same parent
-                            // If step is orphan, check that prev is also orphan
-                            // Check same path
-                                return res.status(StrangerLinking.status).send(StrangerLinking.msg)
-                        }
-
-                        step.name = name;
-                        step.content = content;
-                        step.prev = prevId;
-                        step.parent = parentId;
-                        step.author = userId;
-                        step.last_edited = Date.now()
-
-                        step.save()
-                            .then(step => res.send(step))
-                            .catch(next);
-                    })  
-                    .catch(next);
-                })
-            .catch(next);
-            })
-        .catch(next);
-})
-
-// @route   PUT api/steps/:id
-// @desc    Add data to prev link
-// @access  Admin
-router.put('/:id/addPrevData', [auth, authAdmin], async(req, res, next) => {
-    const {
-        fieldId,
-        decriptionStepId,
-        descriptionStepRatio
+        content
     } = req.body;
 
     const stepId = req.params.id
@@ -214,37 +155,179 @@ router.put('/:id/addPrevData', [auth, authAdmin], async(req, res, next) => {
 
     try {
         step = await Step.findById(stepId)
+        
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
     }
 
     catch(err) {
         next(err)
     }
 
-    if(!step) {
-        return res.status(StepNotExist.status)
-                  .send(StepNotExist.msg)
+    step.genContent = content
+
+
+    try {
+        const resStep = await step.save()
+    
+        return res.status(200).send(resStep.genContent)    
     }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/addLinkInfo
+// @desc    Add info to step link
+// @access  Admin
+router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
+    const {
+        name,
+        fieldId
+    } = req.body;
+
+    const stepId = req.params.id
+
+    let step
+
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    }
+
+    
 
     const field = fields.find(thisField => 
         thisField._id === fieldId) 
 
-    step.prev = {
-        ...step.prev,
-        field: fieldId,
-        description: {
-            ...step.prev.description,
-            step: decriptionStepId,
-            ratio: descriptionStepRatio
-        }
+    step.linkInfo = {
+        ...step.linkInfo,
+        name,
+        field: fieldId
     }
 
     try {
         const resStep = await step.save()
     
         return res.status(200).send({
-            ...resStep.prev,
+            ...resStep.linkInfo,
             field: field
         })    
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/addDescriptionGroup
+// @desc    Add info to step link
+// @access  Admin
+router.put('/:id/addDescriptionGroup', [auth, authAdmin], async(req, res, next) => {
+    const {
+        stepId,
+        ratio
+    } = req.body;
+
+    const reqStepId = req.params.id
+
+    let step
+
+    try {
+        step = await Step.findById(reqStepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    } 
+
+    let refStep
+    try {
+        refStep = await Step.findById(stepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    }
+
+    step.descriptions.push({
+        step: stepId,
+        ratio
+    })
+
+    try {
+        await step.save()
+    
+        return res.status(200).send({
+            step: refStep,
+            ratio
+        })  
+                  
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/addUniContent
+// @desc    Add specific university content
+// @access  Admin
+router.put('/:id/:uniId/addContent', [auth, authAdmin], async(req, res, next) => {
+    const {
+        content,
+        isFinal
+    } = req.body;
+
+    const stepId = req.params.id
+    const uniId = req.params.uniId
+
+    let step 
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) 
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+    }
+
+    catch(err) {
+        next(err)
+    }
+
+    const uniData = step.uniData.find(dataItem => 
+        dataItem.uni === uniId)
+
+    uniData = {
+        ...uniData,
+        content,
+        isFinal
+    }
+
+    try {
+        await step.save()
+        return res.status(200).send(uniData)
     }
 
     catch(err) {

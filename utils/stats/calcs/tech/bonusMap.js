@@ -46,8 +46,6 @@ const getBonus = (subj, subjObj, config) => {
             && bonusGroups?.includes('combBonus')
             && config.comboCount < 2) {
             config.comboCount ++
-            console.log(subj);
-            console.log(config.comboCount);
             return bonusMap.combBonus[units]
         }
     

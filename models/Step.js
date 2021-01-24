@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { default: mongooseAutoPopulate } = require('mongoose-autopopulate');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -21,16 +22,17 @@ const StepSchema = new Schema({
         ref: 'User'
     },
     prev: {
+        type: ObjectId,
+        ref: 'Step'
+    },
+    linkInfo: {
+        name: {
+            type: String
+        },
         field: {
-            type: String,
-            required: true
+            type: String
         },
-        step: {
-            type: ObjectId,
-            ref: 'Step',
-            required: true
-        },
-        decription: [{
+        descriptions: [{
             step: {
                 type: ObjectId,
                 ref: 'Step',
@@ -38,7 +40,7 @@ const StepSchema = new Schema({
             },
             ratio: {
                 type: Number
-            }
+            }  
         }]
     },
     parent: {
@@ -47,9 +49,7 @@ const StepSchema = new Schema({
     }, 
     uniData: [{
         uni: {
-            type: String,
-            required: true,
-            unique: true
+            type: String
         },
         content: {
             type: String

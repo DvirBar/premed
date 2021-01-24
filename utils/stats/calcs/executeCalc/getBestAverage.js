@@ -38,7 +38,8 @@ const getBestAverage = (
 
     /* If grade has reached maximum grade and 
         minimum units requirement has been satisfied */
-    const isMax = cumulAvg.grade >= maxGrade && cumulAvg.grade >= minUnits
+    const isMax = cumulAvg.grade >= maxGrade && 
+                  cumulAvg.grade >= minUnits
 
     return {
         value: isMax ? maxGrade : cumulAvg.grade,
