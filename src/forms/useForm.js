@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addOrRemove } from '../utils/arrays';
 import validateForm from './formValidator';
 
 const useForm = (callback, defaultValues, ...params) => {
@@ -84,17 +85,9 @@ const useForm = (callback, defaultValues, ...params) => {
                     }
                 }
                 
-                else {
-                    // If value does not exist in array, add it
-                    if(!valArr.find(val => val === value))
+                else {  
                     setValues(values => ({...values,
-                    [name]: [...valArr, value]}))
-            
-                    // If value exists in array, remove it 
-                    else
-                        setValues(values => ({...values,
-                        [name]: [...valArr.filter(val =>
-                            val !== value)]}))    
+                    [name]: addOrRemove(values[name], value)})) 
                 }
                 
             }

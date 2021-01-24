@@ -22,6 +22,8 @@ function EditDataPaths({ userPaths, display, toggleModal, tableId, title }) {
         errors
     } = useForm(editUserDataPaths, defaultValues, tableId)
 
+    console.log(values);
+
     return (
         <Modal
         display={display}

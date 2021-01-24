@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import Modal from '../layout/Modal';
-import StepsTree from './StepsTree';
+import StepsTree from './StepsTree/StepsTree';
 import StepContent from './StepContent';
 
 function StepItem() {

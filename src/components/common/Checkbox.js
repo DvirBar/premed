@@ -7,7 +7,8 @@ function Checkbox({
     onChange, 
     checked, 
     isMulti,
-    disabled }) {
+    disabled,
+    style }) {
     const check = () => {
         if(!disabled) {
             if(name) {
@@ -37,6 +38,14 @@ function Checkbox({
         }
     }
 
+    const styling = {
+        backgroundImage: `linear-gradient(${style?.color},${style?.color})` || '',
+        borderColor: style?.color || '',
+        borderRadius: style?.round ? '50%' : '',
+        width: style?.size || '',
+        height: style?.size || ''
+    }
+
     // useEffect(() => {
     //     if(isChanging) {
     //         let dataObj = {
@@ -56,9 +65,11 @@ function Checkbox({
     // }, [isChanging, isChecked])
 
     return (
-        <div className={`checkbox-elem 
+        <div 
+        className={`checkbox-elem 
         ${disabled ? '' : 'enabled'}`}>
-             <div 
+            <div 
+            style={styling}
             className={checked
                 ? "checkbox checked"
                 : "checkbox"}

@@ -19,6 +19,11 @@ export const getGroups = state => {
     return state.statsinputs.groups
 }
 
+export const getFieldById = fieldId => createSelector(
+    fieldsSelector,
+    fields => fields.find(field => field._id === fieldId)
+)
+
 export const getFieldsAndCalcs = state => {
     return [
         ...state.statsinputs.fields,

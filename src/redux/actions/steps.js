@@ -53,10 +53,15 @@ export const stepDelete = id => {
 }
 
 // Get all steps
-export const getSteps = () => dispatch => {
+export const getSteps = (pathId, uniIds) => dispatch => {
     dispatch(stepLoad());
 
-    axios.get('api/steps')
+    const body = JSON.stringify({
+        pathId,
+        uniIds
+    })
+
+    axios.post('api/steps', body)
          .then(res => dispatch(stepSuccess(res.data)))
          .catch(err => {
              dispatch(stepError());
@@ -67,12 +72,11 @@ export const getSteps = () => dispatch => {
 // Create new step
 export const addStep = data => dispatch => {
     dispatch(stepLoad());
-    console.log(data)
 
     // Request body
     const body = JSON.stringify(data);
 
-    axios.post('api/steps', body)
+    axios.post('api/steps/addStep', body)
          .then(res => dispatch(stepAdd(res.data)))
          .catch(err => {
             dispatch(stepError())
@@ -111,7 +115,7 @@ export const addPrevData = (id, data) => dispatch => {
          })
 }
 
-export const addPrevData = (id, uniId, data) => dispatch => {
+export const addUniContent = (id, uniId, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data)
 

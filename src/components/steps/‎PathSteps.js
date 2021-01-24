@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import StepsTree from './StepsTree';
+import StepsTree from './StepsTree/StepsTree';
 
 function PathSteps() {
     let history = useHistory();

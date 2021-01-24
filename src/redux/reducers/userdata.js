@@ -98,7 +98,13 @@ export default function(state = initialState, action) {
                 loading: false,
                 simulatedData: {
                     ...state.simulatedData,
-                    values: state.data.tableData.dataVals,
+                    values: state.data.tableData.dataVals.map(dataVal =>
+                        dataVal.isCalc
+                        ? {
+                            ...dataVal,
+                            value: dataVal.suggestValue
+                        }
+                        : dataVal),
                     customGroups: state.data.tableData.customGroups
                 }
             }

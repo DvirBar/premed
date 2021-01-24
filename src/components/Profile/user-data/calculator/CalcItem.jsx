@@ -18,8 +18,7 @@ function CalcItem({ calc, uniColor }) {
             <p 
             className="calc-value">
                 {valueObj && 
-                (valueObj.value || 
-                valueObj.suggestValue)}
+                (valueObj.value || '-')}
             </p>
         </div>
     )
