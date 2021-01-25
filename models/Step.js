@@ -25,6 +25,16 @@ const StepSchema = new Schema({
         type: ObjectId,
         ref: 'Step'
     },
+    prevDescriptions: [{
+        step: {
+            type: ObjectId,
+            ref: 'Step',
+            autopopulate: true
+        },
+        ratio: {
+            type: Number
+        }
+    }],
     linkInfo: {
         name: {
             type: String
@@ -32,16 +42,6 @@ const StepSchema = new Schema({
         field: {
             type: String
         },
-        descriptions: [{
-            step: {
-                type: ObjectId,
-                ref: 'Step',
-                autopopulate: true
-            },
-            ratio: {
-                type: Number
-            }  
-        }]
     },
     parent: {
         type: ObjectId,

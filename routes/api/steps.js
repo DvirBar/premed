@@ -206,8 +206,6 @@ router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
         next(err)
     }
 
-    
-
     const field = fields.find(thisField => 
         thisField._id === fieldId) 
 
@@ -231,10 +229,10 @@ router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
     }
 })
 
-// @route   PUT api/steps/:id/addDescriptionGroup
-// @desc    Add info to step link
+// @route   PUT api/steps/:id/addDescGroup
+// @desc    Add info to description group
 // @access  Admin
-router.put('/:id/addDescriptionGroup', [auth, authAdmin], async(req, res, next) => {
+router.put('/:id/addDescGroup', [auth, authAdmin], async(req, res, next) => {
     const {
         stepId,
         ratio
@@ -261,7 +259,7 @@ router.put('/:id/addDescriptionGroup', [auth, authAdmin], async(req, res, next) 
     try {
         refStep = await Step.findById(stepId)
 
-        if(!step) {
+        if(!refStep) {
             return res.status(StepNotExist.status)
                       .send(StepNotExist.msg)
         }
@@ -271,25 +269,35 @@ router.put('/:id/addDescriptionGroup', [auth, authAdmin], async(req, res, next) 
         next(err)
     }
 
-    step.descriptions.push({
-        step: stepId,
-        ratio
-    })
+    const descriptions = step.prevDescriptions
+    let found = true
+    
+    for(let desc of descriptions) {
+        if(desc.step === stepId) {
+            found = true
+            desc.ratio = ratio
+            break;
+        }
+    }
+
+    if(!found) {
+        descriptions.push({
+            step: stepId,
+            ratio
+        })        
+    }
 
     try {
-        await step.save()
+        const savedStep = await step.save()
     
-        return res.status(200).send({
-            step: refStep,
-            ratio
-        })  
-                  
+        return res.status(200).send(savedStep.prevDescriptions)   
     }
 
     catch(err) {
         next(err)
     }
 })
+
 
 // @route   PUT api/steps/:id/addUniContent
 // @desc    Add specific university content
