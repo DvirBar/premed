@@ -65,7 +65,8 @@ export const STEP_ERROR = 'STEP_ERROR';
 export const STEP_ADD = 'STEP_ADD';
 export const STEP_UPDATE = 'STEP_UPDATE';
 export const STEP_DELETE = 'STEP_DELETE';
-export const STEP_ADD_PREV_DATA = 'STEP_ADD_PREV_DATA';
+export const STEP_ADD_LINK_INFO = 'STEP_ADD_LINK_INFO';
+export const STEP_ADD_DESC_GROUP = 'STEP_ADD_DESC_GROUP';
 export const STEP_ADD_UNI_CONTENT = 'STEP_ADD_UNI_CONTENT';
 
 

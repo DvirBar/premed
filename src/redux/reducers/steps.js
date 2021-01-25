@@ -5,7 +5,8 @@ import {
     STEP_ADD,
     STEP_UPDATE,
     STEP_DELETE,
-    STEP_ADD_PREV_DATA,
+    STEP_ADD_LINK_INFO,
+    STEP_ADD_DESC_GROUP,
     STEP_ADD_UNI_CONTENT
 } from '../actions/types';
 
@@ -51,7 +52,7 @@ export default function(state = initialState, action) {
                 steps: state.steps.map(step => step._id === payload._id ? step = payload : step)
             }
 
-        case STEP_ADD_PREV_DATA:
+        case STEP_ADD_LINK_INFO:
             return {
                 ...state,
                 loading: false,
@@ -59,7 +60,20 @@ export default function(state = initialState, action) {
                     step._id === payload.id
                     ?   {
                         ...step,
-                        prev: payload.prevData
+                        linkInfo: payload.linkInfo
+                    }
+                    :   step)
+            }
+
+        case STEP_ADD_DESC_GROUP:
+            return {
+                ...state,
+                loading: false,
+                steps: state.steps.map(step => 
+                    step._id === payload.id
+                    ?   {
+                        ...step,
+                        prevDescriptions: payload.desc
                     }
                     :   step)
             }

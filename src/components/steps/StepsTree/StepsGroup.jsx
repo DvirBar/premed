@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { getFirstSteps, getNextSteps } from '../../../redux/selectors/steps'
+import { StepsContext } from '../StepsContext'
 import StepsLevel from './StepsLevel'
  
 function StepsGroup({ parent, isTopLevel }) {
     const firstSteps = useSelector(getFirstSteps(parent._id))
+    const {
+        selectStep
+    } = useContext(StepsContext)
+    
     return (
-        <div className={`steps-group 
+        <div 
+        className={`steps-group 
         ${isTopLevel ?  'top-level' : 'nested'}`}>
             <div className={`group-wrapper 
             ${isTopLevel ? '' : 'nested'}`}>
                 {!isTopLevel &&
-                    <p className="steps-group-name">
+                    <p 
+                    onClick={e => selectStep(parent, e)}
+                    className="steps-group-name">
                         {parent.name}
                     </p>
                 }

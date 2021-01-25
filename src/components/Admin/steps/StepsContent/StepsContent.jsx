@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getSteps } from '../../../../redux/actions/steps'
-import { stepsSelector } from '../../../../redux/selectors/steps'
 import { addOrRemove } from '../../../../utils/arrays'
-import InlineSelect from '../../../common/InlineSelect'
 import StepsBlock from './StepsBlock'
 import TopSection from './TopSection'
 
@@ -11,8 +7,7 @@ function StepsContent({
     paths,
     unis,
     selPath,
-    selectPath,
-    selectStep
+    selectPath
 }) {
     const [selUnis, setSelUnis] = useState([])
 
@@ -36,8 +31,7 @@ function StepsContent({
 
             <StepsBlock
             selPath={selPath}
-            selUnis={selUnis}
-            selectStep={selectStep} />
+            selUnis={selUnis} />
         </div>
     )
 }

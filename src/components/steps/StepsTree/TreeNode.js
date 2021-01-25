@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import TreeNodeContent from './TreeNodeContent';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ function TreeNode({ step, length }) {
     const isGroup = children.length > 0
     const nodeWidth = {
         width: (100/length) + '%'}
-        
+
     return (
         <div
         style={nodeWidth} 

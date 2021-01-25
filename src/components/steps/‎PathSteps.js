@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import StepsTree from './StepsTree/StepsTree';
+import StepsProvider from './StepsContext';
 
 function PathSteps() {
     let history = useHistory();
@@ -23,9 +24,11 @@ function PathSteps() {
 
     return (
         <div>
-            <StepsTree 
-            steps={steps}
-            selectStep={selectStep} />
+            <StepsProvider isAdmin={false}>
+                <StepsTree 
+                steps={steps}
+                selectStep={selectStep} />
+            </StepsProvider>
         </div>
     )
 }

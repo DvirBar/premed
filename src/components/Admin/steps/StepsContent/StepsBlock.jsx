@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSteps } from '../../../../redux/actions/steps'
 import { stepsSelector } from '../../../../redux/selectors/steps'
+import StepsProvider from '../../../steps/StepsContext'
 import StepsTree from '../../../steps/StepsTree/StepsTree'
 import AddStep from './AddSteps/AddStep'
 
 function StepsBlock({
     selPath,
-    selUnis,
-    selectStep
+    selUnis
 }) {
     const [displayAdd, setDisplayAdd] = useState(false)
 
@@ -38,6 +38,7 @@ function StepsBlock({
         }
 
         <StepsTree />
+       
     </div>
     )
 }

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Loadbar from '../../layout/Loadbar';
 import { getUnisByPath } from '../../../redux/selectors/unis';
-// import StepsEditSeciton from './StepsEditSection/StepsEditSeciton';
+import StepsEditSeciton from './StepsEditSection/StepsEditSeciton';
 import { pathsSelector } from '../../../redux/selectors/paths';
 import StepsContent from './StepsContent/StepsContent';
+import StepsProvider from '../../steps/StepsContext';
 
 function StepsAdmin() {
-    // Get paths
-    const {
+     // Get paths
+     const {
         paths,
         loading
     } = useSelector(pathsSelector)
@@ -21,30 +22,21 @@ function StepsAdmin() {
 
     const unis = useSelector(getUnisByPath(selPath?.value))
 
-    const [selStep, setSelStep] = useState({});
-
-    // Select step 
-    const selectStep = (step, event) => {
-        if(event)
-            event.stopPropagation()
-        setSelStep(step)
-    }
-
     if(loading || !paths)
         return <Loadbar />
-    
+
     return (
-        <div className="steps-admin">
+        <StepsProvider isAdmin={true}>
+            <div className="steps-admin">
                 <StepsContent
                 paths={paths}
                 unis={unis}
                 selPath={selPath}
-                selectPath={selectPath}
-                selectStep={selectStep} />
-            {/* {Object.keys(selStep).length !== 0 &&
+                selectPath={selectPath} />
+
                 <StepsEditSeciton />
-            } */}
-        </div>
+            </div>
+        </StepsProvider>
     )
 }
 
