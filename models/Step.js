@@ -25,23 +25,23 @@ const StepSchema = new Schema({
         type: ObjectId,
         ref: 'Step'
     },
-    prevDescriptions: [{
-        step: {
-            type: ObjectId,
-            ref: 'Step',
-            autopopulate: true
-        },
-        ratio: {
-            type: Number
-        }
-    }],
-    linkInfo: {
+    summaries: [{
         name: {
             type: String
         },
-        field: {
-            type: String
-        },
+        groups: [{
+            contents: [{
+                name: {
+                    type: String
+                },
+                ratio: {
+                    type: Number
+                }
+            }]
+        }]
+    }],
+    linkLabel: {
+        type: String
     },
     parent: {
         type: ObjectId,

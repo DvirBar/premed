@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import config from 'config';
 import cors from 'cors';
 import errorHandler from  '../middleware/errorHandler';
+import morgan from 'morgan';
 
 // Init app
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 // Entry middlewares
 app.use(express.json());
 app.use(cors());
+app.use(morgan('tiny'))
 
 // App routes
 import auth from '../routes/api/auth';
@@ -69,6 +71,7 @@ mongoose
     })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
+
 
 
 

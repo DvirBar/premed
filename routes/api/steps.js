@@ -10,11 +10,11 @@ const modelName = 'step';
 import internalData from '../../utils/internalData';
 const { paths } = internalData;
 
-import fields from '../../utils/stats/fields/dataFields';
 // Errors
 const stepsMessages = require('../../messages/steps');
 const pathsMessages = require('../../messages/paths');
-const { SuccessDelete, StepNotExist, ParentNotExist, 
+const { SuccessDelete, SummarySuccessDelete, GroupSuccessDelete,
+    ContentSuccessDelete, StepNotExist, ParentNotExist, 
     PrevStepNotExist, StrangerLinking } = stepsMessages;
 const { PathNotExist } = pathsMessages;
 
@@ -146,7 +146,10 @@ router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
 // @access  Admin
 router.put('/:id', [auth, authAdmin], async(req, res, next) => {
     const {
-        content
+        name,
+        prevId,
+        parentId,
+        genContent
     } = req.body;
 
     const stepId = req.params.id
@@ -166,13 +169,15 @@ router.put('/:id', [auth, authAdmin], async(req, res, next) => {
         next(err)
     }
 
-    step.genContent = content
-
+    step.name = name
+    step.genContent = genContent
+    step.prev = prevId
+    step.parent = parentId
 
     try {
         const resStep = await step.save()
     
-        return res.status(200).send(resStep.genContent)    
+        return res.status(200).send(resStep)    
     }
 
     catch(err) {
@@ -180,13 +185,12 @@ router.put('/:id', [auth, authAdmin], async(req, res, next) => {
     }
 })
 
-// @route   PUT api/steps/:id/addLinkInfo
+// @route   PUT api/steps/:id/addLinkLabel
 // @desc    Add info to step link
 // @access  Admin
-router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
+router.put('/:id/addLinkLabel', [auth, authAdmin], async(req, res, next) => {
     const {
-        name,
-        fieldId
+        labelName,
     } = req.body;
 
     const stepId = req.params.id
@@ -206,22 +210,12 @@ router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
         next(err)
     }
 
-    const field = fields.find(thisField => 
-        thisField._id === fieldId) 
-
-    step.linkInfo = {
-        ...step.linkInfo,
-        name,
-        field: fieldId
-    }
+    step.linkLabel = labelName
 
     try {
         const resStep = await step.save()
     
-        return res.status(200).send({
-            ...resStep.linkInfo,
-            field: field
-        })    
+        return res.status(200).send(resStep.linkLabel)    
     }
 
     catch(err) {
@@ -229,16 +223,136 @@ router.put('/:id/addLinkInfo', [auth, authAdmin], async(req, res, next) => {
     }
 })
 
-// @route   PUT api/steps/:id/addDescGroup
-// @desc    Add info to description group
+// @route   PUT api/steps/:id/addSummary
+// @desc    Add step summary
 // @access  Admin
-router.put('/:id/addDescGroup', [auth, authAdmin], async(req, res, next) => {
-    const {
-        stepId,
+router.put('/:id/addSummary', [auth, authAdmin], async(req, res, next) => {
+    const { 
+        name
+    } = req.body;
+
+    const stepId = req.params.id
+
+    let step
+
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    } 
+
+    step.summaries.push({
+        name
+    })
+
+    try {
+        const savedStep = await step.save()
+        const lastSum = savedStep.summaries.length - 1
+        return res.status(200).send(savedStep.summaries[lastSum])   
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/:sumId
+// @desc    Edit summary
+// @access  Admin
+router.put('/:id/:sumId', [auth, authAdmin], async(req, res, next) => {
+    const { 
+        name
+    } = req.body;
+
+    const stepId = req.params.id
+    const sumId = req.params.sumId
+
+    let step
+
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    } 
+
+    const summary = step.summaries.id(sumId)
+    summary.name = name
+
+    try {
+        await step.save()
+        return res.status(200).send(summary)   
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/:sumId/remove
+// @desc    Edit summary
+// @access  Admin
+router.put('/:id/:sumId/remove', [auth, authAdmin], async(req, res, next) => {
+    const { 
+        name
+    } = req.body;
+
+    const stepId = req.params.id
+    const sumId = req.params.sumId
+
+    let step
+
+    try {
+        step = await Step.findById(stepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    } 
+
+    const summary = step.summaries.id(sumId)
+    await summary.remove()
+
+    try {
+        await step.save()
+        return res.status(SummarySuccessDelete.status)
+                  .send(SummarySuccessDelete.msg)   
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/sumId/addGroup
+// @desc    Create sum group
+// @access  Admin
+router.put('/:id/:sumId/addGroup', [auth, authAdmin], async(req, res, next) => {
+    const { 
+        name,
         ratio
     } = req.body;
 
     const reqStepId = req.params.id
+    const sumId = req.params.sumId
 
     let step
 
@@ -255,11 +369,44 @@ router.put('/:id/addDescGroup', [auth, authAdmin], async(req, res, next) => {
         next(err)
     } 
 
-    let refStep
-    try {
-        refStep = await Step.findById(stepId)
+    const summary = step.summaries.id(sumId)
+    summary.groups.push({
+    contents:[{
+        name,
+        ratio
+    }]})
 
-        if(!refStep) {
+    try {
+        await step.save()
+
+        const lastGroup = summary.groups.length - 1
+        return res.status(200).send(summary.groups[lastGroup])   
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/sumId/:groupId/addContent
+// @desc    Add content to summary group
+// @access  Admin
+router.put('/:id/:sumId/:groupId/addContent', [auth, authAdmin], async(req, res, next) => {
+    const { 
+        name,
+        ratio
+    } = req.body;
+
+    const reqStepId = req.params.id
+    const sumId = req.params.sumId
+    const groupId = req.params.groupId
+
+    let step
+
+    try {
+        step = await Step.findById(reqStepId)
+
+        if(!step) {
             return res.status(StepNotExist.status)
                       .send(StepNotExist.msg)
         }
@@ -267,30 +414,118 @@ router.put('/:id/addDescGroup', [auth, authAdmin], async(req, res, next) => {
 
     catch(err) {
         next(err)
+    } 
+
+    const summary = step.summaries.id(sumId)
+    const group = summary.groups.id(groupId)
+
+    group.contents.push({
+        name,
+        ratio
+    })
+
+    try {
+        await step.save()
+        
+        const lastContent = group.contents.length - 1
+        return res.status(200).send(group.contents[lastContent])   
     }
 
-    const descriptions = step.prevDescriptions
-    let found = true
-    
-    for(let desc of descriptions) {
-        if(desc.step === stepId) {
-            found = true
-            desc.ratio = ratio
-            break;
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/sumId/:groupId/:contentId
+// @desc    Edit summary group content
+// @access  Admin
+router.put('/:id/:sumId/:groupId/:contentId', [auth, authAdmin], async(req, res, next) => {
+    const {
+        name,
+        ratio
+    } = req.body;
+
+    const reqStepId = req.params.id
+    const {
+        sumId,
+        groupId,
+        contentId
+    } = req.params
+
+    let step
+
+    try {
+        step = await Step.findById(reqStepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
         }
     }
 
-    if(!found) {
-        descriptions.push({
-            step: stepId,
-            ratio
-        })        
+    catch(err) {
+        next(err)
+    } 
+
+    const summary = step.summaries.id(sumId)
+    const group = summary.groups.id(groupId)
+    const content = group.contents.id(contentId)
+
+    content.name = name
+    content.ratio = ratio
+
+
+    try {
+        await step.save()
+        return res.status(200).send(content)   
+    }
+
+    catch(err) {
+        next(err)
+    }
+})
+
+// @route   PUT api/steps/:id/sumId/:groupId/:contentId/remove
+// @desc    Remove summary group content
+// @access  Admin
+router.put('/:id/:sumId/:groupId/:contentId/remove', [auth, authAdmin], async(req, res, next) => {
+    const reqStepId = req.params.id
+    const {
+        sumId,
+        groupId,
+        contentId
+    } = req.params
+
+    let step
+
+    try {
+        step = await Step.findById(reqStepId)
+
+        if(!step) {
+            return res.status(StepNotExist.status)
+                      .send(StepNotExist.msg)
+        }
+    }
+
+    catch(err) {
+        next(err)
+    } 
+
+    const summary = step.summaries.id(sumId)
+    const group = summary.groups.id(groupId)
+    const content = group.contents.id(contentId)
+
+    await content.remove()
+
+    // Remove group as well if no contents are left
+    if(group.contents.length === 0) {
+        await group.remove()
     }
 
     try {
-        const savedStep = await step.save()
-    
-        return res.status(200).send(savedStep.prevDescriptions)   
+        await step.save()
+        return res.status(ContentSuccessDelete.status)
+                  .send(ContentSuccessDelete.msg)   
     }
 
     catch(err) {

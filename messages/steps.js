@@ -6,6 +6,27 @@ const stepMessages = {
         },
         status: 200
     },
+    SummarySuccessDelete: {
+        msg: {
+            en: 'Summary successfully deleted',
+            he: 'הסיכום נמחק בהצלחה'
+        },
+        status: 200
+    },
+    GroupSuccessDelete: {
+        msg: {
+            en: 'Summary group successfully deleted',
+            he: 'קבוצת הסיכום נמחקה בהצלחה'
+        },
+        status: 200
+    },
+    ContentSuccessDelete: {
+        msg: {
+            en: 'Summary group content successfully deleted',
+            he: 'התוכן נמחק בהצלחה'
+        },
+        status: 200
+    },
     StepNotExist: {
         msg: {
             en: 'Step does not exist',
