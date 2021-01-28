@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from 'react'
-import { StepsContext } from '../../../steps/StepsContext'
+import React from 'react'
+import EditStep from './EditStep'
+
 
 function StepsEditSeciton() {
-    const {
-        selStep 
-    } = useContext(StepsContext)
-    console.log(selStep);
     return (
         <div>
+            <EditStep />
         </div>
     )
 }

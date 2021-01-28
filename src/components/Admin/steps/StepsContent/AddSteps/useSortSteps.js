@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-const findParents = (steps, type, parentId, stepId) => {
-    let parents = steps
-    
-    if(type !== 'add')
-        parents = steps?.filter(thisStep => 
-            thisStep.parent === parentId &&
-            thisStep._id !== stepId) 
+const defaultValue = {
+    name: 'ללא',
+    value: undefined
+}
 
-    return parents?.map(parent => ({
+const findParents = (steps, type, parentId, stepId) => {
+    return [defaultValue, ...steps?.map(parent => ({
         name: parent.name,
         value: parent._id
-    }))
+    }))]
 }
 
 const findPrevSteps = (stepId, steps, type, parentId) => {
@@ -22,13 +20,13 @@ const findPrevSteps = (stepId, steps, type, parentId) => {
     prevSteps = steps?.filter(thisStep => 
         thisStep.parent === parentId &&
         (type === 'add' ||
-        thisStep.prev.step !== stepId)) 
+        thisStep.prev !== stepId)) 
     
 
-    return prevSteps.map(prev => ({
+    return [defaultValue, ...prevSteps.map(prev => ({
         name: prev.name,
         value: prev._id
-    }))
+    }))]
 }
 
 function useSortSteps(steps, type, parentId, stepId) {
