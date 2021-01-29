@@ -206,7 +206,7 @@ export default function(state = initialState, action) {
                     :   step)
             }
 
-        case STEP_DELETE_SUMMARY_CONTENT:
+        case STEP_REMOVE_SUMMARY_CONTENT:
             return {
                 ...state,
                 loading: false,
@@ -257,10 +257,3 @@ export default function(state = initialState, action) {
             return state;
     }
 }
-
-
-// export const selectPathSteps = (state, path) => {
-//     state.steps.filter(step => {
-//         step.path === path._id
-//     })
-// }

@@ -1,7 +1,4 @@
-import React, { Fragment, useContext } from 'react'
-import { useSelector } from 'react-redux'
-import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps'
-import StepsGroup from './StepsGroup'
+import React from 'react'
 import TreeNode from './TreeNode'
 
 function StepsLevel({ nextSteps, levelWidth }) {

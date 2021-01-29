@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import TreeNodeContent from './TreeNodeContent';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps';
 import StepsGroup from './StepsGroup';
 import TreeLink from './TreeLink/TreeLink';
 import StepsLevel from './StepsLevel';
+import LinkLabel from './TreeLink/LinkLabel';
 
 function TreeNode({ step, length }) {
     const nextSteps = useSelector(getNextSteps(step._id))
@@ -28,6 +29,8 @@ function TreeNode({ step, length }) {
 
             {nextSteps?.length > 0 &&
                 <Fragment>
+                    <LinkLabel
+                    step={step}/>                       
                     <TreeLink
                     linkWidth='300'
                     linkInfo={step.linkInfo}
