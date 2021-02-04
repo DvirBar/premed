@@ -1,0 +1,23 @@
+.choose-sum-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    &.display {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .choose-sum-item {
+        background-color: $main-color;
+        color: #fff;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        cursor: pointer;
+    }
+}

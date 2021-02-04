@@ -33,7 +33,6 @@ const useForm = (callback, defaultValues, ...params) => {
     }
 
     const handleChange = event => {
-
         // If not custom field
         if(event.target) {
             if(typeof event.persist !== "undefined")

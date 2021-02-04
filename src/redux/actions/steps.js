@@ -196,7 +196,7 @@ export const addStepSummaryGroup = (id, sumId, data) => dispatch => {
 export const addStepSummaryGroupContent = (id, sumId, groupId, data) => dispatch => {
     // Request body
     const body = JSON.stringify(data)
-
+    console.log(body);
     axios.put(`api/steps/${id}/${sumId}/${groupId}/addContent`, body)
          .then(res => dispatch({
             type: STEP_ADD_SUMMARY_CONTENT,

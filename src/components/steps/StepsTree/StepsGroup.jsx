@@ -1,20 +1,22 @@
 import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
-import { getFirstSteps, getNextSteps } from '../../../redux/selectors/steps'
+import { getFirstSteps } from '../../../redux/selectors/steps'
 import { StepsContext } from '../StepsContext'
 import StepsLevel from './StepsLevel'
+import StepSummary from './step-summary/StepSummary'
  
 function StepsGroup({ parent, isTopLevel }) {
     const firstSteps = useSelector(getFirstSteps(parent._id))
     const {
-        selectStep
+        selectStep,
+        isStepsAdmin
     } = useContext(StepsContext)
     
     return (
         <div 
         className={`steps-group 
         ${isTopLevel ?  'top-level' : 'nested'}`}>
-            <div className={`group-wrapper 
+            <div className={`wrapper 
             ${isTopLevel ? '' : 'nested'}`}>
                 {!isTopLevel &&
                     <p 
@@ -28,7 +30,13 @@ function StepsGroup({ parent, isTopLevel }) {
                     nextSteps={firstSteps} />
                 }
             </div>
-        </div>
+            
+            <div className="wrapper">
+                <StepSummary
+                stepId={parent._id}
+                summaries={parent.summaries} />     
+            </div>
+        </div>  
     )
 }
 

@@ -1,0 +1,50 @@
+.sum-content-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    width: 100%;
+}
+
+.sum-content-item {
+    color: $main-color;
+    width: 100%;
+
+    &.client {
+        justify-content: space-between;
+        display: flex;
+    }
+
+    &.admin {
+        display: grid;
+        grid-template-columns: 9rem 4rem 2rem;
+    }
+
+    &:hover {
+        .delete-content {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.add-group-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 0.5rem;
+    row-gap: 0.8rem;
+}
+
+.add-content-block {
+    justify-self: flex-end;
+}
+
+.delete-content {
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+        color: $error-color;
+    }
+}

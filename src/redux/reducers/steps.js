@@ -111,16 +111,8 @@ export default function(state = initialState, action) {
                     step._id === payload.id
                     ?   {
                         ...step,
-                        summaries: step.summaries.map(sum => 
-                            sum._id === payload.sumId 
-                            ? {
-                                ...sum,
-                                groups: [
-                                    ...sum.groups,
-                                    payload.group
-                                ]
-                            }
-                            : sum)
+                        summaries: step.summaries.filter(sum =>
+                            sum._id !== payload.sumId)
                     }
                     :   step)
             }

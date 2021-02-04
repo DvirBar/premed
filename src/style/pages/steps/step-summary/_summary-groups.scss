@@ -1,0 +1,58 @@
+.summary-groups-list {
+    display: flex;
+    column-gap: 3rem;
+    row-gap: 3rem;
+    justify-content: center;
+    padding: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    visibility: hidden;
+
+    &.display {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &.client {
+        z-index: 3;
+        position: absolute;
+        background-color: transparent;
+        bottom: 0;
+        right: 100px;
+        width: 20rem;
+        flex-wrap: nowrap;
+    }
+}
+
+.summary-group-item {
+    display: flex;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    padding: 1.5rem;
+    width: 18rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    position: absolute;
+    bottom: 0;
+
+    .material-icons {
+        color: $main-color;
+        justify-self: flex-start;
+    }
+
+    &.display {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+}
+
+.return-choose {
+    padding-left: 1rem;
+    &:hover {
+        animation: tilt 2s infinite;
+        animation-timing-function: ease-in-out;
+    }
+}
