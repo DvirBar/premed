@@ -30,6 +30,9 @@ const StepSchema = new Schema({
             type: String
         },
         groups: [{
+            name: {
+                type: String
+            },
             contents: [{
                 name: {
                     type: String

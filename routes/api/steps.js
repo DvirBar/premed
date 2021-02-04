@@ -303,13 +303,9 @@ router.put('/:id/:sumId', [auth, authAdmin], async(req, res, next) => {
 })
 
 // @route   PUT api/steps/:id/:sumId/remove
-// @desc    Edit summary
+// @desc    Remove summary
 // @access  Admin
 router.put('/:id/:sumId/remove', [auth, authAdmin], async(req, res, next) => {
-    const { 
-        name
-    } = req.body;
-
     const stepId = req.params.id
     const sumId = req.params.sumId
 
@@ -347,6 +343,7 @@ router.put('/:id/:sumId/remove', [auth, authAdmin], async(req, res, next) => {
 // @access  Admin
 router.put('/:id/:sumId/addGroup', [auth, authAdmin], async(req, res, next) => {
     const { 
+        groupName,
         name,
         ratio
     } = req.body;
@@ -371,6 +368,7 @@ router.put('/:id/:sumId/addGroup', [auth, authAdmin], async(req, res, next) => {
 
     const summary = step.summaries.id(sumId)
     summary.groups.push({
+    name: groupName,
     contents:[{
         name,
         ratio
