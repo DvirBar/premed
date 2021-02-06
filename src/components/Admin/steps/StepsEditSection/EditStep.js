@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { getStepById, stepsSelector } from '../../../../redux/selectors/steps'
 import FormInput from '../../../common/FormInput'
 import Dropdown from '../../../common/Dropdown'
+import DeleteStep from './DeleteStep'
 
 function EditStep() {
     const steps = useSelector(stepsSelector)
@@ -55,8 +56,6 @@ function EditStep() {
             value: data
         })
     }
-
-    // console.log(values);
 
     const parentStep = useSelector(getStepById(values.parentId))
     const prevStep = useSelector(getStepById(values.prevId))
@@ -112,6 +111,8 @@ function EditStep() {
                     עריכה
                 </button>
             </form>
+            <DeleteStep
+            stepId={selStep._id} />
         </Modal>
     )
 }

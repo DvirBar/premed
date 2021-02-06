@@ -53,6 +53,7 @@ export const stepUpdate = step => {
 }
 
 export const stepDelete = id => {
+    console.log(id);
     return {
         type: STEP_DELETE,
         payload: id

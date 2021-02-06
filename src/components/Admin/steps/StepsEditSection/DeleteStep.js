@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import VerifyDelete from '../../common/VerifyDelete';
-import { deleteStep } from '../../../redux/actions/steps';
+import VerifyDelete from '../../../common/VerifyDelete';
+import { deleteStep } from '../../../../redux/actions/steps';
 
 function DeleteStep({ stepId }) {
     const [display, setDisplay] = useState(false)
