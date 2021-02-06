@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { orderSteps } from '../../utils/steps';
 
 export const stepsSelector = state => state.steps.steps
 
@@ -12,9 +13,10 @@ export const getStepsByParent = parentId => createSelector(
     steps => steps.filter(step => step.parent === parentId)
 )
 
-export const getTopSteps = createSelector(
+export const getStartingStep = createSelector(
     stepsSelector,
-    steps => steps.filter(step => !step.parent)
+    steps => steps.find(step => 
+        !step.parent && !step.prev)
 )
 
 export const getStepChildren = parentId => createSelector (

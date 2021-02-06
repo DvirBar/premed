@@ -20,6 +20,7 @@ function AddStep({
         setDefaultValues({
             name: '',
             isFinal: false,
+            isTransition: false, 
             pathId,
             uniIds
         })
@@ -64,7 +65,13 @@ function AddStep({
                         title="שלב מכיל"
                         onChange={handleChange}
                         placeholder="בחירה" />                                    
-                    } 
+                    }
+
+                    <CheckBox
+                    name="isTransition"
+                    label="שלב מעבר"
+                    onChange={handleChange}
+                    checked={values.isTransition} /> 
 
                     {prevSteps?.length > 0 &&
                         <Dropdown

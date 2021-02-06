@@ -1,8 +1,7 @@
-import React, { Children } from 'react'
-import LinkInfo from './LinkInfo'
+import React from 'react'
 import LinkSplit from './LinkSplit'
 
-function TreeLink({ linkInfo, nextSteps, linkWidth }) {
+function TreeLink({ nextSteps, linkWidth }) {
     const length = nextSteps.length
     const isEven = length % 2 === 0
     const middlePoint = (length / 2) - 0.5
@@ -19,7 +18,6 @@ function TreeLink({ linkInfo, nextSteps, linkWidth }) {
         width={linkWidth} 
         height={svgHeight} 
         xmlns="http://www.w3.org/2000/svg">
-            <LinkInfo linkInfo={linkInfo} />
             <path 
             d={`M 150 0 V ${mainLinkHeight}`} 
             stroke="purple" 

@@ -1,14 +1,17 @@
-export const getNextSteps = (steps, prevId) => {
-    const nextSteps = steps.filter(step => 
-        step.prev.step === prevId)
+// Only start with one step
+export const orderSteps = steps => {
+    return getNextStep(steps)
+}
 
-    if(nextSteps.length === 0)
-        return {}
+const getNextStep = (steps, prevId) => {
 
-    const levelObj = {
-        steps: nextSteps,
-        count: nextSteps.length
+    const nextStep = steps.find(step => 
+        step.prev === prevId)
+
+    if(!nextStep) {
+        return []
     }
 
-    return [levelObj, ...getNextSteps(steps, )]
+    return [nextStep, ...getNextStep(steps, nextStep._id)]
 }
+

@@ -1,0 +1,42 @@
+.steps-level {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.steps-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.nested {
+        padding: 0.5rem;
+
+        & > .wrapper {
+            padding: 1rem;
+            background-color: rgba($main-color, 0.1);
+            border-radius: 0.5rem;
+        }
+    }
+
+    &.top-level {
+        width: 650px;
+
+        .wrapper.top-level > .steps-group-name {
+            width: 100%;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 5px solid rgba($main-color, 0.7);
+            margin-bottom: 1rem;
+            color: rgba($main-color, 0.7);
+            font-size: 1.8rem;
+            font-weight: 500;
+            padding: 0.5rem;
+        }
+    }
+
+    .group-content {
+        width: 100%;
+    }
+}

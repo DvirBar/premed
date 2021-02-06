@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 // import TreeNode from './TreeNode';
-import { getTopSteps } from '../../../redux/selectors/steps';
 import TreeContent from './TreeContent';
+import { getStartingStep } from '../../../redux/selectors/steps';
 
 function StepsTree() {
-    const topSteps = useSelector(getTopSteps)
+    const firstStep = useSelector(getStartingStep)
     
-    if(topSteps?.length === 0) {
+    if(!firstStep) {
         return (
             <div className="no-resource-error">
                 עדיין אין שלבים במסלול זה
@@ -18,7 +18,7 @@ function StepsTree() {
 
     return (
         <TreeContent 
-        topSteps={topSteps} />
+        firstStep={firstStep} />
     )
 }
 

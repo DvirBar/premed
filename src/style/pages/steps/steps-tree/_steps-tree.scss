@@ -1,0 +1,24 @@
+.steps-tree {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    width: $tree-width;
+    margin: 0;
+    width: 100%;
+}
+
+.steps-level {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 1;
+    flex-wrap: wrap;
+}
+
+.tree-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 !important;
+}

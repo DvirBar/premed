@@ -1,10 +1,9 @@
 import React from 'react'
 import useWindowDim from '../../common/useWindowDim';
-import StepTopLevel from './StepTopLevel';
+import StepsLevel from './StepsLevel';
 
-function TreeContent({ topSteps }) {
+function TreeContent({ firstStep }) {
     const { width } = useWindowDim()
-
     if(width < 350) {
         return <p className="chart-unavailable">
             גודל המסך קטן מדי, אין אפשרות להציג את התרשים.
@@ -12,11 +11,8 @@ function TreeContent({ topSteps }) {
     }
     return (
         <div className="steps-tree">
-            {topSteps.map(step => 
-                <StepTopLevel
-                key={step._id}
-                step={step} />
-            )}
+            <StepsLevel
+            nextSteps={[firstStep]}/>
         </div>
     )
 }

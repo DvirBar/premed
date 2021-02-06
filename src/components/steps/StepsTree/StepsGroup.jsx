@@ -8,8 +8,7 @@ import StepSummary from './step-summary/StepSummary'
 function StepsGroup({ parent, isTopLevel }) {
     const firstSteps = useSelector(getFirstSteps(parent._id))
     const {
-        selectStep,
-        isStepsAdmin
+        selectStep
     } = useContext(StepsContext)
     
     return (
@@ -17,24 +16,24 @@ function StepsGroup({ parent, isTopLevel }) {
         className={`steps-group 
         ${isTopLevel ?  'top-level' : 'nested'}`}>
             <div className={`wrapper 
-            ${isTopLevel ? '' : 'nested'}`}>
-                {!isTopLevel &&
-                    <p 
-                    onClick={e => selectStep(parent, e)}
-                    className="steps-group-name">
+            ${isTopLevel ?  'top-level' : 'nested'}`}>
+                <div 
+                onClick={e => selectStep(parent, e)}
+                className="steps-group-name">
+                    <span>
                         {parent.name}
-                    </p>
-                }
-                {firstSteps?.length > 0 &&
-                    <StepsLevel 
-                    nextSteps={firstSteps} />
-                }
-            </div>
-            
-            <div className="wrapper">
-                <StepSummary
-                stepId={parent._id}
-                summaries={parent.summaries} />     
+                    </span>
+                </div>
+                <div className="group-content">
+                    {firstSteps?.length > 0 &&
+                        <StepsLevel 
+                        nextSteps={firstSteps} />
+                    }
+
+                    <StepSummary
+                    stepId={parent._id}
+                    summaries={parent.summaries} />     
+                </div>
             </div>
         </div>  
     )

@@ -11,7 +11,7 @@ import LinkLabel from './TreeLink/LinkLabel';
 function TreeNode({ step, length }) {
     const nextSteps = useSelector(getNextSteps(step._id))
     const children = useSelector(getStepChildren(step._id))
-
+    const isTopLevel = !step.parent
     const isGroup = children.length > 0
     const nodeWidth = {
         width: (100/length) + '%'}
@@ -22,12 +22,12 @@ function TreeNode({ step, length }) {
         className="tree-node">
             {isGroup 
             ?   <StepsGroup
-                parent={step} />
+                parent={step}
+                isTopLevel={isTopLevel} />
             :   <TreeNodeContent
                 step={step} />
             }
-
-            {nextSteps?.length > 0 &&
+            {nextSteps?.length > 0 && 
                 <Fragment>
                     <LinkLabel
                     step={step}/>                       

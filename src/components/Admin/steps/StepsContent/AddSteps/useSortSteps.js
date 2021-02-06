@@ -5,7 +5,7 @@ const defaultValue = {
     value: undefined
 }
 
-const findParents = (steps, type, parentId, stepId) => {
+const findParents = (steps) => {
     return [defaultValue, ...steps?.map(parent => ({
         name: parent.name,
         value: parent._id
@@ -38,14 +38,12 @@ function useSortSteps(steps, type, parentId, stepId) {
             // Find parent steps
             setParents(findParents(steps, type, parentId, stepId))
 
-            if(parentId) {
-                // Find prev steps
-                setPrevSteps(findPrevSteps(
-                    stepId, 
-                    steps, 
-                    type, 
-                    parentId))
-            }
+            // Find prev steps
+            setPrevSteps(findPrevSteps(
+                stepId, 
+                steps, 
+                type, 
+                parentId))
         }
     }, [stepId, steps, parentId])
 
