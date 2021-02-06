@@ -62,6 +62,7 @@ router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
         prevId,
         parentId,
         isFinal,
+        isTransition,
         pathId,
         uniIds
     } = req.body;
@@ -121,6 +122,7 @@ router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
         uniData: [],
         parent: parentId,
         path: pathId,
+        isTransition,
         author: userId
     })
 

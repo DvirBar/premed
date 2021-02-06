@@ -61,6 +61,9 @@ const StepSchema = new Schema({
             type: Boolean
         }
     }],
+    isTransition: {
+        type: Boolean
+    },
     last_edited: {
         type: Date,
         required: true,
