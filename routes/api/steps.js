@@ -29,20 +29,16 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
-// @route   GET api/steps/:pathId/:uniId
-// @desc    Get steps by path and unis
+// @route   GET api/steps/:pathId
+// @desc    Get steps by path
 // @access  Public
-router.post('/', async(req, res, next) => { 
-    const {
-        pathId,
-        uniIds
-    } = req.body
+router.get('/:pathId', async(req, res, next) => { 
+    const { pathId } = req.params
 
     try {
-        const steps = await Step.find({$and: [
-            { path: pathId }, 
-            { 'uniData.uni': {$in: uniIds }}
-        ]}).select('-author')
+        const steps = await Step
+        .find({ path: pathId })
+        .select('-author')
 
         return res.status(200).send(steps)
     }
