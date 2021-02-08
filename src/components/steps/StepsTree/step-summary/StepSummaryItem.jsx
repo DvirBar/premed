@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import SummaryGroupsList from './SummaryGroups/SummaryGroupsList';
 import { StepsContext } from '../../StepsContext';
 import StepSummaryTop from './StepSummaryTop';
+import SummaryGroupContent from './SummaryGroups/SummaryGroupContent';
 
 function StepSummaryItem({ summary, stepId }) {
     const [displayEdit, setDisplayEdit] = useState(false);
@@ -19,7 +20,6 @@ function StepSummaryItem({ summary, stepId }) {
     const [displayGroups, setDisplayGroups] = useState(false)
 
     const toggleGroups = toggle => {
-        console.log(toggle);
         setDisplayGroups(toggle)
     }
 
@@ -34,13 +34,12 @@ function StepSummaryItem({ summary, stepId }) {
             stepId={stepId}
             summary={summary} />
 
-            <SummaryGroupsList
+            <SummaryGroupContent
             display={displayGroups} 
             toggleGroups={toggleGroups}
             stepId={stepId}
             sumId={summary._id}
             groups={summary.groups} />
-            
         </div>
     )
 }

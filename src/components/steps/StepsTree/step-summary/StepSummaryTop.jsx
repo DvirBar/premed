@@ -18,7 +18,7 @@ function StepSummaryTop({
     
     return (
         <div 
-        onClick={() => toggleGroups(!displayGroups)}
+        onMouseDown={() => toggleGroups(!displayGroups)}
         className={`step-summary-top
         ${!isStepsAdmin ? 'client' : ''}`}>
             {display 
@@ -40,7 +40,7 @@ function StepSummaryTop({
                 sumId={summary._id} />
             }
 
-        </div>
+    </div>
     )
 }
 

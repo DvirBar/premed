@@ -11,7 +11,7 @@ function StepsGroup({ parent, isTopLevel }) {
     } = useContext(StepsContext)
 
     const firstSteps = useSelector(getFirstSteps(parent?._id))
-    
+
     return (
         <div 
         className={`steps-group 

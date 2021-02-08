@@ -52,21 +52,21 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: [...state.steps, payload]
+                uniSteps: [...state.uniSteps, payload]
             }
 
         case STEP_UPDATE:
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => step._id === payload._id ? step = payload : step)
+                uniSteps: state.uniSteps.map(step => step._id === payload._id ? step = payload : step)
             }
 
         case STEP_ADD_LINK_LABEL:
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -79,7 +79,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -95,7 +95,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -111,7 +111,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -126,7 +126,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -148,7 +148,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -177,7 +177,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -206,7 +206,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -233,7 +233,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: state.steps.map(step => 
+                uniSteps: state.uniSteps.map(step => 
                     step._id === payload.id
                     ?   {
                         ...step,
@@ -253,7 +253,7 @@ export default function(state = initialState, action) {
             // Waits for get steps
             return {
                 ...state,
-                steps: state.steps.filter(step => step._id !== payload)
+                uniSteps: state.uniSteps.filter(step => step._id !== payload)
             }
 
         default:

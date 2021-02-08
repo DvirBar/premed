@@ -1,5 +1,4 @@
 import React, { Fragment, useContext, useRef, useState } from 'react'
-import AddSummaryGroup from './AddSummaryGroup'
 import SummaryGroupItem from './SummaryGroupItem'
 import { StepsContext } from '../../../StepsContext';
 import MultiSumGroups from './MultiSumGroups';
@@ -11,6 +10,7 @@ function SummaryGroupsList({
     groups, 
     display,
     toggleGroups }) {
+        
     const {
         isStepsAdmin
     } = useContext(StepsContext)
@@ -18,7 +18,7 @@ function SummaryGroupsList({
     const ref = useRef()
 
     useOnClickOutside(ref, display, () => toggleGroups(false))
-    console.log(groups);
+
     return (
         <div 
         ref={ref}
@@ -38,16 +38,10 @@ function SummaryGroupsList({
                     stepId={stepId}
                     group={groups[0]}
                     sumId={sumId}
+                    isSingle={true}
                     display={display || isStepsAdmin} />
                 }
                 </Fragment>
-            }
-            
-            
-            {isStepsAdmin &&
-                <AddSummaryGroup
-                stepId={stepId}
-                sumId={sumId} />                
             }
         </div>
     )

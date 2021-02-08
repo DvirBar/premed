@@ -9,7 +9,8 @@ function SummaryGroupItem({
     stepId, 
     sumId, 
     openChoose,
-    display }) {
+    display,
+    isSingle }) {
     const [displayAdd, setDisplayAdd] = useState(false)
 
     const {
@@ -29,7 +30,9 @@ function SummaryGroupItem({
     return (
         <div 
         className={`summary-group-item
-        ${display ? 'display' : '' }`}>
+        ${isStepsAdmin ? 'admin' : 'client'}
+        ${display ? 'display' : '' }
+        ${isSingle ? 'single' : ''}`}>
             {openChoose &&
                 <div>
                     <i 
