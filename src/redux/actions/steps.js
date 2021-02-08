@@ -13,7 +13,8 @@ import {
     STEP_ADD_SUMMARY_CONTENT,
     STEP_EDIT_SUMMARY_CONTENT,
     STEP_REMOVE_SUMMARY_CONTENT,
-    STEP_ADD_UNI_CONTENT
+    STEP_ADD_UNI_CONTENT,
+    STEP_FILTER_UNIS
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -53,7 +54,6 @@ export const stepUpdate = step => {
 }
 
 export const stepDelete = id => {
-    console.log(id);
     return {
         type: STEP_DELETE,
         payload: id
@@ -61,15 +61,10 @@ export const stepDelete = id => {
 }
 
 // Get all steps
-export const getSteps = (pathId, uniIds) => dispatch => {
+export const getSteps = pathId => dispatch => {
     dispatch(stepLoad());
 
-    const body = JSON.stringify({
-        pathId,
-        uniIds
-    })
-
-    axios.post('api/steps', body)
+    axios.get(`api/steps/${pathId}`)
          .then(res => dispatch(stepSuccess(res.data)))
          .catch(err => {
              dispatch(stepError());
@@ -269,6 +264,13 @@ export const addUniContent = (id, uniId, data) => dispatch => {
              dispatch(getError(err))
              dispatch(stepError())
          })
+}
+
+export const stepsFilterUnis = unis => dispatch => {
+    dispatch({
+        type: STEP_FILTER_UNIS,
+        payload: unis
+    })
 }
 
 export const deleteStep = id => dispatch => {

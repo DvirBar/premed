@@ -1,15 +1,16 @@
 import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
-import { getFirstSteps } from '../../../redux/selectors/steps'
 import { StepsContext } from '../StepsContext'
 import StepsLevel from './StepsLevel'
 import StepSummary from './step-summary/StepSummary'
+import { getFirstSteps } from '../../../redux/selectors/steps'
  
 function StepsGroup({ parent, isTopLevel }) {
-    const firstSteps = useSelector(getFirstSteps(parent._id))
     const {
         selectStep
     } = useContext(StepsContext)
+
+    const firstSteps = useSelector(getFirstSteps(parent?._id))
     
     return (
         <div 

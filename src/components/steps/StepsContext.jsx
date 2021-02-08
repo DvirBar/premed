@@ -1,6 +1,7 @@
 import React, { createContext } from 'react';
 import useStepsAdmin from '../admin/steps/useStepsAdmin';
 import useStepsClient from './useStepsClient';
+import useStepsGlobal from './useStepsGlobal';
 
 export const StepsContext = createContext()
 

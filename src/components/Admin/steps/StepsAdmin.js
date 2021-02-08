@@ -8,34 +8,9 @@ import StepsContent from './StepsContent/StepsContent';
 import StepsProvider from '../../steps/StepsContext';
 
 function StepsAdmin() {
-     // Get paths
-     const {
-        paths,
-        loading
-    } = useSelector(pathsSelector)
-
-    const [selPath, setSelPath] = useState({});
-
-    const selectPath = selected => {
-        setSelPath(selected)
-    }
-
-    const unis = useSelector(getUnisByPath(selPath?.value))
-
-    if(loading || !paths)
-        return <Loadbar />
-
     return (
         <StepsProvider isAdmin={true}>
-            <div className="steps-admin">
-                <StepsContent
-                paths={paths}
-                unis={unis}
-                selPath={selPath}
-                selectPath={selectPath} />
-
-                <StepsEditSeciton />
-            </div>
+            <StepsContent />
         </StepsProvider>
     )
 }

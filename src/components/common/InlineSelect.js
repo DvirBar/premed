@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function InlineSelect({ selected, selectOption, options}) {
@@ -13,7 +13,7 @@ function InlineSelect({ selected, selectOption, options}) {
         <ul className="inline-select">
             {options.map(option => (
                 <li 
-                className={selected.value === option.value
+                className={selected === option.value
                 ?   "select-item selected"
                 :   "select-item"}
                 onClick={() => selectOption(option)}>
@@ -25,7 +25,7 @@ function InlineSelect({ selected, selectOption, options}) {
 }
 
 InlineSelect.propTypes = {
-    selected: PropTypes.object.isRequired,
+    selected: PropTypes.string.isRequired,
     selectOption: PropTypes.func.isRequired,
     options: PropTypes.array.isRequired,
 }

@@ -1,3 +1,4 @@
+import { stepMatchUnis } from '../../utils/steps';
 import {
     STEP_LOADING,
     STEP_SUCCESS,
@@ -13,12 +14,14 @@ import {
     STEP_ADD_SUMMARY_CONTENT,
     STEP_EDIT_SUMMARY_CONTENT,
     STEP_REMOVE_SUMMARY_CONTENT,
-    STEP_ADD_UNI_CONTENT
+    STEP_ADD_UNI_CONTENT,
+    STEP_FILTER_UNIS
 } from '../actions/types';
 
 const initialState = {
     loading: false,
-    steps: []
+    steps: [],
+    uniSteps: []
 }
 
 export default function(state = initialState, action) {
@@ -35,7 +38,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                steps: payload
+                steps: payload,
+                uniSteps: payload
             }
 
         case STEP_ERROR:
@@ -236,6 +240,13 @@ export default function(state = initialState, action) {
                         uniData: payload.uniData
                     }
                     :   step)
+            }
+
+        case STEP_FILTER_UNIS:
+            return {
+                ...state,
+                uniSteps: state.steps.filter(step =>
+                    stepMatchUnis(step, payload))
             }
 
         case STEP_DELETE:

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { Fragment, useContext, useRef, useState } from 'react'
 import AddSummaryGroup from './AddSummaryGroup'
 import SummaryGroupItem from './SummaryGroupItem'
 import { StepsContext } from '../../../StepsContext';
@@ -18,26 +18,31 @@ function SummaryGroupsList({
     const ref = useRef()
 
     useOnClickOutside(ref, display, () => toggleGroups(false))
-
+    console.log(groups);
     return (
         <div 
         ref={ref}
         className={`summary-groups-list
         ${!isStepsAdmin ? 'client' : ''}
         ${isStepsAdmin || display ? 'display': ''}`}>
-            {groups.length > 1
-            ?   <MultiSumGroups
-                displayGroups={display}
-                stepId={stepId}
-                sumId={sumId}
-                groups={groups} />
+            {groups.length > 0 && 
+                <Fragment>
+                {groups.length > 1
+                ?   <MultiSumGroups
+                    displayGroups={display}
+                    stepId={stepId}
+                    sumId={sumId}
+                    groups={groups} />
 
-            :   <SummaryGroupItem
-                stepId={stepId}
-                group={groups[0]}
-                sumId={sumId}
-                display={display || isStepsAdmin} />
+                :   <SummaryGroupItem
+                    stepId={stepId}
+                    group={groups[0]}
+                    sumId={sumId}
+                    display={display || isStepsAdmin} />
+                }
+                </Fragment>
             }
+            
             
             {isStepsAdmin &&
                 <AddSummaryGroup

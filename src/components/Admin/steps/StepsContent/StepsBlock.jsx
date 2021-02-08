@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSteps } from '../../../../redux/actions/steps'
 import { stepsSelector } from '../../../../redux/selectors/steps'
-import StepsProvider from '../../../steps/StepsContext'
+import { StepsContext } from '../../../steps/StepsContext'
 import StepsTree from '../../../steps/StepsTree/StepsTree'
 import AddStep from './AddSteps/AddStep'
 
-function StepsBlock({
-    selPath,
-    selUnis
-}) {
+function StepsBlock() {
+    const {
+        isStepsAdmin,
+        pathId,
+        selUnis,
+        steps
+    } = useContext(StepsContext)
+
     const [displayAdd, setDisplayAdd] = useState(false)
 
     const toggleAdd = toggle => {
@@ -19,18 +23,16 @@ function StepsBlock({
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(selPath && selUnis.length > 0) {
-            dispatch(getSteps(selPath.value, selUnis))
+        if(pathId) {
+            dispatch(getSteps(pathId))
         }
-    }, [selPath, selUnis])
-
-    const steps = useSelector(stepsSelector)
+    }, [pathId])
 
     return (
         <div className="steps-block">
-        {selPath.value &&
+        {isStepsAdmin && pathId &&
             <AddStep 
-            pathId={selPath.value}
+            pathId={pathId}
             uniIds={selUnis} 
             steps={steps}
             display={displayAdd}
@@ -38,7 +40,6 @@ function StepsBlock({
         }
 
         <StepsTree />
-       
     </div>
     )
 }
