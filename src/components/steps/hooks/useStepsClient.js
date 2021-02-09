@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import { getPathById } from '../../redux/selectors/paths';
 import useStepsGlobal from './useStepsGlobal';
 
 function useStepsClient() {
-
     // Get path data from url 
     const history = useHistory()
     let { params, path } = useRouteMatch();

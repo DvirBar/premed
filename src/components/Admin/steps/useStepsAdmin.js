@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useStepsGlobal from '../../steps/useStepsGlobal';
+import useStepsGlobal from '../../steps/hooks/useStepsGlobal';
 
 function useStepsAdmin() {
     const [selPath, setSelPath] = useState({});
