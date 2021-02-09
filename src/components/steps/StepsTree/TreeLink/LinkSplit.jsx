@@ -3,9 +3,10 @@ import React, { Fragment } from 'react'
 function LinkSplit({ 
     isEven, 
     middlePoint, 
-    index }) {
+    index,
+    color }) {
     const startX = 150
-    const endY = 210
+    const endY = 150
 
     let distFromMiddle = Math.abs(middlePoint - index) / 2
 
@@ -17,7 +18,7 @@ function LinkSplit({
         <Fragment>
             {!isEven && middlePoint === index
             ?   <path d="M 150 0 V 210" 
-                stroke="purple" 
+                stroke={color} 
                 stroke-width='5' 
                 fill="transparent"/>
 
@@ -27,7 +28,7 @@ function LinkSplit({
                       ${endX} ${endY/2}, 
                       ${endX} ${endY}`
                     } 
-                stroke="purple" 
+                stroke={color} 
                 stroke-width='5' 
                 fill="transparent"/>
 

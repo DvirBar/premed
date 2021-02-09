@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function StepContent({ selStep }) {
+function StepContent({ step }) {
     return (
         <div className="step-content">
-            <span className="step-title">{selStep.name}</span>
-            {selStep.content 
+            <span className="step-title">{step.name}</span>
+            {step.genContent 
             ?
                 <div 
                 className="content-container ck-editor"
-                dangerouslySetInnerHTML={{__html: selStep.content}}>
+                dangerouslySetInnerHTML={{__html: step.genContent}}>
                 </div>
             : 
             <div className="no-resource-error">

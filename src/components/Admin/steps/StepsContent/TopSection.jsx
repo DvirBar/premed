@@ -33,10 +33,13 @@ function TopSection({ paths }) {
                 </p>
             }
 
-            <UnisChoose
-            unis={unis}
-            selectUni={selectUni}
-            selUnis={selUnis} />
+            <div className={`uni-container
+            ${!isStepsAdmin ? 'client' : ''}`}>
+                <UnisChoose
+                unis={unis}
+                selectUni={selectUni}
+                selUnis={selUnis} />
+            </div>
         </div>
     )
 }

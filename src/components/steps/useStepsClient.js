@@ -12,11 +12,13 @@ function useStepsClient() {
     const { pathId } = params
     let newPath = path.replace(/:pathId/g, pathId)
 
-    const selectStep = (step, event) => {
+    const selectStep = (event, step, isFinal) => {
         if(event)
             event.stopPropagation()
 
-        history.push(`${newPath}/${step._id}`)
+        if(!isFinal) {
+            history.push(`${newPath}/${step._id}`)
+        }
     }
 
     const stepsGlobal = useStepsGlobal(pathId)

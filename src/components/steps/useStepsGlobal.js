@@ -31,10 +31,32 @@ function useStepsGlobal(pathId) {
         }
     }, [selUnis])
 
+    const getTreeColor = uniData => {
+        const baseColor = '#486974'
+
+        if(selUnis.length === 1) {
+            const color = unis?.find(uni => 
+                selUnis[0] === uni._id)?.color
+
+            return color || baseColor
+        }
+
+        if(uniData.length > 1) {
+            return baseColor
+        }
+
+        const color = unis?.find(uni => 
+            uniData[0].uni === uni._id)?.color
+
+        return color || baseColor 
+    }
+
+   
     return {
         unis,
         selUnis,
         selectUni,
+        getTreeColor,
         steps
     }
 }

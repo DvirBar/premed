@@ -1,8 +1,13 @@
 import React from 'react'
 
-function ChooseSumGroup({ groups, selectGroup, display }) {
+function ChooseSumGroup({ 
+    groups, 
+    selectGroup, 
+    display }) {
+
     return (
-        <div className={`choose-sum-group
+        <div 
+        className={`choose-sum-group
         ${display ? 'display' : ''}`}>
             {groups.map(group =>
                 <div 

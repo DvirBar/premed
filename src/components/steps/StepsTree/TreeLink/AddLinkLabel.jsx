@@ -8,7 +8,7 @@ function AddLinkLabel({ step }) {
     const dispatch = useDispatch()
 
     const addLabel = () => {
-        if(label && label !== step.linkLabel) {
+        if(label !== step.linkLabel) {
             const data = {
                 labelName: label
             }

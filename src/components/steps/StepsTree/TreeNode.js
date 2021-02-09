@@ -7,14 +7,27 @@ import TreeLink from './TreeLink/TreeLink';
 import StepsLevel from './StepsLevel';
 import LinkLabel from './TreeLink/LinkLabel';
 import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps';
+import { StepsContext } from '../StepsContext';
 
 function TreeNode({ step, length }) {
     const nextSteps = useSelector(getNextSteps(step?._id))
     const children = useSelector(getStepChildren(step?._id))
     const isTopLevel = !step.parent
     const isGroup = children.length > 0
+
+    const isEven = length % 2 === 0
+    const ratio = isEven 
+    ? isGroup ? length : length + 1 
+    : length
+
     const nodeWidth = {
-        width: (100/length) + '%'}
+        width: (100/ratio) + '%'}
+
+    const {
+        getTreeColor
+    } = useContext(StepsContext)
+
+    const color = getTreeColor(step.uniData)
 
     return (
         <div
@@ -23,18 +36,24 @@ function TreeNode({ step, length }) {
             {isGroup 
             ?   <StepsGroup
                 parent={step}
+                color={color}
                 isTopLevel={isTopLevel} />
             :   <TreeNodeContent
+                color={color}
                 step={step} />
             }
             {nextSteps?.length > 0 && 
                 <Fragment>
-                    <LinkLabel
-                    step={step}/>                       
+                    {!isTopLevel &&
+                        <LinkLabel
+                        color={color}
+                        step={step}/>                                               
+                    }
                     <TreeLink
                     linkWidth='300'
                     linkInfo={step.linkInfo}
-                    nextSteps={nextSteps} />
+                    nextSteps={nextSteps}
+                    color={color} />
                     <StepsLevel
                     levelWidth='300px'
                     nextSteps={nextSteps} />

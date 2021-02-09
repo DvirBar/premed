@@ -39,7 +39,7 @@ function StepSummaryItem({ summary, stepId }) {
             toggleGroups={toggleGroups}
             stepId={stepId}
             sumId={summary._id}
-            groups={summary.groups} />
+            groups={summary.groups}/>
         </div>
     )
 }

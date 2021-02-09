@@ -8,8 +8,9 @@
 }
 
 .steps-level {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-shrink: 1;
     flex-wrap: wrap;
 }
@@ -21,4 +22,10 @@
     justify-content: flex-start;
     align-items: center;
     margin: 0 !important;
+    transition: color 0.3s ease-in-out;
+    transition: stroke-width 0.3s ease-in-out;
+
+    .node-circle {
+        stroke-width: 2px;
+    }
 }

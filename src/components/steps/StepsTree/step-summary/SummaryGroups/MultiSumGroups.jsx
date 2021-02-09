@@ -3,7 +3,12 @@ import { isObjEmpty } from '../../../../../utils/objects'
 import ChooseSumGroup from './ChooseSumGroup'
 import SummaryGroupItem from './SummaryGroupItem'
 
-function MultiSumGroups({ displayGroups, groups, stepId, sumId }) {
+function MultiSumGroups({ 
+    displayGroups, 
+    groups, 
+    stepId, 
+    sumId }) {
+        
     const [displayChoose, setDisplayChoose] = useState(false)
     const [chosenGroup, setChosenGroup] = useState({})
     

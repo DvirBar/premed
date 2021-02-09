@@ -4,7 +4,7 @@ import { StepsContext } from '../../StepsContext'
 import StagingSum from './StagingSum'
 import StepSummariesList from './StepSummariesList'
 
-function StepSummary({ stepId, summaries }) {
+function StepSummary({ stepId, summaries, color }) {
     const [displayStaging, setDisplayStaging] = useState(false)
     
     const toggleStaging = toggle => {
@@ -21,7 +21,8 @@ function StepSummary({ stepId, summaries }) {
         <div className="step-summary">
             <StepSummariesList
             stepId={stepId}
-            summaries={summaries} />
+            summaries={summaries}
+            color={color} />
 
             {isStepsAdmin &&
             <Fragment>

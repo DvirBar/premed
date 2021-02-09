@@ -22,7 +22,7 @@ function SummaryGroupContent({
             toggleGroups={toggleGroups}
             stepId={stepId}
             sumId={sumId}
-            groups={groups}/>
+            groups={groups} />
 
             {isStepsAdmin &&
                 <AddSummaryGroup

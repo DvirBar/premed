@@ -44,7 +44,8 @@ function SummaryGroupItem({
             }
 
             {isStepsAdmin &&
-                <div className="sum-group-name">
+                <div 
+                className="sum-group-name">
                     {group.name}
                 </div>
             }

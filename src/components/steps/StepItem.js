@@ -4,17 +4,16 @@ import { useRouteMatch, useHistory } from 'react-router-dom';
 import Modal from '../layout/Modal';
 import StepsTree from './StepsTree/StepsTree';
 import StepContent from './StepContent';
+import PathSteps from './‎PathSteps';
+import { getStepById } from '../../redux/selectors/steps';
 
 function StepItem() {
     let { params, path } = useRouteMatch();
     let history = useHistory();
     const { pathId, stepId } = params;
     path = path.replace(/:pathId/g, pathId)
-
-    const steps = useSelector(state => 
-        state.steps.steps.filter(step => step.path === pathId))
     
-    const step = steps.find(step => step._id === stepId)
+    const step = useSelector(getStepById(stepId))
 
     const selectStep = selStep => {
         path = path.replace(/:stepId/g, selStep._id)
@@ -34,13 +33,11 @@ function StepItem() {
             display={displayModal}
             toggleModal={toggleModal}
             title={"מסלול הקבלה"}>
-                <StepsTree 
-                steps={steps}
-                selectStep={selectStep} />
+                <PathSteps />
             </Modal>
             <button onClick={() => toggleModal(true)}>הצג מסלול</button>
             { step &&
-                <StepContent selStep={step} /> 
+                <StepContent step={step} /> 
             }
         </div>
     )

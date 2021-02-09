@@ -1,9 +1,3 @@
-.steps-level {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 .steps-group {
     width: 100%;
     display: flex;
@@ -16,6 +10,10 @@
             padding: 1rem;
             background-color: rgba($main-color, 0.1);
             border-radius: 0.5rem;
+        }
+
+        .steps-group-name {
+            font-size: 2rem;
         }
     }
 

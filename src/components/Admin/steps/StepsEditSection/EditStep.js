@@ -13,13 +13,11 @@ import FormInput from '../../../common/FormInput'
 import Dropdown from '../../../common/Dropdown'
 import DeleteStep from './DeleteStep'
 
-function EditStep() {
+function EditStep({ display, toggleDisplay }) {
     const steps = useSelector(stepsSelector)
 
     const {
-        selStep,
-        displayEdit,
-        toggleEdit
+        selStep
     } = useContext(StepsContext)
 
 
@@ -62,8 +60,8 @@ function EditStep() {
 
     return (
         <Modal
-        display={displayEdit}
-        toggleModal={toggleEdit}
+        display={display}
+        toggleModal={toggleDisplay}
         title='עריכת שלב'>
             <form onSubmit={handleSubmit}>
                 <FormInput

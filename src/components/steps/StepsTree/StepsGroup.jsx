@@ -5,20 +5,33 @@ import StepsLevel from './StepsLevel'
 import StepSummary from './step-summary/StepSummary'
 import { getFirstSteps } from '../../../redux/selectors/steps'
  
-function StepsGroup({ parent, isTopLevel }) {
+function StepsGroup({ parent, isTopLevel, color }) {
     const {
         selectStep
     } = useContext(StepsContext)
 
     const firstSteps = useSelector(getFirstSteps(parent?._id))
 
+
+    const groupStyle = {
+        backgroundColor: color + '20',
+    }
+
+    const groupNameStyle = {
+        color,
+        borderColor: color + '90'
+    }
+
     return (
         <div 
         className={`steps-group 
         ${isTopLevel ?  'top-level' : 'nested'}`}>
-            <div className={`wrapper 
-            ${isTopLevel ?  'top-level' : 'nested'}`}>
+            <div 
+            className={`wrapper 
+            ${isTopLevel ?  'top-level' : 'nested'}`}
+            style={!isTopLevel ? groupStyle : {}}>
                 <div 
+                style={groupNameStyle}
                 onClick={e => selectStep(parent, e)}
                 className="steps-group-name">
                     <span>
@@ -32,6 +45,7 @@ function StepsGroup({ parent, isTopLevel }) {
                     }
 
                     <StepSummary
+                    color={color}
                     stepId={parent._id}
                     summaries={parent.summaries} />     
                 </div>

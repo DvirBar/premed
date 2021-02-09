@@ -17,7 +17,7 @@ function useStepsAdmin() {
     }
 
     // Select step 
-    const selectStep = (step, event) => {
+    const selectStep = (event, step) => {
         if(event)
             event.stopPropagation()
     
