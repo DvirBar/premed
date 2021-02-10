@@ -1,20 +1,19 @@
+.labels-container {
+    position: relative;
+}
+
 .link-label {
     position: absolute;
-    top: 75px;
-    min-width: 150px;
+    width: 7rem;
 
     .add-link-label {
         position: absolute;
-        width: 10rem;
         text-align: center;
-        right: 25px;
+        width: 7rem;
     }
 
     .link-label-name {
         position: absolute;
-        right: 85px;
-        font-size: 1.8rem;
-        color: purple;
-        font-weight: 500;
+        font-size: 1.5rem;
     }
 }

@@ -44,11 +44,6 @@ function TreeNode({ step, length }) {
             }
             {nextSteps?.length > 0 && 
                 <Fragment>
-                    {!isTopLevel &&
-                        <LinkLabel
-                        color={color}
-                        step={step}/>                                               
-                    }
                     <TreeLink
                     linkWidth='300'
                     linkInfo={step.linkInfo}

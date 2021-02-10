@@ -1,41 +1,34 @@
 import React from 'react'
-import LinkSplit from './LinkSplit'
+import LinkLabels from './LinkLabels'
+import LinkPath from './LinkPath'
+
 
 function TreeLink({ nextSteps, linkWidth, color }) {
-    const length = nextSteps.length
-    const isEven = length % 2 === 0
-    const middlePoint = (length / 2) - 0.5
     const multiNext = nextSteps.length > 1
 
     const mainLinkHeight = 70
     const splitLinkHeight = 150
     const svgHeight = multiNext ? splitLinkHeight : mainLinkHeight
 
+    const pathCords = {
+        startX: 150,
+        startY: 0,
+        length: 70
+    }
     return (
-        <svg 
-        width={linkWidth} 
-        height={svgHeight} 
-        xmlns="http://www.w3.org/2000/svg">
-            {!multiNext 
-            ?   <path 
-                d={`M 150 0 V ${mainLinkHeight}`} 
-                stroke={color} 
-                stroke-width='5' 
-                fill="transparent"/>
-
-            
-            :   <g>
-                    {nextSteps.map((step, index) =>
-                        <LinkSplit
-                        key={step._id}
-                        middlePoint={middlePoint}
-                        isEven={isEven}
-                        index={index}
-                        color={color} />
-                    )}
-                </g>
-            }
-        </svg>
+       <div className="path-section">
+           <LinkLabels 
+           nextSteps={nextSteps}
+           color={color}
+           isMulti={multiNext} />
+           <LinkPath
+           linkWidth={linkWidth}
+           svgHeight={svgHeight}
+           multiNext={multiNext}
+           pathCords={pathCords}
+           color={color}
+           nextSteps={nextSteps} />
+       </div>
     )
 }
 
