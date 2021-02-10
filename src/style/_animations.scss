@@ -18,3 +18,24 @@
         transform: translateX(0);
     }
 }
+
+@keyframes tiltHorizontal {
+    0% {
+        transform: translateX(0);
+    }
+    12.5% {
+        transform: translateX(2px);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    37.5% {
+        transform: translateX(2px);
+    }
+    50% {
+        transform: translateX(-2px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}

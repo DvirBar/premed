@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { StepsContext } from '../StepsContext'
 import StepsLevel from './StepsLevel'
@@ -12,6 +12,7 @@ function StepsGroup({ parent, isTopLevel, color }) {
 
     const firstSteps = useSelector(getFirstSteps(parent?._id))
 
+    const [isHover, setIsHover] = useState(false)
 
     const groupStyle = {
         backgroundColor: color + '20',
@@ -32,7 +33,7 @@ function StepsGroup({ parent, isTopLevel, color }) {
             style={!isTopLevel ? groupStyle : {}}>
                 <div 
                 style={groupNameStyle}
-                onClick={e => selectStep(parent, e)}
+                onClick={e => selectStep(e, parent)}
                 className="steps-group-name">
                     <span>
                         {parent.name}
