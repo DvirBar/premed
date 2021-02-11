@@ -1,7 +1,8 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from '../common/useOnClickOutside';
 import TopLinks from './TopLinks';
+import { useLocation } from 'react-router-dom';
 
 const Modal = ({ 
   display, 
@@ -11,16 +12,20 @@ const Modal = ({
   subTitle, 
   links })=> {
     
-    // We'll use ref of modal box, so when clicking outside it'll close
+    /* We'll use ref of modal box, 
+    so when clicking outside it'll close */
     const ref = useRef();
     useOnClickOutside(ref, display, () => toggleModal(false))
 
-    // Overflow
+    /* Prevent window overflow and disable outside scrolling 
+      when modal is open */
     if(display) {
       document.documentElement.style.overflow = 'hidden';
       document.body.scroll = "no"
     }
 
+    /* Cleanup window overflow disable and scrolling when 
+       modal closes */
     else {
       document.documentElement.style.overflow = 'auto';
       document.body.scroll = "yes"
@@ -41,6 +46,13 @@ const Modal = ({
       opacity: 0,
       visibility: 'hidden'
     }
+
+    // Close modal when url changes 
+    const location = useLocation()
+
+    useEffect(() => {
+      toggleModal(false)
+    }, [location])
 
     return (
         <div 

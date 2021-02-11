@@ -10,8 +10,8 @@ function Default() {
     return (
         <div className="default-page">
             <Anouncements />
-            {auth.isAuthenticated && 
-                <Dashboard />}
+            {/* {auth.isAuthenticated && 
+                <Dashboard />} */}
         </div>
     )
 }

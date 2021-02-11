@@ -6,36 +6,17 @@ import StepsTree from './StepsTree/StepsTree';
 import StepContent from './StepContent';
 import PathSteps from './‎PathSteps';
 import { getStepById } from '../../redux/selectors/steps';
+import ShowTree from './ShowTree';
 
 function StepItem() {
-    let { params, path } = useRouteMatch();
-    let history = useHistory();
-    const { pathId, stepId } = params;
-    path = path.replace(/:pathId/g, pathId)
+    let { params } = useRouteMatch();
+    const { stepId } = params;
     
     const step = useSelector(getStepById(stepId))
 
-    const selectStep = selStep => {
-        path = path.replace(/:stepId/g, selStep._id)
-        setDisplayModal(false)
-        history.push(path)
-    }
-
-    const [displayModal, setDisplayModal] = useState(false)
-
-    const toggleModal = open => {
-        setDisplayModal(open)
-    }
-
     return (
         <div>
-            <Modal
-            display={displayModal}
-            toggleModal={toggleModal}
-            title={"מסלול הקבלה"}>
-                <PathSteps />
-            </Modal>
-            <button onClick={() => toggleModal(true)}>הצג מסלול</button>
+            <ShowTree />
             { step &&
                 <StepContent step={step} /> 
             }

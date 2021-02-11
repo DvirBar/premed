@@ -32,7 +32,7 @@ const Router = () => {
                 <Route exact path="/login" component={Login} />
                 <ProtectedRoute path="/profile" component={Profile} />
                 <AdminRoute path="/admin" component={Admin} />
-                <Route path="/steps" component={Steps} />
+                <Route path="/steps/:pathId" component={Steps} />
                 <ProtectedRoute path="/stats" component={Stats} />
                 <Route path="/qna" component={Questions} />
                 <ProtectedRoute path="/drive" component={Drive} />

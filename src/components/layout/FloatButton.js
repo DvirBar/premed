@@ -8,7 +8,9 @@ function FloatButton({ onClick, toolTip, className, children}) {
         ?   `float-button-wrapper ${className}`
         :   'float-button-wrapper'} 
         onClick={onClick}>
-            <ToolTip text={toolTip} />
+            {toolTip &&
+                <ToolTip text={toolTip} />
+            }
             <div className="float-button">
                 { children }
             </div>

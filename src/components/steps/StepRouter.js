@@ -22,8 +22,8 @@ const StepRouter = () => {
 
     return ( 
         <Switch>
-            <Route exact path={`${path}/:pathId`} component={PathSteps} />
-            <Route exact path={`${path}/:pathId/:stepId`} component={StepItem} />
+            <Route exact path={`${path}`} component={PathSteps} />
+            <Route exact path={`${path}/:stepId`} component={StepItem} />
         </Switch>
     )
 }
