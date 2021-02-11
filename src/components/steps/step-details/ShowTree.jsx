@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
-import FloatButton from '../layout/FloatButton'
-import Modal from '../layout/Modal'
-import PathSteps from './‎PathSteps'
+import FloatButton from '../../layout/FloatButton'
+import Modal from '../../layout/Modal'
+import PathSteps from '../‎PathSteps'
 
 function ShowTree() {
     const [displayModal, setDisplayModal] = useState(false)
@@ -11,6 +11,7 @@ function ShowTree() {
     return (
         <Fragment>
             <FloatButton
+            toolTip="מסלול"
             onClick={() => setDisplayModal(true)}>
                 <i className="material-icons float-button">
                     timeline

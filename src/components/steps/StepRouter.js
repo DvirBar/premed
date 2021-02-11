@@ -6,7 +6,7 @@ import {
     useLocation,
     useRouteMatch } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
-import StepItem from './StepItem';
+import StepItem from './step-details/StepItem';
 import PathSteps from './‎PathSteps';
 
 
