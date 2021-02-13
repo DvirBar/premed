@@ -51,13 +51,29 @@ function useStepsGlobal(pathId) {
         return baseColor;
     }
 
+    const getUniContent = step => {
+        const uniData = step?.uniData
+        const uniContent = {}
+        
+        if(uniData) {
+            for(let uniItem of uniData) {
+                if(uniItem.content?.length > 0) {
+                    uniContent[uniItem.uni] = uniItem.content
+                }
+            }
+        }
+
+        return uniContent
+    }
+
    
     return {
         unis,
         selUnis,
         selectUni,
         getTreeColor,
-        steps
+        steps,
+        getUniContent
     }
 }
 

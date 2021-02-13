@@ -5,19 +5,28 @@ import StepContent from './StepContent';
 import { getStepById } from '../../../redux/selectors/steps';
 import ShowTree from './ShowTree';
 import JumpToStep from './jump-to-step/JumpToStep';
+import useStepsGlobal from '../hooks/useStepsGlobal';
+import UniContent from './UniContent';
+import { isObjEmpty } from '../../../utils/objects';
 
 function StepItem() {
     let { params } = useRouteMatch();
     const { stepId } = params;
+    const { getUniContent } = useStepsGlobal()
     
     const step = useSelector(getStepById(stepId))
-
+    const uniContent = getUniContent(step)
+    
     return (
         <div className="step-item">
             <ShowTree />
             { step &&
                 <Fragment>
                     <StepContent step={step} /> 
+                    {!isObjEmpty(uniContent) &&
+                        <UniContent 
+                        content={uniContent} />
+                    }
                     <JumpToStep
                     step={step} />
                 </Fragment>

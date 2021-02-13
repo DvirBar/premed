@@ -31,9 +31,6 @@ const Carousel = ({ className, children }) => {
         }
     }
     
-    useEffect(() => {
-        console.log(loc);
-    }, [loc])
     return (
         <div className={className
             ? `carousel ${className}`

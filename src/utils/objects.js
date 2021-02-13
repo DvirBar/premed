@@ -25,3 +25,10 @@ export const checkObjectKeys = (obj, keys) => {
     
     return success
 }
+
+export const arrayToObject = (arr, keyName) => {
+    return arr.reduce((map, objItem) => {
+        map[objItem[keyName]] = objItem.content
+        return map
+    }, {})
+}

@@ -12,6 +12,8 @@ import { getStepById, stepsSelector } from '../../../../redux/selectors/steps'
 import FormInput from '../../../common/FormInput'
 import Dropdown from '../../../common/Dropdown'
 import DeleteStep from './DeleteStep'
+import EditUniContent from './EditUniContent'
+import{ arrayToObject } from '../../../../utils/objects'
 
 function EditStep({ display, toggleDisplay }) {
     const steps = useSelector(stepsSelector)
@@ -23,12 +25,14 @@ function EditStep({ display, toggleDisplay }) {
 
     const [defaultValues, setDefaultValues] = useState()
 
+
     useEffect(() => {
         setDefaultValues({
             name: selStep.name,
             parentId: selStep.parent,
             prevId: selStep.prev,
-            genContent: selStep.genContent || ''
+            genContent: selStep.genContent || '',
+            uniContent: arrayToObject(selStep?.uniData || [], 'uni')
         })
     }, [selStep])
 
@@ -58,6 +62,8 @@ function EditStep({ display, toggleDisplay }) {
     const parentStep = useSelector(getStepById(values.parentId))
     const prevStep = useSelector(getStepById(values.prevId))
 
+
+    console.log(values);
     return (
         <Modal
         display={display}
@@ -104,6 +110,12 @@ function EditStep({ display, toggleDisplay }) {
                 onChange={ (event, editor) => {
                     changeContent(editor.getData())
                 }} />
+
+                {/* {values.uniContent &&
+                    <EditUniContent
+                    uniContent={values.uniContent}
+                    handleChange={handleChange} />
+                } */}
                 
                 <button type="submit"> 
                     עריכה
