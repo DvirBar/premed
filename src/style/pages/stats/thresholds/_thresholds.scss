@@ -1,11 +1,13 @@
 .thresholds {
+    cursor: default;
+
     .unis-list {
         display: flex;
         flex-direction: column;
         row-gap: 3rem;
 
         .uni-name {
-            font-size: 2rem;
+            font-size: 2.3rem;
             margin-bottom: 1rem;
         }
     }
@@ -30,5 +32,22 @@
         flex-direction: column;
         row-gap: 5rem;
         padding-bottom: 1rem;
+    }
+
+    .calc-name {
+        font-size: 2rem;
+    }
+
+    .indent-block {
+        padding-right: 1rem;
+    }
+
+    .const-calc-value {
+        font-size: 1.7rem;
+        padding-top: 1rem;
+    }
+
+    .no-thresh-message {
+        font-weight: 500;
     }
 }

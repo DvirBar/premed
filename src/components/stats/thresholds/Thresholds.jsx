@@ -18,7 +18,7 @@ function Thresholds({ pathId, tableId }) {
     }, [pathId])
 
     return (
-        <div className="thresholds">
+        <div className="thresholds noselect">
             <div className="unis-list">
             {unis.map(uni => 
                 <UniItem

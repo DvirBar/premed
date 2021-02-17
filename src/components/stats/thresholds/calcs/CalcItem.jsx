@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getThreshsByFieldAndType } from '../../../../redux/selectors/datatables';
 import CalcContent from './CalcContent';
@@ -24,12 +24,10 @@ function CalcItem({ calc, tableId, color }) {
         setSelType(type)
     }
 
-    const nameStyle = {
-        color: color
-    }
 
     const calcItemStyle = {
-        backgroundColor: color + '15'
+        backgroundColor: color + '15',
+        color: color
     }
 
     return (
@@ -37,21 +35,27 @@ function CalcItem({ calc, tableId, color }) {
         style={calcItemStyle}
         className="calc-item">
             <p 
-            className="calc-name"
-            style={nameStyle}>
+            className="calc-name">
                 {calc.name}
             </p>
-
-            {typeOptions.length === 0
-            ?   <p>אין סיפי קבלה זמינים</p>
-            :   <CalcContent
-                typeOptions={typeOptions}
-                selType={selType}
-                selectType={selectType}
-                acceptThreshes={acceptThreshes}
-                rejectThreshes={rejectThreshes} />
+            {calc.constValue 
+            ?   <div className="const-calc-value indent-block">
+                    ערך קבוע: {calc.constValue}
+                </div>
+            : <Fragment>
+                {typeOptions.length === 0
+                ?   <p className="no-thresh-message indent-block">
+                        אין סיפי קבלה זמינים
+                    </p>
+                :   <CalcContent
+                    typeOptions={typeOptions}
+                    selType={selType}
+                    selectType={selectType}
+                    acceptThreshes={acceptThreshes}
+                    rejectThreshes={rejectThreshes} />
+                }
+            </Fragment>
             }
-
             
         </div>
     )

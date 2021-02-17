@@ -25,19 +25,30 @@ function CalcThreshAxis({ threshes, type }) {
 
     const baseAloc = 10
 
+    const axisWidth = 830
+
+    const axisStyle ={
+        width: axisWidth
+    }
+
     return (
-        <div 
-        className={`calc-thresh-axis ` + type}>
-            {monthsSplit.map((month, index) => 
-                <AxisMonthSection
-                month={month.month}
-                year={month.year}
-                threshes={month.threshes}
-                isEven={index % 2 === 0}
-                type={type}
-                length={monthsSplit.length}
-                baseAloc={baseAloc} />)}
+        <div className="scroll-wrapper scrollbar-main">
+            <div 
+            style={axisStyle}
+            className={`calc-thresh-axis ` + type}>
+                {monthsSplit.map((month, index) => 
+                    <AxisMonthSection
+                    month={month.month}
+                    year={month.year}
+                    threshes={month.threshes}
+                    isEven={index % 2 === 0}
+                    type={type}
+                    length={monthsSplit.length}
+                    baseAloc={baseAloc} 
+                    axisWidth={axisWidth} />)}
+            </div>
         </div>
+        
     )
 }
 

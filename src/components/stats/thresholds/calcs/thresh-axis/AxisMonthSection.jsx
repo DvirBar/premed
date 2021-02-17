@@ -12,7 +12,8 @@ function AxisMonthSection({
     isEven, 
     type, 
     length,
-    baseAloc }) {
+    baseAloc,
+    axisWidth }) {
 
     const color = type === 'accept'
     ?   '#1b922f' : '#c01b1b'
@@ -20,17 +21,17 @@ function AxisMonthSection({
     const borderColor = isEven 
     ?   color + '70' : color
 
-    const axisWidth = 830 / length
+    const monthAxisWidth = axisWidth / length
     const groupsNum = baseAloc/length
     const days = new Date(year, month + 1, 0).getDate()
     const daysGap = days / groupsNum
-    const groupWidth = axisWidth/groupsNum
+    const groupWidth = monthAxisWidth/groupsNum
 
     const threshGroups = groupAxis(threshes, daysGap)
     
     const axisStyle = {
         color,
-        width: axisWidth
+        width: monthAxisWidth
     } 
 
     const axisBarStyle = {
@@ -56,7 +57,7 @@ function AxisMonthSection({
             groupsNum={groupsNum}
             daysGap={daysGap}
             days={days}
-            listWidth={axisWidth}
+            listWidth={monthAxisWidth}
             width={groupWidth}
             color={color} />
             <div className="axis-month-name">

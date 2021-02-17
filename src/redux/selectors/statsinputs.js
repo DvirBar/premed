@@ -18,7 +18,7 @@ export const threshFieldsSelector = createSelector(
         const filteredFields = fields.filter(field => 
             field.threshField)
         const filteredCalcs = calcs.filter(calc =>
-             calc.threshField)
+             calc.threshField || calc.constValue)
     
         return [...filteredCalcs, ...filteredFields]    
     }

@@ -1,3 +1,8 @@
+.scroll-wrapper {
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
 .calc-thresh-axis {
     display: flex;
     align-items: flex-end;
@@ -5,7 +10,7 @@
     align-self: center;
 
     .axis-month-section {
-        height: 180px;
+        height: 200px;
         display: flex;
         flex-direction: column;
         row-gap: 1rem;
