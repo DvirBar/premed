@@ -1,7 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { getDataFields } from '../../../../../redux/actions/datafields'
-import SelectCalcs from './SelectCalcs'
+import React, { Fragment, useState } from 'react'
 import Selectors from './Selectors'
 import SelectThreshType from './SelectThreshType'
 import ThreshList from './ThreshList'
@@ -18,11 +15,6 @@ function Thresholds({ tableId }) {
     const selectType = type => {
         setSelType(type)
     }
-
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getDataFields())
-    }, [])
 
     return (
         <div className="thresholds">

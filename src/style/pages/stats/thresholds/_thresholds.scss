@@ -1,0 +1,34 @@
+.thresholds {
+    .unis-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 3rem;
+
+        .uni-name {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .calcs-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+    }
+
+    .calc-item {
+        background-color: transparent;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    // Type selector style in admin scss file
+
+    .calc-content {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 5rem;
+        padding-bottom: 1rem;
+    }
+}

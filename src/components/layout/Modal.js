@@ -54,6 +54,13 @@ const Modal = ({
       toggleModal(false)
     }, [location])
 
+    const selectLink = loc => {
+      console.log(loc);
+      if(links && links.selectLink) {
+        links.selectLink(loc)
+      }
+    }
+
     return (
         <div 
         className="gen-modal" 
@@ -70,7 +77,7 @@ const Modal = ({
               </p>
               {links?.linksList && 
                 <TopLinks 
-                selectLink={links.selectLink}
+                onChoose={selectLink}
                 selected={links.selected}>
                     {links.linksList.map(link => 
                       <div 

@@ -35,7 +35,34 @@
     50% {
         transform: translateX(-2px);
     }
+    72.5% {
+        transform: translateX(0px);
+    }
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes tiltVertical {
+    0% {
+        transform: translateY(0);
+    }
+    12.5% {
+        transform: translateY(2px);
+    }
+    25% {
+        transform: translateY(-2px);
+    }
+    37.5% {
+        transform: translateY(2px);
+    }
+    50% {
+        transform: translateY(-2px);
+    }
+    72.5% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(0);
     }
 }

@@ -6,14 +6,13 @@ import ThreshItem from './ThreshItem'
 
 function ThreshList({ tableId, selField, threshType }) {
     // Get thresholds by type and field
-    const thresholds = useSelector(state => 
-        getThreshsByFieldAndType(
-            state,
-            tableId,
-            selField,
-            threshType))
+    const thresholds = useSelector(getThreshsByFieldAndType(
+        tableId,
+        selField,
+        threshType))
 
     const [displayAdd, setDisplayAdd] = useState(false)
+    console.log(thresholds);
 
     return (
         <ul className={"thresh-list " + threshType}>

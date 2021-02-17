@@ -12,6 +12,7 @@ import StepsAdmin from './steps/StepsAdmin';
 import Pages from './pages/Pages';
 import StatsMain from './stats/StatsMain';
 import Questions from './questions/Questions';
+import DataTables from './stats/DataTables';
 
 
 const AdminRouter = () => {
@@ -30,7 +31,7 @@ const AdminRouter = () => {
                 <AdminRoute path={`${path}/anouncements`} component={AncAdmin} />
                 <AdminRoute path={`${path}/steps`} component={StepsAdmin} />
                 <AdminRoute path={`${path}/pages`} component={Pages} />
-                <AdminRoute exact path={`${path}/stats`} component={StatsMain} />
+                <AdminRoute exact path={`${path}/stats`} component={DataTables} />
                 <AdminRoute exact path={`${path}/questions`} component={Questions} />
             </Switch>
     )

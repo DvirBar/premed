@@ -1,16 +1,24 @@
 import React from 'react'
-import CalcsList from './CalcsList'
+import { useSelector } from 'react-redux'
+import { getCalcsByUniAndPath } from '../../../redux/selectors/statsinputs'
+import CalcsList from './calcs/CalcsList'
 
-function UniItem({ uni, uniFields, tableId }) {
+function UniItem({ pathId, uni, tableId }) {
+    const calcs = useSelector(getCalcsByUniAndPath(pathId, uni._id))
+    
+    const uniNameStyle = {
+        color: uni.color
+    }
+
     return (
         <div className="uni-item">
             <p 
             className="uni-name"
-            style={{color: uni.color}}>
+            style={uniNameStyle}>
                 {uni.name}
             </p>
             <CalcsList
-            calcs={uniFields}
+            calcs={calcs}
             tableId={tableId}
             backColor={uni.color} />
         </div>

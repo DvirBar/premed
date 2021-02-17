@@ -1,3 +1,4 @@
+import { months } from 'moment';
 import React from 'react';
 import AxisMonthSection from './AxisMonthSection';
 
@@ -6,6 +7,7 @@ function CalcThreshAxis({ threshes, type }) {
 
     for(let thresh of threshes) {
         const threshMonth = (new Date(thresh.date)).getMonth()
+        const threshYear = (new Date(thresh.date)).getYear()
         const monthObj = monthsSplit.find(item => 
             item.month === threshMonth)
         if(monthObj) {
@@ -15,14 +17,13 @@ function CalcThreshAxis({ threshes, type }) {
         else {
             monthsSplit.push({
                 month: threshMonth,
+                year: threshYear,
                 threshes: [thresh]
             })
         }
     }
 
-    const relativeSize = monthThreshes => {
-       return (monthThreshes.length / threshes.length) * 100
-    }
+    const baseAloc = 10
 
     return (
         <div 
@@ -30,10 +31,12 @@ function CalcThreshAxis({ threshes, type }) {
             {monthsSplit.map((month, index) => 
                 <AxisMonthSection
                 month={month.month}
+                year={month.year}
                 threshes={month.threshes}
                 isEven={index % 2 === 0}
                 type={type}
-                relativeSize={relativeSize(month.threshes)} />)}
+                length={monthsSplit.length}
+                baseAloc={baseAloc} />)}
         </div>
     )
 }

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { getCalcFieldsByUnis } from '../../../../../redux/selectors/datafields';
 import Dropdown from '../../../../common/Dropdown';
+import { getCalcsByUniAndPath } from '../../../../../redux/selectors/statsinputs';
 
 function SelectCalcs({ pathId, uniId, selectField }) {
-    const calcFields = useSelector(state => 
-        getCalcFieldsByUnis(state.datafields.fields, pathId, uniId))
-
+    const calcFields = useSelector(getCalcsByUniAndPath(pathId, uniId))
+    console.log(calcFields);
     const options = calcFields.map(field => ({
         name: field.name,
         value: field._id

@@ -23,11 +23,6 @@ function Stats() {
     const [selUni, setSelUni] = useState('');
 
 
-    // Get types 
-    useEffect(() => {
-        dispatch(getStatsInputs())
-    }, [])
-
     // Paths
     const pathSelector = useSelector(state => state.paths);
     const paths = pathSelector.paths;

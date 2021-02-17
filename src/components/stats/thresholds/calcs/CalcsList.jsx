@@ -4,8 +4,7 @@ import CalcItem from './CalcItem'
 function CalcsList({ calcs, tableId, backColor }) {
     return (
         <div 
-        className="calcs-list"
-        style={{ backgroundColor: backColor + '15' }}>
+        className="calcs-list">
             {calcs.map(calc =>
                 <CalcItem
                 key={calc._id}

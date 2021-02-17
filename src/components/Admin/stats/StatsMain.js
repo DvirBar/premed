@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTables from './DataTables';
 import Stats from './Stats';
 
 function StatsMain() {
     const [showStats, setShowStats] = useState(true);
+    useEffect(() => {
+        
+    })
 
     return (
         <div className="stats-main">

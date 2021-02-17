@@ -11,6 +11,19 @@ export const calcsSelector = createSelector(
     inputs => inputs.calcs
 )
 
+export const threshFieldsSelector = createSelector(
+    fieldsSelector,
+    calcsSelector,
+    (fields, calcs) => {
+        const filteredFields = fields.filter(field => 
+            field.threshField)
+        const filteredCalcs = calcs.filter(calc =>
+             calc.threshField)
+    
+        return [...filteredCalcs, ...filteredFields]    
+    }
+)
+
 export const getAllStoredCalcs = state => {
     return state.statsinputs.calcs
 }
@@ -126,4 +139,19 @@ export const getCalcWithGroupArgs = createSelector(
 export const getTableSectionsByPath = pathId => createSelector(
     statsInputsSelector,
     inputs => inputs.tableSections[pathId]
+)
+
+export const getCalcsByUniAndPath = (pathId, uniId) => createSelector(
+    threshFieldsSelector,
+    fields => fields.filter(field => {
+        if(field.threshField?.paths) {
+            const threshField = field.threshField
+
+            return threshField.paths.includes(pathId) && 
+                   threshField.unis.includes(uniId)
+        }
+
+        return field.uni === uniId && 
+        (!field.paths || field.paths.includes(pathId))
+    })
 )

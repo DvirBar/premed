@@ -9,11 +9,13 @@ function TableDetails({ table, display, toggleModal }) {
     const linksList = [
         {
             name: "עריכה",
-            loc: "edit"
+            loc: "edit",
+            id: "edit"
         },
         {
             name: "סיפים",
-            loc: "thresholds"
+            loc: "thresholds",
+            id: "thresholds"
         }
     ]
 
@@ -26,6 +28,8 @@ function TableDetails({ table, display, toggleModal }) {
         selected: selectedLink,
         linksList
     }
+
+    console.log(selectedLink);
 
     return (
         <Modal 
