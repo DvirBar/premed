@@ -30,6 +30,10 @@ const fields = [
     {
         name: 'מו"ר',
         _id: 'mor',
+        threshField: {
+            paths: ['six-year'],
+            unis: ['tech']
+        },
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [

@@ -213,7 +213,8 @@ router.put('/:id/addThreshold', [auth, authAdmin], (req, res, next) => {
 
                 const thresholds = table.thresholds
                 const fieldThresholds = thresholds.filter(thresh =>
-                    thresh.field === fieldId)
+                    thresh.field === fieldId && 
+                    thresh.threshType === threshType) 
 
                 if(fieldThresholds.length !== 1) {
                     const closestDates = findClosestDates(

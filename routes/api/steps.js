@@ -147,7 +147,8 @@ router.put('/:id', [auth, authAdmin], async(req, res, next) => {
         name,
         prevId,
         parentId,
-        genContent
+        genContent,
+        uniContent
     } = req.body;
 
     const stepId = req.params.id
@@ -171,6 +172,17 @@ router.put('/:id', [auth, authAdmin], async(req, res, next) => {
     step.genContent = genContent
     step.prev = prevId
     step.parent = parentId
+
+    const uniData = step.uniData 
+    for(let uniItem of uniData) {
+        const content = uniContent[uniItem.uni]
+        if(content) {
+            uniItem.set({
+                ...uniItem,
+                content
+            }) 
+        }
+    }
 
     try {
         const resStep = await step.save()

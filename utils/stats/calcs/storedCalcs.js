@@ -38,6 +38,7 @@ const storedCalcs = [
         _id: "hujiInitial",
         name: "סכם ראשוני",
         func: hujiCalcs.hujiInitial,
+        threshField: true,
         args: [
             bagrutHuji,
             psycho
@@ -58,6 +59,7 @@ const storedCalcs = [
         _id: "hujiFinal",
         name: "סכם סופי",
         func: hujiCalcs.hujiFinal,
+        threshField: true,
         args: [
             bagrutHuji,
             psycho,
@@ -96,6 +98,7 @@ const storedCalcs = [
         _id: "tauInitial",
         name: "סכם ראשוני",
         func: tauCalcs.tauInitial,
+        threshField: true,
         args: [
             bagrutTau,
             psycho
@@ -128,6 +131,7 @@ const storedCalcs = [
         _id: "initialTech",
         name: "סכם ראשוני",
         func: techCalcs.techInitial,
+        threshField: true,
         args: [
             psycho,
             bagrutTech

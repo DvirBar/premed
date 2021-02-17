@@ -34,8 +34,7 @@ const DataTableSchema = new Schema({
             default: false
         },
         field: {
-            type: ObjectId,
-            ref: 'DataField'
+            type: String
         },
         value: {
             type: Number

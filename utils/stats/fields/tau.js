@@ -11,6 +11,7 @@ const fields = [
     {
         name: 'סכם סופי',
         _id: 'tauFinal',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['six-year'],
@@ -44,6 +45,7 @@ const fields = [
     {
         name: 'סכם ראשוני',
         _id: 'tauInitialFour',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
@@ -60,6 +62,7 @@ const fields = [
     {
         name: 'סכם סופי',
         _id: 'tauFinalFour',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],

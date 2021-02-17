@@ -11,6 +11,7 @@ const fields = [
     {
         name: 'סכם ראשוני',
         _id: 'biuInitialFour',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
@@ -22,6 +23,7 @@ const fields = [
     {
         name: 'סכם סופי',
         _id: 'biuFinalFour',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],

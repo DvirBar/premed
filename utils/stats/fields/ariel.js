@@ -13,6 +13,7 @@ const fields = [
         _id: 'arielInitial',
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
+        threshField: true,
         paths: ['four-year'],
         uni: 'ariel',
         validators: [
@@ -27,6 +28,7 @@ const fields = [
     {
         name: 'סכם סופי',
         _id: 'arielFinal',
+        threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
