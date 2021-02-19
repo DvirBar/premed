@@ -288,7 +288,7 @@ router.put('/:id/:itemId/toggleDownvote', auth, (req, res, next) => {
                 downvotes.splice(downvoteIndex, 1)
             }
 
-            /* If user hasn't downvoted, check if they downvoted, 
+            /* If user hasn't downvoted, check if they upvoted, 
                 and remove from downvotes */
             else {
                 const upvoteIndex = upvotes.findIndex(upvote => 

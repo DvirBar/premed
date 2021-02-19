@@ -169,6 +169,7 @@ const storedCalcs = [
         _id: "bguInitial",
         name: "סכם ראשוני",
         func: bguCalcs.bguInitial,
+        constValue: 735,
         args: [
             bagrutBgu,
             psycho
