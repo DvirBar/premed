@@ -15,42 +15,46 @@ app.use(cors());
 app.use(morgan('tiny'))
 
 // App routes
-import auth from '../routes/api/auth';
-import paths from '../routes/api/paths';
-import anouncements from '../routes/api/anouncements';
-import ancgroups from '../routes/api/anc-groups';
-import sections from '../routes/api/sections';
-import steps from '../routes/api/steps';
-import pages from '../routes/api/pages';
-import topics from '../routes/api/topics';
-// import datagroups from '../routes/api/data-groups';
-// import datafields from '../routes/api/data-fields';
-import universities from '../routes/api/universities';
-// import calculations from '../routes/api/calculations';
-import userdata from '../routes/api/user-data';
-import datatables from '../routes/api/data-tables';
-import questgroups from '../routes/api/question-groups';
-import inquiries from '../routes/api/inquiries';
-import serverdata from '../routes/api/server-data';
+
+// import paths from '../routes/api/paths';
+// import anouncements from '../routes/api/anouncements';
+// import ancgroups from '../routes/api/anc-groups';
+// import sections from '../routes/api/sections';
+// import steps from '../routes/api/steps';
+// import pages from '../routes/api/pages';
+// import topics from '../routes/api/topics';
+// // import datagroups from '../routes/api/data-groups';
+// // import datafields from '../routes/api/data-fields';
+// import universities from '../routes/api/universities';
+// // import calculations from '../routes/api/calculations';
+// import userdata from '../routes/api/user-data';
+// import datatables from '../routes/api/data-tables';
+// import questgroups from '../routes/api/question-groups';
+// import inquiries from '../routes/api/inquiries';
+// import serverdata from '../routes/api/server-data';
+
+import auth from './api/components/auth/routes';
 import libraries from './api/components/library/routes';
 
+
+// app.use('/api/paths', paths);
+// app.use('/api/anouncements', anouncements);
+// app.use('/api/ancgroups', ancgroups);
+// app.use('/api/sections', sections);
+// app.use('/api/steps', steps);
+// app.use('/api/pages', pages);
+// app.use('/api/topics', topics);
+// // app.use('/api/datagroups', datagroups);
+// // app.use('/api/datafields', datafields);
+// app.use('/api/universities', universities);
+// // app.use('/api/calculations', calculations);
+// app.use('/api/userdata', userdata);
+// app.use('/api/datatables', datatables);
+// app.use('/api/questgroups', questgroups);
+// app.use('/api/inquiries', inquiries);
+// app.use('/api/serverdata', serverdata);
+
 app.use('/api/auth', auth);
-app.use('/api/paths', paths);
-app.use('/api/anouncements', anouncements);
-app.use('/api/ancgroups', ancgroups);
-app.use('/api/sections', sections);
-app.use('/api/steps', steps);
-app.use('/api/pages', pages);
-app.use('/api/topics', topics);
-// app.use('/api/datagroups', datagroups);
-// app.use('/api/datafields', datafields);
-app.use('/api/universities', universities);
-// app.use('/api/calculations', calculations);
-app.use('/api/userdata', userdata);
-app.use('/api/datatables', datatables);
-app.use('/api/questgroups', questgroups);
-app.use('/api/inquiries', inquiries);
-app.use('/api/serverdata', serverdata);
 app.use('/api/libraries', libraries)
 
 // Exit middlewares

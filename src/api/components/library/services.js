@@ -1,30 +1,30 @@
-import libraryDb from './db/index'
+import Library from './db/model'
 import { downvoteUpvote } from './utils'
 import { saveDoc } from '../../db/methods'
 
 class LibraryService {
     static getAll() {
-        return libraryDb.getAll()
+        return Library.getAll()
     }
 
     static create(data) {
-        return libraryDb.create(data)
+        return Library.createLibrary(data)
     }
 
     static update(id, data) {
-        return libraryDb.update(id, data)
+        return Library.editLibrary(id, data)
     }
 
     static addItem(id, data) {
-        return libraryDb.addItem(id, data)
+        return Library.addItem(id, data)
     }
 
     static editItem(params, data) {
-        return libraryDb.editItem(params, data)
+        return Library.editItem(params, data)
     }
 
     static async toggleVote(params, userId, isUpvote) {
-        const { lib, item } = await libraryDb.getItemById(params)
+        const { lib, item } = await Library.getItemById(params)
 
         downvoteUpvote(item, userId, isUpvote)
 
@@ -42,11 +42,11 @@ class LibraryService {
     }
 
     static removeItem(params) {
-        return libraryDb.removeItem(params)
+        return Library.removeItem(params)
     }
 
     static delete(id) {
-        return libraryDb.delete(id)
+        return Library.delete(id)
     }
 }
 

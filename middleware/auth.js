@@ -1,6 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import User from '../src/api/components/auth/db/model';
 
 const auth = (req, res, next) => {
     const token = req.get('x-auth-token');

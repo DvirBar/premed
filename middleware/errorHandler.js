@@ -1,4 +1,5 @@
 const Error = require('../models/Error');
+const { sendHttpMessage } = require('../src/services/messages');
 
 const errorHandler = (err, req, res, next) => {
     try {
@@ -29,9 +30,13 @@ const errorHandler = (err, req, res, next) => {
         //         .catch(() => {return res.status(500).send({msg: "Internal server error"})})
 
         // return res.status(500).send({msg: "Internal server error"})
-        console.log(err);
-        return res.status(500).send({ msg: "Internal server error" })
-
+        if(err.status) {
+            return sendHttpMessage(res, err)
+        }
+        else {
+            console.log(err);
+            return res.status(500).send({ msg: "Internal server error" })
+        }
     } catch (err) {
         throw err;
         // return res.status(500).send({msg: "Internal server error"})

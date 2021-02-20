@@ -1,7 +1,6 @@
 import LibraryService from './services';
 import { sendHttpMessage } from '../../../services/messages';
 import messages from './messages';
-import queryString from 'query-string'
  
 const { DeletedSuccessfully, ItemDeletedSuccessfully } = messages
 

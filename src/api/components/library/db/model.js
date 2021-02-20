@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-import { escapeEmptyDocsPlugin } from '../../../db/plugins';
 import LibraryValidators from './validation';
+import * as staticMethods from './methods';
 
 // Create schema
 const LibrarySchema = new Schema({
@@ -45,7 +45,10 @@ const LibrarySchema = new Schema({
     }]
 })
 
-LibrarySchema.plugin(escapeEmptyDocsPlugin)
+LibrarySchema.statics = {
+    ...LibrarySchema.statics,
+    ...staticMethods
+}
 
 
 module.exports = mongoose.model('Library', LibrarySchema);

@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
+import * as staticMethods from './methods'
 
 // Create schema
-const UserSchema = new Schema({
+export const UserSchema = new Schema({
     firstName: {
         type: String
     },
@@ -54,4 +55,10 @@ const UserSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('User', UserSchema);
+// Define static methods
+UserSchema.statics = {
+    ...UserSchema.statics,
+    ...staticMethods
+}
+
+export default mongoose.model('User', UserSchema)
