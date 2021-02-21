@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId
+import * as staticMethods from './methods';
 
 // Create schema
 const DataTableSchema = new Schema({
@@ -10,6 +10,7 @@ const DataTableSchema = new Schema({
     },
     url: {
         type: String
+        // TODO: add url validation
     },
     date_created: {
         type: Date,
@@ -22,16 +23,19 @@ const DataTableSchema = new Schema({
         default: false
     },
     thresholds: [{
-        // Either acceptance or rejection
+        // Either accept or reject
         threshType: {
-            type: String
+            type: String,
+            enum: ['accept', 'reject']
         },
         date: {
             type: Date
+            // Validate date and values are in sync
         },
         isFinal: {
             type: Boolean,
             default: false
+            // Validate is final is the only one
         },
         field: {
             type: String
@@ -41,5 +45,10 @@ const DataTableSchema = new Schema({
         }        
     }]
 })
+
+DataTableSchema.statics = {
+    ...DataTableSchema.statics,
+    staticMethods
+}
 
 module.exports = mongoose.model('DataTable', DataTableSchema);

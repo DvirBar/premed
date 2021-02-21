@@ -10,9 +10,13 @@ export function getUserByEmail(email) {
 }
 
 export function createUser(user) {
-    const newUser = new this({
+    const {
         isStudent,
-        ...user
+        ...userObj
+    } = user
+
+    const newUser = new this({
+        ...userObj
     })
 
     if(user.isStudent) {

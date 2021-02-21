@@ -34,6 +34,7 @@ app.use(morgan('tiny'))
 // import serverdata from '../routes/api/server-data';
 
 import auth from './api/components/auth/routes';
+import dataTables from './api/components/dataTables/routes';
 import libraries from './api/components/library/routes';
 
 
@@ -55,6 +56,7 @@ import libraries from './api/components/library/routes';
 // app.use('/api/serverdata', serverdata);
 
 app.use('/api/auth', auth);
+app.use('/api/datatables', dataTables)
 app.use('/api/libraries', libraries)
 
 // Exit middlewares

@@ -20,7 +20,6 @@ class UserService {
 
     // Register user and return login info with token and user
     static async create(data) {
-        try {
             // Hash password string and create user
             data.password = await hashString(data.password)
 
@@ -35,10 +34,6 @@ class UserService {
                 token,
                 user: userObj
             }
-        }
-        catch(err) {
-            throw err;
-        }
     }
 
     static async login(email, loginPassword) {
