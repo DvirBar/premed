@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const Schema = mongoose.Schema
+import { findKeyByNestedValue } from '../../../../../utils/objects';
+import { 
+    statusTypes, 
+    inquiryTypes 
+} from '../allowedTypes'
+import { CostructStaticMethods } from '../../../db/plugins'
+import * as staticMethods from './methods'
 
 // Create schema
 const InquirySchema = new Schema({
@@ -14,14 +21,17 @@ const InquirySchema = new Schema({
     },
     type: {
         type: String,
-        required: true
+        required: true,
+        enum: Object.keys(inquiryTypes)
     },
     refLink: { 
         type: String
     },
     statuses: [{
-        value: {
-            type: String
+        type: {
+            type: String,
+            enum: Object.keys(statusTypes),
+            default: findKeyByNestedValue(statusTypes, 'default', true)
         },
         date: {
             type: Date,
@@ -46,6 +56,10 @@ const InquirySchema = new Schema({
         type: Date,
         default: Date.now
     }
-})
+}, { modelName: 'inquiry' })
+
+InquirySchema.plugin(
+    CostructStaticMethods, 
+    { customStaticMethods: staticMethods})
 
 module.exports = mongoose.model('Inquiry', InquirySchema);

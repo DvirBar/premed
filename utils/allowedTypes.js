@@ -84,54 +84,7 @@ export const staticDataTypes = {
 
 export const allowedTypes = {
     types: {
-        inquiryStatusTypes: [
-            {
-                name: 'נשלח',
-                value: 'sent',
-                default: true   
-            },
-            {
-                name: 'בתהליך',
-                value: 'in process'
-            },
-            {
-                name: 'הושלם',
-                value: 'completed',
-                finalStage: true
-            },
-            {
-                name: 'נדחה',
-                value: 'regected',
-                finalStage: true,
-                requireNote: true
-            }
-        ],
-        inquiryTypes: [
-            {
-                name: 'הצעה',
-                value: 'suggestion'
-            },
-            {
-                name: 'תקלה',
-                value: 'bug'
-            },
-            {
-                name: 'הצעת חומר',
-                value: 'driveSuggest'
-            },
-            {
-                name: 'מידע שגוי',
-                value: 'falseInfo'
-            },
-            {
-                name: 'שקלול שגוי',
-                value: 'falseCalc'
-            },
-            {
-                name: 'דיווח על תגובה',
-                value: 'commentReport'
-            }
-        ]
+        
     },
     
     isType: (keyName, validArr) => {

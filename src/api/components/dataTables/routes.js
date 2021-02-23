@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import auth from '../../middleware/auth';
-import authAdmin from '../../middleware/authAdmin'
+import auth from '../../../../middleware/auth';
+import authAdmin from '../../../../middleware/authAdmin'
 
 import DataTableController from './controller'
 

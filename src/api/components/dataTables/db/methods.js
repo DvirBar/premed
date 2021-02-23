@@ -23,7 +23,7 @@ export function createTable(name, url) {
     return newTable.save()
 }
 
-export function editTable(tableId, data) {
+export async function editTable(tableId, data) {
     const table = await this.findById(tableId)
 
     const {
