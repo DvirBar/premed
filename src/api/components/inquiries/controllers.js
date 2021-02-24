@@ -145,7 +145,7 @@ class InquiryControllers {
             await InquiryServices
                 .delete(inquiryId, userId, isAdmin)
 
-            sendHttpMessage(SuccessDelete)
+            return sendHttpMessage(res, SuccessDelete)
         }
         catch(err) {
             next(err)

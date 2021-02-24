@@ -8,7 +8,7 @@ export function escapeEmptyDocsPlugin(schema) {
     })
 }
 
-export function CostructStaticMethods(schema, options) {
+export function ConstructStaticMethods(schema, options) {
     const {
         customStaticMethods = {}
     } = options || {}

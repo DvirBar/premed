@@ -6,7 +6,7 @@ import {
     statusTypes, 
     inquiryTypes 
 } from '../allowedTypes'
-import { CostructStaticMethods } from '../../../db/plugins'
+import { ConstructStaticMethods } from '../../../db/plugins'
 import * as staticMethods from './methods'
 
 // Create schema
@@ -59,7 +59,7 @@ const InquirySchema = new Schema({
 }, { modelName: 'inquiry' })
 
 InquirySchema.plugin(
-    CostructStaticMethods, 
-    { customStaticMethods: staticMethods})
+    ConstructStaticMethods, 
+    { customStaticMethods: staticMethods })
 
 module.exports = mongoose.model('Inquiry', InquirySchema);
