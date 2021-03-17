@@ -37,6 +37,7 @@ import auth from './api/components/auth/routes';
 import dataTables from './api/components/dataTables/routes';
 import inquiries from './api/components/inquiries/routes';
 import libraries from './api/components/library/routes';
+import serverData from './api/components/serverData';
 
 
 // app.use('/api/paths', paths);
@@ -60,6 +61,7 @@ app.use('/api/auth', auth);
 app.use('/api/datatables', dataTables)
 app.use('/api/inquiries', inquiries)
 app.use('/api/libraries', libraries)
+app.use('/api/serverdata', serverData)
 
 // Exit middlewares
 app.use(errorHandler);
