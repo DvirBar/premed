@@ -5,8 +5,7 @@ const authAdmin = require('../../middleware/authAdmin');
 
 // Models
 const UserData = require('../../models/UserData');
-const DataTable = require('../../models/DataTable');
-const Path = require('../../models/Path');
+const DataTable = require('../../src/api/components/dataTables/db/model');
 import groups from '../../utils/stats/groups/dataGroups';
 const modelName = 'user data';
 

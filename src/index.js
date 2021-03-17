@@ -17,10 +17,8 @@ app.use(morgan('tiny'))
 // App routes
 
 // import paths from '../routes/api/paths';
-// import anouncements from '../routes/api/anouncements';
-// import ancgroups from '../routes/api/anc-groups';
+
 // import sections from '../routes/api/sections';
-// import steps from '../routes/api/steps';
 // import pages from '../routes/api/pages';
 // import topics from '../routes/api/topics';
 // // import datagroups from '../routes/api/data-groups';
@@ -28,40 +26,29 @@ app.use(morgan('tiny'))
 // import universities from '../routes/api/universities';
 // // import calculations from '../routes/api/calculations';
 // import userdata from '../routes/api/user-data';
-// import datatables from '../routes/api/data-tables';
-// import questgroups from '../routes/api/question-groups';
-// import inquiries from '../routes/api/inquiries';
-// import serverdata from '../routes/api/server-data';
+
 
 import auth from './api/components/auth/routes';
 import dataTables from './api/components/dataTables/routes';
 import inquiries from './api/components/inquiries/routes';
 import libraries from './api/components/library/routes';
-import serverData from './api/components/serverData';
-
-
-// app.use('/api/paths', paths);
-// app.use('/api/anouncements', anouncements);
-// app.use('/api/ancgroups', ancgroups);
-// app.use('/api/sections', sections);
-// app.use('/api/steps', steps);
-// app.use('/api/pages', pages);
-// app.use('/api/topics', topics);
-// // app.use('/api/datagroups', datagroups);
-// // app.use('/api/datafields', datafields);
-// app.use('/api/universities', universities);
-// // app.use('/api/calculations', calculations);
-// app.use('/api/userdata', userdata);
-// app.use('/api/datatables', datatables);
-// app.use('/api/questgroups', questgroups);
-// app.use('/api/inquiries', inquiries);
-// app.use('/api/serverdata', serverdata);
+import serverData from './api/components/serverData/routes';
+import questions from './api/components/questions/routes';
+import userdata from '../routes/api/user-data';
+import steps from '../routes/api/steps';
+import anouncements from '../routes/api/anouncements';
+import ancgroups from '../routes/api/anc-groups';
 
 app.use('/api/auth', auth);
 app.use('/api/datatables', dataTables)
 app.use('/api/inquiries', inquiries)
 app.use('/api/libraries', libraries)
 app.use('/api/serverdata', serverData)
+app.use('/api/userdata', userdata);
+app.use('/api/questions', questions);
+app.use('/api/steps', steps);
+app.use('/api/anouncements', anouncements);
+app.use('/api/ancgroups', ancgroups);
 
 // Exit middlewares
 app.use(errorHandler);

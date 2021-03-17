@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
-const authAdmin = require('../../middleware/authAdmin');
+const auth = require('../../../../middleware/auth');
+const authAdmin = require('../../../../middleware/authAdmin');
 
 import QuestionControllers from './controllers'
 

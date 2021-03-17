@@ -11,7 +11,7 @@ export async function findByIdRequired(model, id) {
 }
 
 export function getAll() {
-    this.find().sort({ date_created: -1 })
+    return this.find().sort({ date_created: -1 })
 }
 
 export function createTable(name, url) {

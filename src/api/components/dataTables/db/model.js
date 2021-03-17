@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 import * as staticMethods from './methods';
+import { ConstructStaticMethods } from '../../../db/plugins'
+
 
 // Create schema
 const DataTableSchema = new Schema({
@@ -46,9 +48,8 @@ const DataTableSchema = new Schema({
     }]
 })
 
-DataTableSchema.statics = {
-    ...DataTableSchema.statics,
-    staticMethods
-}
+DataTableSchema.plugin(
+    ConstructStaticMethods,
+    { customStaticMethods: staticMethods })
 
 module.exports = mongoose.model('DataTable', DataTableSchema);

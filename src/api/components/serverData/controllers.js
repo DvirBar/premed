@@ -8,7 +8,7 @@ class ServerDataController {
     }
 
     getStatsData(req, res, next) {
-        res.send(sdServiceInstance.getStatsData())
+        res.send(sdServiceInstance.getStatsData(req.body.pathIds))
         next()
     }
 

@@ -1,15 +1,17 @@
-import internalData from "../../../../utils/internalData"
 import { getByPaths, getInputsByUniAndPath, getUnisByPath } from "../../../../utils/selectors"
 import storedCalcs from "../../../../utils/stats/calcs/storedCalcs"
-import fields from "../../../../utils/stats/fields/tau"
+import fields from "../../../../utils/stats/fields/dataFields"
 import groups from "../../../../utils/stats/groups/dataGroups"
+import baseData from "../../../staticData/baseData/baseData"
+const { paths, universities } = baseData
 
-class ServerDataSevice {
-    getBaseData = () => {
-        return internalData
+class ServerDataService {
+    getBaseData() {
+        return baseData
     }
     
-    getStatsData = (pathIds) => {
+    getStatsData(pathIds) {
+        console.log(pathIds);
         const resObj = {
             fields: getByPaths(fields, pathIds),
             groups: getByPaths(groups, pathIds),
@@ -19,7 +21,7 @@ class ServerDataSevice {
         return resObj
     }
     
-    getTableSections = () => {
+    getTableSections() {
         let resObj = paths.reduce((obj, path) => {
             return {
                 ...obj,
@@ -43,4 +45,4 @@ class ServerDataSevice {
     }
 }
 
-export default ServerDataSevice
+export default ServerDataService

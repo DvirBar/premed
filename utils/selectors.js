@@ -3,7 +3,7 @@ import { arrayToObject } from "./methods"
 import storedCalcs from "./stats/calcs/storedCalcs"
 import fields from "./stats/fields/dataFields"
 
-const {paths, universities } = internalData
+const { paths, universities } = internalData
 
 const getByUniAndPath = (inputs, uniId, pathId) => {
     return inputs.filter(field => 
