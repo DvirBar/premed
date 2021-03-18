@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useRouteMatch, useLocation } from 'react-router-dom'
-import Pages from './pages/Pages';
 
 function SideMenu() {
     const { path } = useRouteMatch();
@@ -20,8 +19,8 @@ function SideMenu() {
             name: 'תהליך הקבלה' 
         },
         {
-            url: `${path}/pages`,
-            name: 'עמודים' 
+            url: `${path}/libraries`,
+            name: 'ספרייה' 
         },
         {
             url: `${path}/stats`,

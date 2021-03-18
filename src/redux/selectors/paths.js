@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const pathsSelector = state => state.paths
+export const pathsSelector = state => state.paths || []
 
 export const getPathById = pathId => createSelector(
     pathsSelector,

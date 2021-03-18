@@ -6,8 +6,6 @@ import sections from './sections';
 import paths from './paths';
 import ancgroups from './ancgroups';
 import steps from './steps';
-import pages from './pages';
-import topics from './topics';
 import datagroups from './datagroups';
 import datafields, * as fieldSelectors from './datafields';
 import unis from './universities';
@@ -17,6 +15,7 @@ import datatables from './datatables';
 import questgroups, * as questGroupsSelectors from './questgroups';
 import inquiries from './inquiries';
 import statsinputs from './statsinputs';
+import libraries from '../libraries/reducers'
 
 const appReducer = combineReducers({
     auth,
@@ -26,8 +25,6 @@ const appReducer = combineReducers({
     ancs,
     sections,
     steps,
-    pages,
-    topics,
     datagroups,
     datafields,
     unis,
@@ -36,7 +33,8 @@ const appReducer = combineReducers({
     datatables,
     questgroups,
     inquiries,
-    statsinputs
+    statsinputs,
+    libraries
 });
 
 const rootReducer = (state, action) => {

@@ -2,13 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function InlineSelect({ selected, selectOption, options}) {
-
-    // Default selection
-    useEffect(() => {
-        if(options && options.length !== 0)
-            selectOption(options[0])
-    }, [options])
-
+    if(!selected) {
+        selectOption(options[0])
+    }
     return (
         <ul className="inline-select">
             {options.map(option => (

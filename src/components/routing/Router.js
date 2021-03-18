@@ -13,7 +13,6 @@ import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
 import Questions from '../questions/Questions';
-import Drive from '../drive/Drive';
 
 const Router = () => {
     const location = useLocation();
@@ -35,7 +34,7 @@ const Router = () => {
                 <Route path="/steps/:pathId" component={Steps} />
                 <ProtectedRoute path="/stats" component={Stats} />
                 <Route path="/qna" component={Questions} />
-                <ProtectedRoute path="/drive" component={Drive} />
+                {/* <ProtectedRoute path="/drive" component={Drive} /> */}
                 <Route component={NoMatchPage} />  
             </Switch>
         </div>
