@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import Router from './components/routing/Router';
 import './style/css/App.css';
 import Navbar from './components/layout/Navbar';
@@ -40,7 +40,6 @@ function App() {
   const selPaths = useSelector(state => state.paths);
   const paths = selPaths.paths;
   const loadPaths = selPaths.loading;
-  console.log(document.referrer);
 
   if(!auth || auth.loading || loadPaths)
     return <Loadbar loadfull={true} />
