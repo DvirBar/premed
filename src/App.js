@@ -52,7 +52,6 @@ function App() {
           <div className="cover-photo">
             <div className="cover-top-layer"></div>
           </div>
-
           <div className="content">
               <Router /> 
           </div>

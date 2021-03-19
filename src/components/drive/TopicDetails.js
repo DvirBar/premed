@@ -49,7 +49,9 @@ function TopicDetails() {
                             }   
                             <TopicItemsList topic={topic} />
                         </Route>
-                        <Route path={`${url}/:topicUrl`} component={TopicDetails} />
+                        <Route 
+                        path={`${url}/:topicUrl`} 
+                        component={TopicDetails} />
                     </Switch>
                 </Fragment>
         </div>

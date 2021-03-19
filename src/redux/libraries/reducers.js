@@ -38,7 +38,6 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: false,
                 libraries: [],
-                userSubscirbes: []
             }
 
         case LIBRARY_ADD:

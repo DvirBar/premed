@@ -5,8 +5,8 @@ import { getAllStoredCalcs, getGroupById } from '../../../redux/selectors/statsi
 import { getGroupValsReal } from '../../../redux/selectors/userdata';
 import { GroupsContext } from './data-block/GroupsContext';
 
-/* This function finds calcs that are dependent on other calcs, and 
-that have no other missing args except the other calcs */
+/* This function finds(recusively) calcs that are dependent on other calcs, and 
+that have no other missing args except for the other calcs */
 export const getNextCalcs = (stagedLevel, storedCalcs, validErrors) => {
     const nextCalcs = []
 
@@ -114,9 +114,6 @@ function useExecCalc() {
                     firstCalcs, 
                     storedCalcs, 
                     validErrors)]
-
-
-                console.log(calcSequence);
                  
                 dispatch(executeCalc(calcSequence))
             }

@@ -45,7 +45,7 @@ $border-input-width: 10rem;
         position: absolute;
         top: 37px;
         right: 5px;
-        content: '';
+        content: "";
         border-left: $size solid transparent;
         border-right: $size solid transparent;
         border-top: $size solid $error-color;
@@ -71,7 +71,6 @@ $border-input-width: 10rem;
     }
 }
 
-
 .form-text-input {
     line-height: 1.5em;
     position: relative;
@@ -83,13 +82,13 @@ $border-input-width: 10rem;
         right: 0;
         color: #999;
         font-size: 1.2rem;
-        transition: all 0.2s linear;
+        transition: all 0.2s ease-in-out;
     }
 
     .text-input {
         background-color: transparent;
         outline: 0;
-        border:none;
+        border: none;
         border-bottom: 2px solid #999;
         font-size: $text-size;
         width: $input-width;
@@ -140,8 +139,7 @@ $border-input-width: 10rem;
     }
 }
 
-
-input[type=search] {
+input[type="search"] {
     border-radius: 5px;
     border: 0;
     width: 200px;
@@ -165,9 +163,9 @@ textarea {
     box-shadow: $default-shadow;
 
     &::placeholder {
-        color: #aaa
+        color: #aaa;
     }
-    
+
     &:focus {
         color: #000;
         box-shadow: $default-shadow-hover;
@@ -204,14 +202,14 @@ textarea {
         border-color: $main-color;
 
         legend {
-            color: $main-color
+            color: $main-color;
         }
     }
 
     .text-input {
         background-color: transparent;
         outline: 0;
-        border:none;
+        border: none;
         font-size: 1.8rem;
         width: $border-input-width;
         color: #aaa;
@@ -233,7 +231,7 @@ textarea {
         }
 
         legend {
-            color: $error-color
+            color: $error-color;
         }
     }
 }

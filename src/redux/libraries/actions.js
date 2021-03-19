@@ -9,9 +9,9 @@ import {
     LIB_ITEM_EDIT,
     LIB_ITEM_DELETE,
     LIB_ITEM_TOGGLE_VOTE
-} from './types';
+} from '../actions/types';
 import axios from 'axios';
-import { getMessage, getError } from './messages';
+import { getMessage, getError } from '../actions/messages';
 
 // Basic types
 export const libraryLoad = () => {
@@ -28,18 +28,17 @@ export const libraryError = (err) => dispatch => {
     })
 }
 
-// Get all libraries
-export const getLibraries = () => dispatch => {
+// Get libraries by pathId
+export const getLibraries = pathId => dispatch => {
     dispatch(libraryLoad());
 
-    axios.get(`/api/libraries`)
+    axios.get(`/api/libraries/${pathId}`)
          .then(res => dispatch({
              type: LIBRARY_SUCCESS,
              payload: res.data
          }))
          .catch(err => {
-             dispatch(LibraryError())
-             dispatch(getMessage(err))
+             dispatch(libraryError(err))
          })
 }
 
@@ -57,12 +56,12 @@ export const addLibrary = data => dispatch => {
              payload: res.data
          }))
          .catch(err => {
-             dispatch(LibraryError(err))
+             dispatch(libraryError(err))
         })
 }
 
 export const editLibrary = (id, data) => dispatch => {
-    dispatch(LibraryLoad());
+    dispatch(libraryLoad());
     
     // Request body
     const body = JSON.stringify(data);
@@ -77,7 +76,7 @@ export const editLibrary = (id, data) => dispatch => {
             })
 }
 
-export const addLibItem = async(id, data) => dispatch => {
+export const addLibItem = (id, data) => async(dispatch) => {
     const body = JSON.stringify(data)
 
     try {
@@ -97,7 +96,7 @@ export const addLibItem = async(id, data) => dispatch => {
     }
 }
 
-export const editLibItem = async(id, itemId, data) => dispatch => {
+export const editLibItem = (id, itemId, data) => async(dispatch) => {
     const body = JSON.stringify(data)
 
     try {
@@ -118,7 +117,7 @@ export const editLibItem = async(id, itemId, data) => dispatch => {
     }
 }
 
-export const voteLibItem = async(id, itemId, isUpvote) => dispatch => {
+export const voteLibItem = (id, itemId, isUpvote) => async(dispatch) => {
     try {
         const res = await axios.put(`api/libraries/${id}/items/${itemId}?isUpvote=${isUpvote}`)
 
@@ -137,7 +136,7 @@ export const voteLibItem = async(id, itemId, isUpvote) => dispatch => {
     }
 }
 
-export const deleteLibItem = async(id, itemId) => dispatch => {
+export const deleteLibItem = (id, itemId) => async(dispatch) => {
     try {
         const res = await axios
         

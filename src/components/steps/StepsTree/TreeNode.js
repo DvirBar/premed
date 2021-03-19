@@ -8,8 +8,15 @@ import StepsLevel from './StepsLevel';
 import LinkLabel from './TreeLink/LinkLabel';
 import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps';
 import { StepsContext } from '../StepsContext';
+import { useLocation, useRouteMatch } from 'react-router';
 
 function TreeNode({ step, length }) {
+    const location = useLocation()
+    const { url } = useRouteMatch()
+
+    console.log(location);
+    console.log(url);
+ 
     const nextSteps = useSelector(getNextSteps(step?._id))
     const children = useSelector(getStepChildren(step?._id))
     const isTopLevel = !step.parent
