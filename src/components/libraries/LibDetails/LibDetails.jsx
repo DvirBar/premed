@@ -1,15 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useLocation, useRouteMatch } from 'react-router'
 import { getLibById, getLibChildren } from '../../../redux/libraries/selectors'
 import Loadbar from '../../layout/Loadbar'
+import { LibraryContext } from '../LibraryContext'
 import LibsList from '../LibsList/LibsList'
 import LibItemsList from './LibItems/LibItemsList'
 
-function LibDetails({ libId }) {
-    const lib = useSelector(getLibById(libId))
-    const libChildren = useSelector(getLibChildren(libId))
-    
+function LibDetails({ lib }) {
+   const libChildren = useSelector(getLibChildren(lib?._id))
+   
     if(!lib) {
         return <Loadbar />
     }

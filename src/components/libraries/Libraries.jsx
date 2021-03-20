@@ -4,7 +4,8 @@ import { useParams } from 'react-router'
 import { getLibraries } from '../../redux/libraries/actions'
 import { librariesSelector } from '../../redux/libraries/selectors'
 import Loadbar from '../layout/Loadbar'
-import TopBar from '../steps/TopBar'
+import TopBar from './TopBar/TopBar'
+import LibraryProvider from './LibraryContext'
 import LibraryRouter from './LibraryRouter'
 
 function Libraries() {
@@ -26,11 +27,13 @@ function Libraries() {
 
     return (
         <div className="libraries">
-            <TopBar />
-            {loading
-            ?   <Loadbar />
-            :   <LibraryRouter />
-            }
+            <LibraryProvider>
+                <TopBar />
+                {loading
+                ?   <Loadbar />
+                :   <LibraryRouter />
+                }
+            </LibraryProvider>
         </div>
     )
 }

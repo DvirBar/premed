@@ -1,10 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { generatePath, Link, useRouteMatch } from 'react-router-dom'
-import { getAllPaths } from '../../redux/selectors/paths'
-import TopLinks from '../layout/TopLinks'
+import { useSelector } from 'react-redux';
+import { generatePath, useRouteMatch } from 'react-router';
+import { Link } from 'react-router-dom';
+import { getAllPaths } from '../../../redux/selectors/paths';
+import TopLinks from '../../layout/TopLinks';
 
-function TopBar() {
+function PathLinks() {
     let { path, params } = useRouteMatch();
     const { pathId } = params
 
@@ -19,6 +20,7 @@ function TopBar() {
         url: createPath(pathItem._id),
         id: pathItem._id
     }))
+
     return (
         <div className="top-content-nav">
             <TopLinks 
@@ -38,4 +40,4 @@ function TopBar() {
     )
 }
 
-export default TopBar
+export default PathLinks
