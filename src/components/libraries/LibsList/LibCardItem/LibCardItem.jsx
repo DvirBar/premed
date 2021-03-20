@@ -1,16 +1,19 @@
 import React from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
 
-function LibraryCardItem({ lib }) {
-    const notItem = lib.items.length === 0
+function LibCardItem({ lib, noItems }) {
+    const { url } = useRouteMatch()
 
     return (
-        <div className={`lib-item 
-        ${notItem ? 'no-items' : ''}`}>
+        <Link 
+        to={`${url}/${lib._id}`}
+        className={`lib-card-item 
+        ${noItems ? 'no-items' : ''}`}>
             <span className="lib-name">
                 {lib.name}
             </span>
-        </div>
+        </Link>
     )
 }
 
-export default LibraryCardItem
+export default LibCardItem

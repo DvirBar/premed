@@ -3,11 +3,10 @@ $main-color-light: #bfc9cc;
 $error-color: #c01b1b;
 $okay-color: #1b922f;
 $pending-color: #e79806;
-$default-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
-    0 3px 10px 0 rgba(0, 0, 0, 0.19);
 $default-shadow-hover: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+$default-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
+    0 3px 10px 0 rgba(0, 0, 0, 0.19);
 $key-color: #4e4e4e;
 $key-color-hover: #838383;
 $header-color: #727272;
@@ -38,6 +37,7 @@ body {
     overflow-x: hidden;
     overflow-wrap: break-word;
     word-break: break-word;
+    overflow-x: hidden;
 }
 
 .App {
@@ -249,7 +249,7 @@ th {
     right: 0;
     width: 100%;
     box-shadow: 0 3px 6px #00000030;
-    overflow-x: auto;
+    overflow-x: none;
     white-space: nowrap;
 
     .top-links-profile-nav {
@@ -317,6 +317,7 @@ th {
 @import "forms/buttons";
 @import "forms/checkbox";
 
+@import "pages/pages";
 @import "pages/index";
 @import "pages/anouncements";
 @import "pages/dashboard";
@@ -326,6 +327,7 @@ th {
 @import "pages/auth/index";
 @import "pages/questions";
 
+@import "admin";
 @import "admin/admin";
 @import "admin/default";
 @import "admin/sidemenu";

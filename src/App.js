@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link } from 'react-router-dom';
 import Router from './components/routing/Router';
-import './style/css/App.css';
+import './style/App.css';
 import Navbar from './components/layout/Navbar';
 import { getUser } from './redux/actions/auth';
 import { getTables } from './redux/actions/datatables';

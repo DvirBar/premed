@@ -1,14 +1,18 @@
 import React from 'react'
-import LibItem from './LibItem'
+import LibItem from './LibCardItem/LibCardItem'
 
-function LibsList({ libs }) {
+function LibsList({ libs, noItems }) {
     return (
-        <div className="libs-list">
-            {libs.map(lib =>
-                <LibItem
-                key={lib._id}
-                lib={lib} />
-            )}
+        <div className="libs-list-wrapper">
+            <div className={`libs-list 
+            ${noItems ? 'no-items' : 'has-item'}`}>
+                {libs.map(lib =>
+                    <LibItem
+                    key={lib._id}
+                    lib={lib}
+                    noItems={noItems} />
+                )}
+            </div>
         </div>
     )
 }

@@ -1,0 +1,26 @@
+.libs-list-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.libs-list {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 20rem);
+
+    &.has-items {
+        column-gap: 1rem;
+        overflow-x: auto;
+    }
+
+    &.no-items {
+        row-gap: 3rem;
+        column-gap: 4rem;
+        flex-wrap: wrap;
+    }
+}
+
+@import "LibCardItem/index";

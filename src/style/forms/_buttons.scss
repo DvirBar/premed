@@ -30,6 +30,32 @@ button {
     }
 }
 
+.inline-button {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    background-color: #ddd;
+    color: #777;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out !important;
+    transition: color 0.2s ease-in-out;
+    display: inline-block;
+
+    &.danger {
+        background-color: $danger-color;
+        color: #fff;
+
+        &:hover {
+            background-color: lighten($danger-color, 10);
+        }
+    }
+
+    &:hover {
+        background-color: $main-color;
+        color: #fff;
+    }
+}
+
 .danger {
     border-color: $danger-color;
     color: $danger-color;

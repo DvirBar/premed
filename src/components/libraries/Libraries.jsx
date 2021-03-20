@@ -27,13 +27,11 @@ function Libraries() {
 
     return (
         <div className="libraries">
-            <LibraryProvider>
-                <TopBar />
-                {loading
-                ?   <Loadbar />
-                :   <LibraryRouter />
-                }
-            </LibraryProvider>
+            <TopBar />
+            {loading
+            ?   <Loadbar />
+            :   <LibraryRouter />
+            }
         </div>
     )
 }

@@ -1,5 +1,4 @@
 $size: 2rem;
-$height: 4;
 $not-selected-backcolor: #ddd;
 $hover-background: #ccc;
 
@@ -10,6 +9,7 @@ $hover-background: #ccc;
     &__item {
         height: 4rem;
         display: flex;
+        transition: background-color 0.3s ease-in-out !important;
 
         &:hover:not(.highlight) {
             & > div {
@@ -47,7 +47,8 @@ $hover-background: #ccc;
         }
 
         div {
-            width: 11rem;
+            border: none;
+            width: 14rem;
             background-color: $not-selected-backcolor;
             color: #777;
             font-weight: 500;

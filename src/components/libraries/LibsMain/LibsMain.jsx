@@ -12,7 +12,9 @@ function LibsMain() {
         <div>
             {libId 
             ? <RecursiveRouter />
-            : <LibsList libs={libs} />   
+            : <LibsList 
+              noItems={true}
+              libs={libs} />   
             }
         </div>
     )

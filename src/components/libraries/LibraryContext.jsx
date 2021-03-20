@@ -4,11 +4,9 @@ import useLibraries from './useLibraries';
 export const LibraryContext = createContext()
 
 const LibraryProvider = ({ children, isAdmin }) => {
-    const libraries = useLibraries()
-    
     return (
         <LibraryContext.Provider 
-        value={libraries}>
+        value={isAdmin}>
             {children}
         </LibraryContext.Provider>
     )
