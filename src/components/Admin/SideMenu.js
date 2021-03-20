@@ -1,9 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link, useRouteMatch, useLocation } from 'react-router-dom'
+import { getAllPaths } from '../../redux/selectors/paths';
 
 function SideMenu() {
     const { path } = useRouteMatch();
     let { pathname } = useLocation();
+    const pathItems = useSelector(getAllPaths)
 
     const linksList = [
         {
@@ -19,7 +22,7 @@ function SideMenu() {
             name: 'תהליך הקבלה' 
         },
         {
-            url: `${path}/libraries`,
+            url: `${path}/libraries/${pathItems[0]?._id}`,
             name: 'ספרייה' 
         },
         {

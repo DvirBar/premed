@@ -5,7 +5,6 @@ import { getLibraries } from '../../redux/libraries/actions'
 import { librariesSelector } from '../../redux/libraries/selectors'
 import Loadbar from '../layout/Loadbar'
 import TopBar from './TopBar/TopBar'
-import LibraryProvider from './LibraryContext'
 import LibraryRouter from './LibraryRouter'
 
 function Libraries() {
@@ -18,12 +17,16 @@ function Libraries() {
         if(pathId) {
             dispatch(getLibraries(pathId))
         }
-        
+
     }, [pathId])
 
     const { 
         loading
     } = useSelector(librariesSelector)
+
+    if(loading) {
+        return <Loadbar />
+    }
 
     return (
         <div className="libraries">
@@ -36,4 +39,4 @@ function Libraries() {
     )
 }
 
-export default Libraries
+export default React.memo(Libraries)

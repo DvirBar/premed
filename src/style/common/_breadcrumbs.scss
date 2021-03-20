@@ -4,7 +4,11 @@ $hover-background: #ccc;
 
 .bread-crumbs {
     display: flex;
-    align-items: center;
+    overflow-x: auto;
+    padding: 1rem 0;
+    width: 100%;
+    flex-shrink: 0;
+    column-gap: 1rem;
 
     &__item {
         height: 4rem;
@@ -42,12 +46,11 @@ $hover-background: #ccc;
             border-bottom-left-radius: 0.5rem;
         }
 
-        &:not(:last-child) {
-            margin-left: -30px;
-        }
+        // &:not(:last-child) {
+        //     margin-left: -30px;
+        // }
 
         div {
-            border: none;
             width: 14rem;
             background-color: $not-selected-backcolor;
             color: #777;
@@ -69,7 +72,7 @@ $hover-background: #ccc;
             border-top: $size solid transparent;
             border-bottom: $size solid transparent;
             border-right: $size solid #fff;
-            transform: translateX(-$size);
+            transform: translateX(-$size + 0.05rem);
         }
 
         &:not(:last-child)::after {

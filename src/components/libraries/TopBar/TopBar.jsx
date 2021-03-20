@@ -5,7 +5,7 @@ import LibraryMenu from './LibraryMenu/LibraryMenu'
 import PathLinks from './PathLinks'
 
 function TopBar() {
-    const isAdmin = useContext(LibraryContext)
+    const {isAdmin} = useContext(LibraryContext)
     return (
         <div className="top-bar">
             {!isAdmin &&

@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import EditInfo from '../../admin/libraries/EditLibrary/EditInfo'
 import Modal from '../../layout/Modal'
+import { LibraryContext } from '../LibraryContext'
 
 function LibInfo({ lib }) {
     const [display, setDisplay] = useState(false)
@@ -7,6 +9,8 @@ function LibInfo({ lib }) {
     const toggleDisplay = toggle => {
         setDisplay(toggle)
     }
+
+    const { isAdmin }= useContext(LibraryContext) 
 
     return (
         <div>
@@ -20,7 +24,10 @@ function LibInfo({ lib }) {
             title={lib.name}
             display={display}
             toggleModal={toggleDisplay}>
-                <div dangerouslySetInnerHTML={{__html: lib.info}}/>
+                {isAdmin
+                ?   <EditInfo lib={lib} />
+                :   <div dangerouslySetInnerHTML={{__html: lib.info}}/>   
+                }
             </Modal>
         </div>
     )

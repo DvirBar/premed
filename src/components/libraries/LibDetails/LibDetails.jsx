@@ -7,13 +7,14 @@ import LibsList from '../LibsList/LibsList'
 import LibInfo from './LibInfo'
 import LibItemsList from './LibItems/LibItemsList'
 import DeleteLibrary from '../../admin/libraries/DeleteLibrary/DeleteLibrary'
+import EditName from '../../admin/libraries/EditLibrary/EditName'
 
 function LibDetails({ lib }) {
     const libChildren = useSelector(getLibChildren(lib?._id))
 
     const hasItems = lib?.items.length > 0
 
-    const isAdmin = useContext(LibraryContext)
+    const {isAdmin} = useContext(LibraryContext)
 
     if(!lib) {
         return <Loadbar />
@@ -22,24 +23,24 @@ function LibDetails({ lib }) {
     else {
         return (
             <div className="lib-details">
+                {isAdmin &&
+                    <EditName lib={lib} />
+                }
+
                 <div className="lib-details__options">
-                    {lib.info &&
-                        <LibInfo lib={lib} />
-                    }
+                    <LibInfo lib={lib} />
+
                     {isAdmin &&
                         <DeleteLibrary
                         libId={lib._id} />
                     }
                 </div>
                 
-
-               {libChildren.length > 0 &&
-                    // Recursion base case
-                   <LibsList 
-                   noItems={!hasItems}
-                   libs={libChildren} />
-                
-               }
+                <LibsList 
+                parent={lib}
+                noItems={!hasItems}
+                libs={libChildren} />
+               
                {hasItems &&
                     <LibItemsList />
                 }

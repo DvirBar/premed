@@ -1,12 +1,18 @@
 import React, { createContext } from 'react';
-import useLibraries from './useLibraries';
+import { useParams } from 'react-router';
 
 export const LibraryContext = createContext()
 
 const LibraryProvider = ({ children, isAdmin }) => {
+    const { pathId } = useParams()
+    
+    const value = {
+        isAdmin,
+        pathId
+    }
     return (
         <LibraryContext.Provider 
-        value={isAdmin}>
+        value={value}>
             {children}
         </LibraryContext.Provider>
     )

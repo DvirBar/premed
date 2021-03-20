@@ -1,36 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Modal from '../../../layout/Modal'
 import FormInput from '../../../common/FormInput'
 import Checkbox from '../../../common/Checkbox'
 import useForm from '../../../../forms/useForm'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import * as he from '@ckeditor/ckeditor5-build-classic/build/translations/he.js';
 import { addLibrary } from '../../../../redux/libraries/actions'
 import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../../../redux/selectors/paths'
-import Dropdown from '../../../common/Dropdown'
-import { getAllLibraries } from '../../../../redux/libraries/selectors'
+import { useParams } from 'react-router'
+import { LibraryContext } from '../../../libraries/LibraryContext'
 
-function AddLibraryForm({ display, toggleDisplay }) {
+function AddLibraryForm({ display, toggleDisplay, parent }) {
+    const  {
+        pathId
+    } = useContext(LibraryContext)
+
     const [defaultValues, setDefaultValues] = useState({
         name: '',
-        pathIds: []
+        pathIds: [pathId && pathId],
+        parentId: parent?._id
     })
 
     // Selectors
     const paths = useSelector(getAllPaths)
-    const libs = useSelector(getAllLibraries)
-    const libsOptions = [
-        {
-            name: "ללא",
-            value: undefined
-        },
-        ...libs.map(lib => ({
-            name: lib.name,
-            value: lib._id
-        }))
-    ]
 
     const {
         handleChange,
@@ -60,7 +53,7 @@ function AddLibraryForm({ display, toggleDisplay }) {
                 onChange={handleChange}
                 error={errors.name} />
 
-                {paths.map(path => 
+                {!parent && paths.map(path => 
                     <div>
                         <Checkbox 
                         label={path.name}
@@ -86,15 +79,6 @@ function AddLibraryForm({ display, toggleDisplay }) {
                 onChange={ (event, editor) => {
                     changeContent(editor.getData())
                 }} />
-
-                {libsOptions.length > 0 && 
-                    <Dropdown
-                    options={libsOptions}
-                    title="ספריית אב"
-                    placeholder="בחר"
-                    name="parentId"
-                    onChange={handleChange} />
-                }
 
                 <button type="submit">
                     יצירה

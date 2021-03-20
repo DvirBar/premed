@@ -61,8 +61,6 @@ export const addLibrary = data => dispatch => {
 }
 
 export const editLibrary = (id, data) => dispatch => {
-    dispatch(libraryLoad());
-    
     // Request body
     const body = JSON.stringify(data);
 

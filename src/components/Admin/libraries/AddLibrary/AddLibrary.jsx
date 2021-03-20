@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AddLibraryForm from './AddLibraryForm'
 
-function AddLibrary() {
+function AddLibrary({ parent }) {
     const [display, setDisplay] = useState(false)
     const toggleDisplay = toggle => {
         setDisplay(toggle)
@@ -13,6 +13,7 @@ function AddLibrary() {
             </button>
 
             <AddLibraryForm 
+            parent={parent}
             display={display}
             toggleDisplay={toggleDisplay} />
         </div>
