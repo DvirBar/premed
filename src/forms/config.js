@@ -75,6 +75,10 @@ export const config = {
 
         value: {
             isRequired: { message: 'יש להזין ערך'}
+        },
+
+        icon: {
+            isRequired: { message: 'יש לבחור אייקון'}
         }
     }
 }

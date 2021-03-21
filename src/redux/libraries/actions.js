@@ -117,8 +117,7 @@ export const editLibItem = (id, itemId, data) => async(dispatch) => {
 
 export const voteLibItem = (id, itemId, isUpvote) => async(dispatch) => {
     try {
-        const res = await axios.put(`api/libraries/${id}/items/${itemId}?isUpvote=${isUpvote}`)
-
+        const res = await axios.put(`api/libraries/${id}/items/${itemId}/vote?isUpvote=${isUpvote}`)
         dispatch({
             type: LIB_ITEM_TOGGLE_VOTE,
             payload: {

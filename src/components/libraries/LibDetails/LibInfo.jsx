@@ -18,7 +18,7 @@ function LibInfo({ lib }) {
             className="inline-button"
             onClick={() => toggleDisplay(true)}
             role="button">
-                מידע כללי
+                מידע וטיפים
             </div>
             <Modal
             title={lib.name}

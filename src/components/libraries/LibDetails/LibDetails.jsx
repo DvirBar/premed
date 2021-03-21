@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { getLibChildren } from '../../../redux/libraries/selectors'
 import Loadbar from '../../layout/Loadbar'
@@ -42,7 +42,9 @@ function LibDetails({ lib }) {
                 libs={libChildren} />
                
                {hasItems &&
-                    <LibItemsList />
+                    <LibItemsList
+                    libId={lib._id}
+                    items={lib.items} />
                 }
             </div>
         )

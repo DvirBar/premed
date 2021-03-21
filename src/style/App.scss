@@ -35,9 +35,9 @@ body {
     line-height: $line-height;
     outline: none;
     overflow-x: hidden;
+    overflow-y: scroll;
     overflow-wrap: break-word;
     word-break: break-word;
-    overflow-x: hidden;
 }
 
 .App {
@@ -297,8 +297,10 @@ th {
 
 @import "animations";
 
+@import "layout";
 @import "layout/index";
 
+@import "common";
 @import "common/dropdown";
 @import "common/dropdownmenu";
 @import "common/inlineselect";

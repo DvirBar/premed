@@ -1,27 +1,44 @@
-import React, { useContext } from 'react'
+import React, { Fragment, useContext } from 'react'
 import AddLibrary from '../../admin/libraries/AddLibrary/AddLibrary'
+import AddItem from '../../admin/libraries/Items/AddItem/AddItem'
+import Grid from '../../layout/Grid/Grid'
 import { LibraryContext } from '../LibraryContext'
 import LibItem from './LibCardItem/LibCardItem'
 
 function LibsList({ parent, libs, noItems }) {
     const {isAdmin} = useContext(LibraryContext)
 
+    const ListContent =  libs.map(lib =>
+        <LibItem
+        key={lib._id}
+        lib={lib}
+        noItems={noItems} />
+    )
+
     return (
         <div className="libs-list-wrapper">
             {isAdmin &&
-                <AddLibrary parent={parent} />
+                <div className="admin-options">
+                    <AddLibrary parent={parent} />
+                    
+                    {parent &&
+                        <AddItem libId={parent._id} />
+                    }
+                </div>
             }
 
             {libs.length > 0 &&
-                <div className={`libs-list 
-                ${noItems ? 'no-items' : 'has-item'}`}>
-                    {libs.map(lib =>
-                        <LibItem
-                        key={lib._id}
-                        lib={lib}
-                        noItems={noItems} />
-                    )}
-                </div>   
+                <Fragment>
+                    {noItems 
+                    ? <Grid>
+                         {ListContent}
+                       </Grid>
+                    : <div className="libs-list-has-items">
+                        {ListContent}
+                    </div>
+                    }
+                </Fragment>
+                    
             }
         </div>
     )

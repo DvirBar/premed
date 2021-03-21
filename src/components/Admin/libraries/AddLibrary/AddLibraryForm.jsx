@@ -3,13 +3,12 @@ import Modal from '../../../layout/Modal'
 import FormInput from '../../../common/FormInput'
 import Checkbox from '../../../common/Checkbox'
 import useForm from '../../../../forms/useForm'
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { addLibrary } from '../../../../redux/libraries/actions'
 import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../../../redux/selectors/paths'
 import { useParams } from 'react-router'
 import { LibraryContext } from '../../../libraries/LibraryContext'
+import Editor from '../../../common/forms/Editor/Editor'
 
 function AddLibraryForm({ display, toggleDisplay, parent }) {
     const  {
@@ -31,13 +30,6 @@ function AddLibraryForm({ display, toggleDisplay, parent }) {
         values,
         errors
     } = useForm(addLibrary, defaultValues)
-
-    const changeContent = data => {
-        handleChange({
-            name: 'info',
-            value: data
-        })
-    }
 
     return (
         <Modal
@@ -67,18 +59,10 @@ function AddLibraryForm({ display, toggleDisplay, parent }) {
                         />      
                     </div>)}
 
-                <CKEditor
-                editor={ ClassicEditor }
-                config={{
-                    language: {
-                        ui: 'he',
-                        content: 'he'
-                    }
-                }}
-                data={values.info}
-                onChange={ (event, editor) => {
-                    changeContent(editor.getData())
-                }} />
+                <Editor
+                value={values.info}
+                onChange={handleChange}
+                name="info" />
 
                 <button type="submit">
                     יצירה

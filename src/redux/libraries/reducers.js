@@ -84,11 +84,12 @@ export default function(state = initialState, action) {
 
 
         case LIB_ITEM_TOGGLE_VOTE:
+            console.log(payload);
             return {
                 ...state,
                 loading: false,
                 libraries: state.libraries.map(library => 
-                    library._id === payload.libId 
+                    library._id === payload.id 
                     ?   {
                         ...library,
                         items: library.items.map(item => 

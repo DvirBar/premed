@@ -11,7 +11,7 @@ function LibrariesAdmin() {
     const history = useHistory()
     const { pathId } = useParams()
 
-    const selectPath = (option) => {
+    const selectPath = option => {
         const newPath = generatePath(path, 
             { pathId: option.value })
 
