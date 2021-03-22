@@ -22,17 +22,25 @@ const LibrarySchema = new Schema({
             message: 'Cannot find parent library'
         }
     },
+    paths: [{
+        type: String,
+        required: [true, 'At least one path is required']
+    }],
     items: [{
         name: {
             type: String,
             required: [true, 'Item name is required']
         },
         icon: {
-            type: String
+            type: String,
+            required: [true, 'Link is required']
         },
         link: {
             type: String,
             required: [true, 'Item link is required']
+        },
+        info: {
+            type: String
         },
         upvotes: [{
             type: ObjectId,

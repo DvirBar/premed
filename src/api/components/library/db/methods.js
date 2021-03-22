@@ -3,17 +3,23 @@ export function getAll() {
     return this.find()
 }
 
+export function getByPath(pathId) {
+    return this.find({ paths: pathId })
+}
+
 // Create new library entry
 export function createLibrary(data) {
     const {
         name, 
-        info, 
+        info,
+        pathIds,
         parentId
     } = data
 
     const newLib = new this({
         name,
         info,
+        paths: pathIds,
         parent: parentId
     })
 
@@ -71,22 +77,12 @@ export async function getItemById(params) {
 
 // Add new item to library
 export async function addItem(id, data) {
-    const {
-        name,
-        icon,
-        link            
-    } = data
-
     try {
         const lib = await this.findById(id)
-        const item = {
-            name,
-            icon,
-            link
-        }
+
         const items = lib.items
 
-        items.push(item)
+        items.push(data)
 
         await lib.save()
 
@@ -151,7 +147,7 @@ export async function removeItem(params) {
 }
 
 // Delete library entry
-export async function deleteLibrary(id) {
+export async function remove(id) {
     try {
         return this.findOneAndRemove({ _id: id })
     }

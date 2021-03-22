@@ -4,10 +4,10 @@ const auth = require('../../../../middleware/auth')
 const authAdmin = require('../../../../middleware/authAdmin')
 import LibraryController from './controller'
 
-// @route   GET api/libraries
-// @desc    Get all libraries
+// @route   GET api/libraries/:pathId
+// @desc    Get libraries by path
 // @access  Private
-router.get('/', auth, LibraryController.getAll)
+router.get('/:pathId', auth, LibraryController.getByPath)
 
 // @route   POST api/libraries
 // @desc    Create new library
@@ -31,7 +31,7 @@ router.put('/:id/items/:itemId', [auth, authAdmin], LibraryController.editItem)
 
 // @route   PUT api/libraries/:id/items/:itemId/vote
 // @desc    Upvote or downvote item
-// @access  Admin
+// @access  Private
 router.put('/:id/items/:itemId/vote', auth, LibraryController.toggleVote)  
 
 // @route   PUT api/libraries/:id/items/:itemId/remove

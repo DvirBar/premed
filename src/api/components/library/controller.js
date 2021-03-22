@@ -5,9 +5,9 @@ import messages from './messages';
 const { DeletedSuccessfully, ItemDeletedSuccessfully } = messages
 
 class LibraryController {
-    static async getAll(req, res, next) {
+    static async getByPath(req, res, next) {
         try {
-            const libraries = await LibraryService.getAll()
+            const libraries = await LibraryService.getByPath(req.params.pathId)
 
             return res.send(libraries)
         }

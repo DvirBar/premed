@@ -3,8 +3,8 @@ import { downvoteUpvote } from './utils'
 import { saveDoc } from '../../db/methods'
 
 class LibraryService {
-    static getAll() {
-        return Library.getAll()
+    static getByPath(pathId) {
+        return Library.getByPath(pathId)
     }
 
     static create(data) {
@@ -25,10 +25,9 @@ class LibraryService {
 
     static async toggleVote(params, userId, isUpvote) {
         const { lib, item } = await Library.getItemById(params)
-
+ 
         downvoteUpvote(item, userId, isUpvote)
-
-        await saveDoc(lib)
+        await lib.save()
 
         const {
             upvotes,
@@ -46,7 +45,7 @@ class LibraryService {
     }
 
     static delete(id) {
-        return Library.delete(id)
+        return Library.remove(id)
     }
 }
 
