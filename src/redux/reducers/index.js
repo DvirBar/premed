@@ -16,6 +16,7 @@ import questgroups, * as questGroupsSelectors from './questgroups';
 import inquiries from './inquiries';
 import statsinputs from './statsinputs';
 import libraries from '../libraries/reducers'
+import comments from '../comments/reducers'
 
 const appReducer = combineReducers({
     auth,
@@ -34,7 +35,8 @@ const appReducer = combineReducers({
     questgroups,
     inquiries,
     statsinputs,
-    libraries
+    libraries,
+    comments
 });
 
 const rootReducer = (state, action) => {
