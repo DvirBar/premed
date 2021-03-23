@@ -12,7 +12,7 @@ const messages = {
             he: 'שם משתמש או סיסמה שגויים'
         },
         status: 401
-    }, 
+    },
     UserDoesNotExist: {
         msg: {
             en: 'User Does not exist',

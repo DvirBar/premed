@@ -34,6 +34,7 @@ import inquiries from './api/components/inquiries/routes';
 import libraries from './api/components/library/routes';
 import serverData from './api/components/serverData/routes';
 import questions from './api/components/questions/routes';
+import comments from './api/components/comments/routes'
 import userdata from '../routes/api/user-data';
 import steps from '../routes/api/steps';
 import anouncements from '../routes/api/anouncements';
@@ -49,6 +50,7 @@ app.use('/api/questions', questions);
 app.use('/api/steps', steps);
 app.use('/api/anouncements', anouncements);
 app.use('/api/ancgroups', ancgroups);
+app.use('/api/comments', comments)
 
 // Exit middlewares
 app.use(errorHandler);

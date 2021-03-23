@@ -36,7 +36,12 @@ class InquiryServices {
         const inquiry = await Inquiry.getByIdOrFail(inquiryId)
 
         // Check that if the user is not an admin, they own it
-        checkOwnedResource(inquiry, userId, isAdmin, true)
+        checkOwnedResource(
+            inquiry, 
+            inquiry.user._id,
+            userId, 
+            isAdmin, 
+            true)
 
         inquiry.text = text 
 
@@ -110,7 +115,7 @@ class InquiryServices {
     static async delete(inquiryId, userId, isAdmin) {
         const inquiry = await Inquiry.getByIdOrFail(inquiryId)
 
-        checkOwnedResource(inquiry, userId, isAdmin, true)
+        checkOwnedResource(inquiry.user._id, userId, isAdmin, true)
         
         return inquiry.remove()
     }
