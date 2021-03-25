@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addComment } from '../../redux/actions/topics';
+import { addComment } from '../../../../redux/comments/actions'
 
-function AddComment({ topicId, itemId }) {
+function AddComment({ itemId }) {
     const [comment, setComment] = useState('')
 
     const dispatch = useDispatch()
     const sendComment = e => {
         if(e.key === "Enter" && comment !== '') {
             const dataObj = {
-                text: comment
+                text: comment,
+                item: itemId
             }
-
-            dispatch(addComment(topicId, itemId, dataObj))
+            dispatch(addComment(dataObj))
 
             setComment('')
         }

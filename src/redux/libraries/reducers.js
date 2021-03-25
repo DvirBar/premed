@@ -37,7 +37,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                libraries: [],
             }
 
         case LIBRARY_ADD:

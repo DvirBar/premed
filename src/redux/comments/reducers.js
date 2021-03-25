@@ -6,7 +6,7 @@ import {
     COMMENT_UPDATE,
     COMMENT_TOGGLE_LIKE,
     COMMENT_DELETE
-} from '../actions/types';
+} from './types';
 
 const initialState = {
     loading: false,
@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
                 loading: true
             }
 
-        case COMMENT_SUCCESS:
+        case COMMENT_GET_BY_ITEM:
             return {
                 ...state,
                 loading: false,

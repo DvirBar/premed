@@ -1,0 +1,13 @@
+.add-comment {
+    width: 100%;
+    padding: 1rem;
+    border: 1.5px solid #aaa;
+    border-radius: 0.5rem;
+    font-size: 1.8rem;
+    transition: border-color 0.3s ease;
+    outline: none;
+
+    &:focus {
+        border-color: $main-color;
+    }
+}

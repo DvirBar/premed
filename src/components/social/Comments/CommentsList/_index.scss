@@ -1,0 +1,9 @@
+@import "./CommentItem/index";
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding-bottom: 3rem;
+    width: 100%;
+}

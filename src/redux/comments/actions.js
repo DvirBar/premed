@@ -27,7 +27,7 @@ export const commentError = (err) => dispatch => {
 
 // Get comments by item id
 export const getCommentsByItem = itemId => dispatch => {
-    dispatch(libraryLoad());
+    dispatch(commentLoad());
 
     axios.get(`/api/comments/${itemId}`)
          .then(res => dispatch({
@@ -35,7 +35,7 @@ export const getCommentsByItem = itemId => dispatch => {
              payload: res.data
          }))
          .catch(err => {
-             dispatch(CommentError(err))
+             dispatch(commentError(err))
          })
 }
 
@@ -71,7 +71,7 @@ export const editComment = (id, data) => dispatch => {
             })
 }
 
-export const voteLibItem = id => async(dispatch) => {
+export const voteComment = id => async(dispatch) => {
     try {
         const res = await axios.put(`api/comments/${id}/vote`)
         dispatch({

@@ -1,0 +1,25 @@
+.comment-likes {
+    color: $main-color;
+    transition: opacity 0.2s ease-in-out;
+    display: flex;
+    text-align: center;
+    font-size: 18px;
+
+    .MuiSvgIcon-root {
+        color: $main-color;
+    }
+
+    &.voted {
+        color: $main-color;
+    }
+
+    &__vote-comment {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

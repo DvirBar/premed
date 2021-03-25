@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react'
-import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../../../../../redux/selectors/auth'
-import useVotes from '../useVotes'
+import { selectUser } from '../../../../../../redux/selectors/auth'
+import useVotes from '../../../../../common/hooks/useVotes'
 import VoteItem from './VoteItem'
 import ThumbUp from '@material-ui/icons/ThumbUp'
 import ThumbDown from '@material-ui/icons/ThumbDown'
-import { voteLibItem } from '../../../../../redux/libraries/actions'
+import { voteLibItem } from '../../../../../../redux/libraries/actions'
 
 function Votes({ libId, item }) {
     console.log(libId);
@@ -39,12 +38,14 @@ function Votes({ libId, item }) {
             <VoteItem
             votes={upvotes}
             hasVoted={upvote}
+            isUpvote={true}
             onClick={dispatchVote(true)}>
                 <ThumbUp style={{fontSize: 20}} />
             </VoteItem>
             <VoteItem
             votes={downvotes}
             hasVoted={downvote}
+            isUpvote={false}
             onClick={dispatchVote(false)}>
                 <ThumbDown style={{fontSize: 20}}/>
             </VoteItem>
