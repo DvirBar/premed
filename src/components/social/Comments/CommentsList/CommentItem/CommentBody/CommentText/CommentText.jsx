@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { editComment } from '../../../../../../redux/comments/actions';
+import { editComment } from '../../../../../../../redux/comments/actions';
 
 function CommentText({ 
+    ref,
     editMode, 
     toggleEdit,  
     comment }) {
@@ -45,7 +46,9 @@ function CommentText({
         )
     }
     return (
-        <div className="comment-text">
+        <div 
+        ref={ref}
+        className="comment-text noselect">
             {comment.text} 
         </div>
     )
