@@ -12,6 +12,7 @@ import Footer from './components/layout/Footer';
 import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
 import { getBaseData } from './redux/actions/basedata';
+import EditableTextBox from './components/common/inputs/EditableTextBox/EditableTextBox';
 
 axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
@@ -33,7 +34,6 @@ function App() {
    useEffect(() => {
     dispatch(getUser());
   }, []);
-
 
   moment.locale('he');
 
