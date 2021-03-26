@@ -38,7 +38,20 @@ export async function edit(id, commentDetails, user) {
         comment.text = text
 
         return comment.save()
+}
+
+export async function addReply(parent, comment) {
+    const comment = await Comment.getByIdOrFail(parent)
+
+    const commentObject = {
+        ...comment,
+        parent
     }
+
+    const newComment = new Comment(commentObject)
+
+    return newComment.save()
+}
 
 export async function toggleLike(id, userId) {
     const comment = await Comment.getByIdOrFail(id)
