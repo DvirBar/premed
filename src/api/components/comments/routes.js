@@ -19,16 +19,16 @@ router.post('/', auth, CommentController.create)
 router.put('/:id', auth, CommentController.edit)
 
 
-// @route   PUT api/comments/:id/toggleLike
+// @route   PUT api/comments/:id/vote
 // @desc    Toggle like
 // @access  Private
-router.put('/:id/toggleLike', auth, CommentController.toggleLike)
+router.put('/:id/vote', auth, CommentController.toggleLike)
 
 
-// @route   DELETE api/comments/:id/remove
+// @route   DELETE api/comments/:id
 // @desc    Delete comment
 // @access  Private (Admin allowed)
-router.delete('/:id/remove', auth, CommentController.remove)
+router.delete('/:id', auth, CommentController.remove)
  
 
 export default router

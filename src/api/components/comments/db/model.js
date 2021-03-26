@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { default: mongooseAutoPopulate } = require('mongoose-autopopulate');
 const { ConstructStaticMethods } = require('../../../db/plugins');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -21,7 +20,7 @@ const CommentSchema = new Schema({
     },
     user: {
         type: ObjectId,
-        required: [true, 'Author is required'],
+        required: [true, 'User is required'],
         ref: 'User',
         autopopulate: true
     },
@@ -29,7 +28,7 @@ const CommentSchema = new Schema({
         type: ObjectId,
         ref: 'Comment'
     },
-    Item: {
+    item: {
         type: ObjectId,
         ref: 'Library.items'
     }

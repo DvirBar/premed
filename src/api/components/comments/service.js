@@ -6,14 +6,23 @@ export function getByItem(itemId) {
         return Comment.getByItem(itemId)
     }
 
-export function create(comment) {
-        const newComment = new Comment(comment)
+export function create(comment, userId) {
+        const commentObject = {
+            ...comment,
+            user: userId
+        }
+
+        const newComment = new Comment(commentObject)
 
         return newComment.save()
     }
 
 export async function edit(id, commentDetails, user) {
-        const comment = await Comment.findByIdOrFail(id)
+        const {
+            text
+        } = commentDetails 
+        
+        const comment = await Comment.getByIdOrFail(id)
         const {
             id: userId,
             isAdmin 
@@ -26,28 +35,36 @@ export async function edit(id, commentDetails, user) {
             isAdmin,
             true)
 
-        Object.assign(comment, commentDetails)
+        comment.text = text
 
         return comment.save()
     }
 
 export async function toggleLike(id, userId) {
-    const comment = await Comment.findByIdOrFail(id)
-    const likes = comment.likes
+    const comment = await Comment.getByIdOrFail(id)
 
+    let likes = comment.likes;
     if(likes.includes(userId)) {
-        likes = removeFromArray(likes, userId)
+        // likes = removeFromArray(likes, userId)
+        comment.likes = removeFromArray(likes, userId)
+
     }
 
     else {
         likes.push(userId)
     }
 
-    return comment.save()
+    await comment.save()
+
+    return comment.likes
 }
     
-export async function remove(id) {
-    const comment = await Comment.findByIdOrFail(id)
+export async function remove(id, user) {
+    const comment = await Comment.getByIdOrFail(id)
+    const {
+        id: userId,
+        isAdmin
+    } = user
 
     checkOwnedResource(
         comment, 

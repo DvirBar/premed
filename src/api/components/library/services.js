@@ -25,8 +25,9 @@ class LibraryService {
 
     static async toggleVote(params, userId, isUpvote) {
         const { lib, item } = await Library.getItemById(params)
- 
-        downvoteUpvote(item, userId, isUpvote)
+
+        downvoteUpvote(item, userId, isUpvote) 
+
         await lib.save()
 
         const {

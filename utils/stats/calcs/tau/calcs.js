@@ -5,6 +5,8 @@ import axios from 'axios';
 import qs from 'querystring';
 
 export const tauInitial = async(params) => {
+    //M * 0.342694114 + 0.299848662 * initial +446.4705507
+    
     const {
         'bagrutTau': bagrut,
         'psycho': psycho,

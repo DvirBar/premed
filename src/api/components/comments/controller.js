@@ -17,8 +17,9 @@ export async function getByItem(req, res, next) {
 }
 
 export async function create(req, res, next) {
-    try {
-        const comment = await CommentService.create(res.body)
+    try {  
+        const userId = res.locals.user._id
+        const comment = await CommentService.create(req.body, userId)
 
         return res.status(201).send(comment)
     }
@@ -29,10 +30,10 @@ export async function create(req, res, next) {
 }
 
 export async function edit(req, res, next) {
-    try{
-
+    try {
         const { id } = req.params
-        const comment = await CommentService.edit(id, res.body)
+        const user = res.locals.user
+        const comment = await CommentService.edit(id, req.body, user)
 
         return res.status(201).send(comment)
     }
@@ -45,9 +46,9 @@ export async function edit(req, res, next) {
 export async function toggleLike(req, res, next) {
     try {
         const { id } = req.params
-        const comment = await CommentService.edit(id, res.body)
-
-        return res.status(201).send(comment)
+        const userId = res.locals.user.id
+        const likes = await CommentService.toggleLike(id, userId)
+        return res.status(201).send(likes)
     }
 
     catch(err) {
@@ -58,8 +59,8 @@ export async function toggleLike(req, res, next) {
 export async function remove(req, res, next) {
     try {
         const { id } = req.params
-
-        await CommentService.remove(id)
+        const user = res.locals.user
+        await CommentService.remove(id, user)
 
         return sendHttpMessage(res, SuccessDelete)
     }

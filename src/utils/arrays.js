@@ -11,13 +11,14 @@
 
 export const removeFromArray = (arr, item, key) => {
     const index = arr.findIndex(thisItem => key 
-        ? thisItem[key] === item[key] 
-        : thisItem === item)
+        ? thisItem[key].toString() === item[key] 
+        : thisItem.toString() === item)
 
+    
     if(index === -1) {
         return arr
-    }
-
+    }   
+    
     // We are using slice to keep the function pure
-    return arr.slice(index, index + 1)
+    return arr.slice(index + 1, index + 2)
 }
