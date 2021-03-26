@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addComment } from '../../../../redux/comments/actions'
+import EditableTextBox from '../../../common/inputs/EditableTextBox/EditableTextBox';
 
 function AddComment({ itemId }) {
     const [comment, setComment] = useState('')
 
     const dispatch = useDispatch()
-    const sendComment = e => {
-        if(e.key === "Enter" && comment !== '') {
+    const sendComment = text => {
+        if(text) {
             const dataObj = {
-                text: comment,
+                text,
                 item: itemId
             }
             dispatch(addComment(dataObj))
@@ -19,13 +20,11 @@ function AddComment({ itemId }) {
     }
 
     return (
-        <input 
-        type="text"
-        placeholder="הוספת תגובה"
-        className="add-comment"
-        onChange={e => setComment(e.target.value)}
-        onKeyPress={e => sendComment(e)}
-        value={comment} />
+        <EditableTextBox
+        value={comment}
+        onChange={setComment}
+        placeholder="תגובה חדשה..."
+        onEnter={sendComment} />
     )
 }
 

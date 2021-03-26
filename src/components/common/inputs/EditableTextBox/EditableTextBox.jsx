@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 import useFocus from './useFocus'
 
 function EditableTextBox({ 
     value, 
     onChange, 
+    onEnter,
     placeholder, 
     options }) {
-        
+    const ref = useRef(value)
+
+    const handleChange = text => {
+        console.log(text);
+        onChange(text)
+        ref.current = text
+    }
+
     const keyOptionsMap = event => {
         if(event) {
             switch(event.key) {
                 case 'Enter': 
                     if(event.shiftKey) {
                         return;
+                    }
+
+                    if(onEnter) {
+                        onEnter(ref.current)
                     }
 
                     event.preventDefault()
@@ -28,9 +40,10 @@ function EditableTextBox({
             event.preventDefault()
 
             const pastedText = event.clipboardData.getData('text/plain')
-            onChange(pastedText)
+            handleChange(pastedText)
         }
     }
+
     const editableClassName = "editable-textbox" 
     useFocus(editableClassName)
     
@@ -39,7 +52,7 @@ function EditableTextBox({
         id={editableClassName}
         html={value}
         onPaste={handlePaste}
-        onChange={e => onChange(e.target.value)}
+        onChange={e => handleChange(e.target.value)}
         onKeyPress={keyOptionsMap}
         placeholder={placeholder} />
     )

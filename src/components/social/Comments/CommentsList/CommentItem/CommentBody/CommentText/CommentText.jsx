@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { editComment } from '../../../../../../../redux/comments/actions';
-import useLongTouch from '../../../../../../common/hooks/useLongTouch';
+import EditableTextBox from '../../../../../../common/inputs/EditableTextBox/EditableTextBox';
 
 function CommentText({ 
-    toggleDisplayMenu,
     editMode, 
     toggleEdit,  
     comment }) {
@@ -13,10 +12,10 @@ function CommentText({
         
     const dispatch = useDispatch()
 
-    const changeComment = e => {
-        if(e.key === "Enter" && text !== '') {
+    const changeComment = newComment => {
+        if(text !== '') {
             const dataObj = {
-                text
+                text: newComment
             }
     
             dispatch(editComment(comment._id, dataObj))
@@ -32,13 +31,11 @@ function CommentText({
     if(editMode) {
         return (
             <div className="comment-text">
-                <textarea
-                className="add-comment"
-                onChange={e => setText(e.target.value)}
+                <EditableTextBox
                 value={text}
-                placeholder="כתיבת תגובה..."
-                onKeyPress={e => changeComment(e)} />
-
+                onChange={setText}
+                placeholder="עריכת תגובה..."
+                onEnter={changeComment} />
                 <span 
                 className="cancel-edit"
                 onClick={() => cancelEdit()}>
@@ -50,9 +47,8 @@ function CommentText({
     
     return (
         <div 
-        className="comment-text noselect">
-            {comment.text} 
-        </div>
+        dangerouslySetInnerHTML={{__html: comment.text}}
+        className="comment-text noselect" />
     )
 }
 
