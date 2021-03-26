@@ -13,7 +13,7 @@ import Loadbar from './components/layout/Loadbar';
 import axios from 'axios'; 
 import { getBaseData } from './redux/actions/basedata';
 
-axios.defaults.baseURL = 'http://10.0.0.18:5000';
+axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 function App() {

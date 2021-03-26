@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-function useLongTouch({ ref, callback }) {
+function useLongTouch(ref, callback) {
     // Touch duration in milliseconds
-    const touchDuration = 500
+    const touchDuration = 1000
     let timer
 
     function listener(exec, event) {
@@ -14,7 +14,8 @@ function useLongTouch({ ref, callback }) {
     }
 
     function touchstart() {
-        timer = setTimeout(callback, touchDuration)
+        console.log("hi");
+        timer = setTimeout(callback(), touchDuration)
     }
 
     function touchend() {

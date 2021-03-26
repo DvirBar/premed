@@ -1,26 +1,20 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { deleteComment } from '../../../../../../../redux/comments/actions';
 import Menu from '../../../../../../common/Menu/Menu';
 import MoreVert from '@material-ui/icons/MoreVert';
-
+import useOnClickOutside from '../../../../../../common/useOnClickOutside'
 
 function CommentOptions({ 
-    anchorRef,
-    display,
-    toggle,
     allowed, 
     toggleEdit, 
     comment }) {
-
+    
     const dispatch = useDispatch()
 
     const removeComment = () => {
         dispatch(deleteComment(comment._id))
     }
-
-    const [displayMenu, setDisplayMenu] = useState(false);
-
 
     const options = allowed 
     ? [
@@ -40,17 +34,22 @@ function CommentOptions({
         }
     ]
 
+    const [displayMenu, setDisplayMenu] = useState(false);
+
+
+    const ref = useRef(null)
+    useOnClickOutside(ref, displayMenu, () => setDisplayMenu(false))
+
     return (
-        <div className="options-anchor">
+        <div ref={ref}>
             <div 
-            onClick={() => setDisplayMenu(!display)}>
+            className="options-anchor"
+            onClick={() => setDisplayMenu(!displayMenu)}>
                 <MoreVert />
             </div>
 
             <Menu
-            longTouchRef={anchorRef}
-            display={displayMenu}
-            toggleDisplay={setDisplayMenu}>
+            display={displayMenu}>
                 {options.map(option => 
                     <div onClick={() => option.action()}>
                         {option.name}

@@ -10,18 +10,14 @@ function CommentBody({ comment, user }) {
 
     const [displayEdit, setDisplayEdit] = useState(false);
 
-    const ref = useRef()
-
     return (
          <div className="comment-body">
-            <CommentText 
-            ref={ref}
+            <CommentText
             editMode={displayEdit}
             toggleEdit={setDisplayEdit}
             comment={comment} />
 
             <CommentOptions
-            anchorRef={ref}
             allowed={allowedPermissions}
             toggleEdit={setDisplayEdit}
             comment={comment} />

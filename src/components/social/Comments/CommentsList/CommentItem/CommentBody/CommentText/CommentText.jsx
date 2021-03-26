@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { editComment } from '../../../../../../../redux/comments/actions';
+import useLongTouch from '../../../../../../common/hooks/useLongTouch';
 
 function CommentText({ 
-    ref,
+    toggleDisplayMenu,
     editMode, 
     toggleEdit,  
     comment }) {
+
     const [text, setText] = useState(comment.text)
         
     const dispatch = useDispatch()
@@ -45,9 +47,9 @@ function CommentText({
             </div>
         )
     }
+    
     return (
         <div 
-        ref={ref}
         className="comment-text noselect">
             {comment.text} 
         </div>

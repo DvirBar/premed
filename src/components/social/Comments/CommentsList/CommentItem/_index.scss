@@ -33,7 +33,7 @@
         column-gap: 0.5rem;
     }
 
-    &:hover > .comment-body > .options-anchor {
+    &:hover > .comment-body > div > .options-anchor {
         opacity: 1;
         visibility: visible;
     }
