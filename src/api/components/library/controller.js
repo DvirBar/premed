@@ -1,6 +1,7 @@
 import LibraryService from './services';
 import { sendHttpMessage } from '../../../services/messages';
 import messages from './messages';
+import commentMessages from '../comments/messages'
  
 const { DeletedSuccessfully, ItemDeletedSuccessfully } = messages
 
@@ -73,7 +74,7 @@ class LibraryController {
 
     static async toggleVote(req, res, next) {
         try {
-            const params = req.params
+            const { id: libId, itemId } = req.params
             const userId = res.locals.user.id
             let { isUpvote } = req.query
 
@@ -91,7 +92,7 @@ class LibraryController {
                 throw new Error('isUpvote<bool> was not provided in query string')
             }
     
-            const votes = await LibraryService.toggleVote(params, userId, isUpvote)
+            const votes = await LibraryService.toggleVote(libId, itemId, userId, isUpvote)
 
             return res.send(votes)
         }

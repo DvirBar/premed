@@ -1,6 +1,7 @@
 import Library from './db/model'
 import { downvoteUpvote } from './utils'
-import { saveDoc } from '../../db/methods'
+import * as CommentService from '../comments/service'
+import { checkOwnedResource } from '../../../services/validation'
 
 class LibraryService {
     static getByPath(pathId) {
@@ -23,8 +24,8 @@ class LibraryService {
         return Library.editItem(params, data)
     }
 
-    static async toggleVote(params, userId, isUpvote) {
-        const { lib, item } = await Library.getItemById(params)
+    static async toggleVote(libId, itemId, userId, isUpvote) {
+        const { lib, item } = await Library.getItemById(libId, itemId)
 
         downvoteUpvote(item, userId, isUpvote) 
 

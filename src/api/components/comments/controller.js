@@ -43,20 +43,6 @@ export async function edit(req, res, next) {
     }
 }
 
-export async function addReply(req, res, next) {
-    try {
-        const { id } = req.params
-
-        const comment = await CommentService.addReply(id, res.body)
-        
-        return res.status(201).send(comment)
-    }
-
-    catch(err) {
-        next(err)
-    }
-}
-
 export async function toggleLike(req, res, next) {
     try {
         const { id } = req.params

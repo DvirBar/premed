@@ -18,11 +18,6 @@ router.post('/', auth, CommentController.create)
 // @access  Private
 router.put('/:id', auth, CommentController.edit)
 
-// @route   PUT api/comments/:id
-// @desc    Add reply
-// @access  Private
-router.put('/:id/reply', auth, CommentController.addReply)
-
 // @route   PUT api/comments/:id/vote
 // @desc    Toggle like
 // @access  Private

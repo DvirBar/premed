@@ -3,8 +3,8 @@ import { removeFromArray } from '../../../utils/arrays'
 import Comment from './db/model'
 
 export function getByItem(itemId) {
-        return Comment.getByItem(itemId)
-    }
+    return Comment.getByItem(itemId)
+}
 
 export function create(comment, userId) {
         const commentObject = {
@@ -38,19 +38,6 @@ export async function edit(id, commentDetails, user) {
         comment.text = text
 
         return comment.save()
-}
-
-export async function addReply(parent, comment) {
-    const comment = await Comment.getByIdOrFail(parent)
-
-    const commentObject = {
-        ...comment,
-        parent
-    }
-
-    const newComment = new Comment(commentObject)
-
-    return newComment.save()
 }
 
 export async function toggleLike(id, userId) {

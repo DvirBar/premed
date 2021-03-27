@@ -49,14 +49,9 @@ export async function editLibrary(id, data) {
 
 
 // Find library item by Id
-export async function getItemById(params) {
-    const {
-        id,
-        itemId
-    } = params
-
+export async function getItemById(libId, itemId) {
     try {
-        const lib = await this.findById(id)
+        const lib = await this.getByIdOrFail(libId)
 
         const item = lib.items.id(itemId) 
 
@@ -72,6 +67,22 @@ export async function getItemById(params) {
 
     catch(err) {
         throw err;
+    }
+}
+
+export async function getCommentById(libId, itemId, commentId) {
+    const { lib, item } = getItemById(libId, itemId)
+
+    const comment = item.comments.id(commentId)
+
+    if(!comment) {
+        throw new Error('Cannot find item comment')
+    }
+
+    return {
+        lib,
+        item,
+        comment
     }
 }
 

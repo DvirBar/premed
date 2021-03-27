@@ -24,14 +24,24 @@ const CommentSchema = new Schema({
         ref: 'User',
         autopopulate: true
     },
+    item: {
+        type: ObjectId, 
+        required: true,
+        ref: 'Library.items'
+    }, 
     parent: {
         type: ObjectId,
         ref: 'Comment'
-    },
-    item: {
-        type: ObjectId,
-        ref: 'Library.items'
     }
+})
+
+CommentSchema.post('remove', async function(doc, next) {
+    const children = await this.model('Comment').find({ parent: doc._id })
+    for(let child of children) {
+        child.remove()
+    }
+    
+    next()
 })
 
 

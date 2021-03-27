@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 import LibraryValidators from './validation';
 import * as staticMethods from './methods';
+import { ConstructStaticMethods } from '../../../db/plugins';
 
 // Create schema
 const LibrarySchema = new Schema({
@@ -53,10 +54,9 @@ const LibrarySchema = new Schema({
     }]
 })
 
-LibrarySchema.statics = {
-    ...LibrarySchema.statics,
-    ...staticMethods
-}
+LibrarySchema.plugin(
+    ConstructStaticMethods,  
+    { customStaticMethods: staticMethods })
 
 
 module.exports = mongoose.model('Library', LibrarySchema);
