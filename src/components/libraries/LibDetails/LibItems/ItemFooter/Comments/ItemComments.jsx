@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import Forum from '@material-ui/icons/Forum'
 import Modal from '../../../../../layout/Modal'
 import Comments from '../../../../../social/Comments/Comments'
+import { useSelector } from 'react-redux'
+import { commentsSelector } from '../../../../../../redux/comments/selectors'
+import Loadbar from '../../../../../layout/Loadbar'
 
 function ItemComments({ item }) {
     const [display, setDisplay] = useState(false)
@@ -24,7 +27,8 @@ function ItemComments({ item }) {
             display={display}
             toggleModal={setDisplay}>
                 {display &&
-                    <Comments itemId={item._id} />
+                    <Comments 
+                    itemId={item._id} />
                 }
             </Modal>
         </div>

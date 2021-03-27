@@ -42,8 +42,6 @@ export const getCommentsByItem = itemId => dispatch => {
 
 // Create new comment
 export const addComment = data => dispatch => {
-    dispatch(commentLoad());
-
     // Request body
     const body = JSON.stringify(data);
 

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addComment } from '../../../../redux/comments/actions'
 import EditableTextBox from '../../../common/inputs/EditableTextBox/EditableTextBox';
 
-function AddComment({ itemId }) {
+function AddComment({ itemId, parent }) {
     const [comment, setComment] = useState('')
 
     const dispatch = useDispatch()
@@ -11,7 +11,8 @@ function AddComment({ itemId }) {
         if(text) {
             const dataObj = {
                 text,
-                item: itemId
+                item: itemId,
+                parent: parent?._id
             }
             dispatch(addComment(dataObj))
 
@@ -19,11 +20,15 @@ function AddComment({ itemId }) {
         }
     }
 
+    const placeholder = !parent 
+    ? "תגובה חדשה..."
+    : `הגב/הגיבי לתגובה של ${parent.user.firstName + ' ' + parent.user.lastName}...`
+
     return (
         <EditableTextBox
         value={comment}
         onChange={setComment}
-        placeholder="תגובה חדשה..."
+        placeholder={placeholder}
         onEnter={sendComment} />
     )
 }

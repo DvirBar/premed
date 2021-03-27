@@ -8,8 +8,6 @@ import ThumbDown from '@material-ui/icons/ThumbDown'
 import { voteLibItem } from '../../../../../../redux/libraries/actions'
 
 function Votes({ libId, item }) {
-    console.log(libId);
-
     const user = useSelector(selectUser)
     const {
         upvotes,

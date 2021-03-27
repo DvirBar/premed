@@ -3,20 +3,15 @@
     flex-direction: column;
     row-gap: 0.5rem;
     width: 100%;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #aaa;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #aaa;
+    }
 
     .MuiSvgIcon-root {
         font-size: 20px;
         color: #777;
         cursor: pointer;
-    }
-
-    @media only screen and(min-width: 764px) {
-        &:hover > .comment-main > .comment-options {
-            opacity: 1;
-            visibility: visible;
-        }
     }
 
     .comment-author {
@@ -33,7 +28,7 @@
         column-gap: 0.5rem;
     }
 
-    &:hover > .comment-body > div > .options-anchor {
+    & > .item-content:hover > .comment-body > div > .options-anchor {
         opacity: 1;
         visibility: visible;
     }

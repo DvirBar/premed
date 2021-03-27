@@ -1,33 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { commentsSelector } from '../../../../redux/comments/selectors'
+import { getCommentsByParent } from '../../../../redux/comments/selectors'
 import CommentItem from './CommentItem/CommentItem'
-import Loadbar from '../../../layout/Loadbar'
 
-function CommentsList({ itemId }) {
-    const {
-        comments,
-        loading
-    } = useSelector(commentsSelector)
+function CommentsList({ 
+    displayReplies,
+    toggleDisplayReplies,
+    parentId, 
+    itemId, 
+}) {
+    const comments = useSelector(getCommentsByParent(parentId))
     
-    if(loading) {
-        return <Loadbar />
-    }
+
+    const showRepliesText = comments.length > 1
+    ?   `הצגת ${comments.length} תגובות`
+    :   'הצגת תגובה'
 
     if(comments.length === 0) {
-        return <div className="no-resource-error">
-            אין תגובות
-        </div>
+        if(!parentId) {
+            return (
+                <div className="no-resource-error">
+                    אין תגובות
+                </div>
+            )
+            
+        }   
+        
+        return null
     }
     
     return (
         <div className="comments-list">
-            {comments.map(comment => 
-                <CommentItem
-                key={comment._id}
-                comment={comment}
-                itemId={itemId} />
-            )}
+            {(!parentId || displayReplies)
+            ?   comments.map(comment => 
+                    <CommentItem
+                    itemId={itemId}
+                    key={comment._id}
+                    comment={comment} />
+                )
+            :   <span 
+                onClick={() => toggleDisplayReplies(true)}
+                className="show-replies">
+                    {showRepliesText}
+                </span>
+            }
         </div>
     )
 }

@@ -48,7 +48,7 @@ function CommentText({
     return (
         <div 
         dangerouslySetInnerHTML={{__html: comment.text}}
-        className="comment-text noselect" />
+        className="comment-text" />
     )
 }
 

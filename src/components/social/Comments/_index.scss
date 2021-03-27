@@ -1,2 +1,16 @@
 @import "./AddComment/index";
 @import "./CommentsList/index";
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    &.isReply:not(:empty) {
+        margin: 1rem;
+        margin-right: 2rem;
+        margin-left: 0;
+        border-right: 5px solid $main-color;
+        padding-right: 2rem;
+    }
+}
