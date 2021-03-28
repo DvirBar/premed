@@ -108,11 +108,6 @@ export async function addItem(id, data) {
 // Edit library item
 export async function editItem(params, data) {
     const { id, itemId } = params;
-    const { 
-        name,
-        icon,
-        link
-    } = data 
 
     try {
         const lib = await this.findById(id)
@@ -122,10 +117,11 @@ export async function editItem(params, data) {
             throw new Error('Cannot find requested item')
         }
 
+
+
         item.set({
-            name,
-            icon,
-            link
+            ...item,
+            ...data
         })
 
         await lib.save()

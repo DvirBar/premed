@@ -43,6 +43,11 @@ const LibrarySchema = new Schema({
         info: {
             type: String
         },
+        meta: {
+            credit: {
+                type: String
+            }
+        },
         upvotes: [{
             type: ObjectId,
             ref: "User"
