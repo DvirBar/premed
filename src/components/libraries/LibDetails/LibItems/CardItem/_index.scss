@@ -1,0 +1,17 @@
+.item-icon {
+    width: 9rem;
+    height: 10rem;
+}
+
+.item-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+
+    .item-name {
+        padding-top: 2rem;
+    }
+}
