@@ -6,6 +6,7 @@ import FormInput from '../../../../common/FormInput'
 import UrlInput from '../../../../common/forms/UrlInput/UrlInput'
 import IconsSelect from '../IconSelect/IconsSelect'
 import Editor from '../../../../common/forms/Editor/Editor'
+import AddMeta from '../AddItem/AddMeta';
 
 function EditItem({ display, setDisplay, item, libId }) {
     const [defaultValues, setDefaultValues] = useState({
@@ -18,7 +19,7 @@ function EditItem({ display, setDisplay, item, libId }) {
         values,
         errors
     } = useForm(editLibItem, defaultValues, libId, item._id)
-    
+    console.log(values);
     return (
         <Modal
         title={`עריכת ${item.name}`}
@@ -32,6 +33,11 @@ function EditItem({ display, setDisplay, item, libId }) {
                 value={values.name}
                 onChange={handleChange}
                 error={errors.name} />
+
+                <AddMeta
+                handleChange={handleChange}
+                values={values}
+                errors={errors} />
     
                 <UrlInput
                 url={values.link}

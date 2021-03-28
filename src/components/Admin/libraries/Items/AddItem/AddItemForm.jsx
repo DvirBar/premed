@@ -6,12 +6,14 @@ import UrlInput from '../../../../common/forms/UrlInput/UrlInput';
 import Editor from '../../../../common/forms/Editor/Editor';
 import Modal from '../../../../layout/Modal';
 import IconsSelect from '../IconSelect/IconsSelect';
+import AddMeta from './AddMeta';
 
 function AddItemForm({ display, toggleModal, libId }) {
     const [defaultValues, setDefaultValues] = useState({
         name: '',
         icon: '',
-        link: ''
+        link: '',
+        meta: {}
     })
     
     const {
@@ -20,7 +22,7 @@ function AddItemForm({ display, toggleModal, libId }) {
         values,
         errors
     } = useForm(addLibItem, defaultValues, libId)
-    
+
     return (
         <Modal
         display={display}
@@ -37,6 +39,11 @@ function AddItemForm({ display, toggleModal, libId }) {
                 onChange={handleChange}
                 error={errors.name} />
 
+                <AddMeta
+                handleChange={handleChange}
+                values={values}
+                errors={errors} />
+                
                 <UrlInput
                 url={values.link}
                 onChange={handleChange}
