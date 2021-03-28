@@ -19,7 +19,7 @@ function EditItem({ display, setDisplay, item, libId }) {
         values,
         errors
     } = useForm(editLibItem, defaultValues, libId, item._id)
-    console.log(values);
+
     return (
         <Modal
         title={`עריכת ${item.name}`}
