@@ -5,6 +5,7 @@ import ItemFooter from '../ItemFooter/ItemFooter'
 import IconObj from '../../../IconsMap';
 import { LibraryContext } from '../../../LibraryContext';
 import EditItem from '../../../../admin/libraries/Items/EditItem/EditItem';
+import Info from '@material-ui/icons/Info'
 
 function CardItem({ item, libId }) {
     const [display, setDisplay] = useState(false)
@@ -25,12 +26,25 @@ function CardItem({ item, libId }) {
             }
         }
     }
+
+    const openDetails = event => {
+        if(event) {
+            event.stopPropagation()
+            setDisplay(true)
+        }
+    }
+    
     return (
         <Fragment>
             <Card
             onClick={linkToUrl}
             type="big">
                 <div className="item-wrapper">
+                    <p 
+                    onClick={openDetails}
+                    className="display-details">
+                        <Info style={{fontSize: 22 }}/>
+                    </p>
                     <p className="item-name">
                         {item.name}
                     </p>

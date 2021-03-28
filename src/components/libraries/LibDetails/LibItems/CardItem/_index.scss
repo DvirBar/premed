@@ -4,12 +4,40 @@
 }
 
 .item-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     height: 100%;
     width: 100%;
+
+    .display-details {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        color: #777;
+
+        @media only screen and(min-width: 768px) {
+            visibility: hidden;
+            transform: translateX(10px);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    &:hover {
+        & > .display-details {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
 
     .item-name {
         padding-top: 2rem;

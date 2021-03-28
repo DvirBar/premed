@@ -19,9 +19,11 @@ function ItemComments({ item }) {
         <div 
         onClick={event => stopBubbling(event)}
         className="comments-wrapper">
-            <Forum 
-            onClick={() => setDisplay(true)}
-            style={{ fontSize: 25 }} />
+            <div className="open-comments">
+                <Forum 
+                onClick={() => setDisplay(true)}
+                style={{ fontSize: 25 }} />
+            </div>
             <Modal
             title={title}
             display={display}
