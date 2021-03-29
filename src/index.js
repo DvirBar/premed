@@ -39,6 +39,7 @@ import userdata from '../routes/api/user-data';
 import steps from '../routes/api/steps';
 import announcements from './api/components/announcements/announcements/routes'
 import ancGroups from './api/components/announcements/groups/routes'
+import { sendEmail } from './services/email';
 
 app.use('/api/auth', auth);
 app.use('/api/datatables', dataTables)
