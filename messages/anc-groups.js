@@ -6,20 +6,6 @@ const ancMessages = {
         },
         status: 200
     },
-    SuccessSubscribe: {
-        msg: {
-            en: 'Subscribed successfully',
-            he: 'נרשמת בהצלחה'
-        },
-        status: 200
-    },
-    SuccessUnsubscribe: {
-        msg: {
-            en: 'Unsubscribed successfully',
-            he: 'הסרת את הרשמתך'
-        },
-        status: 200
-    },
     AlreadySubscribed: {
         msg: {
             en: 'You are already subscribed to this group',

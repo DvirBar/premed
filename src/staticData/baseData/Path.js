@@ -14,7 +14,7 @@ class Path {
         }
     }
 
-    populatePaths = ids => {
+    populatePaths(ids) {
         return ids.map(id => this.getPathById(id))
     }
 }

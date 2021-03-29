@@ -1,0 +1,21 @@
+import { subTypes } from "./enums"
+
+export function getAll() {
+    return this.find()
+}
+export function getUserSub(subs, userId) {
+    return subs.find(sub => 
+        sub.user.equals(userId))
+}
+
+export async function addSub(group, userId) {
+    const subObj = {
+        user: userId,
+        types: [subTypes.email]
+    }
+    
+    group.subscribers.push(subObj)
+
+    await group.save()
+    return subObj
+}
