@@ -4,6 +4,7 @@ import config from 'config';
 import cors from 'cors';
 import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
+import path from 'path';
 
 // Init app
 const app = express();
@@ -63,6 +64,14 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
 
 // Database config
 const db = config.get('mongoURI');
+// sendEmail({
+//     subject: "Test",
+//     to: "dvir.bartov1@gmail.com"
+// }, 'announcement',{
+//     anc_title: 'פורסמו ציונים',
+//     anc_body: 'מייל שבודק שהטמפלייטים עובדים',
+//     footer_content: 'מידע זה אינו רשמי ואין להסתמך עליו <a href="google.com">שלום</a>'
+// })
 
 // Connect to MongoDB
 mongoose

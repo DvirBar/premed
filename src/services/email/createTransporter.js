@@ -26,6 +26,13 @@ async function createTransporter() {
             resolve(token)
         })
     })
+
+    
+
+
+    const defaultOptions = { 
+        from: config.get('google-email')
+    }
      
     const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -40,16 +47,8 @@ async function createTransporter() {
         tls: {
             rejectUnauthorized: false
         }   
-    })
+    }, defaultOptions)
 
-    transporter.use('compile', hbs({ 
-        viewEngine: {
-            partiaDir: path.resolve(__dirname, 'templates'),
-            defaultLayout: ''
-        },
-        viewPath: path.resolve(__dirname, 'templates'),
-        extName: '.hbs'
-    }))
 
     return transporter;
 }
