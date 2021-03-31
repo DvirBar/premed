@@ -6,17 +6,17 @@ const messages = {
         },
         status: 200
     },
-    SuccessSubscribe: {
+    SubscribeUpdated: {
         msg: {
-            en: 'Subscribed successfully',
-            he: 'נרשמת בהצלחה'
+            en: 'Subscripsion successfully updated',
+            he: 'ההרשמות עודכנו בהצלחה'
         },
         status: 200
     },
-    SuccessUnsubscribe: {
+    UnSubscribedFromAllSuccessfully: {
         msg: {
-            en: 'Unsubscribed successfully',
-            he: 'הסרת את הרשמתך'
+            en: 'You have been successfully unsubscribed from all groups',
+            he: 'הסרת את הרשמתך מכל הקבוצות בהצלחה'
         },
         status: 200
     }

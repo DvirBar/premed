@@ -17,7 +17,7 @@ const AncGroupSchema = new Schema({
     path: {
         type: String,
         required: [true, 'Path is required'],
-        enum: path.getPaths()
+        enum: path.getPaths().map(pathItem => pathItem._id)
     },
     subscribers: [{
         user: {
@@ -30,10 +30,6 @@ const AncGroupSchema = new Schema({
             required: [true, 'Subscription type is required'],
             enum: Object.values(subTypes)
         }]
-    }],
-    announcements: [{
-        type: ObjectId,
-        ref: 'Announcement'
     }]
 })
 

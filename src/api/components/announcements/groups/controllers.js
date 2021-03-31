@@ -1,7 +1,7 @@
 import * as AncGroupServices from './services'
 import { sendHttpMessage } from '../../../../services/messages'
 import messages from './messages'
-const { SuccessDelete, SuccessSubscribe, SuccessUnsubscribe } = messages
+const { SuccessDelete, SubscribeUpdated, UnSubscribedFromAllSuccessfully } = messages
 
 export async function getAll(req, res, next) {
     try {
@@ -55,13 +55,26 @@ export async function edit(req, res, next) {
 export async function toggleSubscribe(req, res, next) {
     try {
         const userId = res.locals.user.id
-        const sub = await AncGroupServices.toggleSubscribe(req.params.id, userId)
-        const message = sub ? SuccessSubscribe : SuccessUnsubscribe
-
+        const sub = await AncGroupServices.toggleSubscribe(req.body, userId)
+      
         return res.status(200).send({
             sub,
-            message
+            message: SubscribeUpdated
         })
+    }
+
+    catch(err) {
+        next(err)
+    }
+}
+
+export async function unsubscribeAll(req, res, next) {
+    try {
+        const userId = res.locals.user.id
+
+        await AncGroupServices.unsubscribeAll(userId)
+
+        sendHttpMessage(res, UnSubscribedFromAllSuccessfully)
     }
 
     catch(err) {

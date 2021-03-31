@@ -8,6 +8,14 @@ export function getUserSub(subs, userId) {
         sub.user.equals(userId))
 }
 
+export async function getAllGroupSubs(groupId) {
+    const group = await this
+                    .findById(groupId)
+                    .populate('subscribers.user')
+                    .select('email')
+    return group.subscribers
+}
+
 export async function addSub(group, userId) {
     const subObj = {
         user: userId,
@@ -17,5 +25,8 @@ export async function addSub(group, userId) {
     group.subscribers.push(subObj)
 
     await group.save()
-    return subObj
+    return {
+        group: group._id,
+        types: subObj.types
+    }
 }

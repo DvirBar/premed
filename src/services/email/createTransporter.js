@@ -16,7 +16,6 @@ async function createTransporter() {
         refresh_token: config.get('google-refresh_token')
     })
 
-
     const accessToken = await new Promise((resolve, reject) => {
         oauth2Client.getAccessToken((err, token) => {
             if(err) {
@@ -26,9 +25,6 @@ async function createTransporter() {
             resolve(token)
         })
     })
-
-    
-
 
     const defaultOptions = { 
         from: config.get('google-email')

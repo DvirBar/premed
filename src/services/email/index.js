@@ -9,7 +9,7 @@ export async function sendEmail(emailOptions, templateName, context) {
 
     let emailTransporter = await createTransporter()
     
-    await emailTransporter.sendMail({
+    emailTransporter.sendMail({
         ...emailOptions,
         attachments: [{
             filename: 'banner.png',
@@ -17,5 +17,17 @@ export async function sendEmail(emailOptions, templateName, context) {
             cid: 'banner'
         }],
         html: compiledTemplate.render(context)
+    }, (err, info) => {
+        if(err) {
+            throw err
+        }
+        
+        if(info.accepted) {
+            console.log(`Successfully sent email to ${info.accepted}`);
+        }
+
+        if(info.rejected) {
+            console.log(`Email rejected by ${info.rejected}`);
+        }
     })
 }

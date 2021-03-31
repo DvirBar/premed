@@ -40,7 +40,9 @@ import userdata from '../routes/api/user-data';
 import steps from '../routes/api/steps';
 import announcements from './api/components/announcements/announcements/routes'
 import ancGroups from './api/components/announcements/groups/routes'
-import { sendEmail } from './services/email';
+import viewIndex from './views/index'
+
+
 
 app.use('/api/auth', auth);
 app.use('/api/datatables', dataTables)
@@ -54,6 +56,11 @@ app.use('/api/comments', comments);
 app.use('/api/announcements', announcements)
 app.use('/api/announcements/groups', ancGroups)
 
+app.set('view engine', 'hjs')
+app.set('views', path.join(__dirname, 'views'))
+app.engine('hjs', require('hogan-express'))
+app.use('/', viewIndex)
+
 // Exit middlewares
 app.use(errorHandler);
 
@@ -64,14 +71,7 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
 
 // Database config
 const db = config.get('mongoURI');
-// sendEmail({
-//     subject: "Test",
-//     to: "dvir.bartov1@gmail.com"
-// }, 'announcement',{
-//     anc_title: 'פורסמו ציונים',
-//     anc_body: 'מייל שבודק שהטמפלייטים עובדים',
-//     footer_content: 'מידע זה אינו רשמי ואין להסתמך עליו <a href="google.com">שלום</a>'
-// })
+
 
 // Connect to MongoDB
 mongoose

@@ -25,6 +25,12 @@ export async function getAllWithSubs(userId) {
     return newGroups
 }
 
+export async function getAllGroupSubs(groupId) {
+    return AncGroup.getAllGroupSubs(groupId)
+    // Should be changed when there will be a notification service
+    
+}
+
 export function create(data) {
     const newGroup = new AncGroup(data)
 
@@ -42,18 +48,60 @@ export async function edit(id, data) {
     return group.save() 
 }
 
-export async function toggleSubscribe(groupId, userId) {
-    const group = await AncGroup.getByIdOrFail(groupId)
+export async function toggleSubscribe(data, userId) {
+    const {
+        groupIds
+    } = data
+    
+    if(Array.isArray(groupIds)) {
+        let promises = []
+        for(let groupId of groupIds) {
+            promises.push(groupToggleSubscribe(groupId, userId))
+        }
 
+        return Promise.all(promises).then(groups => groups)
+    }   
+
+    throw 'Bad request: groupIds is not an array'
+}
+
+export async function unsubscribeAll(userId) {
+    const groups = await AncGroup.find()
+
+    let promises = []
+
+    for(let group of groups) {
+        promises.push(removeSub(group, userId))
+    }
+
+    return Promise.all(promises)
+}
+
+async function removeSub(group, userId) {
+    const sub = AncGroup.getUserSub(group.subscribers, userId)
+
+    if(sub) {
+        await sub.remove()
+        return group.save()
+    }
+}
+
+async function groupToggleSubscribe(groupId, userId) {
+    const group = await AncGroup.getByIdOrFail(groupId)
     const sub = AncGroup.getUserSub(group.subscribers, userId)
 
     if(sub) {
         await sub.remove()
         await group.save()
-        return undefined
+        return {
+            group: groupId,
+            types: []
+        }
     }
-
-    return AncGroup.addSub(group, userId)
+        
+    else {
+        return AncGroup.addSub(group, userId)
+    }
 }
  
 export async function remove(id) {

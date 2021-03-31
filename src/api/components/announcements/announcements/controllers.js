@@ -29,7 +29,7 @@ export async function getAncsList(req, res, next) {
 export async function create(req, res, next) {
     try {
         const userId = res.locals.user.id
-        const anc = await AncServices.create(req.body, userId)
+        const anc = await AncServices.create(req.body.anc, userId, req.body.shouldEmail)
         return res.status(201).send(anc)
     }
 
