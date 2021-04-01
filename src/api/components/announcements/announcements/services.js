@@ -37,11 +37,17 @@ export async function create(data, userId, shouldEmail) {
     return anc
 }
 
-export async function edit(id, data) {
+export async function edit(id, data, shouldEmail) {
     const anc = await Announcement.getByIdOrFail(id)
     anc.set(data)
+
+    await anc.save()
+
+    if(shouldEmail) {
+        sendAncEmail(anc, true)
+    }
     
-    return anc.save()
+    return anc
 }
 
 export async function remove(id) {
@@ -50,10 +56,15 @@ export async function remove(id) {
     return anc.remove()
 }
 
-async function sendAncEmail(anc) {
+async function sendAncEmail(anc, isEdit) {
     // Find subscribers
     const subs = await AncGroupService.getAllGroupSubs(anc.group)
- 
+    let title = ''
+    if(isEdit) {
+        title = 'תיקון מייל: '
+    }
+
+    title += anc.title
     // Loop through subscribers asynchronously and send emails
     for(let sub of subs) {
         const userEmail = sub.user.email
@@ -66,12 +77,13 @@ async function sendAncEmail(anc) {
         `${config.get('serverURI')}/unsubscribe?token=${token}`
 
         sendEmail({
-            subject: anc.title,
+            subject: title,
             bcc: userEmail
         }, templateMap.announcement, {
-            anc_title: anc.title,
+            anc_title: title,
             anc_body: anc.content,
-            unsubscribe_link
+            unsubscribe_link,
+            isEdit: isEdit
         })
     }
 }

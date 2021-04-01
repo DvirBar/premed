@@ -16,7 +16,7 @@
             background-color: #fff;
             padding: 10px;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             margin: auto;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
                 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -25,11 +25,18 @@
         .anc-title {
             font-weight: 500;
             font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .is-edit {
+            font-size: 11px;
+            color: #c20000;
+            margin-bottom: 5px;
         }
 
         .anc-body {
-            padding-top: 5px;
-            padding-right: 10px;
+            padding: 10px;
+            background-color: #eee;
         }
 
         .banner {
@@ -98,8 +105,13 @@
             <div class="anc-title">
                 {{ anc_title }}
             </div>
+            {{#isEdit}}
+            <div class="is-edit">
+                זהו עדכון של המייל הקודם שנשלח
+            </div>
+            {{/isEdit}}
             <div class="anc-body">
-                {{ anc_body }}
+                {{{anc_body}}}
             </div>
         </div>
     </div>

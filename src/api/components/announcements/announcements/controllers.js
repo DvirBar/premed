@@ -40,7 +40,7 @@ export async function create(req, res, next) {
 
 export async function edit(req, res, next) {
     try {
-        const anc = await AncServices.edit(req.params.id, req.body)
+        const anc = await AncServices.edit(req.params.id, req.body.anc, req.body.shouldEmail)
 
         return res.status(200).send(anc)
     }

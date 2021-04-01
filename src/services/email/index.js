@@ -22,11 +22,11 @@ export async function sendEmail(emailOptions, templateName, context) {
             throw err
         }
         
-        if(info.accepted) {
+        if(info.accepted?.length > 0) {
             console.log(`Successfully sent email to ${info.accepted}`);
         }
 
-        if(info.rejected) {
+        if(info.rejected?.length > 0) {
             console.log(`Email rejected by ${info.rejected}`);
         }
     })
