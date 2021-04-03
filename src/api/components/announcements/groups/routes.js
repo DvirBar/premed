@@ -7,8 +7,8 @@ import * as AncGroupsControllers from './controllers'
 
 // @route   GET api/announcements/group
 // @desc    Get announcement groups 
-// @access  Public
-router.get('/', AncGroupsControllers.getAll)
+// @access  Admin
+router.get('/', [auth, authAdmin], AncGroupsControllers.getAll)
 
 // @route   GET api/announcements/group
 // @desc    Get announcement groups with user subsbriptions

@@ -55,10 +55,10 @@ export async function edit(req, res, next) {
 export async function toggleSubscribe(req, res, next) {
     try {
         const userId = res.locals.user.id
-        const sub = await AncGroupServices.toggleSubscribe(req.body, userId)
+        const subs = await AncGroupServices.toggleSubscribe(req.body, userId)
       
         return res.status(200).send({
-            sub,
+            subs,
             message: SubscribeUpdated
         })
     }

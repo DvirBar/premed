@@ -26,7 +26,7 @@ export async function addSub(group, userId) {
 
     await group.save()
     return {
-        group: group._id,
+        group: group._id, 
         types: subObj.types
     }
 }

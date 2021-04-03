@@ -8,11 +8,12 @@ import * as staticMethods from './methods';
 const AnnouncementSchema = new Schema({
     title: {
         type: String,
-        required: [true, 'Title is required']
+        required: [true, 'Title is required'],
+        text: true
     },
     content: {
-        type: String, 
-        required: [true, 'Content is required']
+        type: String,
+        text: true
     },
     date: {
         type: Date,

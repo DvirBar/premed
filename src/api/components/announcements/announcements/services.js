@@ -14,10 +14,26 @@ export function getLast() {
     that was sent. */
 export async function getAncsList(data) {
     const {
-        lastAncId
+        lastAncId,
+        filters
     } = data
     const anc = await Announcement.findById(lastAncId) 
-    return Announcement.getFromDate(10, anc ? anc.date : new Date(), anc?._id)
+
+    if(anc) {
+        filters.maxDate = anc.date
+    }
+
+    if(!filters.maxDate) {
+        filters.maxDate = new Date()
+    }
+
+    if(!filters.minDate) {
+        filters.minDate = new Date(1997, 2, 7)
+    }
+
+    return Announcement.filterAncs(filters, 10, lastAncId)
+
+    // return Announcement.getFromDate(10, anc ? anc.date : new Date(), anc?._id)
 }
 
 // Post new announcement

@@ -110,9 +110,11 @@
                 זהו עדכון של המייל הקודם שנשלח
             </div>
             {{/isEdit}}
+            {{#anc_body}}
             <div class="anc-body">
                 {{{anc_body}}}
             </div>
+            {{/anc_body}}
         </div>
     </div>
     <div class="banner">
