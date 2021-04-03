@@ -204,10 +204,15 @@ ul {
 
 .material-icons {
     cursor: pointer;
-
+    margin: 0;
     &.remove:hover {
         color: $error-color;
     }
+}
+
+.MuiSvgIcon-root {
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .content-wrapper {

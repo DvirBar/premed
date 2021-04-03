@@ -1,0 +1,43 @@
+.groups-list {
+    display: flex;
+    column-gap: 10rem;
+    flex-wrap: wrap;
+
+    .path-groups {
+        width: 15rem;
+        .path-name {
+            padding: 1rem;
+            background-color: $main-color;
+            border-radius: 0.5rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .group-item {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $main-color;
+            align-items: center;
+
+            &:hover {
+                .group-options {
+                    display: flex;
+                }
+            }
+
+            &__details {
+                display: flex;
+                flex-direction: column;
+
+                &__sub-count {
+                    color: #999;
+                    font-weight: 500;
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}
+
+@import "./GroupOptions/index";

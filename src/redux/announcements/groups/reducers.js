@@ -2,18 +2,16 @@ import {
     GROUP_LOADING,
     GROUP_SUCCESS,
     GROUP_ERROR,
-    USER_SUBSCRIBES,
+    GET_GROUPS_USER_SUBSCRIBES,
     GROUP_ADD,
     GROUP_UPDATE,
-    GROUP_SUBSCRIBE,
-    GROUP_UNSUBSCRIBE,
+    GROUP_TOGGLE_SUBSCRIBE,
     GROUP_DELETE,
-} from '../actions/types';
+} from './types';
 
 const initialState = {
     loading: false,
-    groups: [],
-    userSubs: []
+    groups: []
 }
 
 export default function(state = initialState, action) {
@@ -27,6 +25,7 @@ export default function(state = initialState, action) {
             }
 
         case GROUP_SUCCESS:
+        case GET_GROUPS_USER_SUBSCRIBES:
             return {
                 ...state,
                 loading: false,
@@ -36,16 +35,7 @@ export default function(state = initialState, action) {
         case GROUP_ERROR:
             return {
                 ...state,
-                loading: false,
-                groups: [],
-                userSubscirbes: []
-            }
-        
-        case USER_SUBSCRIBES:
-            return {
-                ...state,
-                loading: false,
-                userSubscirbes: payload
+                loading: false
             }
 
         case GROUP_ADD:
@@ -63,18 +53,18 @@ export default function(state = initialState, action) {
                     group._id === payload._id ? group = payload : group)
             }
 
-        case GROUP_SUBSCRIBE:
-            return {
-                ...state,
-                loading: false,
-                userSubscirbes: [...state.userSubscirbes, payload]
-            }
 
-        case GROUP_UNSUBSCRIBE:
+        case GROUP_TOGGLE_SUBSCRIBE:
             return {
                 ...state,
                 loading: false,
-                userSubscribes: state.userSubscirbes.filter(sub => sub !== payload)
+                groups: state.groups.map(group => 
+                    payload[group._id] 
+                    ? {
+                        ...group,
+                        subscriptions: payload[group._id]
+                    }
+                    : group)
             }
 
         case GROUP_DELETE:

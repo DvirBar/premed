@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import Done from '@material-ui/icons/Done'
 
 function Checkbox({ 
     name, 
@@ -46,24 +47,6 @@ function Checkbox({
         height: style?.size || ''
     }
 
-    // useEffect(() => {
-    //     if(isChanging) {
-    //         let dataObj = {
-    //             name,
-    //             value: isChecked 
-    //             ? (typeof value.on !== "undefined"
-    //                 ? value.on : value)
-    //             : (typeof value.off !== "undefined"
-    //                 ? value.off : value)
-    //         }
-    
-    //         if(isMulti)
-    //             dataObj.type = "multiValue"
-    
-    //         onChange(dataObj)
-    //     }
-    // }, [isChanging, isChecked])
-
     return (
         <div 
         className={`checkbox-elem 
@@ -74,9 +57,9 @@ function Checkbox({
                 ? "checkbox checked"
                 : "checkbox"}
             onClick={() => check()}>
-                <i className="material-icons">
-                    done
-                </i>
+                {checked &&
+                    <Done />
+                }
             </div>
             <div className="checkbox-label">
                 {label}

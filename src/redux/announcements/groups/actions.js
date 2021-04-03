@@ -2,16 +2,16 @@ import {
     GROUP_LOADING,
     GROUP_SUCCESS,
     GROUP_ERROR,
-    USER_SUBSCRIBES,
+    GET_GROUPS_USER_SUBSCRIBES,
     GROUP_ADD,
     GROUP_UPDATE,
-    GROUP_SUBSCRIBE,
-    GROUP_UNSUBSCRIBE,
+    GROUP_TOGGLE_SUBSCRIBE,
     GROUP_DELETE,
 } from './types';
 import axios from 'axios';
-import { getMessage, getError } from './messages';
+import { getMessage, getError } from '../../actions/messages';
 
+const apiUrl = '/api/announcements/groups'
 
 // Basic types
 export const groupLoad = () => {
@@ -33,13 +33,6 @@ export const groupError = () => {
     }
 }
 
-export const userSubs = subs => {
-    return {
-        type: USER_SUBSCRIBES,
-        payload: subs
-    }
-}
-
 export const groupAdd = group => {
     return {
         type: GROUP_ADD,
@@ -51,20 +44,6 @@ export const groupUpdate = group => {
     return {
         type: GROUP_UPDATE,
         payload: group
-    }
-}
-
-export const groupSubscribe = groupId => {
-    return {
-        type: GROUP_SUBSCRIBE,
-        payload: groupId
-    }
-}
-
-export const groupUnsubscribe = groupId => {
-    return {
-        type: GROUP_UNSUBSCRIBE,
-        payload: groupId
     }
 }
 
@@ -80,7 +59,7 @@ export const getGroups = () => dispatch => {
     dispatch(groupLoad());
 
     axios
-        .get('/api/ancgroups')
+        .get(apiUrl)
         .then(res => dispatch(groupSuccess(res.data)))
         .catch(err => {
             dispatch(groupError())
@@ -89,12 +68,15 @@ export const getGroups = () => dispatch => {
 }
 
 // Get all user subscriptions
-export const getSubs = () => dispatch => {
+export const getUserSubs = () => dispatch => {
     dispatch(groupLoad());
 
     axios
-        .get('/api/ancgroups/subscribes')
-        .then(res => dispatch(getSubs(res.data)))
+        .get(`${apiUrl}/subs`)
+        .then(res => ({
+            type: GET_GROUPS_USER_SUBSCRIBES,
+            payload: res.data
+        }))
         .catch(err => dispatch(getError(err)))
 }
 
@@ -105,7 +87,7 @@ export const addGroup = data => dispatch => {
 
     // Send request
     axios
-        .post('/api/ancgroups', body)
+        .post(apiUrl, body)
         .then(res => dispatch(groupAdd(res.data)))
         .catch(err =>  dispatch(getError(err)))
 }
@@ -116,48 +98,30 @@ export const editGroup = (id, data) => dispatch => {
     const body = JSON.stringify(data)
 
     axios
-        .put(`/api/ancgroups/${id}`, body)
+        .put(`${apiUrl}/${id}`, body)
         .then(res => dispatch(groupUpdate(res.data)))
-        .catch(err => dispatch(getError(err)))
-}
-
-// Subscribe to a group
-export const subscribeGroup = id => dispatch => {
-    axios 
-        .put(`/api/ancgroups/${id}/subscribe`)
-        .then(res => {
-            dispatch(groupSubscribe(id));
-            dispatch(getMessage(res.data));
-        })
         .catch(err => dispatch(getError(err)))
 }
 
 // Unsubscribe from a group
-export const unsubscribeGroup = id => dispatch => {
+export const groupToggleSubscribe = id => dispatch => {
     axios 
-        .put(`/api/ancgroups/${id}/unsubscribe`)
+        .put(`${apiUrl}/toggleSubscribe`)
         .then(res => {
-            dispatch(groupUnsubscribe(id));
-            dispatch(getMessage(res.data));
+            dispatch({
+                type: GROUP_TOGGLE_SUBSCRIBE,
+                payload: res.data.subs
+            });
+            dispatch(getMessage(res.data.message));
         })
         .catch(err => dispatch(getError(err)))
 }
 
-// Add path to group
-export const addGroupPath = (data, id) => dispatch => {
-    // Request body
-    const body = JSON.stringify(data)
-
-    axios
-        .put(`/api/ancgroups/${id}/addpath`, body)
-        .then(res => dispatch(groupUpdate(res.data)))
-        .catch(err => dispatch(getError(err)))
-}
 
 // Delete group
 export const deleteGroup = id => dispatch => {
     axios
-        .delete(`/api/ancgroups/${id}`)
+        .delete(`${apiUrl}/${id}`)
         .then(res => {
             dispatch(groupDelete(id))
             dispatch(getMessage(res))

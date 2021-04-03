@@ -18,37 +18,32 @@ $checkbox-color: $main-color;
         background-repeat: no-repeat;
         background-size: 0% 0%;
         cursor: pointer;
-    
+
         transition: background-size 150ms ease-out, border 0.5s ease;
-        
+
         &.enabled {
             &:hover {
                 border-color: $checkbox-color;
                 cursor: pointer;
             }
         }
-    
-    
+
         &:hover {
-            transition: border 0.5s ease; 
+            transition: border 0.5s ease;
         }
-    
-        .material-icons {
+
+        .MuiSvgIcon-root {
             color: #fff;
-            visibility: hidden;
+            font-size: 20px;
         }
-    
+
         &.checked {
             background-size: 100% 100%;
             border: 3px solid $checkbox-color;
             transition: opacity 0.25s ease, background-size 150ms ease-in;
-    
+
             &:hover {
                 opacity: 0.8;
-            }
-    
-            .material-icons {
-                visibility: visible;
             }
         }
 

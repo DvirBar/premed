@@ -14,7 +14,7 @@ function SideMenu() {
             name: 'כללי'
         },
         {
-            url: `${path}/anouncements`,
+            url: `${path}/announcements`,
             name: 'פרסומים' 
         },
         {

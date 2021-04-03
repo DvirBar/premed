@@ -79,6 +79,14 @@ export const config = {
 
         icon: {
             isRequired: { message: 'יש לבחור אייקון'}
+        },
+
+        group: {
+            isRequired: { message: 'יש לבחור קבוצה'}
+        },
+
+        path: {
+            isRequired: { message: 'יש לבחור מסלול' }
         }
     }
 }

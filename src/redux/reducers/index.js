@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
 import messages from './messages';
-import ancs from './anouncements';
 import sections from './sections';
 import paths from './paths';
-import ancgroups from './ancgroups';
 import steps from './steps';
 import datagroups from './datagroups';
 import datafields, * as fieldSelectors from './datafields';
@@ -15,8 +13,10 @@ import datatables from './datatables';
 import questgroups, * as questGroupsSelectors from './questgroups';
 import inquiries from './inquiries';
 import statsinputs from './statsinputs';
-import libraries from '../libraries/reducers'
-import comments from '../comments/reducers'
+import libraries from '../libraries/reducers';
+import comments from '../comments/reducers';
+import ancs from '../announcements/ancs/reducers'
+import ancgroups from '../announcements/groups/reducers'
 
 const appReducer = combineReducers({
     auth,

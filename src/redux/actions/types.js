@@ -28,24 +28,7 @@ export const PATH_ADD = 'PATH_ADD';
 export const PATH_UPDATE = 'PATH_UPDATE';
 export const PATH_DELETE = 'PATH_DELETE';
 
-// Anouncement Groups
-export const GROUP_LOADING = 'GROUP_LOADING';
-export const GROUP_SUCCESS = 'GROUP_SUCCESS';
-export const GROUP_ERROR = 'GROUP_ERROR';
-export const USER_SUBSCRIBES = 'USER_SUBSCRIBES';
-export const GROUP_ADD = 'GROUP_ADD';
-export const GROUP_UPDATE = 'GROUP_UPDATE';
-export const GROUP_SUBSCRIBE = 'GROUP_SUBSCRIBE';
-export const GROUP_UNSUBSCRIBE = 'GROUP_UNSUBSCRIBE';
-export const GROUP_DELETE = 'GROUP_DELETE';
 
-// Anouncements
-export const ANC_LOADING = 'ANC_LOADING';
-export const ANC_SUCCESS = 'ANC_SUCCESS';
-export const ANC_ERROR = 'ANC_ERROR';
-export const ANC_ADD = 'ANC_ADD';
-export const ANC_UPDATE = 'ANC_UPDATE';
-export const ANC_DELETE = 'ANC_DELETE';
 
 // Sections
 export const SEC_LOADING = 'SEC_LOADING';
@@ -75,7 +58,6 @@ export const STEP_EDIT_SUMMARY_CONTENT = 'STEP_EDIT_SUMMARY_CONTENT';
 export const STEP_REMOVE_SUMMARY_CONTENT = 'STEP_REMOVE_SUMMARY_CONTENT';
 export const STEP_ADD_UNI_CONTENT = 'STEP_ADD_UNI_CONTENT';
 export const STEP_FILTER_UNIS = 'STEP_FILTER_UNIS';
-
 
 
 

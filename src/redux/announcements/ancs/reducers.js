@@ -5,7 +5,7 @@ import {
     ANC_ADD,
     ANC_UPDATE,
     ANC_DELETE
-} from '../actions/types';
+} from './types';
 
 const initialState = {
     loading: false,
