@@ -14,6 +14,7 @@ import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
 import Questions from '../questions/Questions';
 import LibrariesCient from '../libraries/LibrariesCient';
+import ViewAncs from '../announcements/ViewAncs/ViewAncs';
 
 const Router = () => {
     const location = useLocation();
@@ -30,12 +31,13 @@ const Router = () => {
                 <Route exact path="/" component={Default} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <ProtectedRoute path="/profile" component={Profile} />
-                <AdminRoute path="/admin" component={Admin} />
                 <Route path="/steps/:pathId" component={Steps} />
-                <ProtectedRoute path="/stats" component={Stats} />
                 <Route path="/qna" component={Questions} />
+                <ProtectedRoute path="/profile" component={Profile} />
+                <ProtectedRoute path="/announcements" component={ViewAncs} />
+                <ProtectedRoute path="/stats" component={Stats} />
                 <ProtectedRoute path="/library/:pathId" component={LibrariesCient} />
+                <AdminRoute path="/admin" component={Admin} />
                 <Route component={NoMatchPage} />  
             </Switch>
         </div>

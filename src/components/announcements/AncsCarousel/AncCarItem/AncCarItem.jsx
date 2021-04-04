@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 
-function AncItem({ anc, selectAnc }) {
-    
+function AncCarItem({ anc, selectAnc }) {
     return (
         <Fragment>
             <div 
-            className="anc-item"
+            className="ancs-carousel__item"
             onClick={() => selectAnc(anc)}>
                 <span className="anc-date">
                     {moment(anc.date).format("D בMMMM")}
@@ -15,8 +14,9 @@ function AncItem({ anc, selectAnc }) {
                     {anc.title}
                 </div>
             </div>   
+            
         </Fragment>
     )
 }
 
-export default AncItem;
+export default AncCarItem;

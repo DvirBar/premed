@@ -1,0 +1,27 @@
+.filter-ancs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+
+    &__title {
+        color: $main-color;
+        font-size: 2.3rem;
+    }
+
+    &__body {
+        display: flex;
+        column-gap: 3rem;
+        row-gap: 3rem;
+        align-items: flex-end;
+        flex-wrap: wrap;
+
+        &__dates {
+            display: flex;
+            column-gap: 2rem;
+        }
+    }
+}

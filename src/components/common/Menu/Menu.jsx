@@ -1,9 +1,14 @@
-import React, { memo } from 'react'
+import React, { memo, useRef } from 'react'
+import useScreenAware from '../hooks/useScreenAware'
 
 const Menu = ({ display, children })  => {
-    // Close when clicking outside the list
+    const ref = useRef()
+
+    // useScreenAware(ref, display)
     return (
-        <div className={`menu-wrapper ${display ? 'display' : ''}`}>
+        <div 
+        ref={ref}
+        className={`menu-wrapper ${display ? 'display' : ''}`}>
             <ul 
             className={`dd-menu noselect`}>
                 {children.map((child, index) => 

@@ -8,14 +8,18 @@ const Carousel = ({ className, children }) => {
     const { width } = useWindowDim();
 
     useEffect(() => {
-        if(width < '768') {
+        if(width <= '600') {
             setLocDiff(1)
         }
 
-        else {
+        if(width <= '800') {
             setLocDiff(2)
         }
-    })
+
+        else {
+            setLocDiff(3)
+        }
+    }, [width])
 
     const transNeg = () => {
         if(loc > 0) {

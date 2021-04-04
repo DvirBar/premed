@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import FormInput from './FormInput';
 import moment from 'moment';
 import useOnClickOutside from './useOnClickOutside';
+import Close from '@material-ui/icons/Close';
 
 function DatePicker({ 
     label, 
@@ -47,13 +48,26 @@ function DatePicker({
 
     return (
         <div className="form-date-picker">
-            <FormInput
-            label={label} 
-            type='text'
-            value={moment(value).format('DD/MM/yyyy')}
-            error={error}
-            onClick={() => setDisplayCal(!displayCal)}
-            width="10rem" />
+            <div className="date-input">
+                <FormInput
+                label={label} 
+                type='text'
+                value={!value
+                ?   ''
+                :   moment(value).format('DD/MM/yyyy')}
+                error={error}
+                onClick={() => setDisplayCal(!displayCal)}
+                width="10rem" />
+
+                {value &&
+                    <span
+                    onClick={() => changeDate()}
+                    className="date-input__cancel">
+                        <Close />
+                    </span>
+                }
+            </div>
+            
 
             <div
             style={displayCal ? showOpacity : hideOpacity} 

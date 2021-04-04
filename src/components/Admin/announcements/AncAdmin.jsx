@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getAncs } from '../../../redux/announcements/ancs/actions'
 import { getGroups } from '../../../redux/announcements/groups/actions'
+import ViewAncs from '../../announcements/ViewAncs/ViewAncs'
+import ViewAncsProvider from '../../announcements/ViewAncs/ViewAncsContext'
 import TopBar from './TopBar/TopBar'
 
 function AncAdmin() {
@@ -9,12 +10,12 @@ function AncAdmin() {
 
     useEffect(() => {
         dispatch(getGroups())
-        dispatch(getAncs())
     }, [])
 
     return (
         <div>
             <TopBar />
+            <ViewAncs isAdmin={true} />
         </div>
     )
 }

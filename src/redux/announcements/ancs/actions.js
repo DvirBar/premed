@@ -64,11 +64,28 @@ export const getAncs = () => dispatch => {
         })
 }
 
+// Get anouncement
+export const getAncsList = data => dispatch => {
+    dispatch(ancLoad());
+    const body = JSON.stringify(data)
+
+    axios
+        .post('/api/announcements/ancsList', body)
+        .then(res => dispatch({
+            type: ANC_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            // Get message
+            dispatch(ancError());
+        })
+}
+
 
 // Add new anouncement
 export const addAnc = data => dispatch => {
     dispatch(ancLoad());
-    console.log(data)
+
     // Reuest body 
     const body = JSON.stringify(data);
 

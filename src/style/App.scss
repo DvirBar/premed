@@ -160,14 +160,6 @@ ul {
     max-width: 900px;
     margin: ($header-height + $cover-height + 10rem) auto;
     z-index: 0;
-
-    .default-page {
-        position: absolute;
-        top: ($header-height + $cover-height + 2rem);
-        max-width: 900px;
-        margin: auto;
-        margin-bottom: 5rem;
-    }
 }
 
 .router {
@@ -325,7 +317,6 @@ th {
 
 @import "pages/pages";
 @import "pages/index";
-@import "pages/anouncements";
 @import "pages/dashboard";
 @import "pages/drive";
 @import "pages/profile/index";
@@ -349,3 +340,4 @@ th {
 @import "admin/thresholds";
 
 @import "../components/social/Comments/index";
+@import "../components/announcements/index";

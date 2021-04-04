@@ -4,7 +4,7 @@ function useSearch(array, keyword, escapeEmpty) {
     const [filtered, setFiltered] = useState(array)
 
     useEffect(() => {
-        if(!keyword || keyword === '') {
+        if(!keyword) {
             setFiltered(array)
         }
 

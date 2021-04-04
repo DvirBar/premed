@@ -2,7 +2,7 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 4rem minmax(0, 1fr) 4rem;
-    max-width: 100%;
+    width: 100%;
     height: 100%;
 
     .nav-arrow {
@@ -11,7 +11,7 @@
         z-index: 1;
         background-color: #fff;
         visibility: hidden;
-        
+
         &.display {
             visibility: visible;
         }
@@ -23,7 +23,7 @@
             font-size: 5rem;
             color: #aaa;
             transition: color 0.3s ease;
-    
+
             &:hover {
                 color: $main-color;
             }
@@ -34,17 +34,24 @@
         display: flex;
 
         .car-item {
-            padding: 2rem;
+            padding-left: 1rem;
             flex-shrink: 0;
             transition: transform 0.5s ease-in-out;
-            width: (100%/2);
+            width: (100%/3);
+            height: 100%;
         }
 
-        @media only screen and (max-width: 768px) {
-            .car-item {   
+        @media only screen and (max-width: 800px) {
+            .car-item {
+                display: flex;
+                width: (100%/ 2);
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .car-item {
                 display: flex;
                 width: 100%;
-                height: 100%;
             }
         }
     }
