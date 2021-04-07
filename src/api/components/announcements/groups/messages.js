@@ -8,7 +8,7 @@ const messages = {
     },
     SubscribeUpdated: {
         msg: {
-            en: 'Subscripsion successfully updated',
+            en: 'Subscriptions successfully updated',
             he: 'ההרשמות עודכנו בהצלחה'
         },
         status: 200

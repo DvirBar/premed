@@ -12,12 +12,8 @@ export function getLast() {
 
 /* This service receives the id of the last announcement 
     that was sent. */
-export async function getAncsList(data) {
-    const {
-        lastAncId,
-        filters
-    } = data
-    const anc = await Announcement.findById(lastAncId) 
+export async function getAncsList(filters) {
+    const anc = await Announcement.findById(filters.lastAncId) 
 
     if(anc) {
         filters.maxDate = anc.date
@@ -31,9 +27,7 @@ export async function getAncsList(data) {
         filters.minDate = new Date(1997, 2, 7)
     }
 
-    return Announcement.filterAncs(filters, 10, lastAncId)
-
-    // return Announcement.getFromDate(10, anc ? anc.date : new Date(), anc?._id)
+    return Announcement.filterAncs(filters, 10)
 }
 
 // Post new announcement

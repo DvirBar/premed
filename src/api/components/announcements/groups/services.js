@@ -59,29 +59,21 @@ export async function edit(id, data) {
     return group.save() 
 }
 
-export async function toggleSubscribe(data, userId) {
-    const {
-        groupIds
-    } = data
-    
-    if(Array.isArray(groupIds)) {
-        let promises = []
-        for(let groupId of groupIds) {
-            promises.push(groupToggleSubscribe(groupId, userId))
+export async function updateSubscriptions(subs, userId) {
+    let promises = []
+    for(let sub of subs) {
+        promises.push(updateSub(sub.groupId, sub.sub, userId))
+    }
+
+
+    return Promise.all(promises).then(subItems => {
+        let obj = {}
+        for(let subItem of subItems) {
+            obj[subItem.groupId] = subItem.sub
         }
 
-
-        return Promise.all(promises).then(groups => {
-            let obj = {}
-            for(let group of groups) {
-                obj[group.group] = group.types
-            }
-
-            return obj
-        })
-    }   
-
-    throw 'Bad request: groupIds is not an array'
+        return obj
+    })
 }
 
 export async function unsubscribeAll(userId) {
@@ -98,22 +90,33 @@ export async function unsubscribeAll(userId) {
 }
 
 
-async function groupToggleSubscribe(groupId, userId) {
+async function updateSub(groupId, sub, userId) {
     const group = await AncGroup.getByIdOrFail(groupId)
-    const sub = AncGroup.getUserSub(group.subscribers, userId)
-    
-    if(sub) {
-        await sub.remove()
-        await group.save()
-        return {
-            group: groupId,
-            types: []
-        }
+    let userSub = AncGroup.getUserSub(group.subscribers, userId)
+    let subToReturn 
+    if(!sub && userSub) {
+        await userSub.remove()
     }
     
+    else if(sub && !userSub) {
+        subToReturn = sub
+        group.subscribers.push({
+            user: userId,
+            types: subToReturn
+        })
+    }
+
     else {
-        return AncGroup.addSub(group, userId)
+        subToReturn = userSub?.types
     }
+    await group.save()
+
+
+    return {
+        groupId,
+        sub: subToReturn
+    }
+    
 }
 
 async function removeSub(group, userId) {

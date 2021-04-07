@@ -23,7 +23,7 @@ router.post('/', [auth, authAdmin], AncGroupsControllers.create)
 // @route   PUT api/anouncements/groups/toggleSubscribe
 // @desc    Toggle subscription 
 // @access  Admin
-router.put('/toggleSubscribe', auth, AncGroupsControllers.toggleSubscribe)
+router.put('/toggleSubscribe', auth, AncGroupsControllers.updateSubscriptions)
 
 // @route   POST api/anouncements/groups/toggleSubscribe
 // @desc    Toggle subscription 

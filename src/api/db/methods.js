@@ -1,5 +1,4 @@
 export async function getByIdOrFail(id) {
-    console.log(id);
     const modelName = this.schema.options.modelName
 
     const doc = await this.findById(id)

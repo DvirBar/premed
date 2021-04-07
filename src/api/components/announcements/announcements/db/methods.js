@@ -17,12 +17,13 @@ export function getFromDate(limit, lastDate, id) {
             .select("-user")
 } 
 
-export function filterAncs(filters, limit, id) {
+export function filterAncs(filters, limit) {
     const {
       minDate,
       maxDate,
       name,
-      group
+      group,
+      lastAncId: id
     } = filters
  
     const queries = {}
@@ -47,4 +48,5 @@ export function filterAncs(filters, limit, id) {
       .sort({date: -1}) 
       .limit(limit) 
       .select("-user")
+      .populate("group")
 }

@@ -61,7 +61,7 @@ export const techBagrut = (params, values) => {
 
     result = {
         ...result,
-        value: Math.round(result.value * 10) / 10
+        value: Math.round(result.value * 100) / 100
     }
     return result
 }
