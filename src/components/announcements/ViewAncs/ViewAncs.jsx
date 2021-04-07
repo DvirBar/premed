@@ -4,7 +4,6 @@ import AncsList from './AncsList/AncsList'
 import FilterAncs from './FilterAncs/FilterAncs'
 import { getAncsList } from '../../../redux/announcements/ancs/actions'
 import ViewAncsProvider from './ViewAncsContext'
-import { getGroups } from '../../../redux/announcements/groups/actions'
 
 function ViewAncs({ isAdmin }) {
     const filtersOnInit = {
@@ -37,7 +36,6 @@ function ViewAncs({ isAdmin }) {
 
     useEffect(() => {
         filterAncs()
-        dispatch(getGroups())
     }, [])
 
 

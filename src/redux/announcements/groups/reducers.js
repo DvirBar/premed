@@ -5,7 +5,8 @@ import {
     GET_GROUPS_USER_SUBSCRIBES,
     GROUP_ADD,
     GROUP_UPDATE,
-    GROUP_TOGGLE_SUBSCRIBE,
+    GROUP_CHANGE_SUB,
+    GROUP_COMMIT_SUBSCRIPTION,
     GROUP_DELETE,
 } from './types';
 
@@ -52,9 +53,20 @@ export default function(state = initialState, action) {
                 groups: state.groups.map(group => 
                     group._id === payload._id ? group = payload : group)
             }
+        case GROUP_CHANGE_SUB:
+            return {
+                ...state,
+                loading: false,
+                groups: state.groups.map(group => 
+                    group._id === payload.groupId
+                    ? {
+                        ...group,
+                        subscriptions: payload.sub
+                    }
+                    : group)
+            }
 
-
-        case GROUP_TOGGLE_SUBSCRIBE:
+        case GROUP_COMMIT_SUBSCRIPTION:
             return {
                 ...state,
                 loading: false,

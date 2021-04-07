@@ -23,7 +23,9 @@ $checkbox-color: $main-color;
 
         &.enabled {
             &:hover {
-                border-color: $checkbox-color;
+                @media (hover: hover) {
+                    border-color: $checkbox-color;
+                }
                 cursor: pointer;
             }
         }
@@ -42,8 +44,10 @@ $checkbox-color: $main-color;
             border: 3px solid $checkbox-color;
             transition: opacity 0.25s ease, background-size 150ms ease-in;
 
-            &:hover {
-                opacity: 0.8;
+            @media (hover: hover) {
+                &:hover {
+                    opacity: 0.8;
+                }
             }
         }
 

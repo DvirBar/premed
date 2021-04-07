@@ -10,7 +10,7 @@ function UserBasicData({ user }) {
                 עריכת פרטים בסיסיים
             </h1>
             <div className="card-content">
-                <p className="user-date-created">
+                <p className="card-info">
                     <span>המשתמש נוצר ב-</span>
                     <span>{moment(user.date_created).format('DD בMMMM, YYYY')}</span>
                 </p>

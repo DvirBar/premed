@@ -51,6 +51,7 @@ a {
 h1 {
     color: $main-color;
     font-weight: 450;
+    padding-bottom: 2rem;
 }
 
 .wrapper {
@@ -341,3 +342,4 @@ th {
 
 @import "../components/social/Comments/index";
 @import "../components/announcements/index";
+@import "../components/profile/index";

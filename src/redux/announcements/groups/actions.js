@@ -5,7 +5,8 @@ import {
     GET_GROUPS_USER_SUBSCRIBES,
     GROUP_ADD,
     GROUP_UPDATE,
-    GROUP_TOGGLE_SUBSCRIBE,
+    GROUP_CHANGE_SUB,
+    GROUP_COMMIT_SUBSCRIPTION,
     GROUP_DELETE,
 } from './types';
 import axios from 'axios';
@@ -73,7 +74,7 @@ export const getUserSubs = () => dispatch => {
 
     axios
         .get(`${apiUrl}/subs`)
-        .then(res => ({
+        .then(res => dispatch({
             type: GET_GROUPS_USER_SUBSCRIBES,
             payload: res.data
         }))
@@ -104,14 +105,35 @@ export const editGroup = (id, data) => dispatch => {
 }
 
 // Unsubscribe from a group
-export const groupToggleSubscribe = id => dispatch => {
+export const groupChangeSub = (groupId, sub)=> dispatch => {
+    dispatch({ 
+        type: GROUP_CHANGE_SUB,
+        payload: {
+            groupId,
+            sub
+        }
+    })
+}
+
+// Unsubscribe from a group
+export const groupCommitSubscriptions = groups => dispatch => {
+    const subs = groups.map(group => ({
+        groupId: group._id,
+        sub: group.subscriptions
+    }))
+    console.log(subs);   
+    const body = JSON.stringify({
+        subs
+    })
+    
     axios 
-        .put(`${apiUrl}/toggleSubscribe`)
+        .put(`${apiUrl}/toggleSubscribe`, body)
         .then(res => {
             dispatch({
-                type: GROUP_TOGGLE_SUBSCRIBE,
+                type: GROUP_COMMIT_SUBSCRIPTION,
                 payload: res.data.subs
             });
+            console.log(res.data);
             dispatch(getMessage(res.data.message));
         })
         .catch(err => dispatch(getError(err)))

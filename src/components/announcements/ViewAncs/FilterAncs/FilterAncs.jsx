@@ -1,9 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getGroups } from '../../../../redux/announcements/groups/selectors'
 import Dropdown from '../../../common/Dropdown'
 import FormInput from '../../../common/FormInput'
 import DatePicker from '../../../common/DatePicker'
+import { getUserSubs, getGroups as getGroupsAction } from '../../../../redux/announcements/groups/actions'
+import { ViewAncsContext } from '../ViewAncsContext'
 
 function FilterAncs({ filters, changeFilters, filterAncs }) {
     const groups = useSelector(getGroups)
@@ -29,7 +31,19 @@ function FilterAncs({ filters, changeFilters, filterAncs }) {
         changeFilters(name, value)
     }
 
-    
+    const { isAdmin } = useContext(ViewAncsContext)
+
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if(isAdmin) {
+            dispatch(getGroupsAction())
+        }
+
+        else {
+            console.log("sent");
+            dispatch(getUserSubs())
+        }
+    }, [isAdmin])
     return (
         <div className="filter-ancs">
             <div className="filter-ancs__title">

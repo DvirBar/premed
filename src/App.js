@@ -14,7 +14,7 @@ import axios from 'axios';
 import { getBaseData } from './redux/actions/basedata';
 import EditableTextBox from './components/common/inputs/EditableTextBox/EditableTextBox';
 
-axios.defaults.baseURL = 'http://10.0.0.13:5000';
+axios.defaults.baseURL = 'http://10.0.0.20:5000';
 axios.defaults.headers['Content-Type'] = 'application/json';
 
 function App() {
