@@ -2,6 +2,7 @@ import React from 'react'
 import { 
     generatePath,
     useRouteMatch } from 'react-router-dom'
+import TopLinksWrapper from '../../layout/TopLinksWrapper'
 import PathsChoose from './PathsChoose'
 import SelectTable from './SelectTable'
 import TypeChoose from './TypeChoose'
@@ -32,7 +33,7 @@ function Topbar() {
 
 
     return (
-        <div className="top-content-nav">
+        <TopLinksWrapper>
             <PathsChoose 
             pathId={pathId}
             tableId={tableId}
@@ -48,7 +49,7 @@ function Topbar() {
             tableId={tableId}
             type={type}
             newPath={newPath} />
-        </div>
+        </TopLinksWrapper>
     )
 }
 

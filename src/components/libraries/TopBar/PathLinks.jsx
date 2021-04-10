@@ -4,6 +4,7 @@ import { generatePath, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
 import { getAllPaths } from '../../../redux/selectors/paths';
 import TopLinks from '../../layout/TopLinks';
+import TopLinksWrapper from '../../layout/TopLinksWrapper';
 
 function PathLinks() {
     let { path, params } = useRouteMatch();
@@ -22,9 +23,8 @@ function PathLinks() {
     }))
 
     return (
-        <div className="top-content-nav">
+        <TopLinksWrapper>
             <TopLinks 
-            className="top-links-profile-nav"
             selected={pathId}>
                 {linksList.map(link => 
                     <Link
@@ -36,7 +36,7 @@ function PathLinks() {
                     </Link>
                     )}
             </TopLinks>
-        </div>
+        </TopLinksWrapper>
     )
 }
 

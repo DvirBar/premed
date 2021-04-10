@@ -7,7 +7,7 @@ import Topbar from './topbar/TopBar';
 function StatsContent() {
     const { pathId, tableId, type } = useParams()
     return (
-        <div className="stats">
+        <div>
             <Topbar />
             {type === 'table'
             ?   <PathStats 

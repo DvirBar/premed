@@ -26,11 +26,7 @@ function Stats() {
     }
 
     return (
-        <div className="stats-main">
-            <Fragment>
-                <StatsRouter />
-            </Fragment>
-        </div>
+        <StatsRouter />
     )
 }
 

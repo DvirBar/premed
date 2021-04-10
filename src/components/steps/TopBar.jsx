@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { generatePath, Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { getAllPaths } from '../../redux/selectors/paths'
 import TopLinks from '../layout/TopLinks';
+import TopLinksWrapper from '../layout/TopLinksWrapper';
 
 function TopBar() {
     let { path, params } = useRouteMatch();
@@ -22,7 +23,7 @@ function TopBar() {
 
 
     return (
-        <div className="top-content-nav">
+        <TopLinksWrapper>
             <TopLinks 
             className="top-links-profile-nav"
             selected={pathId}>
@@ -36,7 +37,7 @@ function TopBar() {
                     </Link>
                     )}
             </TopLinks>
-        </div> 
+        </TopLinksWrapper>
     )
 }
 
