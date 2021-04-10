@@ -1,0 +1,62 @@
+.navbar-main {
+    height: 8rem;
+    box-shadow: $default-shadow;
+    width: 100%;
+    background-color: $main-color;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    height: 8rem;
+    width: 8rem;
+    padding: 1.5rem;
+
+    &:hover {
+        animation: tilt 1s 1;
+    }
+}
+
+@keyframes tilt {
+    25% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+}
+
+.navbar-main {
+    &__left-links {
+        width: 12rem;
+        height: 8rem;
+        display: flex;
+        padding: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}
+
+.login-link {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    padding: 1rem;
+    font-size: 1.8rem;
+    border-radius: 0.5rem;
+    color: $main-color;
+    border: 2px solid #fff;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: transparent;
+        color: #fff;
+    }
+}
+
+@import "./MoreMenu/index";
+@import "./MainLinks/index";

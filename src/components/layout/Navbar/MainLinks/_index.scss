@@ -1,0 +1,10 @@
+.navbar__main-links {
+    justify-self: center;
+
+    &__wrapper {
+        display: flex;
+        height: 100%;
+    }
+}
+
+@import "./LinkItem/index";

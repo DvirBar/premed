@@ -1,0 +1,39 @@
+.link-item {
+    height: 100%;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        padding-bottom: 0.5rem;
+        height: 100%;
+        align-items: center;
+        justify-content: flex-end;
+        width: 12rem;
+        border-bottom: 5px solid transparent;
+        transition: border-color 0.2s ease-in-out;
+
+        &.current {
+            border-color: #fff;
+        }
+
+        &:hover {
+            border-color: #fff;
+        }
+    }
+
+    &__name {
+        font-weight: 500;
+    }
+
+    &__icon {
+        height: 4rem;
+        .MuiSvgIcon-root {
+            font-size: 4rem;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

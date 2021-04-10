@@ -44,7 +44,7 @@ function SideMenu() {
     ]
 
     return (
-        <ul className="side-menu">
+        <ul className="side-menu-admin">
             {linksList.map(link =>
                 <li
                 key={link.url} 

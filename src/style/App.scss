@@ -135,8 +135,6 @@ ul {
 }
 
 .cover-photo {
-    position: absolute;
-    top: $header-height;
     z-index: 0;
     width: 100%;
     height: $cover-height;
@@ -159,7 +157,7 @@ ul {
 
 .content {
     max-width: 900px;
-    margin: ($header-height + $cover-height + 10rem) auto;
+    margin: auto;
     z-index: 0;
 }
 

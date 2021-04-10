@@ -6,6 +6,7 @@ function SideMenu({ display, setDisplay, children }) {
     const ref = useRef()
     useOnClickOutside(ref, display, () => setDisplay(false))
     useHideScroll(display)
+    
     return (
         <div className={`side-menu
         ${display ? 'display' : ''}`}>

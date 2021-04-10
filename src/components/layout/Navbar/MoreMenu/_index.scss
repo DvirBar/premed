@@ -1,0 +1,13 @@
+.icon-wrapper {
+    &:hover {
+        @media (hover: hover) {
+            opacity: 0.8;
+        }
+    }
+
+    .MuiSvgIcon-root {
+        font-size: 4rem;
+    }
+}
+
+@import "./SideBar/index";
