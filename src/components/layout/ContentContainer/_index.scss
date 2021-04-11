@@ -1,0 +1,8 @@
+.content-container {
+    width: 100rem;
+    margin: 2rem auto;
+
+    @media only screen and(max-width: 1000px) {
+        width: 98%;
+    }
+}

@@ -4,6 +4,7 @@ import { getTableById } from '../../../redux/selectors/datatables'
 import { getStatsInputs } from '../../../redux/actions/basedata'
 import { getUnisByPath, getUnisFields, getUnisFieldsByPath } from '../../../redux/selectors/unis'
 import UniItem from './UniItem'
+import ContentContainer from '../../layout/ContentContainer/ContentContainer'
 
 
 function Thresholds({ pathId, tableId }) {
@@ -18,16 +19,18 @@ function Thresholds({ pathId, tableId }) {
     }, [pathId])
 
     return (
-        <div className="thresholds noselect">
-            <div className="unis-list">
-            {unis.map(uni => 
-                <UniItem
-                key={uni._id}
-                pathId={pathId}
-                uni={uni}
-                tableId={table._id} />)}
+        <ContentContainer>
+            <div className="thresholds noselect">
+                <div className="unis-list">
+                {unis.map(uni => 
+                    <UniItem
+                    key={uni._id}
+                    pathId={pathId}
+                    uni={uni}
+                    tableId={table._id} />)}
+                </div>
             </div>
-        </div>
+        </ContentContainer>
     )
 }
 

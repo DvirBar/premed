@@ -4,6 +4,7 @@ import AncsList from './AncsList/AncsList'
 import FilterAncs from './FilterAncs/FilterAncs'
 import { getAncsList } from '../../../redux/announcements/ancs/actions'
 import ViewAncsProvider from './ViewAncsContext'
+import ContentContainer from '../../layout/ContentContainer/ContentContainer'
 
 function ViewAncs({ isAdmin }) {
     const filtersOnInit = {
@@ -40,16 +41,19 @@ function ViewAncs({ isAdmin }) {
 
 
     return (
-        <ViewAncsProvider isAdmin={isAdmin}>
-            <div className="view-ancs">
-                <FilterAncs 
-                filters={ancFilters}
-                filterAncs={filterAncs}
-                changeFilters={changeFilters} />
-                <AncsList
-                filterAncs={filterAncs} />                        
-             </div>
-        </ViewAncsProvider>
+        <ContentContainer>
+            <ViewAncsProvider isAdmin={isAdmin}>
+                <div className="view-ancs">
+                    <FilterAncs 
+                    filters={ancFilters}
+                    filterAncs={filterAncs}
+                    changeFilters={changeFilters} />
+                    <AncsList
+                    filterAncs={filterAncs} />                        
+                </div>
+            </ViewAncsProvider>
+        </ContentContainer>
+        
     )
 }
 

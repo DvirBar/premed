@@ -1,4 +1,5 @@
 import React from 'react';
+import ContentContainer from '../layout/ContentContainer/ContentContainer';
 import StepRouter from './StepRouter';
 import TopBar from './TopBar';
 
@@ -6,7 +7,9 @@ function Steps() {
     return (
         <div>
             <TopBar />
-            <StepRouter />
+            <ContentContainer>
+                <StepRouter />
+            </ContentContainer>
         </div>
     )
 }

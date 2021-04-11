@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useRouteMatch } from 'react-router'
+import ContentContainer from '../../layout/ContentContainer/ContentContainer'
 import { LibraryContext } from '../LibraryContext'
 import LibraryMenu from './LibraryMenu/LibraryMenu'
 import PathLinks from './PathLinks'
@@ -11,7 +12,10 @@ function TopBar() {
             {!isAdmin &&
                 <PathLinks />            
             }
-            <LibraryMenu />
+            <ContentContainer>
+                <LibraryMenu />
+            </ContentContainer>
+            
         </div>
     )
 }

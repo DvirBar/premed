@@ -13,6 +13,7 @@ import axios from "axios";
 import { getBaseData } from "./redux/actions/basedata";
 import EditableTextBox from "./components/common/inputs/EditableTextBox/EditableTextBox";
 import Navbar from "./components/layout/Navbar/Navbar";
+import Banner from "./components/layout/Banner/Banner";
 
 axios.defaults.baseURL = "http://10.0.0.20:5000";
 axios.defaults.headers["Content-Type"] = "application/json";
@@ -38,7 +39,6 @@ function App() {
     moment.locale("he");
 
     const selPaths = useSelector((state) => state.paths);
-    const paths = selPaths.paths;
     const loadPaths = selPaths.loading;
 
     if (!auth || auth.loading || loadPaths) return <Loadbar loadfull={true} />;
@@ -47,10 +47,7 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Navbar />
-                {/* <Navbar paths={paths} />
-                <div className="cover-photo">
-                    <div className="cover-top-layer"></div>
-                </div> */}
+                <Banner />
                 <Router />
      
                 {/* <Footer /> */}

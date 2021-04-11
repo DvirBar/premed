@@ -6,6 +6,7 @@ import { librariesSelector } from '../../redux/libraries/selectors'
 import Loadbar from '../layout/Loadbar'
 import TopBar from './TopBar/TopBar'
 import LibraryRouter from './LibraryRouter'
+import ContentContainer from '../layout/ContentContainer/ContentContainer'
 
 function Libraries() {
     const { pathId } = useParams()
@@ -31,10 +32,12 @@ function Libraries() {
     return (
         <div className="libraries">
             <TopBar />
-            {loading
-            ?   <Loadbar />
-            :   <LibraryRouter />
-            }
+            <ContentContainer>
+                {loading
+                ?   <Loadbar />
+                :   <LibraryRouter />
+                }
+            </ContentContainer>
         </div>
     )
 }
