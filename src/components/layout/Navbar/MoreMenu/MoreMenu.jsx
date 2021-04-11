@@ -8,7 +8,7 @@ function MoreMenu() {
     useOnUrlChange(() => setDisplay(false))
 
     return (
-        <div className="MoreMenu">
+        <div className="more-menu">
             <div 
             onClick={() => setDisplay(true)} 
             className="icon-wrapper">

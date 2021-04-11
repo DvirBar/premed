@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../../../../redux/actions/auth'
+import LogoutIcon from '../../../../../common/icons/Logout/Logout'
 
 function Logout() {
     const dispatch = useDispatch()
@@ -12,7 +13,13 @@ function Logout() {
         <li 
         onClick={commitLogout}
         className="side-bar__logout">
-            התנתקות
+            <LogoutIcon 
+            height="3rem"
+            width="3rem"
+            color="#888" />
+            <span>
+                התנתקות 
+            </span>
         </li>
     )
 }

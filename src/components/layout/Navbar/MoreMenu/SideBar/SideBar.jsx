@@ -1,3 +1,4 @@
+import { Close } from '@material-ui/icons'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../../../../redux/selectors/auth'
@@ -14,9 +15,17 @@ function SideBar({ display, setDisplay }) {
         setDisplay={setDisplay}>
             <div className="side-bar">
                 <div className="side-bar__top">
-                    <li className="side-bar__top__title">
-                        {`שלום, ${user.firstName}`}
-                    </li>
+                    
+                    <div className="side-bar__top__title">
+                        <div 
+                        onClick={() => setDisplay(false)}
+                        className="side-bar__top__title__close">
+                            <Close style={{fontSize: 20}} />
+                        </div>
+                        <span>
+                            {`שלום, ${user.firstName}`}
+                        </span>
+                    </div>
                     <SideBarLinks />
                 </div>
                 <div className="side-bar__bottom">

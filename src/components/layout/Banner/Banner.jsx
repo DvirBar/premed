@@ -6,6 +6,8 @@ import BannerMap from './BannerMap'
 function Banner() {
     const { pathname } = useLocation()
     let bannerInfo = BannerMap({ rootUrl: getRoot(pathname) })
+
+    // If no banner info found, use banner of homepage
     if(!bannerInfo) {
         bannerInfo = BannerMap({ rootUrl: '/' })
     }

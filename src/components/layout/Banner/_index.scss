@@ -3,6 +3,7 @@
     background-color: rgba($main-color, 0.3);
     position: relative;
     z-index: -1;
+    overflow: hidden;
 
     &__title {
         width: 100%;

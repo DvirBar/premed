@@ -1,0 +1,22 @@
+.login-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 2px solid #fff;
+
+    &__login-icon {
+        color: #fff;
+        height: 4rem;
+        width: 4rem;
+        justify-self: center;
+
+        &__label {
+            color: $main-color;
+            font-weight: 500;
+        }
+    }
+}

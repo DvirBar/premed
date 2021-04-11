@@ -4,10 +4,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     cursor: default;
 
     &__top {
+        position: relative;
+
         &__title {
             color: #fff;
             font-size: 3rem;
@@ -17,6 +20,12 @@
             padding: 3rem 2rem;
             background-color: $main-color;
             box-shadow: $default-shadow;
+
+            &__close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
         }
     }
 }
