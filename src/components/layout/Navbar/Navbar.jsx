@@ -26,8 +26,6 @@ function Navbar() {
                 :   <LoginLink />
                 }
             </li>
-
-           
         </ul>
     )
 }

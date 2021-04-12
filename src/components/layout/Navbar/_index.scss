@@ -7,7 +7,6 @@
     display: flex;
     justify-content: space-between;
     z-index: 10;
-    position: relative;
 
     @media only screen and(max-width: 750px) {
         height: 6rem;
@@ -20,6 +19,14 @@
     &__left-links {
         width: 10rem;
         height: 100%;
+
+        @media only screen and(max-width: 750px) {
+            width: 8rem;
+        }
+
+        @media only screen and(max-width: 750px) {
+            width: 6rem;
+        }
 
         @media only screen and(max-width: 350px) {
             width: 5rem;

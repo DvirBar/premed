@@ -11,15 +11,13 @@ function SideMenu({ display, setDisplay, children }) {
         <div 
         className={`side-menu
         ${display ? 'display' : ''}`}>
-            <div className="scroll-view">
-                <div 
-                className="side-menu__mask"></div>
-                <div 
-                ref={ref}
-                className="side-menu__container">
-                    <div className="side-menu__container__content">
-                        {children}
-                    </div>
+            <div 
+            className="side-menu__mask"></div>
+            <div 
+            ref={ref}
+            className="side-menu__container">
+                <div className="side-menu__container__content">
+                    {children}
                 </div>
             </div>
         </div>

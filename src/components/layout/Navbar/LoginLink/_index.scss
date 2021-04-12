@@ -14,9 +14,18 @@
         width: 4rem;
         justify-self: center;
 
+        @media only screen and(max-width: 600px) {
+            height: 3rem;
+            width: 3rem;
+        }
+
         &__label {
             color: $main-color;
             font-weight: 500;
+
+            @media only screen and(max-width: 750px) {
+                display: none;
+            }
         }
     }
 }

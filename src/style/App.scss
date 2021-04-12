@@ -292,7 +292,6 @@ th {
 @import "pages/drive";
 @import "pages/profile/index";
 @import "pages/stats/index";
-@import "pages/auth/index";
 @import "pages/questions";
 
 @import "admin";
@@ -310,6 +309,7 @@ th {
 @import "admin/questions";
 @import "admin/thresholds";
 
+@import "../components/auth/index";
 @import "../components/social/Comments/index";
 @import "../components/announcements/index";
 @import "../components/profile/index";
