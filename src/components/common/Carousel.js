@@ -12,7 +12,7 @@ const Carousel = ({ className, children }) => {
             setLocDiff(1)
         }
 
-        if(width <= '800') {
+        else if(width <= '800') {
             setLocDiff(2)
         }
 
@@ -27,6 +27,7 @@ const Carousel = ({ className, children }) => {
             setDiffX(diffX - 100)
         }
     }
+
 
     const transPos = () => {
         if(children.length - loc > locDiff) {
