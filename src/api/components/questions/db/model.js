@@ -5,7 +5,7 @@ import { ConstructStaticMethods } from '../../../db/plugins'
 import * as staticMethods from './methods'
 
 // Create schema
-const QuestionGroupSchema = new Schema({
+const QuestionsSchema = new Schema({
     name: {
         type: String,
         required: [true, 'Name is required'],
@@ -16,10 +16,12 @@ const QuestionGroupSchema = new Schema({
     },
     questions: [{
         question: {
-            type: String
+            type: String,
+            required: [true, "Question is required"]
         },
         answer: {
-            type: String
+            type: String,
+            required: [true, "Answer is required"]
         },
         sourceLink: {
             type: String
@@ -30,8 +32,8 @@ const QuestionGroupSchema = new Schema({
     }
 })
 
-QuestionGroupSchema.plugin(
+QuestionsSchema.plugin(
     ConstructStaticMethods,
     { customStaticMethods: staticMethods })
 
-module.exports = mongoose.model('QuestionGroup', QuestionGroupSchema);
+module.exports = mongoose.model('Questions', QuestionsSchema);

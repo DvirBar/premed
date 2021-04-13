@@ -65,7 +65,7 @@ class QuestionControllers {
             const question = await QuestionServices
                                    .addQuestion(
                                        groupId, 
-                                       res.body)
+                                       req.body)
 
             return res.send(question)
         }

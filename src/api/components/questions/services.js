@@ -1,12 +1,12 @@
-import QuestionGroup from './db/model'
+import Questions from './db/model'
 
 class QuestionServices {
     static getAll() {
-        return QuestionGroup.find()
+        return Questions.find()
     }
 
     static getByPath(pathId) {
-        return QuestionGroup.getQuestionGroupByPath(pathId)
+        return Questions.getQuestionGroupByPath(pathId)
     }
 
     static create(bodyData) {
@@ -22,11 +22,11 @@ class QuestionServices {
             readmore
         }
 
-        return QuestionGroup.insert(group)
+        return Questions.insert(group)
     }
 
     static async edit(groupId, bodyData) {
-        const group = await QuestionGroup.getByIdOrFail(groupId)
+        const group = await Questions.getByIdOrFail(groupId)
 
         const {
             name,
@@ -42,7 +42,8 @@ class QuestionServices {
     }
 
     static async addQuestion(groupId, questionDetails) {
-        const group = await QuestionGroup.getByIdOrFail(groupId)
+        console.log(questionDetails);
+        const group = await Questions.getByIdOrFail(groupId)
         const questions = group.questions 
         questions.push(questionDetails)
 
@@ -55,7 +56,7 @@ class QuestionServices {
         const {
             group,
             question
-        } = await QuestionGroup
+        } = await Questions
                     .getQuestionByIdOrFail(groupId, questId)
 
         question.set({
@@ -72,7 +73,7 @@ class QuestionServices {
         const {
             group,
             question
-        } = await QuestionGroup
+        } = await Questions
             .getQuestionByIdOrFail(groupId, questId)
 
         await question.remove()
@@ -80,7 +81,7 @@ class QuestionServices {
     } 
 
     static async delete(groupId) {
-        const group = await QuestionGroup.getByIdOrFail(groupId)
+        const group = await Questions.getByIdOrFail(groupId)
 
         return group.remove()
     }
