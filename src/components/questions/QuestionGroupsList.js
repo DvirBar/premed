@@ -1,22 +1,13 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useRouteMatch } from 'react-router-dom'
-import { getQuestGroupsByPath } from '../../redux/reducers'
-import Loadbar from '../layout/Loadbar'
+import { getQuestGroupByPath } from '../../redux/questions/actions'
+import { getAllGroups } from '../../redux/questions/selectors'
 import QuestionGroupItem from './QuestionGroupItem'
 
 function QuestionGroupsList() {
-    const { params } = useRouteMatch()
-    const { pathId } = params
-
-    const groups = useSelector(state => 
-        getQuestGroupsByPath(state.questgroups.groups, pathId))
-
-    const loading = useSelector(state => state.questgroups.loading)
-
-    if(loading) 
-        return <Loadbar />
-
+    const groups = useSelector(getAllGroups)    
+    console.log(groups);
     return (
         <div className="question-groups-list">
             {groups.map(group => 

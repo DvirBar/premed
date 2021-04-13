@@ -33,7 +33,7 @@ function Section({ className, children }) {
     const toggleDisplay = () => {
         setDisplay(!display);
     }
-    
+    //
     return (
         <div className={className
             ?   `section ${className}`
@@ -59,7 +59,7 @@ function Section({ className, children }) {
                     ? `section-content ${bodyClass}`
                     : "section-content"
                 )}>
-                <div className="section-content-holder">
+                <div className="section-content__holder">
                     {body}
                 </div>
             </div>

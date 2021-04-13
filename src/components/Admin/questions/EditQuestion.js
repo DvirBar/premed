@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
-import { editQuest } from '../../../redux/actions/questgroups';
+import { editQuest } from '../../../redux/questions/actions'
 
 function EditQuestion({ groupId, question, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({})

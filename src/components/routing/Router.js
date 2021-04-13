@@ -12,14 +12,13 @@ import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
-import Questions from '../questions/Questions';
+import Questions from '../questions//Questions';
 import LibrariesCient from '../libraries/LibrariesCient';
 import ViewAncs from '../announcements/ViewAncs/ViewAncs';
 
 const Router = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const paths = useSelector(state => state.paths);
 
     useEffect(() => {
         dispatch(initMessage());
@@ -32,7 +31,7 @@ const Router = () => {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route path="/steps/:pathId" component={Steps} />
-                <Route path="/qna" component={Questions} />
+                <Route path="/qna/:pathId" component={Questions} />
                 <ProtectedRoute path="/profile" component={Profile} />
                 <ProtectedRoute path="/announcements" component={ViewAncs} />
                 <ProtectedRoute path="/stats" component={Stats} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
-import { addQuest } from '../../../redux/actions/questgroups';
+import { addQuest } from '../../../redux/questions/actions';
 
 function AddQuestion({ group, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({
@@ -10,7 +10,7 @@ function AddQuestion({ group, display, toggleModal }) {
         answer: ''
     })
     
-    const {
+    const {//
         handleChange,
         handleSubmit,
         values,

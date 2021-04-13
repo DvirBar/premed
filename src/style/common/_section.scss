@@ -5,21 +5,19 @@
     font-size: 2rem;
     color: #646464;
     cursor: pointer;
-}
+} //
 
 .section-content {
     max-height: 0;
-    transition: all 0.3s ease-out;
+    transition: all 0.3s ease-in-out;
     overflow: hidden;
 
     &.open {
-        max-height: 200rem;
-        transition: all 0.3s ease-in;
-        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        max-height: 10rem;
     }
 
-    &-holder {
+    &__holder {
         padding: 2rem;
-        overflow: hidden;
     }
 }

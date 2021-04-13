@@ -10,7 +10,7 @@ import unis from './universities';
 import calcs from './calculations';
 import userdata, * as dataSelectors from './userdata';
 import datatables from './datatables';
-import questgroups, * as questGroupsSelectors from './questgroups';
+import questions from '../questions/reducers';
 import inquiries from './inquiries';
 import statsinputs from './statsinputs';
 import libraries from '../libraries/reducers';
@@ -32,7 +32,7 @@ const appReducer = combineReducers({
     calcs,
     userdata,
     datatables,
-    questgroups,
+    questions,
     inquiries,
     statsinputs,
     libraries,
@@ -67,9 +67,3 @@ export const getFilteredSortedData = state => {
     
     return stateCollection;
 }
-
-export const getQuestGroupsByPath = (groups, pathId) => 
-    questGroupsSelectors.getQuestGroupsByPath(groups, pathId)
-
-export const getQuestGroup = (groups, groupId) => 
-    questGroupsSelectors.getQuestGroup(groups, groupId)

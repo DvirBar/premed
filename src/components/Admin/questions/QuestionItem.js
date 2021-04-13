@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { deleteQuest } from '../../../redux/actions/questgroups';
+import { deleteQuest } from '../../../redux/questions/actions';
 import VerifyDelete from '../../common/VerifyDelete';
 import EditQuestion from './EditQuestion';
 

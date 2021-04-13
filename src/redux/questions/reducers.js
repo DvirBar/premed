@@ -8,7 +8,7 @@ import {
     QUEST_ADD,
     QUEST_UPDATE,
     QUEST_DELETE
-} from '../actions/types';
+} from './types';
 
 const initialState = {
     loading: false,
@@ -66,12 +66,4 @@ export default function(state = initialState, action) {
         default: 
             return state;
     }
-}
-
-export const getQuestGroupsByPath = (groups, pathId) => {
-    return groups.filter(group => group.path === pathId)
-}
-
-export const getQuestGroup = (groups, groupId) => {
-    return groups.find(group => group._id === groupId)
 }

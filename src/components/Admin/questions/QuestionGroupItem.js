@@ -5,7 +5,7 @@ import QuestionsList from './QuestionsList';
 import AddQuestion from './AddQuestion';
 import EditQuestionGroup from './EditQuestionGroup';
 import VerifyDelete from '../../common/VerifyDelete';
-import { deleteQuestGroup } from '../../../redux/actions/questgroups';
+import { deleteQuestGroup } from '../../../redux/questions/actions';
 
 function QuestionGroupItem({ group }) {
     // Dropdown Menu

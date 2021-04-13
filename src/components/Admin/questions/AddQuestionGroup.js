@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useForm from '../../../forms/useForm';
-import { addQuestGroup } from '../../../redux/actions/questgroups';
+import { addQuestGroup } from '../../../redux/questions/actions';
 import Modal from '../../layout/Modal';
 import FormInput from '../../common/FormInput';
 

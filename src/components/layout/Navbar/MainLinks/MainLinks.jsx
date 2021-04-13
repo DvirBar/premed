@@ -52,7 +52,7 @@ function MainLinks() {
         },
         {
             name: "שאלות נפוצות",
-            url: '/qna/general',
+            url: `/qna/${paths[0]?._id}`,
             icon: ({ outlined }) => <Qna 
                     color="#fff"
                     secondaryColor="#486974" 
