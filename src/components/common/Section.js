@@ -33,7 +33,7 @@ function Section({ className, children }) {
     const toggleDisplay = () => {
         setDisplay(!display);
     }
-    //
+
     return (
         <div className={className
             ?   `section ${className}`
@@ -50,16 +50,10 @@ function Section({ className, children }) {
                     ? `section-header-rest ${headerClass}`
                     : "section-header-rest"}>{header}</span>
             </div>
-            <div className={display 
-                ? (bodyClass
-                    ? `section-content open ${bodyClass}`
-                    : "section-content open"
-                ) 
-                : (bodyClass
-                    ? `section-content ${bodyClass}`
-                    : "section-content"
-                )}>
-                <div className="section-content__holder">
+            <div className={`section-content 
+                ${display ? 'open' : ''}`}>
+                <div className={`section-content__holder
+                ${bodyClass ? bodyClass : ''}`}>
                     {body}
                 </div>
             </div>

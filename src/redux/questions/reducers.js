@@ -1,3 +1,4 @@
+import { PlaylistAddOutlined } from '@material-ui/icons';
 import {
     QUEST_GROUP_LOADING,
     QUEST_GROUP_SUCCESS,
@@ -36,7 +37,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                groups: []
             }
 
         case QUEST_GROUP_ADD:
@@ -46,14 +46,52 @@ export default function(state = initialState, action) {
             }
 
         case QUEST_GROUP_UPDATE:
-        case QUEST_ADD:
-        case QUEST_UPDATE:
-        case QUEST_DELETE:
             return {
                 ...state,
                 loading: false,
                 groups: state.groups.map(group => 
                     group.id === payload.id ? group = payload : group)
+            }
+
+        case QUEST_ADD:
+            return {
+                ...state,
+                loading: false,
+                groups: state.groups.map(group =>
+                    group._id === payload.groupId 
+                    ? {
+                        ...group,
+                        questions: [...group.questions, payload.data]
+                    }
+                    : group)
+            }
+        case QUEST_UPDATE:
+            return {
+                ...state,
+                loading: false,
+                groups: state.groups.map(group =>
+                    group._id === payload.groupId 
+                    ? {
+                        ...group,
+                        questions: group.questions.map(question =>
+                            question._id === payload.questId
+                            ?   payload.data : question)
+                    }
+                    : group)
+            }
+
+        case QUEST_DELETE:
+            return {
+                ...state,
+                loading: false,
+                groups: state.groups.map(group =>
+                    group._id === payload.groupId 
+                    ? {
+                        ...group,
+                        questions: group.questions.filter(question =>
+                            question._id !== payload.questId)
+                    }
+                    : group)
             }
 
         case QUEST_GROUP_DELETE: 

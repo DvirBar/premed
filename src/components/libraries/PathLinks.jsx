@@ -2,9 +2,9 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { generatePath, useRouteMatch } from 'react-router';
 import { Link } from 'react-router-dom';
-import { getAllPaths } from '../../../redux/selectors/paths';
-import TopLinks from '../../layout/TopLinks';
-import TopLinksWrapper from '../../layout/TopLinksWrapper';
+import { getAllPaths } from '../../redux/selectors/paths';
+import TopLinks from '../layout/TopLinks';
+import TopLinksWrapper from '../layout/TopLinksWrapper';
 
 function PathLinks() {
     let { path, params } = useRouteMatch();

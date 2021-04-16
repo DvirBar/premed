@@ -30,8 +30,8 @@ const AdminRouter = () => {
                 <AdminRoute path={`${path}/announcements`} component={AncAdmin} />
                 <AdminRoute path={`${path}/steps`} component={StepsAdmin} />
                 <AdminRoute path={`${path}/libraries/:pathId`} component={LibrariesAdmin} />
+                <AdminRoute path={`${path}/questions/:pathId`} component={Questions} />
                 <AdminRoute exact path={`${path}/stats`} component={DataTables} />                
-                <AdminRoute exact path={`${path}/questions`} component={Questions} />
             </Switch>
     )
 }

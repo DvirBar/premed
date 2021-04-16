@@ -97,7 +97,10 @@ export const addQuest = (groupId, data) => dispatch => {
     axios.put(`${baseUrl}/${groupId}/addQuestion`, body)
          .then(res => dispatch({
              type: QUEST_ADD,
-             payload: res.data
+             payload: {
+                 groupId,
+                 data: res.data
+             }
          }))
          .catch(err => {
              dispatch(questGroupError())
@@ -112,7 +115,11 @@ export const editQuest = (groupId, questId, data) => dispatch => {
     axios.put(`${baseUrl}/${groupId}/${questId}`, body)
          .then(res => dispatch({
              type: QUEST_UPDATE,
-             payload: res.data
+             payload: {
+                groupId,
+                questId,
+                data: res.data
+            }
          }))
          .catch(err => {
              dispatch(questGroupError())
@@ -123,10 +130,17 @@ export const editQuest = (groupId, questId, data) => dispatch => {
 export const deleteQuest = (groupId, questId) => dispatch => {
 
     axios.put(`${baseUrl}/${groupId}/${questId}/remove`)
-         .then(res => dispatch({
-             type: QUEST_DELETE,
-             payload: res.data 
-         }))
+         .then(res => {
+             dispatch({
+                type: QUEST_DELETE,
+                payload: {
+                    groupId,
+                    questId
+                    }
+            })
+
+            dispatch(getMessage(res.data))
+        })
          .catch(err => {
              dispatch(questGroupError())
              dispatch(getError(err))

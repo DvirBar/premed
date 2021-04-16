@@ -1,27 +1,20 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
-import { useRouteMatch } from 'react-router';
-import { getQuestGroupByPath } from '../../redux/questions/actions';
+import React from 'react'
 import ContentContainer from '../layout/ContentContainer/ContentContainer';
 import QuestionsRouter from './QuestionsRouter';
 import TopBar from './TopBar/TopBar';
+import QuestionsProvider from './QuestionsContext'
 
 
 function Questions() {
-    const { params } = useRouteMatch()
-    const { pathId } = params
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getQuestGroupByPath(pathId))
-    }, [pathId])
-    
     return (
         <div>
             <TopBar />
-            <ContentContainer>
-                <QuestionsRouter />
-            </ContentContainer>
+            <QuestionsProvider isAdmin={false}>
+                <ContentContainer>
+                    <QuestionsRouter />
+                </ContentContainer>
+            </QuestionsProvider>
+         
         </div>
     )
 }

@@ -4,7 +4,7 @@ import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
 import { addQuest } from '../../../redux/questions/actions';
 
-function AddQuestion({ group, display, toggleModal }) {
+function AddQuestion({ group }) {
     const [defaultValues, setDefaultValues] = useState({
         question: '',
         answer: ''
@@ -15,51 +15,58 @@ function AddQuestion({ group, display, toggleModal }) {
         handleSubmit,
         values,
         errors
-    } = useForm(addQuest, defaultValues, group._id)
+    } = useForm(addQuest, defaultValues, group?._id)
     
+    const [display, setDisplay] = useState(false)
+
     return (
-        <Modal
-        display={display}
-        toggleModal={toggleModal}
-        title='הוספת שאלה'>
-            <form onSubmit={handleSubmit}>
-                <FormInput
-                label="שאלה"
-                type="text"
-                name="question"
-                value={values.question}
-                onChange={handleChange}
-                error={errors.question} />
-
-                <textarea
-                cols="80" rows="10"
-                name='answer'
-                placeholder='תשובה'
-                onChange={handleChange}
-                value={values.answer} />
-
-                <div className="url-details">     
-                    <input 
-                    type="text" 
-                    className="form-default"
-                    name="sourceLink"
+        <div>
+            <button onClick={() => setDisplay(true)}>
+                שאלה חדשה
+            </button>
+            <Modal
+            display={display}
+            toggleModal={setDisplay}
+            title='הוספת שאלה'>
+                <form onSubmit={handleSubmit}>
+                    <FormInput
+                    label="שאלה"
+                    type="text"
+                    name="question"
+                    value={values.question}
                     onChange={handleChange}
-                    value={values.sourceLink}
-                    placeholder="מקור" />
+                    error={errors.question} />
 
-                    {values.sourceLink &&
-                        <a 
-                        href={values.sourceLink} 
-                        target="_blank"
-                        rel="noopener noreferrer">בדיקת קישור</a>
-                    }               
-                </div>
+                    <textarea
+                    cols="80" rows="10"
+                    name='answer'
+                    placeholder='תשובה'
+                    onChange={handleChange}
+                    value={values.answer} />
 
-                <button type="submit">
-                    הוספה
-                </button>
-            </form>
-        </Modal>
+                    <div className="url-details">     
+                        <input 
+                        type="text" 
+                        className="form-default"
+                        name="sourceLink"
+                        onChange={handleChange}
+                        value={values.sourceLink}
+                        placeholder="מקור" />
+
+                        {values.sourceLink &&
+                            <a 
+                            href={values.sourceLink} 
+                            target="_blank"
+                            rel="noopener noreferrer">בדיקת קישור</a>
+                        }               
+                    </div>
+
+                    <button type="submit">
+                        הוספה
+                    </button>
+                </form>
+            </Modal>
+        </div>
     )
 }
 

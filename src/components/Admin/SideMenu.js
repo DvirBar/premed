@@ -30,7 +30,7 @@ function SideMenu() {
             name: 'סטטיסטיקות' 
         },
         {
-            url: `${path}/questions`,
+            url: `${path}/questions/${pathItems[0]?._id}`,
             name: 'שאלות נפוצות'
         }
         // {
@@ -49,8 +49,8 @@ function SideMenu() {
                 <li
                 key={link.url} 
                 className={link.url === pathname
-                ? "link-item current"
-                : "link-item"}>
+                ? "link-item-admin current"
+                : "link-item-admin"}>
                     <Link to={link.url}>
                         <span>{link.name}</span>
                     </Link>

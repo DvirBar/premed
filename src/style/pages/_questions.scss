@@ -36,12 +36,12 @@
     border-radius: 0.5rem;
     overflow: hidden !important;
 
-    &:hover { 
+    &:hover {
         .question-title::after {
             transform: scaleX(1);
-            transform-origin:100% 50%;
+            transform-origin: 100% 50%;
         }
-    }   
+    }
 
     .question-title {
         color: $main-color;
@@ -49,10 +49,10 @@
         padding: 0.5rem;
 
         &::after {
-            display:block;
-            content: '';
-            border-bottom: solid 3px $main-color;  
-            transform: scaleX(0);  
+            display: block;
+            content: "";
+            border-bottom: solid 3px $main-color;
+            transform: scaleX(0);
             transition: transform 0.3s ease-in-out;
         }
     }
@@ -60,22 +60,23 @@
     .question-content {
         display: flex;
         flex-direction: column;
-        row-gap: 3rem;
+        row-gap: 2rem;
 
         .question-answer {
+            font-size: 1.7rem;
             color: #3b3b3b;
         }
 
         .question-source {
             font-weight: 500;
-            font-size: 1.6rem;
-            color: #727272;   
+            font-size: 1.5rem;
+            color: $main-color;
             padding-right: 1rem;
             border-right: 3px solid $main-color;
             transition: color 0.3s ease;
 
             &:hover {
-                color: $main-color;
+                opacity: 0.8;
             }
         }
     }

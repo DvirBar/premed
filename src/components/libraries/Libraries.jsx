@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { Fragment, useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getLibraries } from '../../redux/libraries/actions'
 import { librariesSelector } from '../../redux/libraries/selectors'
 import Loadbar from '../layout/Loadbar'
-import TopBar from './TopBar/TopBar'
 import LibraryRouter from './LibraryRouter'
 import ContentContainer from '../layout/ContentContainer/ContentContainer'
+import { LibraryContext } from './LibraryContext'
+import PathLinks from './PathLinks'
+import LibraryMenu from './LibraryMenu/LibraryMenu'
 
 function Libraries() {
     const { pathId } = useParams()
@@ -25,14 +27,19 @@ function Libraries() {
         loading
     } = useSelector(librariesSelector)
 
+    const {isAdmin} = useContext(LibraryContext)
+
     if(loading) {
         return <Loadbar />
     }
 
     return (
         <div className="libraries">
-            <TopBar />
+            {!isAdmin &&
+                <PathLinks />
+            }
             <ContentContainer>
+                <LibraryMenu />
                 {loading
                 ?   <Loadbar />
                 :   <LibraryRouter />

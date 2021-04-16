@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useHistory, useRouteMatch } from 'react-router-dom'
-import { getLibById } from '../../../../redux/libraries/selectors'
+import { Link, useRouteMatch } from 'react-router-dom'
+import { getLibById } from '../../../redux/libraries/selectors'
 
 
 function LibraryMenuItem({ libItem }) {
