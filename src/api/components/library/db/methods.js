@@ -117,8 +117,6 @@ export async function editItem(params, data) {
             throw new Error('Cannot find requested item')
         }
 
-
-
         item.set({
             ...item,
             ...data

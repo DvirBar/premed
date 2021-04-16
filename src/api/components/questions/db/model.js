@@ -11,9 +11,9 @@ const QuestionsSchema = new Schema({
         required: [true, 'Name is required'],
         unique: true
     },
-    path: {
+    path: [{
         type: String
-    },
+    }],
     questions: [{
         question: {
             type: String,

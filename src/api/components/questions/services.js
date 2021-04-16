@@ -12,13 +12,13 @@ class QuestionServices {
     static create(bodyData) {
         const {
             name,
-            pathId,
+            pathIds,
             readmore
         } = bodyData
 
         const group = {
             name,
-            path: pathId,
+            path: pathIds,
             readmore
         }
 

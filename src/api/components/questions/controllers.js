@@ -86,7 +86,7 @@ class QuestionControllers {
                                     .editQuestion(
                                         groupId, 
                                         questId, 
-                                        res.body)
+                                        req.body)
 
             return res.send(question)
         }
@@ -98,7 +98,7 @@ class QuestionControllers {
 
     static async removeQuestion(req, res, next) {
         const {
-            id: groupId,
+            groupId,
             questId
         } = req.params
 

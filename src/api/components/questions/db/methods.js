@@ -3,7 +3,7 @@ export async function getQuestionGroupByPath(pathId) {
 }
 
 export async function getQuestionByIdOrFail(groupId, questId) {
-    const group = this.findByIdOrFail(groupId)
+    const group = await this.getByIdOrFail(groupId)
 
     const question = group.questions.id(questId)
 
