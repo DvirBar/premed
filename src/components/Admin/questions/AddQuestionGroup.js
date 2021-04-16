@@ -4,14 +4,18 @@ import useForm from '../../../forms/useForm';
 import { addQuestGroup } from '../../../redux/questions/actions';
 import Modal from '../../layout/Modal';
 import FormInput from '../../common/FormInput';
+import { useParams } from 'react-router';
+import ChoosePaths from '../../forms/ChoosePaths/ChoosePaths';
 
-function AddQuestionGroup({ pathId }) {
+function AddQuestionGroup() {
     const [defaultValues, setDefaultValues] = useState({})
+
+    const { pathId } = useParams()
 
     useEffect(() => {
         setDefaultValues({
             name: '',
-            pathId
+            pathIds: []
         })
     }, [pathId])
 
@@ -28,6 +32,8 @@ function AddQuestionGroup({ pathId }) {
     const toggleDisplay = open => {
         setDisplay(open)
     }
+
+    console.log(values);
 
     return (
         <Fragment>
@@ -66,6 +72,10 @@ function AddQuestionGroup({ pathId }) {
                             rel="noopener noreferrer">בדיקת קישור</a>
                         }               
                     </div>
+                    
+                    <ChoosePaths 
+                    values={values}
+                    handleChange={handleChange} />
 
                     <button type="submit">
                         יצירה

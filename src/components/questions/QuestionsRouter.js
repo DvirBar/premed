@@ -9,7 +9,6 @@ import QuestionsList from './QuestionsList';
 
 const QuestionsRouter = () => {
     let { path } = useRouteMatch();
-   console.log("hi");
     return ( 
         <Switch>
             <Route exact path={`${path}`} component={QuestionGroupsList} />

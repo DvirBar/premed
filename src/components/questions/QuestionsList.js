@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useRouteMatch } from 'react-router-dom'
 import { getQuestGroupById } from '../../redux/questions/selectors'
 import AddQuestion from '../admin/questions/AddQuestion'
+import DeleteQuestionGroup from '../admin/questions/DeleteQuestionGroup'
 import QuestionItem from './QuestionItem'
 import { QuestionsContext } from './QuestionsContext'
 
@@ -13,15 +14,18 @@ function QuestionsList() {
     const {
         isAdmin
     } = useContext(QuestionsContext)
-    
     return (
         <div>
             <h1>
                 {group?.name}
             </h1>
             {isAdmin &&
-                <AddQuestion 
-                group={group} />
+                <div className="group-item-options">
+                    <AddQuestion 
+                    group={group} /> 
+                    <DeleteQuestionGroup
+                    groupId={groupId} />
+                </div>
             }
             <div className="questions-list">
                 {group?.questions.map(quest => 

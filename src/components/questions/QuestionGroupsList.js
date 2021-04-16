@@ -1,19 +1,26 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useRouteMatch } from 'react-router-dom'
-import { getQuestGroupByPath } from '../../redux/questions/actions'
+import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import { getAllGroups } from '../../redux/questions/selectors'
+import AddQuestionGroup from '../admin/questions/AddQuestionGroup'
 import QuestionGroupItem from './QuestionGroupItem'
+import { QuestionsContext } from './QuestionsContext'
+import Grid from '../layout/Grid/Grid';
 
 function QuestionGroupsList() {
-    const groups = useSelector(getAllGroups)    
-    console.log(groups);
+    const groups = useSelector(getAllGroups)
+    
+    const { 
+        isAdmin
+    } = useContext(QuestionsContext)
     return (
-        <div className="question-groups-list">
+        <Grid>
+            {isAdmin &&
+                <AddQuestionGroup />
+            }
             {groups.map(group => 
                 <QuestionGroupItem group={group} />
             )}
-        </div>
+        </Grid>
     )
 }
 

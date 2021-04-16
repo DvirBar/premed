@@ -1,15 +1,16 @@
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
+import Card from '../common/containers/Card/Card'
 
 function QuestionGroupItem({ group }) {
     const { url } = useRouteMatch()
 
     return (
-        <div className="question-group-item">
-            <Link to={`${url}/${group._id}`}>
+        <Link to={`${url}/${group._id}`}>
+            <Card>
                 {group.name}
-            </Link>
-        </div>
+            </Card>
+        </Link>
     )
 }
 

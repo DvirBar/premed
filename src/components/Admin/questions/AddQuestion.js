@@ -10,7 +10,7 @@ function AddQuestion({ group }) {
         answer: ''
     })
     
-    const {//
+    const {
         handleChange,
         handleSubmit,
         values,

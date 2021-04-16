@@ -5,3 +5,9 @@
     flex-direction: column;
     row-gap: 2rem;
 }
+
+.group-item-options {
+    display: flex;
+    column-gap: 2rem;
+    flex-direction: row;
+}
