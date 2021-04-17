@@ -1,14 +1,20 @@
 import React from 'react'
 import CalcThreshAxis from './thresh-axis/CalcThreshAxis'
 import TypeSelector from '../TypeSelector'
+import InitLastValues from './thresh-axis/InitLastValues'
 
 function CalcContent({ 
+    color,
     typeOptions,
     selType, 
     selectType, 
     acceptThreshes, 
     rejectThreshes}) {
+    const threshes = selType === 'accept'
+    ? acceptThreshes : rejectThreshes
 
+    const initValue = threshes[0]?.value
+    const finalValue = threshes.find(thresh => thresh.isFinal)?.value
     return (
         <div className="calc-content">
             <TypeSelector 
@@ -16,15 +22,14 @@ function CalcContent({
             selType={selType}
             selectType={selectType} />
 
-            {selType === 'accept'
-            ?   <CalcThreshAxis
-                threshes={acceptThreshes}
-                type='accept' />
+            <InitLastValues
+            color={color}
+            initValue={initValue}
+            finalValue={finalValue} />
 
-            :   <CalcThreshAxis
-                threshes={rejectThreshes}
-                type='reject' />
-            }
+            <CalcThreshAxis
+            threshes={threshes}
+            type='accept' />
         </div>
     )
 }

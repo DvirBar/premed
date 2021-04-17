@@ -104,7 +104,7 @@ export const addThreshold = (tableId, data) => dispatch => {
              type: THRESHOLD_ADD,
              payload: {
                  tableId,
-                 thresholds: res.data
+                 threshold: res.data
              }
          }))
          .catch(err => {

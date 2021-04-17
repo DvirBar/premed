@@ -1,17 +1,22 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { getCalcFieldsByUnis } from '../../../../../redux/selectors/datafields';
 import Dropdown from '../../../../common/Dropdown';
 import { getCalcsByUniAndPath } from '../../../../../redux/selectors/statsinputs';
 
 function SelectCalcs({ pathId, uniId, selectField }) {
     const calcFields = useSelector(getCalcsByUniAndPath(pathId, uniId))
-    console.log(calcFields);
-    const options = calcFields.map(field => ({
-        name: field.name,
-        value: field._id
-    }))
+
+    const options = [
+        {
+            name: "בחירה",
+            value: undefined
+        },
+        ...calcFields.map(field => ({
+            name: field.name,
+            value: field._id
+        }))
+    ]
 
     useEffect(() => {
         selectField({value: undefined})

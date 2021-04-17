@@ -24,10 +24,10 @@ function Thresholds({ pathId, tableId }) {
                 <div className="unis-list">
                 {unis.map(uni => 
                     <UniItem
-                    key={uni._id}
+                    key={uni?._id}
                     pathId={pathId}
                     uni={uni}
-                    tableId={table._id} />)}
+                    tableId={table?._id} />)}
                 </div>
             </div>
         </ContentContainer>

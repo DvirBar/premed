@@ -77,13 +77,8 @@ export default function(state = initialState, action) {
                     table._id === payload.tableId
                     ?   {
                         ...table,
-                        thresholds: [
-                            ...table.thresholds.filter(thresh =>
-                                !payload.thresholds.find(fieldThresh =>
-                                    fieldThresh._id === thresh._id)),
-                            
-                            ...payload.thresholds
-                        ]}
+                        thresholds: [...table.thresholds, payload.threshold]
+                    }
                     :   table  
                     )
             }

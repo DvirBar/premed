@@ -15,7 +15,7 @@ export const getMessage = msg => {
     return {
         type: GET_MESSAGE,
         payload: {
-            msg: msg.msg.he,
+            msg: msg,
             status: msg.status
         }
     }

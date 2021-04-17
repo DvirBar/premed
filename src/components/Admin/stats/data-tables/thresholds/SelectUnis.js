@@ -5,10 +5,16 @@ import Dropdown from '../../../../common/Dropdown'
 
 function SelectUnis({ pathId, selectUni }) {
     const unis = useSelector(getUnisByPath(pathId))
-    const options = unis.map(uni => ({
-        name: uni.name,
-        value: uni._id
-    }))
+    const options = [
+        {
+            name: "בחירה",
+            value: undefined
+        },
+        ...unis.map(uni => ({
+            name: uni.name,
+            value: uni._id
+        }))
+    ]
     
     return (
         <Dropdown

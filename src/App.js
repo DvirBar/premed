@@ -24,7 +24,6 @@ function App() {
 
     useEffect(() => {
         dispatch(getBaseData());
-        dispatch(getTables());
 
         if (auth) {
             axios.defaults.headers.common["x-auth-token"] = auth.token;

@@ -1,16 +1,22 @@
 import React from 'react'
 import CalcItem from './CalcItem'
+import ThresholdProvider from './ThresholdContext'
 
 function CalcsList({ calcs, tableId, backColor }) {
     return (
         <div 
         className="calcs-list">
             {calcs.map(calc =>
-                <CalcItem
-                key={calc._id}
-                calc={calc}
-                tableId={tableId}
-                color={backColor} />)}
+                <ThresholdProvider calc={calc}>
+                    <CalcItem
+                    key={calc._id}
+                    calc={calc}
+                    tableId={tableId}
+                    color={backColor} />
+                </ThresholdProvider>
+                
+                
+            )}
         </div>
     )
 }

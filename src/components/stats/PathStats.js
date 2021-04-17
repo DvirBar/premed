@@ -24,10 +24,10 @@ function PathStats({ pathId, tableId }) {
     
     return (
         <Fragment>
-            {table.url
+            {table?.url
             ?   <p className="external-link-container">
                     <a 
-                    href={table.url}
+                    href={table?.url}
                     target="_blank"
                     className="external-table-link"
                     rel="noopener noreferrer">{urlTableTitle}</a>

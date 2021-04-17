@@ -1,6 +1,6 @@
-import { months } from 'moment';
 import React from 'react';
 import AxisMonthSection from './AxisMonthSection';
+import PropTypes from 'prop-types';
 
 function CalcThreshAxis({ threshes, type }) {
     let monthsSplit = []
@@ -30,14 +30,16 @@ function CalcThreshAxis({ threshes, type }) {
     const axisStyle ={
         width: axisWidth
     }
-
+    
     return (
-        <div className="scroll-wrapper scrollbar-main">
+        <div 
+        className="scroll-wrapper">
             <div 
             style={axisStyle}
-            className={`calc-thresh-axis ` + type}>
+            className={`calc-thresh-axis scrollbar-main` + type}>
                 {monthsSplit.map((month, index) => 
                     <AxisMonthSection
+                    key={index}
                     month={month.month}
                     year={month.year}
                     threshes={month.threshes}
@@ -48,8 +50,12 @@ function CalcThreshAxis({ threshes, type }) {
                     axisWidth={axisWidth} />)}
             </div>
         </div>
-        
     )
+}
+
+CalcThreshAxis.propTypes = {
+    threshes: PropTypes.array,
+    type: PropTypes.string
 }
 
 export default CalcThreshAxis

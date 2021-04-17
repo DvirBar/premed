@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
+import { ThresholdContext } from '../ThresholdContext';
 
-function ThreshItem({ thresh, color }) {
-
+function ThreshItem({ thresh }) {
+    const {
+        calc
+    } = useContext(ThresholdContext)
     return (
         <div
         className={thresh.isFinal
@@ -13,7 +16,7 @@ function ThreshItem({ thresh, color }) {
             }
             <span 
             className="thresh-value">
-                {thresh.value.toFixed(3)}
+                {thresh.value.toFixed(calc.fractionDigits)}
             </span>
 
             <span className="thresh-date"> 

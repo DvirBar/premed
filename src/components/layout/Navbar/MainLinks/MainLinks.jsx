@@ -43,7 +43,7 @@ function MainLinks() {
         },
         {
             name: "נתונים",
-            url: `/stats/${paths[0]?._id}`,
+            url: '/stats',
             icon:  ({outlined}) => <BarChart 
                     color="#fff" 
                     width="4rem" 

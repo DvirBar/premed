@@ -48,6 +48,7 @@ function CalcItem({ calc, tableId, color }) {
                         אין סיפי קבלה זמינים
                     </p>
                 :   <CalcContent
+                    color={color}
                     typeOptions={typeOptions}
                     selType={selType}
                     selectType={selectType}

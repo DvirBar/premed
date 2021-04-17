@@ -6,6 +6,7 @@ import Topbar from './topbar/TopBar';
 
 function StatsContent() {
     const { pathId, tableId, type } = useParams()
+    
     return (
         <div>
             <Topbar />
