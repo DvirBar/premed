@@ -1,0 +1,55 @@
+.suggested-calc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__info {
+        color: $main-color;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        column-gap: 0.5rem;
+
+        &__label {
+            font-size: 1.6rem;
+        }
+
+        &__suggested-value {
+            font-weight: 500;
+            font-size: 2rem;
+        }
+
+        &__display-info {
+            font-size: 1.4rem;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .accept-calc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3rem;
+        width: 3rem;
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 50%;
+        color: #999;
+        font-size: 2rem;
+        background-color: #ddd;
+        transition: all 0.2s ease-in-out;
+
+        &:not(&.accepted):hover {
+            opacity: 0.8;
+        }
+
+        &.accepted {
+            background-color: $okay-color;
+            color: #fff;
+        }
+    }
+}

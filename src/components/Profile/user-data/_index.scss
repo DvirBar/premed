@@ -1,0 +1,11 @@
+.user-data__top-bar {
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 2rem;
+}
+
+@import "./data-block/index";

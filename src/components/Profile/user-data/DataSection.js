@@ -1,55 +1,40 @@
 import React, { useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getStatsInputs } from '../../../redux/actions/basedata';
-import { getInputsByUniAndPath} from '../../../redux/selectors/statsinputs';
+import { statsInputsSelector } from '../../../redux/selectors/statsinputs';
+import { getUnisByPath } from '../../../redux/selectors/unis';
 import Loadbar from '../../layout/Loadbar';
-import DataBlock from './DataBlock';
+import DataGroup from './DataGroup';
 
-function DataSection({ paths, selPath, selUni }) {
+function DataSection({ paths, selPath }) {
     const dispatch = useDispatch()
 
     // Dispatch actions to get data
     useEffect(() => {
         dispatch(getStatsInputs(paths.map(path => path._id)))
     }, [paths])
-
-    // Fields
+    console.log(paths);
     const {
-        loading,
-        fields,
-        groups,
-        calcs
-    } = useSelector(getInputsByUniAndPath(
-        selUni && selUni._id, selPath && selPath._id));
+        loading 
+    } = useSelector(statsInputsSelector)
 
-    const getChildren = group => {
-        return groups.filter(thisGroup => 
-            thisGroup.parent === group._id)
-    }
+    const unis = useSelector(getUnisByPath(selPath))
 
-    if(loading)
+    if(loading) {
         return <Loadbar />
-
+    }
+    
     return (
         <Fragment>
-            <DataBlock
-            title={selUni?.name || 'כללי'}
-            fields={fields}
-            calcs={calcs} />
+            <DataGroup 
+            pathId={selPath} />
 
-            {groups &&
-            groups.map(group => 
-                !group.parent && 
-                    <DataBlock
-                    key={group._id}
-                    title={group.name}
-                    fields={group.fields}
-                    calcs={calcs}
-                    group={group}
-                    groups={getChildren(group)}
-                    getChildren={getChildren} />
-                )
-            }
+            {unis.map(uni => 
+                <DataGroup
+                key={uni._id}
+                uni={uni}
+                pathId={selPath} />
+            )}
         </Fragment>
     )
 }

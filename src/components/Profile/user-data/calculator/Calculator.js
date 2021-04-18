@@ -23,7 +23,6 @@ function Calculator() {
                 <CalculatorBody
                 display={displayCalc}
                 toggleModal={toggleCalc} />
-            
             </div>
         </Fragment>
     )

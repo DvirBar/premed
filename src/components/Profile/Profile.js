@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useRouteMatch, Link, useLocation } from 'react-router-dom';
+import ContentContainer from '../layout/ContentContainer/ContentContainer';
 import TopLinks from '../layout/TopLinks';
 import { splitUrl } from '../routing/utils';
 import ProfileRouter from './ProfileRouter';
@@ -24,7 +25,7 @@ function Profile() {
     ]
 
     return (
-        <div className="user-profile">
+        <div>
             <div className="top-content-nav">
                 <TopLinks 
                 className="top-links-profile-nav"
@@ -40,9 +41,14 @@ function Profile() {
                         )}
                 </TopLinks>
             </div>
-            <div className="profile-container">
-                <ProfileRouter />
-            </div>
+        
+            <ContentContainer>
+                <div className="profile-container">
+                    <ProfileRouter />
+                </div>
+            </ContentContainer>
+                
+           
         </div>
     )
 }

@@ -25,7 +25,7 @@ function TopBar({ data, tableId, changeTable, paths }) {
 
 
     return (
-        <div className="top-bar">
+        <div className="user-data__top-bar">
             <TableSelect 
             tables={data.tables}
             table={tableId}

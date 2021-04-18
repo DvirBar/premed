@@ -4,7 +4,7 @@ import { validError } from '../../../../../redux/actions/userdata';
 import { getUniById } from '../../../../../redux/selectors/unis';
 import ChatBox from '../../../../layout/ChatBox';
 import { GroupsContext } from '../GroupsContext';
-import AcceptCalc from './AcceptCalc';
+import AcceptCalc from '../calc-block/SuggestedCalc/AcceptCalc';
 import BlockBody from './BlockBody';
 import DeclineCalc from './DeclineCalc';
 

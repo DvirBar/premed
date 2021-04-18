@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
-import CalcBlock from './calc-block/CalcBlock'
+import CalcBlock from './calc-block/CalcBlock.jsx'
 import MatchFormFragment from '../MatchFormFragment'
 import { GroupsContext } from './GroupsContext'
 

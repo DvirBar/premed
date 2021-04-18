@@ -3,7 +3,6 @@ import moment from 'moment';
 import EditUser from '../EditUser';
 
 function UserBasicData({ user }) {
-
     return (
         <div className="card-container user-basic-data">
             <h1 className="card-header">

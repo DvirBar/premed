@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 function Section({ className, children }) {
     const [titleClass, setTitleClass] = useState('')
+    const [titleStyle, setTitleStyle] = useState('')
     const title = React.Children.map(children, child => 
         child.type.displayName === 'Title' ? child : null)
 
@@ -17,6 +18,7 @@ function Section({ className, children }) {
     useEffect(() => {
         if(title[0]?.props) {
             setTitleClass(title[0].props.className)
+            setTitleStyle(title[0].props.style)
         }
 
         if(header[0]?.props) {
@@ -35,10 +37,12 @@ function Section({ className, children }) {
     }
 
     return (
-        <div className={className
+        <div
+        className={className
             ?   `section ${className}`
             :   "section"}>
             <div 
+            style={titleStyle || {}} 
             className="section-header"
             onClick={() => toggleDisplay()}>
                 <span 
@@ -50,7 +54,8 @@ function Section({ className, children }) {
                     ? `section-header-rest ${headerClass}`
                     : "section-header-rest"}>{header}</span>
             </div>
-            <div className={`section-content 
+            <div 
+            className={`section-content 
                 ${display ? 'open' : ''}`}>
                 <div className={`section-content__holder
                 ${bodyClass ? bodyClass : ''}`}>
@@ -61,7 +66,7 @@ function Section({ className, children }) {
     )
 }
 
-const Title = ({ className, children }) => children;
+const Title = ({ className, style, children }) => children;
 Title.displayName = 'Title';
 Section.Title = Title;
 
