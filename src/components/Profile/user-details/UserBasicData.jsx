@@ -1,11 +1,11 @@
 import React from 'react'
 import moment from 'moment';
 import EditUser from '../EditUser';
-import CardContainer from '../../layout/CardContainer/CardContainer';
-import CardHeader from '../../layout/CardContainer/CardHeader';
-import CardTitle from '../../layout/CardContainer/CardTitle';
-import CardInfo from '../../layout/CardContainer/CardInfo';
-import CardContent from '../../layout/CardContainer/CardContent';
+import CardContainer from '../../layout/Containers/CardContainer/CardContainer';
+import CardHeader from '../../layout/Containers/CardContainer/CardHeader';
+import CardTitle from '../../layout/Containers/CardContainer/CardTitle';
+import CardInfo from '../../layout/Containers/CardContainer/CardInfo';
+import CardContent from '../../layout/Containers/CardContainer/CardContent';
 
 function UserBasicData({ user }) {
     return (

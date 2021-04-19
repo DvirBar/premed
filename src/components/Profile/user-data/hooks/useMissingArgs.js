@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { getGroups, getFieldsAndCalcs } from '../../../redux/selectors/statsinputs';
-import { getSelTypes } from '../../../redux/selectors/userdata';
-import getGroupConfig from './data-block/getGroupConfig';
-import { hasGroupValues } from './data-block/useDataValidation';
+import { getGroups, getFieldsAndCalcs } from '../../../../redux/selectors/statsinputs';
+import { getSelTypes } from '../../../../redux/selectors/userdata';
+import getGroupConfig from '../data-block/getGroupConfig';
+import { hasGroupValues } from '../data-block/useDataValidation';
 
 
 const useMissingArgs = (storedCalcs, dataVals) => {

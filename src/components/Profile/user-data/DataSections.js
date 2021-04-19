@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DataSection from './DataSection';
-import useExecCalc from './useExecCalc';
+import useExecCalc from './hooks/useExecCalc';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getDataVals } from '../../../redux/selectors/userdata';
 import useDataValidation from './data-block/useDataValidation';

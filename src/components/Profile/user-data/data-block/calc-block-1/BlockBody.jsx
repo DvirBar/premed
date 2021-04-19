@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { GroupsContext } from '../GroupsContext'
-import DisplayValidError from './DisplayValidError'
+import DisplayValidError from '../calc-block/NoCalc/DisplayValidError/DisplayValidError'
 import SuggestValue from './SuggestValue'
 
 function BlockBody({ 

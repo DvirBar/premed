@@ -4,7 +4,7 @@ import { getTableById } from '../../../redux/selectors/datatables'
 import { getStatsInputs } from '../../../redux/actions/basedata'
 import { getUnisByPath, getUnisFields, getUnisFieldsByPath } from '../../../redux/selectors/unis'
 import UniItem from './UniItem'
-import ContentContainer from '../../layout/ContentContainer/ContentContainer'
+import ContentContainer from '../../layout/Containers/ContentContainer/ContentContainer'
 
 
 function Thresholds({ pathId, tableId }) {

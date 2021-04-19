@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentContainer from '../layout/ContentContainer/ContentContainer';
+import ContentContainer from '../layout/Containers/ContentContainer/ContentContainer';
 import StepRouter from './StepRouter';
 import TopBar from './TopBar';
 

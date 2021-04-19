@@ -14,7 +14,9 @@ function CalcBlock({ calc, value, suggestedAccepted }) {
     return (
         <div className="calc-block-new">
            {validError
-           ?    <NoCalc />   
+           ?    <NoCalc 
+                calcName={calc.name}
+                validError={validError} />   
            :    <SuggestedCalc
                 suggestedAccepted={suggestedAccepted}
                 value={value} 

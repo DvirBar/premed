@@ -4,7 +4,7 @@ import AncsList from './AncsList/AncsList'
 import FilterAncs from './FilterAncs/FilterAncs'
 import { getAncsList } from '../../../redux/announcements/ancs/actions'
 import ViewAncsProvider from './ViewAncsContext'
-import ContentContainer from '../../layout/ContentContainer/ContentContainer'
+import ContentContainer from '../../layout/Containers/ContentContainer/ContentContainer'
 
 function ViewAncs({ isAdmin }) {
     const filtersOnInit = {

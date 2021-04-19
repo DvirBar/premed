@@ -1,6 +1,6 @@
 import React from 'react';
 import Announcements from './announcements/Announcements';
-import ContentContainer from './layout/ContentContainer/ContentContainer';
+import ContentContainer from './layout/Containers/ContentContainer/ContentContainer';
 
 function Default() {
     return (

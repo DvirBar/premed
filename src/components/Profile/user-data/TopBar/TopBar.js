@@ -4,8 +4,8 @@ import { toggleEnabled } from '../../../../redux/actions/userdata'
 import ToggleSwitch from '../../../common/ToggleSwitch';
 import TableSelect from './TableSelect/TableSelect';
 import DataPathsList from './DataPathsList/DataPathsList';
-import CardContent from '../../../layout/CardContainer/CardContent';
-import CardContainer from '../../../layout/CardContainer/CardContainer';
+import CardContent from '../../../layout/Containers/CardContainer/CardContent';
+import CardContainer from '../../../layout/Containers/CardContainer/CardContainer';
 
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()

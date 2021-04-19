@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getCalcWithGroupArgs, getGroups } from '../../../redux/selectors/statsinputs'
-import { getSelTypes } from '../../../redux/selectors/userdata'
-import getGroupConfig from './data-block/getGroupConfig'
-import { hasGroupValues } from './data-block/useDataValidation'
+import { getCalcWithGroupArgs, getGroups } from '../../../../redux/selectors/statsinputs'
+import { getSelTypes } from '../../../../redux/selectors/userdata'
+import getGroupConfig from '../data-block/getGroupConfig'
+import { hasGroupValues } from '../data-block/useDataValidation'
 
 function useMinUnits(missingArgs, finished, changeSeqStatus, dataVals) {
     const groupsVals = dataVals.filter(val => val.group)

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { generatePath, useHistory, useParams, useRouteMatch } from 'react-router'
 import { getAllPaths } from '../../../redux/selectors/paths'
 import InlineSelect from '../../common/InlineSelect'
-import ContentContainer from '../../layout/ContentContainer/ContentContainer'
+import ContentContainer from '../../layout/Containers/ContentContainer/ContentContainer'
 import QuestionsProvider from '../../questions/QuestionsContext'
 import QuestionsRouter from '../../questions/QuestionsRouter'
 

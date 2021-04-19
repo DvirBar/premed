@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import useMinUnits from '../useMinUnits'
-import useMissingArgs from '../useMissingArgs'
+import useMinUnits from '../hooks/useMinUnits'
+import useMissingArgs from '../hooks/useMissingArgs'
 import { GroupsContext } from './GroupsContext'
 
 export const hasGroupValues = (values, group) => {

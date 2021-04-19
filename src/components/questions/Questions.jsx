@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentContainer from '../layout/ContentContainer/ContentContainer';
+import ContentContainer from '../layout/Containers/ContentContainer/ContentContainer';
 import QuestionsRouter from './QuestionsRouter';
 import TopBar from './TopBar/TopBar';
 import QuestionsProvider from './QuestionsContext'

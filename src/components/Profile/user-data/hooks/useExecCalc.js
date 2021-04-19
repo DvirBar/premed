@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { executeCalc } from '../../../redux/actions/userdata';
-import { getAllStoredCalcs, getGroupById } from '../../../redux/selectors/statsinputs';
-import { getGroupValsReal } from '../../../redux/selectors/userdata';
-import { GroupsContext } from './data-block/GroupsContext';
+import { executeCalc } from '../../../../redux/actions/userdata';
+import { getAllStoredCalcs, getGroupById } from '../../../../redux/selectors/statsinputs';
+import { getGroupValsReal } from '../../../../redux/selectors/userdata';
+import { GroupsContext } from '../data-block/GroupsContext';
 
 /* This function finds(recusively) calcs that are dependent on other calcs, and 
 that have no other missing args except for the other calcs */

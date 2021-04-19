@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { simulateCalcs } from '../../../../redux/actions/userdata';
 import { getCustomGroupsSimulated, getSimulatedGroups, getSimulatedVals, selTableSelector } from '../../../../redux/selectors/userdata';
 import { GroupsContext } from '../data-block/GroupsContext';
-import { getNextCalcs } from '../useExecCalc';
+import { getNextCalcs } from '../hooks/useExecCalc';
 
 const isFirstCalc = (calc, validErrors) => {
     return (!validErrors.find(item => item.calc === calc._id) &&
