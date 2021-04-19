@@ -2,7 +2,7 @@ import React from 'react'
 import Libraries from './Libraries'
 import LibraryProvider from './LibraryContext'
 
-function LibrariesCient() {
+function LibrariesClient() {
     return (
         <LibraryProvider isAdmin={false}>
             <Libraries />
@@ -10,4 +10,4 @@ function LibrariesCient() {
     )
 }
 
-export default LibrariesCient
+export default LibrariesClient

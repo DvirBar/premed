@@ -1,14 +1,2 @@
-.card-container {
-    box-shadow: $default-shadow;
-    padding: 2rem;
-    border-radius: 0.5rem;
-}
-
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 2rem;
-    width: 90rem;
-}
 @import "./user-data/index";
 @import "./user-details/index";

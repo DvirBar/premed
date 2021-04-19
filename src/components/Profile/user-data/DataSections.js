@@ -5,6 +5,7 @@ import useExecCalc from './useExecCalc';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
 import { getDataVals } from '../../../redux/selectors/userdata';
 import useDataValidation from './data-block/useDataValidation';
+import ListLayout from '../../layout/ListLayout/ListLayout';
 
 function DataSections({ paths }) {
     // Change section on navigation
@@ -19,16 +20,11 @@ function DataSections({ paths }) {
     useExecCalc()
 
     return (
-        <Fragment>
-            {/* <NavigateDataSections 
-            paths={paths}
-            unis={unis}
-            changeSection={changeSection} /> */}
-
+        <ListLayout className="user-data__data-sections">
             <DataSection 
             paths={paths}
             selPath={selPath} />
-        </Fragment>
+        </ListLayout>
     )
 }
 

@@ -1,3 +1,9 @@
+.section {
+    max-height: 95vh;
+    overflow: hidden;
+    width: 100%;
+}
+
 .section-header {
     display: flex;
     align-items: center;
@@ -15,7 +21,7 @@
 
     &.open {
         transition: all 0.3s ease-in-out;
-        max-height: 70rem;
+        max-height: 85vh;
         overflow-y: auto;
     }
 

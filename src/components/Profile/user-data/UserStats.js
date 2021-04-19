@@ -1,9 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSelTable, getOneUserData } from '../../../redux/actions/userdata';
+import ListLayout from '../../layout/ListLayout/ListLayout';
 import Loadbar from '../../layout/Loadbar';
 import DataSections from './DataSections';
-import TopBar from './TopBar';
+import TopBar from './TopBar/TopBar';
 
 function UserStats({ data, selTable }) {
     const [paths, setPaths] = useState([])
@@ -23,7 +24,7 @@ function UserStats({ data, selTable }) {
         return <Loadbar />
     
     return (
-        <Fragment>
+        <ListLayout className="user-data">
             <TopBar 
             data={data} 
             changeTable={changeTable} 
@@ -32,7 +33,7 @@ function UserStats({ data, selTable }) {
             
             <DataSections  
             paths={paths} />
-        </Fragment>
+        </ListLayout>
     )
 }
 

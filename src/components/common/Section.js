@@ -38,9 +38,9 @@ function Section({ className, children }) {
 
     return (
         <div
-        className={className
+        className={`${className
             ?   `section ${className}`
-            :   "section"}>
+            :   "section"} no-select `}>
             <div 
             style={titleStyle || {}} 
             className="section-header"
@@ -56,7 +56,7 @@ function Section({ className, children }) {
             </div>
             <div 
             className={`section-content 
-                ${display ? 'open' : ''}`}>
+                ${display ? 'open' : ''} scrollbar-main`}>
                 <div className={`section-content__holder
                 ${bodyClass ? bodyClass : ''}`}>
                     {body}

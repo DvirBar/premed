@@ -1,0 +1,29 @@
+.card-container {
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 0.5rem;
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: $main-color;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.card-title {
+    color: #fff;
+}
+
+.card-info {
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 500;
+    padding-right: 1rem;
+}
+
+.card-content {
+    padding: 2rem;
+}

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import EditDataPaths from './EditDataPaths'
+import EditDataPaths from '../../EditDataPaths'
 
 function DataPathsList({ paths, tableId }) {
     const [displayEdit, setDisplayEdit] = useState(false)
@@ -10,18 +10,22 @@ function DataPathsList({ paths, tableId }) {
 
     return (
         <div className="data-paths">
-            <p>
-                <span className="data-paths-title">המסלולים שלי:</span>
+            <p className="data-paths__info">
+                <span className="data-paths__info__title">
+                    המסלולים שלי:
+                </span>&nbsp;
                 <span 
-                className="edit-paths-link"
+                className="data-paths__info__edit"
                 onClick={() => toggleEdit(true)}>עריכה</span>
             </p>
-            {paths.map((path, index) => 
-                <span>
-                    {path.name}
-                    {index !== paths.length-1 && <Fragment>, </Fragment>}
-                </span>
-            )}
+            <p className="data-paths__paths-list">
+                {paths.map(path => 
+                    <span className="data-paths__paths-list__item">
+                        {path.name}
+                    </span>
+                )}
+            </p>
+            
 
             <EditDataPaths
             userPaths={paths}

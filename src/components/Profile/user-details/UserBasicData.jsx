@@ -1,21 +1,28 @@
 import React from 'react'
 import moment from 'moment';
 import EditUser from '../EditUser';
+import CardContainer from '../../layout/CardContainer/CardContainer';
+import CardHeader from '../../layout/CardContainer/CardHeader';
+import CardTitle from '../../layout/CardContainer/CardTitle';
+import CardInfo from '../../layout/CardContainer/CardInfo';
+import CardContent from '../../layout/CardContainer/CardContent';
 
 function UserBasicData({ user }) {
     return (
-        <div className="card-container user-basic-data">
-            <h1 className="card-header">
-                עריכת פרטים בסיסיים
-            </h1>
-            <div className="card-content">
-                <p className="card-info">
+        <CardContainer>
+            <CardHeader>
+                <CardTitle>
+                    עריכת פרטים בסיסיים
+                </CardTitle>
+                <CardInfo>
                     <span>המשתמש נוצר ב-</span>
                     <span>{moment(user.date_created).format('DD בMMMM, YYYY')}</span>
-                </p>
-                <EditUser user={user} />                
-            </div>
-        </div>
+                </CardInfo>
+            </CardHeader>
+            <CardContent>
+                <EditUser user={user} />    
+            </CardContent>                
+        </CardContainer>
     )
 }
 

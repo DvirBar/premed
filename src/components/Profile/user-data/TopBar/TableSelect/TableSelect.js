@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Dropdown from '../../common/Dropdown'
+import Dropdown from '../../../../common/Dropdown'
 
 function TableSelect({ tables, table, changeTable }) {
     const [tableOptions, setTableOptions] = useState([]);

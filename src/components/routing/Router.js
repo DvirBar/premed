@@ -13,7 +13,7 @@ import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage';
 import Stats from '../stats/Stats';
 import Questions from '../questions//Questions';
-import LibrariesCient from '../libraries/LibrariesCient';
+import LibrariesClient from '../libraries/LibrariesClient';
 import ViewAncs from '../announcements/ViewAncs/ViewAncs';
 
 const Router = () => {
@@ -35,7 +35,7 @@ const Router = () => {
                 <ProtectedRoute path="/profile" component={Profile} />
                 <ProtectedRoute path="/announcements" component={ViewAncs} />
                 <ProtectedRoute path="/stats" component={Stats} />
-                <ProtectedRoute path="/library/:pathId" component={LibrariesCient} />
+                <ProtectedRoute path="/library/:pathId" component={LibrariesClient} />
                 <AdminRoute path="/admin" component={Admin} />
                 <Route component={NoMatchPage} />  
             </Switch>
