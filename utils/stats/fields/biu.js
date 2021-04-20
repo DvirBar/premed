@@ -15,6 +15,7 @@ const fields = [
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
+        fractionDigits: 2,
         uni: 'biu',
         validators: [
             validationTypes.isPosNum,
@@ -27,6 +28,7 @@ const fields = [
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
+        fractionDigits: 2,
         uni: 'biu',
         validators: [
             validationTypes.isPosNum,

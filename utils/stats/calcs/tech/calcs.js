@@ -54,14 +54,22 @@ export const techBagrut = (params, values) => {
 
     const {
         baseAvg,
-        notRequired
+        notRequired,
+        addedArgs
     } = getBaseAvg(params, values, 'tech', getBonus, config)
 
-    let result = getBestAverage(baseAvg, notRequired, 119, 20, getBonus)
+    
+    const {
+        value,
+        payload
+    } = getBestAverage(baseAvg, notRequired, 119, 20, addedArgs)
 
-    result = {
-        ...result,
-        value: Math.round(result.value * 100) / 100
+    const result = {
+        payload: {
+            ...payload,
+            addedArgs
+        },
+        value: Math.round(value * 100) / 100
     }
     return result
 }

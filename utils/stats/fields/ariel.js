@@ -15,6 +15,7 @@ const fields = [
         fieldType: fieldTypes.textbox,
         threshField: true,
         paths: ['four-year'],
+        fractionDigits: 2,
         uni: 'ariel',
         validators: [
             validationTypes.isPosNum,
@@ -32,6 +33,7 @@ const fields = [
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
+        fractionDigits: 2,
         uni: 'ariel',
         validators: [
             validationTypes.isPosNum,

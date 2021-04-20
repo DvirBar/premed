@@ -28,8 +28,8 @@ class DataTableService {
 
     static async addThreshold(tableId, threshData) {
         const table = await DataTable.addThreshold(tableId, threshData)
-
-        return table.thresholds[0]
+        console.log(table);
+        return table.thresholds[table.thresholds.length - 1]
     }
 
     static editThreshold(tableId, threshId, threshData) {

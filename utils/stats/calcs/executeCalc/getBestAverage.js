@@ -12,12 +12,11 @@ const getBestAverage = (
     baseAvg, 
     notRequired, 
     maxGrade, 
-    minUnits) => {
+    minUnits,
+    addedArgs) => {
     let cumulAvg = baseAvg;
 
     const args = sortByGrades(notRequired)
-
-    // console.log(args);
 
     let counter = 0
     
@@ -28,9 +27,22 @@ const getBestAverage = (
         (args[counter].values.grade >= cumulAvg.grade || 
         cumulAvg.units < minUnits))
         { 
-        cumulAvg.grade = addToAvg(cumulAvg, args[counter].values)
-        cumulAvg.units = cumulAvg.units + args[counter].values.units
 
+        const {
+            units,
+            gradeNoBonus,
+            bonus
+        } = args[counter].values
+
+        cumulAvg.grade = addToAvg(cumulAvg, args[counter].values)
+        cumulAvg.units = cumulAvg.units + units
+        addedArgs.push({
+            units,
+            bonus,
+            grade: gradeNoBonus,
+            name: args[counter].name
+        })
+        
         counter ++
     }
 

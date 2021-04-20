@@ -14,6 +14,7 @@ const fields = [
         threshField: true,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
+        fractionDigits: 2,
         paths: ['six-year'],
         uni: 'tau',
         validators: [

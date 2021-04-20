@@ -11,7 +11,6 @@ class ServerDataService {
     }
     
     getStatsData(pathIds) {
-        console.log(pathIds);
         const resObj = {
             fields: getByPaths(fields, pathIds),
             groups: getByPaths(groups, pathIds),

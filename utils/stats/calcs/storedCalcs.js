@@ -24,6 +24,7 @@ const storedCalcs = [
         args: bagrut,
         uni: 'huji',
         paths: ['six-year'],
+        fractionDigits: 2,
         isSuggestion: true,
         validators: [
             validationTypes.isPosNum,
@@ -39,6 +40,7 @@ const storedCalcs = [
         name: "סכם ראשוני",
         func: hujiCalcs.hujiInitial,
         threshField: true,
+        fractionDigits: 3,
         args: [
             bagrutHuji,
             psycho
@@ -60,6 +62,7 @@ const storedCalcs = [
         name: "סכם סופי",
         func: hujiCalcs.hujiFinal,
         threshField: true,
+        fractionDigits: 3,
         args: [
             bagrutHuji,
             psycho,
@@ -85,6 +88,7 @@ const storedCalcs = [
         uni: 'tau',
         paths: ['six-year'],
         isSuggestion: true,
+        fractionDigits: 2,
         validators: [
             validationTypes.isPosNum,
             {
@@ -99,6 +103,7 @@ const storedCalcs = [
         name: "סכם ראשוני",
         func: tauCalcs.tauInitial,
         threshField: true,
+        fractionDigits: 2,
         args: [
             bagrutTau,
             psycho
@@ -118,6 +123,7 @@ const storedCalcs = [
         uni: 'tech',
         paths: ['six-year'],
         isSuggestion: true,
+        fractionDigits: 2,
         validators: [
             validationTypes.isPosNum,
             {
@@ -132,6 +138,7 @@ const storedCalcs = [
         name: "סכם ראשוני",
         func: techCalcs.techInitial,
         threshField: true,
+        fractionDigits: 2,
         args: [
             psycho,
             bagrutTech
@@ -156,6 +163,7 @@ const storedCalcs = [
         uni: 'bgu',
         paths: ['six-year'],
         isSuggestion: true,
+        fractionDigits: 2,
         validators: [
             validationTypes.isPosNum,
             {
@@ -174,6 +182,7 @@ const storedCalcs = [
             bagrutBgu,
             psycho
         ],
+        fractionDigits: 0,
         uni: 'bgu',
         paths: ['six-year'],
         isSuggestion: true,

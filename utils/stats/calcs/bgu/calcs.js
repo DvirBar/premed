@@ -29,14 +29,21 @@ in response string */
 export const bguBargut = (params, values) => {
     const {
         baseAvg,
-        notRequired
+        notRequired,
+        addedArgs
     } = getBaseAvg(params, values, 'bgu', getBonus)
     
-    let result = getBestAverage(baseAvg, notRequired, 130, 20, getBonus)
+    const {
+        value,
+        payload
+    } = getBestAverage(baseAvg, notRequired, 130, 20, addedArgs)
 
-    result = {
-        ...result,
-        value: (result.value).toFixed(2)
+    const result = {
+        payload: {
+            ...payload,
+            addedArgs
+        },
+        value: (value).toFixed(2)
     }
     return result
 }

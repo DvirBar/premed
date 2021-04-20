@@ -6,6 +6,7 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
     let unitsCounter = 0;
     let notRequired = []
     let comboSubj = []
+    let addedArgs = []
 
     /* Get average of required subjects and store 
         not required in an array */
@@ -45,6 +46,8 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
             if(uniGroups?.includes('isRequired')) {
                 const {
                     units,
+                    bonus,
+                    gradeNoBonus,
                     grade
                 } = subjObj.values
     
@@ -54,6 +57,13 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
                     subj === 'math' && units >= 4) {
                     unitsToAdd = unitsToAdd * 2  
                 }
+
+                addedArgs.push({
+                    name: subj,
+                    units: unitsToAdd,
+                    bonus,
+                    grade: gradeNoBonus
+                })
     
                 subjSum += grade * unitsToAdd
                 unitsCounter += unitsToAdd
@@ -107,7 +117,8 @@ const getBaseAvg = (params, values, uni, getBonus, bonusConfig) => {
 
     return {
         baseAvg,
-        notRequired
+        notRequired,
+        addedArgs
     }
 }
 
@@ -125,7 +136,9 @@ const addBonusToGrade = (
     }
 
     const grade = subjObj.values.grade
-    subjObj.values.grade = grade + getBonus(subj, subjObj, bonusConfig)
+    subjObj.values.gradeNoBonus = subjObj.values.grade
+    subjObj.values.bonus = getBonus(subj, subjObj, bonusConfig)
+    subjObj.values.grade = grade + subjObj.values.bonus
 
     return subjObj
 }

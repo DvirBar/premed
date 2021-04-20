@@ -34,6 +34,7 @@ const fields = [
             paths: ['six-year'],
             unis: ['tech']
         },
+        fractionDigits: 0,
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         validators: [

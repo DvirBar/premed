@@ -53,14 +53,21 @@ export const hujiFinal = params => {
 export const hujiBargut = (params, values) => {
     const { 
         baseAvg,
-        notRequired
+        notRequired,
+        addedArgs
     } = getBaseAvg(params, values, 'huji', getBonus)
     
-    let result = getBestAverage(baseAvg, notRequired, 127, 20, getBonus)
+    let {
+        value,
+        payload
+    } = getBestAverage(baseAvg, notRequired, 127, 20, addedArgs)
 
-    result = {
-        ...result,
-        value: (result.value).toFixed(1)
+    const result = {
+        payload: {
+            ...payload,
+            addedArgs
+        },
+        value: (value).toFixed(1)
     }
     return result
 }
