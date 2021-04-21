@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AcceptCalc from './AcceptCalc'
+import CalcDetails from './CalcDetails/CalcDetails'
 
-function SuggestedCalc({ value, suggestedAccepted, calc }) {
+function SuggestedCalc({ value, suggestedValue, calc, payload }) {
+    const [display, setDisplay] = useState(false)
+    
     return (
         <div className="suggested-calc">
             <div className="suggested-calc__info">
@@ -9,16 +12,25 @@ function SuggestedCalc({ value, suggestedAccepted, calc }) {
                     הצעה:
                 </div>
                 <div className="suggested-calc__info__suggested-value">
-                    {value}
+                    {suggestedValue}
                 </div>
-                <div className="suggested-calc__info__display-info">
+                <div 
+                onClick={() => setDisplay(true)}
+                className="suggested-calc__info__display-info">
                     פירוט
                 </div>
             </div>
             <AcceptCalc 
             calcId={calc?._id} 
             value={value} 
-            accepted={suggestedAccepted} />
+            suggestedValue={suggestedValue} />
+
+            <CalcDetails
+            display={display}
+            setDisplay={setDisplay}
+            payload={payload}
+            calcName={calc?.name} />
+            
         </div>
     )
 }

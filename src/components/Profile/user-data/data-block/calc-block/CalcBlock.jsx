@@ -4,7 +4,7 @@ import { GroupsContext } from '../GroupsContext'
 import NoCalc from './NoCalc/NoCalc'
 import SuggestedCalc from './SuggestedCalc/SuggestedCalc'
 
-function CalcBlock({ calc, value, suggestedAccepted }) {
+function CalcBlock({ calc, value, suggestedValue, payload }) {
     const {
         getErrorByCalc
     } = useContext(GroupsContext)
@@ -18,9 +18,10 @@ function CalcBlock({ calc, value, suggestedAccepted }) {
                 calcName={calc.name}
                 validError={validError} />   
            :    <SuggestedCalc
-                suggestedAccepted={suggestedAccepted}
+                suggestedValue={suggestedValue}
                 value={value} 
-                calc={calc} />
+                calc={calc}
+                payload={payload} />
            }
             
         </div>

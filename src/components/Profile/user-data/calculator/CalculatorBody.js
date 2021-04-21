@@ -15,7 +15,7 @@ function CalculatorBody({ display, toggleModal }) {
         setPickCalcs(toggle)
     }
 
-    // A function that finds adds a new calcs to the chosen calcs
+    // A function that finds and adds new calcs to the chosen calcs
     const chooseCalc = calc => {
         if(chosenCalcs.find(thisCalc => thisCalc._id === calc._id))
             setChosenCalcs(chosenCalcs.filter(thisCalc => 

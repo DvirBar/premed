@@ -27,8 +27,9 @@ function FormFragment({ field, isCalc, group }) {
             {isCalc && !isSimulated &&
                 <CalcBlock
                 calc={field}
-                value={dataVal?.suggestValue}
-                suggestedAccepted={dataVal?.suggestedAccepted} />
+                value={dataVal?.value}
+                suggestedValue={dataVal?.suggestValue}
+                payload={dataVal?.payload} />
             }
         </div>
     )

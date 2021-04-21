@@ -1,0 +1,14 @@
+.payload-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+
+    &__titles {
+        color: #999;
+        font-weight: 500;
+        font-size: 2rem;
+    }
+}
+
+@import "./AddedArgs/index";
+@import "./OmittedArgs/index";

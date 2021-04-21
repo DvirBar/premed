@@ -1,0 +1,63 @@
+.payload-info__added-args {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    &__table {
+        font-size: 1.8rem;
+        width: 100%;
+        border: none;
+        border-collapse: separate;
+        border-spacing: 0 15px;
+
+        th,
+        td {
+            text-align: center;
+            padding: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 10rem;
+
+            &:first-child {
+                border-top-right-radius: 0.5rem;
+                border-bottom-right-radius: 0.5rem;
+            }
+
+            &:last-child {
+                border-top-left-radius: 0.5rem;
+                border-bottom-left-radius: 0.5rem;
+            }
+        }
+
+        th {
+            background-color: $main-color;
+            color: #fff;
+        }
+
+        td {
+            color: #555;
+            font-weight: 500;
+        }
+
+        tr {
+            border-radius: 0.5rem;
+            box-shadow: $default-shadow;
+        }
+
+        tr:nth-child(odd) {
+            background-color: rgba($main-color, 0.3);
+        }
+    }
+
+    &__units-sum {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+
+        color: $main-color;
+        font-size: 1.8rem;
+        font-weight: 500;
+        padding-right: 1rem;
+    }
+}

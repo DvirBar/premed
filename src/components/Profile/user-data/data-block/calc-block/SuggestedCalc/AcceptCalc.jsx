@@ -3,20 +3,20 @@ import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { insertData } from '../../../../../../redux/actions/userdata'
 import { selTableSelector } from '../../../../../../redux/selectors/userdata'
-import ToolTip from '../../../../../layout/ToolTip'
 
-function AcceptCalc({ calcId, value, accepted }) {
+function AcceptCalc({ calcId, value, suggestedValue }) {
     const dispatch = useDispatch()
 
     const selTable = useSelector(selTableSelector)
 
+    const isAccepted = Number(suggestedValue) === Number(value)
+
     const insertCalcValue = () => {
-        if(!accepted) {
+        if(!isAccepted) {
             const dataObj = {
                 fieldId: calcId,
                 isCalc: true,
-                value,
-                suggestedAccepted: true
+                value: suggestedValue
             }
     
             dispatch(insertData(dataObj, selTable))
@@ -27,7 +27,7 @@ function AcceptCalc({ calcId, value, accepted }) {
         <div 
         aria-label="קבלת השקלול"
         onClick={insertCalcValue}
-        className={`accept-calc ${accepted ? 'accepted' : ''}`}>
+        className={`accept-calc ${isAccepted ? 'accepted' : ''}`}>
             <Done fontSize="large" />
         </div>
     )
