@@ -1,48 +1,35 @@
 import getBestAverage from "../executeCalc/getBestAverage";
 import getBonus from "./bonusMap";
 import getBaseAvg from "../executeCalc/getBaseAvg";
+import { hujiCog } from "./hujiCog";
+import { hujiFinalCalc } from "./hujiFinalCalc";
 
-const hujiCog = (bagrut, psycho) => {
-    // Standard bagrut grade
-    const B = 3.9630 * (bagrut/10) - 20.0621;
 
-    // Standard psychometry grade
-    const P = 0.032073 * psycho + 0.3672;
 
-    // Calculated cognitive grade for med school
-    const ratioCog = 0.3 * B + 0.7 * P;
-    const stdCog = 1.2235 * ratioCog - 4.4598;
-
-    return stdCog
-}
-
-export const hujiInitial = params => {
+export const hujiInitial = ({ params }) => {
     const {
         'bagrutHuji': bagrut,
         'psycho': psycho,
     } = params
 
-    const stdCog = hujiCog(bagrut, psycho)
-     
+    const stdCog = hujiCog(bagrut/10, psycho)
+
+    // Calculate reverse calcs
     return {
         value: stdCog.toFixed(3)
     }
 }
 
-export const hujiFinal = params => {
+export const hujiFinal = ({ params, year }) => {
     const {
         'bagrutHuji': bagrut,
         'psycho': psycho,
         'mor': mor
     } = params
     
-    const stdCog = hujiCog(bagrut, psycho)
+    const cog = hujiCog(bagrut/10, psycho)
 
-    // Standard mor grade
-    const M = 0.0247 * mor + 21.0837
-
-    // Final grade
-    const result = 0.75 * M + 0.25 * stdCog
+    const result = hujiFinalCalc(mor, cog, year)
 
     // Return result rounded to 3 decimals
     return {
@@ -50,7 +37,7 @@ export const hujiFinal = params => {
     }
 }
 
-export const hujiBargut = (params, values) => {
+export const hujiBargut = ({ params, values }) => {
     const { 
         baseAvg,
         notRequired,

@@ -9,19 +9,6 @@ const {
 
 const fields = [
     {
-        name: 'סכם סופי',
-        _id: 'tauFinal',
-        threshField: true,
-        dataType: dataTypes.num,
-        fieldType: fieldTypes.textbox,
-        fractionDigits: 2,
-        paths: ['six-year'],
-        uni: 'tau',
-        validators: [
-            validationTypes.isPosNum
-        ]
-    },
-    {
         name: 'סטטוס קבלה',
         _id: 'acceptStatusTauSix',
         dataType: dataTypes.str,

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 import * as staticMethods from './methods';
 import { ConstructStaticMethods } from '../../../db/plugins'
+import validateYear from './validation';
 
 
 // Create schema
@@ -13,6 +14,13 @@ const DataTableSchema = new Schema({
     url: {
         type: String
         // TODO: add url validation
+    },
+    year: {
+        type: Number,
+        validate: {
+            validator: validateYear,
+            message: props => `${props.value} is not a valid year.`
+        }
     },
     date_created: {
         type: Date,

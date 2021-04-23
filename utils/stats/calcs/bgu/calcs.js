@@ -3,7 +3,7 @@ import getBestAverage from "../executeCalc/getBestAverage";
 import getBaseAvg from '../executeCalc/getBaseAvg';
 import axios from 'axios'
 
-export const bguInitial = async(params) => {
+export const bguInitial = async({ params }) => {
     const {
         'bagrutBgu': bagrut,
         'psycho': psycho,
@@ -26,7 +26,7 @@ in response string */
     .catch(err => console.log(err))
 }
 
-export const bguBargut = (params, values) => {
+export const bguBargut = ({ params, values }) => {
     const {
         baseAvg,
         notRequired,

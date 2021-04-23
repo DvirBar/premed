@@ -61,6 +61,11 @@ const storedCalcs = [
         _id: "hujiFinal",
         name: "סכם סופי",
         func: hujiCalcs.hujiFinal,
+        versions: {
+            years: [2019, 2020],
+            tableGap: 0,
+            calcGap: -1
+        },
         threshField: true,
         fractionDigits: 3,
         args: [
@@ -104,9 +109,37 @@ const storedCalcs = [
         func: tauCalcs.tauInitial,
         threshField: true,
         fractionDigits: 2,
+        versions: {
+            years: [2020, 2021],
+            tableGap: 0,
+            calcGap: -1
+        },
         args: [
             bagrutTau,
             psycho
+        ],
+        uni: 'tau',
+        paths: ['six-year'],
+        isSuggestion: true,
+        validators: [
+            validationTypes.isPosNum
+        ]
+    },
+    {
+        _id: "tauFinal",
+        name: "סכם סופי",
+        func: tauCalcs.tauFinal,
+        threshField: true,
+        fractionDigits: 2,
+        versions: {
+            years: [2020],
+            tableGap: 0,
+            calcGap: -1
+        },
+        args: [
+            bagrutTau,
+            psycho,
+            mor
         ],
         uni: 'tau',
         paths: ['six-year'],

@@ -46,7 +46,7 @@ const getBestAverage = (
         counter ++
     }
 
-    const ommittedArgs = args.slice(counter).map(arg => arg.name)
+    const omittedArgs = args.slice(counter).map(arg => arg.name)
 
     /* If grade has reached maximum grade and 
         minimum units requirement has been satisfied */
@@ -57,8 +57,8 @@ const getBestAverage = (
         value: isMax ? maxGrade : cumulAvg.grade,
         payload: {
             units: cumulAvg.units,
-            ommittedArgs,
-            isMax: isMax
+            omittedArgs,
+            isMax
         }
     }
 }

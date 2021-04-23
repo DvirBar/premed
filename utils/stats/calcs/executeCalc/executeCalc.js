@@ -6,7 +6,7 @@ import getGroupVals from './getGroupVals';
 import getMultiVals from './getMultiVals';
 
 
-const executeCalc = async(storCalc, values, customGroups) => {
+const executeCalc = async(storCalc, values, customGroups, year) => {
     const params = {}
 
     for(let arg of storCalc.args) {
@@ -47,7 +47,12 @@ const executeCalc = async(storCalc, values, customGroups) => {
 
     // Execute calculation
     try {
-        return Promise.resolve(storCalc.func(params, values))
+        const calcData = {
+            params,
+            values,
+            year
+        }
+        return Promise.resolve(storCalc.func(calcData))
         .then(result => {
             return result
         })

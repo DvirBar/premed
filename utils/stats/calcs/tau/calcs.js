@@ -1,48 +1,52 @@
 import getBonus from './bonusMap';
 import getBestAverage  from "../executeCalc/getBestAverage";
 import getBaseAvg from '../executeCalc/getBaseAvg';
-import axios from 'axios';
-import qs from 'querystring';
+import { 
+    tauInitial as initial2020, 
+    tauFinal as final2020
+} from './versions/2020';
+import {
+    tauInitial as initial2021
+} from './versions/2021'
 
-export const tauInitial = async(params) => {
-    //M * 0.342694114 + 0.299848662 * initial +446.4705507
-    
+const calcMap = {
+    initial: {
+        2020: initial2020,
+        2021: initial2021
+    },
+    final: {
+        2020: final2020
+    }
+}
+
+export const tauInitial = async({ params, year }) => {
     const {
         'bagrutTau': bagrut,
         'psycho': psycho,
     } = params
 
-    const body = {
-        txtBagrut:bagrut,
-        txtPsicho:psycho,
-        facs: '01',
-        'Enter.x': 49,
-        'Enter.y': 4
+    const grade = await calcMap.initial[year]({ bagrut, psycho })
+
+    return {
+        value: (grade).toFixed(2)
     }
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }
-
-    return axios.post('https://www.ims.tau.ac.il/md/ut/Sikuim_T.aspx', 
-            qs.stringify(body), 
-            config)
-    .then(res => {
-        const regFindTags = new RegExp(`<\s*td[^>]*>((.|\n)[^(td)]*?)<\s*\/\s*td><\s*td[^>]*>(&nbsp;ציון התאמה<span style='color:red'> ללא מור<\/span> ביה"ס )[^<]`)
-        const tagContainers = res.data.match(regFindTags).toString()
-        const regFindGrade = /\d{3}[.\d]*/;
-        const grade = Number(tagContainers.match(regFindGrade))
-
-        return {
-            value: grade
-        }
-    })
-    .catch(err => console.log(err))
 }
 
-export const tauBargut = (params, values) => {
+export const tauFinal = async({ params, year }) => {
+    const {
+        'bagrutTau': bagrut,
+        'psycho': psycho,
+        'mor': mor
+    } = params
+    
+    const grade = calcMap.final[year]({ bagrut, psycho, mor })
+
+    return {
+        value: (grade).toFixed(2)
+    }
+}
+
+export const tauBargut = ({ params, values }) => {
     const {
         baseAvg,
         notRequired,

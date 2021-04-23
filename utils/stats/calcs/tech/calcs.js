@@ -4,7 +4,7 @@ import getBaseAvg from '../executeCalc/getBaseAvg';
 import groups from '../../groups/dataGroups';
 import getGroupConfig from '../../groups/getGroupConfig';
 
-export const techInitial = params => {
+export const techInitial = ({ params }) => {
     const {
         'bagrutTech': bagrut,
         'psycho': psycho,
@@ -17,7 +17,7 @@ export const techInitial = params => {
     }
 }
 
-export const techBagrut = (params, values) => {
+export const techBagrut = ({ params, values }) => {
     let hasSci = false
     let hasTech = false
 

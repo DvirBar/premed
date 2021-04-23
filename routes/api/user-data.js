@@ -197,39 +197,48 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
     let resultArray = []
     let stagedValues = values
 
+
     for(let calcLevel of calcsToExec) {
         for(let storCalcId of calcLevel) {
+
             const storCalc = storedCalcs.find(calc => 
                 calc._id === storCalcId)
-            
-            let calcObj = {}
 
-            try {
-                calcObj = await executeCalc(
-                    storCalc, 
-                    stagedValues,  
-                    customGroups)
-            }
-    
-            catch(err) {
-                return res.status(err.status || 500).send(err.msg)
-            }
+            const calcVersions = storCalc.versions
+            const year = (new Date()).getFullYear()
+            const yearToExec = year + calcVersions?.calcGap
+            if(!calcVersions 
+            || calcVersions.years.includes(yearToExec)) {
+                    let calcObj = {}
 
-            const resultObj = {
-                ...calcObj,
-                isCalc: true,
-                field: storCalcId
-            }
-
-            stagedValues = stagedValues.map(val => {
-                if(val.field === resultObj.field) {
-                    val.value = resultObj.value
+                try {
+                    calcObj = await executeCalc(
+                        storCalc, 
+                        stagedValues,  
+                        customGroups,
+                        yearToExec)
+                }
+        
+                catch(err) {
+                    return res.status(err.status || 500).send(err.msg)
                 }
 
-                return val
-            })
+                const resultObj = {
+                    ...calcObj,
+                    isCalc: true,
+                    field: storCalcId
+                }
 
-            resultArray.push(resultObj)
+                stagedValues = stagedValues.map(val => {
+                    if(val.field === resultObj.field) {
+                        val.value = resultObj.value
+                    }
+
+                    return val
+                })
+
+                resultArray.push(resultObj) 
+            }
         }
     }
 
@@ -259,7 +268,8 @@ router.put('/editpaths/:tableId', auth, (req, res, next) => {
 
                 // Find the enabled table             
                 const dataTable = data.tables.find(tableObj => 
-                    tableObj.table.equals(tableId))              
+                    tableObj.table.equals(tableId))     
+
                 dataTable.paths = pathIds
 
                 data.save()
@@ -538,16 +548,24 @@ router.put('/execCalc', auth, (req, res, next) => {
                 const storCalc = storedCalcs.find(calc => 
                     calc._id === storCalcId)
                 
-                let calcObj = {}
+                const calcVersions = storCalc.versions
+                const year = enabledTable.table.year
+                
+                const yearToExec = year + calcVersions?.tableGap
+                if(!calcVersions 
+                    || calcVersions.years.includes(yearToExec)) {
+                        let calcObj = {}
 
                 try {
                     calcObj = await executeCalc(
                         storCalc, 
                         values,  
-                        enabledTable.customGroups)
+                        enabledTable.customGroups,
+                        yearToExec)
                 }
         
                 catch(err) {
+                    console.log(err);
                     return res.status(err.status || 500).send(err.msg)
                 }
             
@@ -616,6 +634,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                     })
                     .catch(next);
                 }
+            }
         }
         return res.send(newCalcs)
     })

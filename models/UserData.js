@@ -52,7 +52,15 @@ const UserDataSchema = new Schema({
             },
             payload: {
                 type: Mixed
-            }
+            },
+            reverseCalcs: [{
+                name: {
+                    type: String
+                },
+                value: {
+                    type: Number
+                }
+            }]
         }],
         customGroups: [{
             name: {
