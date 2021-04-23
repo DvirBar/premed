@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import Loadbar from '../../../layout/Loadbar';
-import CalcsBlock from './CalcsBlock';
+import CalcsBlock from './CalcsBlock/CalcsBlock';
 import { copyToSimulate } from '../../../../redux/actions/userdata';
 import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';

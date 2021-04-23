@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import CalcBlock from './calc-block/CalcBlock.jsx'
 import MatchFormFragment from '../MatchFormFragment'
 import { GroupsContext } from './GroupsContext'
+import { hasCalcForYear } from '../../../../redux/selectors/userdata.js'
 
 function FormFragment({ field, isCalc, group }) {
     const {
@@ -13,6 +14,7 @@ function FormFragment({ field, isCalc, group }) {
     const dataVal = useSelector(
         getFieldVal(field._id, group?._id))
 
+    
     return (
         <div className="form-fragment">
             <MatchFormFragment

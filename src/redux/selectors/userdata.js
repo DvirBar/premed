@@ -113,3 +113,13 @@ export const getSort = (fieldId) => createSelector(
         return ''
     } 
 )
+
+export const getTableYear = createSelector(
+    userdataSelector,
+    userdata => userdata.data.tableData.table.year
+)
+
+export const hasCalcForYear = (calcVersions, gap) => createSelector(
+    getTableYear,
+    tableYear => !calcVersions || calcVersions.years.includes(tableYear + gap)
+) 

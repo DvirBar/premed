@@ -123,7 +123,7 @@ export default function(state = initialState, action) {
                 }
 
                 else {
-                    dataToUpdate.push(item)
+                    dataToInsert.push(item)
                 }
             }
 

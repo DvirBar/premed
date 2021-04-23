@@ -17,11 +17,11 @@
     &:hover {
         background-color: lighten($main-color, 10%);
     }
-    
+
     &.display {
         bottom: 8rem;
         transform: scale(0.6);
-    }   
+    }
 
     .material-icons {
         color: #fff;
@@ -75,12 +75,12 @@
         .calculator-calc-item {
             border-radius: 0.5rem;
             padding: 3px 1.5rem;
-            width: 10rem;
+            min-width: 10rem;
 
             .calc-name {
                 font-size: 1.2rem;
             }
-            .calc-value { 
+            .calc-value {
                 border-radius: 0.5rem;
                 font-size: 2.2rem;
             }
