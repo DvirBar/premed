@@ -21,7 +21,7 @@ function Editor({ value, onChange, name }) {
             }
         }}
         data={value}
-        onChange={ (event, editor) => {
+        onBlur={ (event, editor) => {
             handleChange(editor.getData())
         }} />
     )

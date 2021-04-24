@@ -5,7 +5,6 @@ import { StepsContext } from '../../../steps/StepsContext'
 import useSortSteps from '../StepsContent/AddSteps/useSortSteps'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import * as he from '@ckeditor/ckeditor5-build-classic/build/translations/he.js';
 import Modal from '../../../layout/Modal'
 import { useSelector } from 'react-redux'
 import { getStepById, stepsSelector } from '../../../../redux/selectors/steps'
@@ -32,7 +31,7 @@ function EditStep({ display, toggleDisplay }) {
             parentId: selStep.parent,
             prevId: selStep.prev,
             genContent: selStep.genContent || '',
-            uniContent: arrayToObject(selStep?.uniData || [], 'uni')
+            uniContent: arrayToObject(selStep.uniData || [], 'uni')
         })
     }, [selStep])
 
@@ -62,8 +61,6 @@ function EditStep({ display, toggleDisplay }) {
     const parentStep = useSelector(getStepById(values.parentId))
     const prevStep = useSelector(getStepById(values.prevId))
 
-
-    console.log(values);
     return (
         <Modal
         display={display}
@@ -111,11 +108,11 @@ function EditStep({ display, toggleDisplay }) {
                     changeContent(editor.getData())
                 }} />
 
-                {/* {values.uniContent &&
+                {values.uniContent &&
                     <EditUniContent
                     uniContent={values.uniContent}
                     handleChange={handleChange} />
-                } */}
+                }
                 
                 <button type="submit"> 
                     עריכה

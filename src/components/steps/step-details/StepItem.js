@@ -11,11 +11,12 @@ import { isObjEmpty } from '../../../utils/objects';
 
 function StepItem() {
     let { params } = useRouteMatch();
-    const { stepId } = params;
+    const { pathId, stepId } = params;
     const { getUniContent } = useStepsGlobal()
     
     const step = useSelector(getStepById(stepId))
     const uniContent = getUniContent(step)
+
     
     return (
         <div className="step-item">
@@ -25,7 +26,8 @@ function StepItem() {
                     <StepContent step={step} /> 
                     {!isObjEmpty(uniContent) &&
                         <UniContent 
-                        content={uniContent} />
+                        content={uniContent}
+                        pathId={pathId} />
                     }
                     <JumpToStep
                     step={step} />

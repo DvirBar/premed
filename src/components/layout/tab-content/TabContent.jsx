@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 import ItemContent from './ItemContent'
 import TabsList from './TabsList'
 
-function TabContent({ selItem, selectItem, items, editor }) { 
+function TabContent({ items }) { 
+
+    const [selItem, setSelItem] = useState(items[0])
+
+    const selectItem = item => {
+        setSelItem(item)
+    }
+
     return (
         <div className="tab-content">
             <TabsList 
@@ -10,8 +17,7 @@ function TabContent({ selItem, selectItem, items, editor }) {
             selectItem={selectItem}
             items={items} /> 
             <ItemContent
-            item={selItem}
-            editor={editor} />
+            item={selItem} />
         </div>
     )
 }

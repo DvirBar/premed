@@ -1,15 +1,16 @@
 import React from 'react'
 
-function ItemContent({ item, editor }) {
+function ItemContent({ item }) {
+
     const contentStyle = {
         borderColor: item?.color
     }
-
+    
     return (
         <div 
         style={contentStyle}
         className="tab-item-content">
-            {editor || item.content}
+            {item.content}
         </div>
     )
 }

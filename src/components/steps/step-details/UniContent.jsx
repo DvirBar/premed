@@ -1,40 +1,47 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-import { unisSelector } from '../../../redux/selectors/unis'
+import { getUnisByPath } from '../../../redux/selectors/unis'
+import Editor from '../../common/forms/Editor/Editor'
 import TabContent from '../../layout/tab-content/TabContent'
 
-function UniContent({ content }) {
-    const unis = useSelector(unisSelector)
-
+function UniContent({ content, editMode, onEdit, pathId }) {
+    console.log(content);
+    const unis = useSelector(getUnisByPath(pathId))
+    
     const findUni = uniId => {
         return unis.find(uni => uni._id === uniId)
     }
 
-    const contentArr = Object.keys(content)
-    .map(key => {
-        const uni = findUni(key)
 
+    const createUniItem = uni => {
         return {
-            id: key,
+            id: uni._id,
             tab: uni?.name,
-            content: <div 
-            dangerouslySetInnerHTML={{__html: content[key]}}>
+            content: editMode
+            ? <Editor
+                value={content[uni._id] || ''}
+                onChange={onEdit}
+                name={uni._id} />
+            : <div 
+            dangerouslySetInnerHTML={{__html: content[uni._id]}}>
             </div>,
             color: uni?.color
         }
-    })
-
-    const [selItem, setSelItem] = useState(contentArr[0])
-
-    const selectItem = item => {
-        setSelItem(item)
     }
+
+    const contentArr = editMode 
+    ? unis.map(uni => createUniItem(uni))
+    : Object.keys(content)
+    .map(key => {
+        const uni = findUni(key)
+        return createUniItem(uni)
+    })
 
     return (
         <TabContent
-        selectItem={selectItem}
-        selItem={selItem}
-        items={contentArr} />
+        items={contentArr}
+        onEdit={onEdit}
+        editMode={editMode} />
     )
 }
 

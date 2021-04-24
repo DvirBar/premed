@@ -13,9 +13,6 @@ import { useLocation, useRouteMatch } from 'react-router';
 function TreeNode({ step, length }) {
     const location = useLocation()
     const { url } = useRouteMatch()
-
-    console.log(location);
-    console.log(url);
  
     const nextSteps = useSelector(getNextSteps(step?._id))
     const children = useSelector(getStepChildren(step?._id))

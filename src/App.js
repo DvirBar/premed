@@ -4,18 +4,15 @@ import { BrowserRouter, Link } from "react-router-dom";
 import Router from "./components/routing/Router";
 import "./style/App.css";
 import { getUser } from "./redux/actions/auth";
-import { getTables } from "./redux/actions/datatables";
 import moment from "moment";
 import "moment/locale/he";
-import Footer from "./components/layout/Footer";
 import Loadbar from "./components/layout/Loadbar";
 import axios from "axios";
 import { getBaseData } from "./redux/actions/basedata";
-import EditableTextBox from "./components/common/inputs/EditableTextBox/EditableTextBox";
 import Navbar from "./components/layout/Navbar/Navbar";
 import Banner from "./components/layout/Banner/Banner";
 
-axios.defaults.baseURL = "http://10.0.0.20:5000";
+axios.defaults.baseURL = "http://10.0.0.5:5000";
 axios.defaults.headers["Content-Type"] = "application/json";
 
 function App() {
