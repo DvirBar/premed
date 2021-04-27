@@ -17,6 +17,7 @@ import libraries from '../libraries/reducers';
 import comments from '../comments/reducers';
 import ancs from '../announcements/ancs/reducers'
 import ancgroups from '../announcements/groups/reducers'
+import { useHistory } from 'react-router';
 
 const appReducer = combineReducers({
     auth,
@@ -40,10 +41,6 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-    if(action.type === 'LOGOUT_SUCCESS') {
-        state = undefined
-    }
-
     return appReducer(state, action)
 }
 

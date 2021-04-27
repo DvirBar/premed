@@ -11,25 +11,17 @@ import axios from "axios";
 import { getBaseData } from "./redux/actions/basedata";
 import Navbar from "./components/layout/Navbar/Navbar";
 import Banner from "./components/layout/Banner/Banner";
-
-axios.defaults.baseURL = "http://10.0.0.5:5000";
-axios.defaults.headers["Content-Type"] = "application/json";
+import useAxios from "./axios";
 
 function App() {
+    useAxios()
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        dispatch(getBaseData());
-
-        if (auth) {
-            axios.defaults.headers.common["x-auth-token"] = auth.token;
-        }
-    }, [auth]);
 
     // Check if there is a logged in user
     useEffect(() => {
         dispatch(getUser());
+        dispatch(getBaseData());
     }, []);
 
     moment.locale("he");

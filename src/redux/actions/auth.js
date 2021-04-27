@@ -47,17 +47,15 @@ const userError = () => {
 export const loginSuccess = res => {
     return {
         type: LOGIN_SUCCESS,
-        payload: {
-            token: res.token,
-            user: res.user
-        }
+        payload: res
     }
 }
 
-export const logout = () => {
-    return {
-        type: LOGOUT_SUCCESS
-    }
+export const logout = () => dispatch => {
+    axios.post('/api/auth/logout')
+        .then(() => dispatch({
+            type: LOGOUT_SUCCESS
+        }))
 }
 
 // Get user
@@ -68,7 +66,7 @@ export const getUser = () => dispatch => {
         .get('/api/auth/user')
         .then(res => dispatch(authSuccess(res.data)))
         .catch(err => {
-            dispatch(authError());
+            dispatch(userError());
         })
 }
 
@@ -82,7 +80,7 @@ export const login = data => dispatch => {
 
     // Send request
     axios
-        .post('/api/auth/login', body)
+        .post('/api/auth/login', body, { withCredentials: true })
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
             dispatch(authError());

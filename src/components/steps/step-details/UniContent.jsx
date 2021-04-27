@@ -5,13 +5,12 @@ import Editor from '../../common/forms/Editor/Editor'
 import TabContent from '../../layout/tab-content/TabContent'
 
 function UniContent({ content, editMode, onEdit, pathId }) {
-    console.log(content);
+
     const unis = useSelector(getUnisByPath(pathId))
     
     const findUni = uniId => {
         return unis.find(uni => uni._id === uniId)
     }
-
 
     const createUniItem = uni => {
         return {

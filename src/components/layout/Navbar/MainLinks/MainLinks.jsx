@@ -12,7 +12,7 @@ import Qna from '../../../common/icons/Qna/Qna'
 
 function MainLinks() {
     const paths = useSelector(getAllPaths)
-    
+    console.log(paths);
     const links = [
         {
             name: "בית",
