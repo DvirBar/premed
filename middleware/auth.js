@@ -1,10 +1,10 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
-import { atCookieSettings } from '../src/api/components/auth/controller';
 import UserService from '../src/api/components/auth/services';
+import { getAccessCookie } from '../src/api/components/auth/utils';
 
 const auth = async(req, res, next) => {
-    const accessToken = req.cookies[atCookieSettings.name]
+    const accessToken = getAccessCookie(req)
     try {
         if(!accessToken) {
             throw new Error("No access token provided")

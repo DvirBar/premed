@@ -3,22 +3,8 @@ import UserService from './services';
 
 import messages from './messages';
 import { sendHttpMessage } from '../../../services/messages';
+import { clearAccessCookie, clearRefreshCookie, createAccessCookie, createRefreshCookie, getRefreshCookie, refreshCookieName } from './utils';
 const { SuccessDelete, UsernameAvailable } = messages
-
-export const rtCookieSettings = {
-    name: "_rt",
-    options: {
-        httpOnly: true,
-        path: '/api/auth/refreshToken'
-    }
-}
-
-export const atCookieSettings = {
-    name: "_at",
-    options: {
-        httpOnly: true,
-    }
-}
 
 
 class UserController {
@@ -47,7 +33,7 @@ class UserController {
         }
     }
 
-    static getUserByToken(req, res, next) {
+    static getUserByToken(_req, res, next) {
         try {
             const user = UserService.getUserByToken(res.locals.user)
             return res.send(user)
@@ -66,8 +52,8 @@ class UserController {
                 user
             } = await UserService.create(req.body)
 
-            res.cookie(rtCookieSettings.name, refreshToken, rtCookieSettings.options)
-            res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
+            createAccessCookie(res, accessToken)
+            createRefreshCookie(res, refreshToken)
             return res.send(user)
         }
 
@@ -90,8 +76,8 @@ class UserController {
                 refreshToken,
                 user
             } = await UserService.login(email, password)
-            res.cookie(rtCookieSettings.name, refreshToken, rtCookieSettings.options)
-            res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
+            createAccessCookie(res, accessToken)
+            createRefreshCookie(res, refreshToken)
 
             return res.send(user)
         }
@@ -100,35 +86,35 @@ class UserController {
         }
     }
 
-    static async refreshToken(req, res, next) {
+    static async refreshToken(req, res) {
         try {
-            const refreshToken = req.cookies[rtCookieSettings.name]
+            const refreshToken = getRefreshCookie(req)
+
             if(refreshToken) {
                 const accessToken = await UserService.refreshToken(refreshToken)
-                res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
+                createAccessCookie(res, accessToken)
+                return res.send()
             }
 
-            return res.send()
+            throw new Error()
         }
         
         catch(err) {
             // Clear refresh token
-            res.clearCookie(rtCookieSettings.name, rtCookieSettings.options)
+            clearAccessCookie(res)
 
             // Clear access token
-            res.clearCookie(atCookieSettings.name, atCookieSettings.options)
-            next(err)
+            clearRefreshCookie(res)
+            return res.status(401).send()
         }
     }
 
     static async logout(_req, res, next) {
         try {
             // Clear refresh token
-            res.clearCookie(rtCookieSettings.name, rtCookieSettings.options)
-
+            clearAccessCookie(res)
             // Clear access token
-            res.clearCookie(atCookieSettings.name, atCookieSettings.options)
-        
+            clearRefreshCookie(res)
             return res.send({ msg: "Logged out successfully" })
         }
         catch(err) {
