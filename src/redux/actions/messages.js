@@ -22,21 +22,22 @@ export const getMessage = msg => {
 }
 
 
-export const getError = error => {
-    console.log(error);
+export const getError = error => dispatch => { 
     if(error?.response) {
-        return {
+        dispatch({
             type: GET_ERROR,
             payload: {
                 msg: error.response.data.he,
                 status: error.response.status
             }
-        }
+        })
     }
 
     else {
-        return {
+        dispatch({
             type: GET_ERROR
-        }
+        })
     }
+
+    setTimeout(() => dispatch(initMessage()), 7000)
 }

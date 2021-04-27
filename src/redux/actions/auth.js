@@ -73,14 +73,12 @@ export const getUser = () => dispatch => {
 
 // Login
 export const login = data => dispatch => {
-    dispatch(loginLoad());
-
     // Reuest body 
     const body = JSON.stringify(data);
 
     // Send request
     axios
-        .post('/api/auth/login', body, { withCredentials: true })
+        .post('/api/auth/login', body)
         .then(res => dispatch(loginSuccess(res.data)))
         .catch(err => {
             dispatch(authError());
@@ -91,8 +89,6 @@ export const login = data => dispatch => {
 
 // Register
 export const register = data => dispatch => {
-    dispatch(authLoad());
-
     // Request body
     const body = JSON.stringify(data)
 

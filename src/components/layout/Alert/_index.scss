@@ -1,0 +1,38 @@
+.alert {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 20px;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: $default-shadow;
+    width: 30rem;
+    transform: translate(-50%, 0);
+    left: 50%;
+    padding: 1rem 0;
+    font-size: 1.8rem;
+    min-height: 10rem;
+    max-height: 15rem;
+    color: #555;
+    border-right: 1.5rem solid $okay-color;
+    border-left: 1.5rem solid transparent;
+    z-index: 100;
+
+    transition: border-color 1s step-end;
+
+    &.error {
+        border-right-color: $error-color;
+    }
+
+    &__close {
+        align-self: flex-end;
+
+        .MuiSvgIcon-root {
+            font-size: 2rem;
+        }
+    }
+
+    &__text {
+        padding: 0 1rem;
+    }
+}

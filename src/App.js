@@ -12,6 +12,8 @@ import { getBaseData } from "./redux/actions/basedata";
 import Navbar from "./components/layout/Navbar/Navbar";
 import Banner from "./components/layout/Banner/Banner";
 import useAxios from "./axios";
+import Alert from "./components/layout/Alert/Alert";
+import MessageAlerts from "./components/layout/MessageAlerts/MessageAlerts";
 
 function App() {
     useAxios()
@@ -37,7 +39,7 @@ function App() {
                 <Navbar />
                 <Banner />
                 <Router />
-     
+                <MessageAlerts />
                 {/* <Footer /> */}
             </div>
         </BrowserRouter>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { authError } from '../../redux/actions/auth';
+import { getError } from '../../redux/actions/messages';
 
 const refreshTokenUrl = 'auth/refreshToken'
 const useInterceptors = () => {
@@ -18,12 +19,19 @@ const useInterceptors = () => {
                     return Promise.reject(error)
                 }
 
-            else if(error.response.status === 401 && !originalRequest._retry) {
+            else if(error.response.status === 401 
+                && !originalRequest._retry 
+                && (originalRequest.url !== '/api/auth/login'
+                && originalRequest.url !== '/api/auth/register')) {
                 originalRequest._retry = true;
-            
-                const res = await axios.post(`/api/${refreshTokenUrl}`)
-                if(res.status === 200)
+                try {
+                    await axios.post(`/api/${refreshTokenUrl}`)
                     return axios(originalRequest)
+                }
+                
+                catch(err) {
+                    // dispatch(getError(err))
+                }
             }
 
             return Promise.reject(error)

@@ -19,17 +19,6 @@ const Login = () => {
         errors} = useForm(login, defaultValues);
 
     const auth = useSelector(state => state.auth);
-
-    const selectedMsg = useSelector(state => state.messages);
-    const [message, setMessage] = useState({});
-
-    useEffect(() => {
-        setMessage({
-            msg: selectedMsg.msg, 
-            status: selectedMsg.status
-        });
-    }, [selectedMsg])
-
     
     if(auth.isAuthenticated)
         return <Redirect to="/" />;
@@ -41,9 +30,6 @@ const Login = () => {
                 className="login-form"
                 onSubmit={handleSubmit} noValidate>
                     {auth.loading && <p>Loading...</p>}
-
-                    {message.msg &&
-                    <p className="form-error">{message.msg}</p>}
 
                     <FormInput
                     type="email"
