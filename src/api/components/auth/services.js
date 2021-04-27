@@ -1,11 +1,15 @@
 import User from './db/model'
 import { 
     compareBcrypt, 
+    createAccessToken, 
+    createRefreshToken, 
     hashString, 
-    signJwt, 
-    userWithoutPassword } from './utils';
+    userWithoutPassword, 
+    verifyRefreshToken} from './utils';
 
-import messages from './messages'
+import messages from './messages';
+import jwt from 'jsonwebtoken';
+import config from 'config'
 
 const { InvalidCredentials, NotAuthorizedSelf } = messages
 
@@ -14,26 +18,37 @@ class UserService {
         return User.getAllUsers()
     }
 
+    static getUserById(id) {
+        return User.getByIdOrFail(id)
+    }
+
+    static isUsernameAvailable(username) {
+        return User.getUserByUsername(username)
+    }
+
     static getUserByToken(user) {
         return userWithoutPassword(user)
     }
 
     // Register user and return login info with token and user
     static async create(data) {
-            // Hash password string and create user
-            data.password = await hashString(data.password)
+        // Hash password string and create user
+        data.password = await hashString(data.password)
 
-            const user = await User.createUser(data)
+        const user = await User.createUser(data)
 
-            // Sign token and return it with created user
-            const token = signJwt({ id: user._id })
+        const payload = { id: user._id }
+        // Sign token and return it with created user
+        const accessToken = createAccessToken(payload)
+        const refreshToken = createRefreshToken(payload)
 
-            const userObj = userWithoutPassword(user) 
+        const userObj = userWithoutPassword(user) 
 
-            return {
-                token,
-                user: userObj
-            }
+        return {
+            accessToken,
+            refreshToken,
+            user: userObj
+        }
     }
 
     static async login(email, loginPassword) {
@@ -48,17 +63,28 @@ class UserService {
                 throw InvalidCredentials
             }
 
-            const token = signJwt({ id: user._id })
+            const tokenPayload = { id: user._id }
+            const accessToken = createAccessToken(tokenPayload)
+            const refreshToken = createRefreshToken(tokenPayload)
             const userObj = userWithoutPassword(user) 
-
+            
             return {
-                token,
+                accessToken,
+                refreshToken,
                 user: userObj
             }
         }
         catch(err) {
             throw err
         }
+    }
+
+    static async refreshToken(refreshToken) {
+        const decoded = verifyRefreshToken(refreshToken)
+
+        const user = await User.getByIdOrFail(decoded.id)
+    
+        return createAccessToken({ id: user._id})
     }
 
     static async editUser(user, userId) {

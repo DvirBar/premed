@@ -9,6 +9,10 @@ export function getUserByEmail(email) {
     return this.findOne({ email })
 }
 
+export function getUserByUsername(username) {
+    return this.findOne({ username })
+}
+
 export function createUser(user) {
     const {
         isStudent,

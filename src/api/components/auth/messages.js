@@ -6,10 +6,32 @@ const messages = {
         },
         status: 200
     },
+    UsernameAvailable: {
+        msg: {
+            en: 'Username is available',
+            he: 'שם המשתמש פנוי'
+        },
+        type: "local",
+        status: 200
+    },
+    UsernameAvailable: {
+        msg: {
+            en: 'Username is unavailable',
+            he: 'שם המשתמש תפוס'
+        },
+        type: "local",
+        status: 409
+    },
     InvalidCredentials: {
         msg: {
             en: 'Email or password are incorrect',
             he: 'שם משתמש או סיסמה שגויים'
+        },
+        status: 401
+    },
+    RefreshTokenInvalid: {
+        msg: {
+            en: "Refresh token is invalid"
         },
         status: 401
     },

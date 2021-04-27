@@ -3,13 +3,43 @@ import UserService from './services';
 
 import messages from './messages';
 import { sendHttpMessage } from '../../../services/messages';
-const { SuccessDelete } = messages
+const { SuccessDelete, UsernameAvailable } = messages
+
+export const rtCookieSettings = {
+    name: "_rt",
+    options: {
+        httpOnly: true,
+        path: '/api/auth/refreshToken'
+    }
+}
+
+export const atCookieSettings = {
+    name: "_at",
+    options: {
+        httpOnly: true,
+    }
+}
+
 
 class UserController {
-    static async getAllUsers(req, res, next) {
+    static async getAllUsers(_req, res, next) {
         try {
             const users = await UserService.getAllUsers()
             return res.send(users)
+        }
+
+        catch(err) {
+            next(err)
+        }
+    }
+
+    static async isUsernameAvailble(req, res, next) {
+        try {
+            const user = await UserService.isUsernameAvailable(req.body)
+
+            if(user) {
+                return sendHttpMessage(res, UsernameAvailable)
+            }
         }
 
         catch(err) {
@@ -30,9 +60,15 @@ class UserController {
 
     static async create(req, res, next) {
         try {
-            const loginInfo = await UserService.create(req.body)
+            const { 
+                accessToken, 
+                refreshToken,  
+                user
+            } = await UserService.create(req.body)
 
-            return res.send(loginInfo)
+            res.cookie(rtCookieSettings.name, refreshToken, rtCookieSettings.options)
+            res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
+            return res.send(user)
         }
 
         catch(err) {
@@ -49,9 +85,51 @@ class UserController {
         try {
             checkRequiredVars(req.body)
 
-            const loginInfo = await UserService.login(email, password)
+            const {
+                accessToken,
+                refreshToken,
+                user
+            } = await UserService.login(email, password)
+            res.cookie(rtCookieSettings.name, refreshToken, rtCookieSettings.options)
+            res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
 
-            return res.send(loginInfo)
+            return res.send(user)
+        }
+        catch(err) {
+            next(err)
+        }
+    }
+
+    static async refreshToken(req, res, next) {
+        try {
+            const refreshToken = req.cookies[rtCookieSettings.name]
+            if(refreshToken) {
+                const accessToken = await UserService.refreshToken(refreshToken)
+                res.cookie(atCookieSettings.name, accessToken, atCookieSettings.options)
+            }
+
+            return res.send()
+        }
+        
+        catch(err) {
+            // Clear refresh token
+            res.clearCookie(rtCookieSettings.name, rtCookieSettings.options)
+
+            // Clear access token
+            res.clearCookie(atCookieSettings.name, atCookieSettings.options)
+            next(err)
+        }
+    }
+
+    static async logout(_req, res, next) {
+        try {
+            // Clear refresh token
+            res.clearCookie(rtCookieSettings.name, rtCookieSettings.options)
+
+            // Clear access token
+            res.clearCookie(atCookieSettings.name, atCookieSettings.options)
+        
+            return res.send({ msg: "Logged out successfully" })
         }
         catch(err) {
             next(err)

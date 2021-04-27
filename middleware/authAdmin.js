@@ -1,7 +1,7 @@
 const authAdmin = (req, res, next) => {
     try {
         if(!res.locals.user.isAdmin)
-            return res.status(403).send({ msg: 'You are unauthorized!' })
+            return res.status(403).send({ msg: 'Unauthorized!' })
         
         next();
     }

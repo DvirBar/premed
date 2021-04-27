@@ -5,3 +5,4 @@ utils/googleSheetsApi.js
 # models/DataTable.js
 # messages/data-tables.js
 messages/ggl-api.js
+build

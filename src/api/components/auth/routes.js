@@ -2,13 +2,17 @@ import express from 'express';
 const router = express.Router();
 import auth from '../../../../middleware/auth'
 import authAdmin from '../../../../middleware/authAdmin'
-
 import UserController from './controller'
 
 // @route   GET api/auth/users
 // @desc    Get all users
 // @access  Admin
 router.get('/users', [auth, authAdmin], UserController.getAllUsers)
+
+// @route   GET api/auth/users
+// @desc    Get all users
+// @access  Admin
+router.get('/isUsernameAvailable', UserController.getAllUsers)
 
 // @route   GET api/auth/user
 // @desc    Get user by id from token
@@ -24,6 +28,16 @@ router.post('/register', UserController.create)
 // @desc    Login
 // @access  Public
 router.post('/login', UserController.login)
+
+// @route   POST api/auth/refreshToken
+// @desc    Use refresh token to get a new access token
+// @access  Private
+router.post('/refreshToken', UserController.refreshToken)
+
+// @route   POST api/auth/logout
+// @desc    Log user out
+// @access  Private
+router.post('/logout', UserController.logout)
 
 // @route   PUT api/auth/user/:id
 // @desc    Update user details

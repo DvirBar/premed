@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { ConstructStaticMethods } from '../../../db/plugins';
 const Schema = mongoose.Schema;
 import * as staticMethods from './methods'
 
@@ -56,9 +57,8 @@ export const UserSchema = new Schema({
 })
 
 // Define static methods
-UserSchema.statics = {
-    ...UserSchema.statics,
-    ...staticMethods
-}
+UserSchema.plugin(
+    ConstructStaticMethods, 
+    { customStaticMethods: staticMethods })
 
 export default mongoose.model('User', UserSchema)

@@ -176,12 +176,10 @@ router.put('/:id', [auth, authAdmin], async(req, res, next) => {
     const uniData = step.uniData 
     for(let uniItem of uniData) {
         const content = uniContent[uniItem.uni]
-        if(content) {
-            uniItem.set({
-                ...uniItem,
-                content
-            }) 
-        }
+        uniItem.set({
+            ...uniItem,
+            content
+        }) 
     }
 
     try {

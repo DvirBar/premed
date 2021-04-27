@@ -1,10 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import config from 'config';
-import cors from 'cors';
 import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
 import path from 'path';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // Init app
 const app = express();
@@ -12,22 +13,14 @@ const app = express();
 // Middlewares
 // Entry middlewares
 app.use(express.json());
-app.use(cors());
 app.use(morgan('tiny'))
+// app.use(cors({
+//     origin: "http://localhost:3000",
+//     credentials: true
+// }))
+app.use(cookieParser())
 
 // App routes
-
-// import paths from '../routes/api/paths';
-
-// import sections from '../routes/api/sections';
-// import pages from '../routes/api/pages';
-// import topics from '../routes/api/topics';
-// // import datagroups from '../routes/api/data-groups';
-// // import datafields from '../routes/api/data-fields';
-// import universities from '../routes/api/universities';
-// // import calculations from '../routes/api/calculations';
-// import userdata from '../routes/api/user-data';
-
 
 import auth from './api/components/auth/routes';
 import dataTables from './api/components/dataTables/routes';
@@ -41,7 +34,6 @@ import steps from '../routes/api/steps';
 import announcements from './api/components/announcements/announcements/routes'
 import ancGroups from './api/components/announcements/groups/routes'
 import viewIndex from './views/index'
-
 
 
 app.use('/api/auth', auth);
