@@ -8,10 +8,12 @@ import {
     verifyRefreshToken} from './utils';
 
 import messages from './messages';
-import jwt from 'jsonwebtoken';
-import config from 'config'
 
-const { InvalidCredentials, NotAuthorizedSelf } = messages
+const { 
+    InvalidCredentials, 
+    NotAuthorizedSelf, 
+    UserIsBlocked,
+    UserAlreadyExists } = messages
 
 class UserService {
     static getAllUsers() {
@@ -30,10 +32,19 @@ class UserService {
         return userWithoutPassword(user)
     }
 
+    static isUserBlocked(user) {
+        return User.isUserBlocked(user)
+    }
+
     // Register user and return login info with token and user
     static async create(data) {
         // Hash password string and create user
         data.password = await hashString(data.password)
+        const possibleUser = User.getUserByEmail(data.email)
+
+        if(possibleUser) {
+            throw UserAlreadyExists
+        }
 
         const user = await User.createUser(data)
 
@@ -54,15 +65,30 @@ class UserService {
     static async login(email, loginPassword) {
         try {
             const user = await User.getUserByEmail(email)
+
+        // Validating creadentials and checking that user is not blocked
             if(!user) {
                 throw InvalidCredentials
             }
 
-            const isMatch = await compareBcrypt(loginPassword, user.password)
-            if(!isMatch) {
-                throw InvalidCredentials
+            if(User.isUserBlocked(user)) {
+                throw UserIsBlocked
             }
 
+            const isMatch = await compareBcrypt(loginPassword, user.password)
+            if(!isMatch) {
+                const failedAttempts = await User.addFailedAttempt(user)
+
+                if(failedAttempts >= 5) {
+                    User.blockUser(user)
+                    throw UserIsBlocked
+                }
+
+                throw InvalidCredentials
+            }
+            
+        // Verification completed, log user in
+            User.resetFailedAttempts(user)
             const tokenPayload = { id: user._id }
             const accessToken = createAccessToken(tokenPayload)
             const refreshToken = createRefreshToken(tokenPayload)
@@ -73,6 +99,7 @@ class UserService {
                 refreshToken,
                 user: userObj
             }
+            
         }
         catch(err) {
             throw err

@@ -1,8 +1,9 @@
+import { dateInPast } from '../../../../utils/dates'
 import messages from '../messages'
 const { UserDoesNotExist } = messages
 
 export function getAllUsers() {
-    return this.find()
+    return this.find().select("-password")
 }
 
 export function getUserByEmail(email) {
@@ -11,6 +12,48 @@ export function getUserByEmail(email) {
 
 export function getUserByUsername(username) {
     return this.findOne({ username })
+}
+
+export async function addFailedAttempt(user) {
+    user.failedAttempts = user.failedAttempts + 1
+    await user.save() 
+
+    return user.failedAttempts
+}
+
+export function resetFailedAttempts(user) {
+    user.failedAttempts = 0
+    return user.save() 
+}
+
+export function blockUser(user, expiry) {
+    user.blocked.isBloked = true
+    user.blocked.expiry = expiry 
+
+    return user.save()
+}
+
+export function isUserBlocked(user) {
+    if(user?.blocked?.isBlocked) {
+        const expiry = user.blocked.expiry
+    
+        // If no expiry and user is blocked
+        if(!expiry) {
+            return true
+        }
+
+        // If expiry date had not passed
+        if(!dateInPast(expiry)) {
+            return true
+        }
+        
+        // If expiry date had passed, remove block
+        user.blocked = undefined
+        user.save()
+        return false
+    }
+    
+    return false
 }
 
 export function createUser(user) {

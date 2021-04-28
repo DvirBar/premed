@@ -11,12 +11,17 @@ const auth = async(req, res, next) => {
         }
         const decoded = jwt.verify(accessToken, config.get('jwtSecret'))
         const user = await UserService.getUserById(decoded.id)
+
+        // Check that user isn't blocked
+        if(UserService.isUserBlocked(user)) {
+            throw 'Blocked user attempted to get protected resource'
+        }
+
         res.locals.user = user
-        next()
-            
+        next()     
     }
     catch(err) {
-        return res.status(401).send({ msg: "Unauthorized" })
+        return res.status(401).send("Unauthorized")
     }
 }
 

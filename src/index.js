@@ -4,7 +4,6 @@ import config from 'config';
 import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
 import path from 'path';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // Init app
@@ -14,10 +13,6 @@ const app = express();
 // Entry middlewares
 app.use(express.json());
 app.use(morgan('tiny'))
-// app.use(cors({
-//     origin: "http://localhost:3000",
-//     credentials: true
-// }))
 app.use(cookieParser())
 
 // App routes

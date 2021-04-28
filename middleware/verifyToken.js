@@ -14,14 +14,13 @@ const verifyToken = (req, res, next) => {
                     next()
                 }
                 else {
-                    throw 'No user found on token verification'
+                    next(new Error('No user found on token verification'))
                 }
             })
-        
     }
     
     catch(err) {
-        next(err)
+        return res.status(400).send("Token is invalid or has been expired.")
     }
     
 }

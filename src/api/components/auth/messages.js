@@ -22,6 +22,28 @@ const messages = {
         type: "local",
         status: 409
     },
+    UsernameAvailable: {
+        msg: {
+            en: 'Username is unavailable',
+            he: 'שם המשתמש תפוס'
+        },
+        type: "local",
+        status: 409
+    },
+    UserAlreadyExists: {
+        msg: {
+            en: 'A user with this email already exists',
+            he: 'קיים כבר משתמש עם כתובת מייל זו'
+        },
+        status: 409
+    },
+    UserIsBlocked: {
+        msg: {
+            en: 'User is blocked',
+            he: 'המשתמש חסום'
+        },
+        status: 401
+    },
     InvalidCredentials: {
         msg: {
             en: 'Email or password are incorrect',

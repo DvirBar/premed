@@ -4,34 +4,23 @@ import { google } from 'googleapis'
 const OAuth2 = google.auth.OAuth2
 
 async function createTransporter() {
+    const oauth2Client = new OAuth2(
+        config.get('google-client_id'),
+        config.get('google-client_secret'),
+        "https://developers.google.com/oauthplayground"   
+    );
+
+    oauth2Client.setCredentials({
+        refresh_token: config.get('google-refresh_token')
+    })
+
     try {   
-        const oauth2Client = new OAuth2(
-            config.get('google-client_id'),
-            config.get('google-client_secret'),
-            "https://developers.google.com/oauthplayground"   
-        );
-
-        oauth2Client.setCredentials({
-            refresh_token: config.get('google-refresh_token')
-        })
-        console.log("before refresh");
-
-        const accessToken = await new Promise((resolve, reject) => {
-            oauth2Client.getAccessToken((err, token) => {
-                if(err) {
-                    console.log(err);
-                    reject(err)
-                }
-    
-                resolve(token)
-            })
-        })
-
-    
+        const accessToken = await oauth2Client.getAccessToken()
+        
         const defaultOptions = { 
             from: config.get('google-email')
         }
-       
+        
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -46,8 +35,7 @@ async function createTransporter() {
                 rejectUnauthorized: false
             }   
         }, defaultOptions)
-        console.log("2");
-    
+
         return transporter;
     }
     

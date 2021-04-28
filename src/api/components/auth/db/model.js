@@ -31,10 +31,22 @@ export const UserSchema = new Schema({
         unique: true
         // Email validation
     },
+    failedAttempts: {
+        type: Number,
+        default: 0
+    },
     password: {
         type: String, 
         required: [true, 'Password is required']
         // Password validation
+    },
+    blocked: {
+        isBlocked: {
+            type: Boolean
+        },
+        expiry: {
+            type: Date
+        }
     },
     prefs: [{
         name: {
