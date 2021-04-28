@@ -121,7 +121,7 @@ export const groupCommitSubscriptions = groups => dispatch => {
         groupId: group._id,
         sub: group.subscriptions
     }))
-    console.log(subs);   
+
     const body = JSON.stringify({
         subs
     })
@@ -133,7 +133,7 @@ export const groupCommitSubscriptions = groups => dispatch => {
                 type: GROUP_COMMIT_SUBSCRIPTION,
                 payload: res.data.subs
             });
-            console.log(res.data);
+ 
             dispatch(getMessage(res.data.message));
         })
         .catch(err => dispatch(getError(err)))

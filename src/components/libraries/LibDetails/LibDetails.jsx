@@ -28,7 +28,9 @@ function LibDetails({ lib }) {
                 }
 
                 <div className="lib-details__options">
-                    <LibInfo lib={lib} />
+                    {lib.info &&
+                        <LibInfo lib={lib} />
+                    }
 
                     {isAdmin &&
                         <DeleteLibrary

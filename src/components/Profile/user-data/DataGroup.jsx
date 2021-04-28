@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { useSelector } from 'react-redux';
 import { getInputsByUniAndPath } from '../../../redux/selectors/statsinputs';
 import DataBlock from './DataBlock';
+import SectionProvider from './SectionContext';
 
 function DataGroup({ uni, pathId }) {
     const {
@@ -17,7 +18,7 @@ function DataGroup({ uni, pathId }) {
     }
         
     return (
-        <Fragment>
+        <SectionProvider uni={uni}>
             <DataBlock
             color={uni?.color}
             title={uni?.name || 'כללי'}
@@ -38,7 +39,7 @@ function DataGroup({ uni, pathId }) {
                     getChildren={getChildren} />
                 )
             }
-        </Fragment>
+        </SectionProvider>
     )
 }
 

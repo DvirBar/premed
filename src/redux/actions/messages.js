@@ -1,3 +1,4 @@
+import messages from '../reducers/messages';
 import { 
     INIT_MESSAGE,
     GET_MESSAGE,
@@ -11,13 +12,21 @@ export const initMessage = () => {
     }
 }
 
-export const getMessage = msg => {
-    return {
-        type: GET_MESSAGE,
-        payload: {
-            msg: msg,
-            status: msg.status
-        }
+export const getMessage = msgObj => dispatch => {
+    if(msgObj.msg.he) {
+        dispatch({
+            type: GET_MESSAGE,
+            payload: {
+                msg: msgObj.msg.he,
+                status: msgObj.status
+            }
+        })
+
+        setTimeout(() => dispatch(initMessage()), 7000)
+    }
+    
+    else {
+        dispatch(initMessage())
     }
 }
 
@@ -27,7 +36,7 @@ export const getError = error => dispatch => {
         dispatch({
             type: GET_ERROR,
             payload: {
-                msg: error.response.data.he,
+                msg: error.response.data.he || "התרחשה תקלה לא צפויה. ניתן לרענן את הדף או לנסות מאוחר יותר.",
                 status: error.response.status
             }
         })

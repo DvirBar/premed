@@ -1,0 +1,17 @@
+.lib-item-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    &__date-created {
+        color: #999;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
+    &__credit {
+        color: $main-color;
+        font-weight: 500;
+        font-size: 1.8rem;
+    }
+}

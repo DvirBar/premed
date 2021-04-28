@@ -14,11 +14,14 @@ function SuggestedCalc({ value, suggestedValue, calc, payload }) {
                 <div className="suggested-calc__info__suggested-value">
                     {suggestedValue}
                 </div>
-                <div 
-                onClick={() => setDisplay(true)}
-                className="suggested-calc__info__display-info">
-                    פירוט
-                </div>
+                {payload &&
+                    <div 
+                    onClick={() => setDisplay(true)}
+                    className="suggested-calc__info__display-info">
+                        פירוט
+                    </div>
+                }
+                
             </div>
             <AcceptCalc 
             calcId={calc?._id} 

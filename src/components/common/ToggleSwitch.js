@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function ToggleSwitch({ options, onChange, value, className }) {
-    const [isChanging, setIsChanging] = useState(false);
+    const [selectedOption, setSelectedOption] = useState(value)
 
     const handleChange = () => {
         let changeTo
@@ -14,9 +14,9 @@ function ToggleSwitch({ options, onChange, value, className }) {
         else {
             changeTo = options[0].value
         }
-
+        
+        setSelectedOption(changeTo)
         onChange(changeTo)
-        setIsChanging(false)
     }
 
     return (
@@ -30,7 +30,7 @@ function ToggleSwitch({ options, onChange, value, className }) {
             :   "toggle-button no-value"} 
             onClick={() => handleChange()}>
                 <span className={value
-                ? value === options[1].value
+                ? selectedOption === options[1].value
                     ? "switch on"
                     : "switch"
                 : "switch no-value" 

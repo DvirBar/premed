@@ -44,7 +44,8 @@ function CardItem({ item, libId }) {
                     onClick={openDetails}
                     className="display-details">
                         <Info style={{fontSize: 22 }}/>
-                    </p>
+                    </p>                        
+                    
                     <p className="item-name">
                         {item.name}
                     </p>

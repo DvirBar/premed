@@ -30,9 +30,6 @@ function CalcBlock({ calc, value, suggestedValue, payload }) {
                     payload={payload} />
             : <NoCalcYear />
             }
-           {
-           }
-            
         </div>
     )
 }
