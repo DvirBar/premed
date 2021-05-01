@@ -29,25 +29,31 @@ function BlockContent({
     
     return (
         <div className="data-block-content">
-            <div className="data-block-fragment calcs">
-                {calcs?.map(calc =>
-                    <FormFragment
-                    key={calc._id}
-                    field={calc}
-                    isCalc={true} />
-                )}
-            </div>
+            {calcs?.length > 0 &&
+                <div className="data-block-fragment calcs">
+                    {calcs.map(calc =>
+                        <FormFragment
+                        key={calc._id}
+                        field={calc}
+                        isCalc={true} />
+                    )}
+                </div>
+            }
             
-            <div className="data-block-fragment">
-                {fields?.map(field => 
-                    (!field.isType || !isSimulated) &&
-                    <FormFragment
-                    key={field._id}
-                    field={field}
-                    group={group}
-                    isCalc={false} />
-                )}
-            </div>
+            
+            {(!group || !isSimulated) &&
+                <div className="data-block-fragment">
+                    {fields?.map(field => 
+                        (!field.isType || !isSimulated) &&
+                        <FormFragment
+                        key={field._id}
+                        field={field}
+                        group={group}
+                        isCalc={false} />
+                    )}
+                </div>
+            }
+            
             
             {groups && groups.length > 0 && 
             <div className={`groups-block

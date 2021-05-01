@@ -7,7 +7,6 @@ import {
     VALID_ERROR,
     USER_DATA_ADD,
     CHANGE_TABLE,
-    GET_TABLE_SETCIONS,
     COPY_DATA_SIMULATION,
     SIMULATE_CALCS,
     INSERT_DATA_SIMULATION,
@@ -17,7 +16,6 @@ import {
     REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
-    USER_DATA_INSERT,
     USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
@@ -25,7 +23,10 @@ import {
     USER_DATA_DELETE,
     FILTER_DATA,
     REMOVE_FILTER_DATA,
-    SORT_DATA
+    SORT_DATA,
+    USER_DATA_INSERT_SUCCESS,
+    SIMULATE_CALCS_SUCCESS,
+    EXEC_CALC_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -109,7 +110,7 @@ export default function(state = initialState, action) {
                 }
             }
 
-        case SIMULATE_CALCS: {
+        case SIMULATE_CALCS_SUCCESS: {
             let dataToUpdate = []
             let dataToInsert = []
 
@@ -276,7 +277,7 @@ export default function(state = initialState, action) {
                 }
             }
 
-        case USER_DATA_INSERT: {
+        case USER_DATA_INSERT_SUCCESS: {
             const dataVals = state.data.tableData.dataVals
             return {
                 ...state,
@@ -344,7 +345,7 @@ export default function(state = initialState, action) {
             }
         }
 
-        case EXEC_CALC:
+        case EXEC_CALC_SUCCESS:
             let dataToInsert = []
             let dataToUpdate = []
             const dataVals = state.data.tableData.dataVals

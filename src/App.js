@@ -6,19 +6,20 @@ import "./style/App.css";
 import { getUser } from "./redux/actions/auth";
 import moment from "moment";
 import "moment/locale/he";
-import Loadbar from "./components/layout/Loadbar";
-import axios from "axios";
 import { getBaseData } from "./redux/actions/basedata";
 import Navbar from "./components/layout/Navbar/Navbar";
 import Banner from "./components/layout/Banner/Banner";
 import useAxios from "./axios";
-import Alert from "./components/layout/Alert/Alert";
 import MessageAlerts from "./components/layout/MessageAlerts/MessageAlerts";
+import { isLoading } from "./redux/loader/selectors";
+import { GET_USER } from "./redux/auth/types";
+import Loadbar from "./components/layout/Loadbar";
+import { authSelector, selectUser } from "./redux/selectors/auth";
+import { BASE_DATA } from "./redux/actions/types";
 
 function App() {
     useAxios()
     const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth);
 
     // Check if there is a logged in user
     useEffect(() => {
@@ -28,10 +29,11 @@ function App() {
 
     moment.locale("he");
 
-    const selPaths = useSelector((state) => state.paths);
-    const loadPaths = selPaths.loading;
+    const isBaseLoading = useSelector(isLoading(BASE_DATA))
+    const isUserLoading = useSelector(isLoading(GET_USER))
+    const auth = useSelector(authSelector)
 
-    if (!auth || auth.loading || loadPaths) return <Loadbar loadfull={true} />;
+    if(!auth || isBaseLoading || isUserLoading) return <Loadbar loadfull={true} />
 
     return (
         <BrowserRouter>

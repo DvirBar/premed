@@ -46,11 +46,7 @@ function BannerMap({ rootUrl }) {
         '/profile': {
             name: 'פרופיל',
             img: <Personal />
-        },
-        '/admin': {
-            name: 'ניהול',
-            img: ''
-        }
+        }    
     }
 
     return map[rootUrl]

@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import CalcItem from './CalcItem';
 import { useSelector } from 'react-redux';
 import { getUnisByCalcs } from '../../../../../redux/selectors/unis';
+import { isLoading } from '../../../../../redux/loader/selectors';
+import { SIMULATE_CALCS } from '../../../../../redux/actions/types';
+import Loadbar from '../../../../layout/Loadbar';
 
 export default function CalcsBlock({ calcs, changeStartSimulate }) {
     const [display, setDisplay] = useState(true)
 
     const unis = useSelector(getUnisByCalcs(calcs))
+
+    const loading = useSelector(isLoading(SIMULATE_CALCS))
 
     return (
         <Fragment>
@@ -24,7 +29,7 @@ export default function CalcsBlock({ calcs, changeStartSimulate }) {
         </div>
         <div className={`calculator-calcs-block
         ${display ? 'display' : ''}`}> 
-            <div className="calcs-list">
+            <div className="calcs-list scrollbar-main">
                 {unis.map(uni => 
                     <div 
                     key={uni._id}
@@ -47,9 +52,12 @@ export default function CalcsBlock({ calcs, changeStartSimulate }) {
             <div
             className="exec-sim-calcs"
             onClick={() => changeStartSimulate(true)}>
-                <i className="material-icons">
-                    navigate_before
-                </i>
+                {loading 
+                ?   <Loadbar invert={true} small={true} />
+                :   <i className="material-icons">
+                        navigate_before
+                    </i>
+                }
             </div>
         </div>
     </Fragment>

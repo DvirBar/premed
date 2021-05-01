@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 import { login } from '../../../redux/actions/auth';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
+import { authSelector } from '../../../redux/selectors/auth';
+import { isLoading } from '../../../redux/loader/selectors';
+import { LOGIN } from '../../../redux/auth/types';
+import Loadbar from '../../layout/Loadbar';
 
 const Login = () => {
     const [defaultValues, setDefaultValues] = useState({
@@ -18,7 +22,9 @@ const Login = () => {
         values,
         errors} = useForm(login, defaultValues);
 
-    const auth = useSelector(state => state.auth);
+    const auth = useSelector(authSelector);
+
+    const loading = useSelector(isLoading(LOGIN))
     
     if(auth.isAuthenticated)
         return <Redirect to="/" />;
@@ -47,7 +53,13 @@ const Login = () => {
                     onChange={handleChange}
                     error={errors.password} />
 
-                    <button type="submit">התחברות</button><br />
+                    <div className="login-block">
+                        <button type="submit">התחברות</button>
+                        {loading &&
+                            <Loadbar small={true} />
+                        }
+                    </div>
+                    
 
                     <p>
                         עדיין אין משתמש?&nbsp; 

@@ -7,6 +7,9 @@ import {
     GROUP_UPDATE,
     GROUP_CHANGE_SUB,
     GROUP_COMMIT_SUBSCRIPTION,
+    GROUP_COMMIT_SUBSCRIPTION_LOADING,
+    GROUP_COMMIT_SUBSCRIPTION_SUCCESS,
+    GROUP_COMMIT_SUBSCRIPTION_FAILURE,
     GROUP_DELETE,
 } from './types';
 import axios from 'axios';
@@ -117,6 +120,10 @@ export const groupChangeSub = (groupId, sub)=> dispatch => {
 
 // Unsubscribe from a group
 export const groupCommitSubscriptions = groups => dispatch => {
+    dispatch({
+        type: GROUP_COMMIT_SUBSCRIPTION_LOADING
+    })
+    
     const subs = groups.map(group => ({
         groupId: group._id,
         sub: group.subscriptions
@@ -130,13 +137,16 @@ export const groupCommitSubscriptions = groups => dispatch => {
         .put(`${apiUrl}/toggleSubscribe`, body)
         .then(res => {
             dispatch({
-                type: GROUP_COMMIT_SUBSCRIPTION,
+                type: GROUP_COMMIT_SUBSCRIPTION_SUCCESS,
                 payload: res.data.subs
             });
  
             dispatch(getMessage(res.data.message));
         })
-        .catch(err => dispatch(getError(err)))
+        .catch(err => {
+            dispatch({ type: GROUP_COMMIT_SUBSCRIPTION_FAILURE })
+            dispatch(getError(err))
+        })
 }
 
 

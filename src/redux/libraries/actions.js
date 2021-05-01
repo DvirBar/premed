@@ -9,7 +9,7 @@ import {
     LIB_ITEM_EDIT,
     LIB_ITEM_DELETE,
     LIB_ITEM_TOGGLE_VOTE
-} from '../actions/types';
+} from './types';
 import axios from 'axios';
 import { getMessage, getError } from '../actions/messages';
 

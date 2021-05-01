@@ -2,12 +2,17 @@ import {
     BASE_DATA_SUCCESS,
     STATS_INPUTS_LOADING,
     STATS_INPUTS_SUCCESS,
-    GET_TABLE_SETCIONS
+    GET_TABLE_SETCIONS,
+    BASE_DATA_LOADING
 } from './types';
 import axios from 'axios';
 import { getError } from './messages';
 
 export const getBaseData = () => dispatch => {
+    dispatch({
+        type: BASE_DATA_LOADING
+    })
+
     axios.get('api/serverdata/baseData')
          .then(res => {
              dispatch({

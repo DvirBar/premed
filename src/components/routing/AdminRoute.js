@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import NoMatchPage from '../layout/NoMatchPage';
 
 const AdminRoute = ({ component: Component, ...rest }) => {
     const auth = useSelector(state => state.auth)
@@ -12,10 +13,10 @@ const AdminRoute = ({ component: Component, ...rest }) => {
                     return <Component {...rest} {...props} />;
                 
                 else 
-                    return <Redirect to='/' />;  
+                    return <Route component={NoMatchPage} />;  
             }
             else 
-                return <Redirect to='/' />;  
+                return <Route component={NoMatchPage} /> ;  
         }
         } />
     )

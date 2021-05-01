@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { authError } from '../../redux/actions/auth';
 import { getError } from '../../redux/actions/messages';
+import { GET_USER_FAILURE } from '../../redux/auth/types';
 
 const refreshTokenUrl = 'auth/refreshToken'
 const useInterceptors = () => {
@@ -15,7 +15,7 @@ const useInterceptors = () => {
         // If a request to get a refresh token has already been sent
             if(error.response.status === 401 && 
                 originalRequest.url === `/api/${refreshTokenUrl}`) {
-                    dispatch(authError())
+                    dispatch({ type: GET_USER_FAILURE })
                     return Promise.reject(error)
                 }
 

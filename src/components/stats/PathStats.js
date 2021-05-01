@@ -17,8 +17,6 @@ function PathStats({ pathId, tableId }) {
         }
     }, [pathId, tableId])
 
-    // User data
-    const loadData = useSelector(state => state.userdata.loading)
 
     const urlTableTitle = 'הצגת טבלת הנתונים ' + table?.name
     
@@ -32,11 +30,8 @@ function PathStats({ pathId, tableId }) {
                     className="external-table-link"
                     rel="noopener noreferrer">{urlTableTitle}</a>
                 </p>
-            
-            :  loadData
-                ? <Loadbar />
-                : <DataTable 
-                    pathId={pathId} />
+            :   <DataTable 
+                pathId={pathId} />
             }
 
         </Fragment>

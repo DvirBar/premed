@@ -190,6 +190,7 @@ textarea {
     transition: border-color 0.3s ease-in;
     height: 5.5rem;
     margin: 0;
+    width: $border-input-width;
 
     legend {
         transition: color 0.3s ease-in;
@@ -211,11 +212,12 @@ textarea {
         outline: 0;
         border: none;
         font-size: 1.8rem;
-        width: $border-input-width;
         color: #aaa;
         padding-bottom: 0.5rem;
+        width: $border-input-width;
         text-align: center;
         transition: color 0.3s ease-in;
+        width: 100%;
 
         &:focus {
             transition: color 0.3s ease-out;

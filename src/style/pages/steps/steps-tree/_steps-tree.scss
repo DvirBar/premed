@@ -1,11 +1,20 @@
+.steps-tree-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto;
+}
+
 .steps-tree {
     display: flex;
     flex-direction: column;
     row-gap: 5rem;
     width: $tree-width;
-    margin: 0;
-    width: 100%;
 }
+
+// .steps-block {
+//     width: 100vw;
+// }
 
 .steps-level {
     width: 100%;

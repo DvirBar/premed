@@ -1,7 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react'
+import FieldStatuses from './FieldStatuses/FieldStatuses'
 
-function FormInputBorder({ title, type, name, value, onChange, 
-    onBlur, error, disabled }) {
+function FormInputBorder({ 
+    title, 
+    type, 
+    name, 
+    value, 
+    onChange, 
+    onBlur, 
+    error, 
+    disabled }) {
 
     const [displayError, setDisplayError] = useState(false)
 
@@ -14,6 +22,7 @@ function FormInputBorder({ title, type, name, value, onChange,
             setDisplayError(false)
         }
     }, [value, error])
+
 
     return (
         <Fragment>
@@ -33,7 +42,7 @@ function FormInputBorder({ title, type, name, value, onChange,
                 onChange={onChange}
                 onBlur={onBlur}
                 autoComplete="off"
-                disabled={disabled} />
+                disabled={disabled} /> 
             </fieldset>
             <span className={displayError 
             ? "input-error display"

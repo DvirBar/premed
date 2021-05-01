@@ -29,20 +29,19 @@ function Libraries() {
 
     const {isAdmin} = useContext(LibraryContext)
 
-    if(loading) {
-        return <Loadbar />
-    }
-
     return (
         <div className="libraries">
             {!isAdmin &&
                 <PathLinks />
             }
+            {/* <Loadbar /> */}
             <ContentContainer>
-                <LibraryMenu />
                 {loading
-                ?   <Loadbar />
-                :   <LibraryRouter />
+                    ?   <Loadbar />
+                    :  <Fragment>
+                            <LibraryMenu />
+                            <LibraryRouter />
+                        </Fragment>    
                 }
             </ContentContainer>
         </div>

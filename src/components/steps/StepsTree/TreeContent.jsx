@@ -10,10 +10,13 @@ function TreeContent({ firstStep }) {
         </p>
     }
     return (
-        <div className="steps-tree noselect">
-            <StepsLevel
-            nextSteps={[firstStep]}/>
+        <div className="steps-tree-wrapper">
+            <div className="steps-tree noselect">
+                <StepsLevel
+                nextSteps={[firstStep]}/>
+            </div>
         </div>
+        
     )
 }
 

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-function BorderTextbox({ type, value, placeholder, onChange, onBlur, error }) {
+function BorderTextbox({ 
+    type, 
+    value, 
+    placeholder, 
+    onChange, 
+    onBlur, 
+    error,
+    status }) {
     const [displayError, setDisplayError] = useState(false)
 
     useEffect(() => {
@@ -12,6 +19,10 @@ function BorderTextbox({ type, value, placeholder, onChange, onBlur, error }) {
             setDisplayError(false)
         }
     }, [value, error])
+
+    const statusComponent = () => {
+        
+    }
 
     return (
         <div className="border-textbox">
@@ -34,7 +45,6 @@ function BorderTextbox({ type, value, placeholder, onChange, onBlur, error }) {
                 </i>
                 <span>{error}</span>
             </span>
-         
         </div>
     )
 }

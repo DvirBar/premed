@@ -15,8 +15,9 @@ import inquiries from './inquiries';
 import statsinputs from './statsinputs';
 import libraries from '../libraries/reducers';
 import comments from '../comments/reducers';
-import ancs from '../announcements/ancs/reducers'
-import ancgroups from '../announcements/groups/reducers'
+import ancs from '../announcements/ancs/reducers';
+import ancgroups from '../announcements/groups/reducers';
+import loader from '../loader/reducers';
 
 const appReducer = combineReducers({
     auth,
@@ -36,7 +37,8 @@ const appReducer = combineReducers({
     inquiries,
     statsinputs,
     libraries,
-    comments
+    comments,
+    loader
 });
 
 const rootReducer = (state, action) => {

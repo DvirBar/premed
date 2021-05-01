@@ -1,0 +1,13 @@
+// Libraries
+export const LIBRARY_LOADING = 'LIBRARY_LOADING';
+export const LIBRARY_SUCCESS = 'LIBRARY_SUCCESS';
+export const LIBRARY_ERROR = 'LIBRARY_ERROR';
+export const LIBRARY_ADD = 'LIBRARY_ADD';
+export const LIBRARY_UPDATE = 'LIBRARY_UPDATE';
+export const LIBRARY_DELETE = 'LIBRARY_DELETE';
+
+// Topics
+export const LIB_ITEM_ADD = 'LIB_ITEM_ADD';
+export const LIB_ITEM_EDIT = 'LIB_ITEM_EDIT';
+export const LIB_ITEM_DELETE = 'LIB_ITEM_DELETE';
+export const LIB_ITEM_TOGGLE_VOTE = 'LIB_ITEM_TOGGLE_VOTE';

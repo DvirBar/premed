@@ -16,6 +16,10 @@ button {
     outline: none;
     cursor: pointer;
 
+    &:disabled:hover {
+        background-color: #fff;
+    }
+
     .material-icons {
         color: inherit;
 

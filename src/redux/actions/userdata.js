@@ -16,7 +16,12 @@ import {
     REMOVE_SIMULATED_GROUP,
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
+
     USER_DATA_INSERT,
+    USER_DATA_INSERT_LOADING,
+    USER_DATA_INSERT_SUCCESS,
+    USER_DATA_INSERT_FAILURE,
+
     USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
     EXEC_CALC,
@@ -24,10 +29,17 @@ import {
     USER_DATA_DELETE,
     FILTER_DATA,
     REMOVE_FILTER_DATA,
-    SORT_DATA
+    SORT_DATA,
+    EXEC_CALC_LOADING,
+    EXEC_CALC_SUCCESS,
+    EXEC_CALC_FAILURE,
+    SIMULATE_CALCS_LOADING,
+    SIMULATE_CALCS_SUCCESS,
+    SIMULATE_CALCS_FAILURE
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
+import { setLoader } from '../loader/utils';
 
 // Basic types
 export const dataLoad = () => {
@@ -177,8 +189,10 @@ export const simulateCalcs = (
     values, 
     customGroups, 
     tableId) => dispatch => {
-    // Request body
 
+    dispatch({ type: SIMULATE_CALCS_LOADING })
+
+    // Request body
     const body = JSON.stringify({
         calcsToExec,
         values,
@@ -188,11 +202,11 @@ export const simulateCalcs = (
     axios.post(`api/userdata/simulateCalcs/${tableId}`, body)
          .then(res => {
              dispatch ({
-                type: SIMULATE_CALCS,
+                type: SIMULATE_CALCS_SUCCESS,
                 payload: res.data
              })})
          .catch(err => {
-             dispatch(dataError())
+             dispatch({ type: SIMULATE_CALCS_FAILURE })
              dispatch(getError(err))
             })
 }
@@ -250,27 +264,33 @@ export const switchTable = () => dispatch => {
 
 // Insert new data to user data collection
 export const insertData = (data, tableId) => dispatch => {
-    dispatch(dataLoadSoft());
-    // TODO: Prompt user on successful save 
+    const loaderInstance = setLoader(
+        USER_DATA_INSERT_LOADING,
+        null,
+        data.fieldId,
+        data.groupId)
+    dispatch(loaderInstance);
     
     // Request body
     const body = JSON.stringify(data);
 
     axios.put(`api/userdata/insertdata/${tableId}`, body)
-         .then(res => 
+         .then(res => {
+            loaderInstance.type = USER_DATA_INSERT_SUCCESS
             dispatch({
-                type: USER_DATA_INSERT,
+                ...loaderInstance,
                 payload: {
                     tableId,
                     dataVal: res.data
                 }
-             }))
+             })
+         })
          .catch(err => {
-             console.log(err);
-             dispatch(dataError())
-             // Returns modified/added dataVal
-             dispatch(getError(err))
-            })
+                loaderInstance.type = USER_DATA_INSERT_FAILURE             
+                dispatch(loaderInstance)
+                // Returns modified/added dataVal
+                dispatch(getError(err))
+        })
 }
 
 // Toggle user data enabled status
@@ -291,6 +311,14 @@ export const toggleEnabled = tableId => dispatch => {
 
 // Execute calculation
 export const executeCalc = calcsToExec => dispatch => {
+    for(let calcLevel of calcsToExec) {
+        for(let calc of calcLevel) {
+            const instance = setLoader(EXEC_CALC_LOADING, null, calc)
+            dispatch(instance)
+        }
+    }
+    
+
     const data = {
         calcsToExec: calcsToExec
     }
@@ -299,12 +327,11 @@ export const executeCalc = calcsToExec => dispatch => {
 
     axios.put(`/api/userdata/execCalc`, body)
          .then(res => dispatch({
-             type: EXEC_CALC,
+             type: EXEC_CALC_SUCCESS,
              payload: res.data
          }))
          .catch(err => {
-             console.log(err);
-             dispatch(dataError())
+             dispatch({ type: EXEC_CALC_FAILURE })
              dispatch(getError(err))
          })
 }

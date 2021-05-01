@@ -26,24 +26,25 @@ function DataTable({ pathId }) {
 
     const ordering = useSelector(state => 
         state.userdata.ordering);
-    
-    if(!tableSections) {
-        return <Loadbar />
-    }
+
+    const loadData = useSelector(state => state.userdata.loading)
 
     return (
         <div className="table-container">
-            <table className="data-table">
-                <TableHeaders 
-                matchColor={matchColor}
-                tableSections={tableSections}
-                ordering={ordering}
-                />
-                <TableBody 
-                tableSections={tableSections}
-                matchColor={matchColor}
-                ordering={ordering} />
-            </table>
+            {(!tableSections || loadData) 
+            ?   <Loadbar />
+            :   <table className="data-table">
+                    <TableHeaders 
+                    matchColor={matchColor}
+                    tableSections={tableSections}
+                    ordering={ordering}
+                    />
+                    <TableBody 
+                    tableSections={tableSections}
+                    matchColor={matchColor}
+                    ordering={ordering} />
+                </table>
+            }
         </div>
     )
 }

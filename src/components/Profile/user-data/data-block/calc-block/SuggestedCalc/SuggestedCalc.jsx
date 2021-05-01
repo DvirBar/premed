@@ -20,8 +20,7 @@ function SuggestedCalc({ value, suggestedValue, calc, payload }) {
                     className="suggested-calc__info__display-info">
                         פירוט
                     </div>
-                }
-                
+                }  
             </div>
             <AcceptCalc 
             calcId={calc?._id} 

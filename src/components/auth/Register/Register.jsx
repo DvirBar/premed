@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import useForm from '../../../forms/useForm';
 import { register } from '../../../redux/actions/auth';
+import { REGISTER } from '../../../redux/auth/types';
+import { isLoading } from '../../../redux/loader/selectors';
 import FormInput from '../../common/FormInput';
-import Checkbox from '../../common/Checkbox';
+import Loadbar from '../../layout/Loadbar';
 
 const Register = () => {
     const [defaultValues, setDefaultValues] = useState({
@@ -23,16 +25,8 @@ const Register = () => {
         errors } = useForm(register, defaultValues);
 
     const auth = useSelector(state => state.auth);
-    
-    const selectedMsg = useSelector(state => state.messages);
-    const [message, setMessage] = useState({});
 
-    useEffect(() => {
-        setMessage({
-            msg: selectedMsg.msg, 
-            status: selectedMsg.status
-        });
-    }, [selectedMsg])
+    const loading = useSelector(isLoading(REGISTER))
 
 
     if(auth.isAuthenticated)
@@ -44,9 +38,6 @@ const Register = () => {
                 <div className="register-container">
                     <form className="register-form" onSubmit={handleSubmit} noValidate>
                         {auth.loading && <p>Loading...</p>}
-
-                        {message.msg &&
-                        <p className="form-error">{message.msg}</p>}
 
                         <div className="name-block">
                             <FormInput
@@ -92,8 +83,11 @@ const Register = () => {
                         value={values.password}
                         onChange={handleChange}
                         error={errors.password} />
-            
-                        <button type="submit">הרשמה</button>
+                        
+                        <div className="register-block">
+                            <button type="submit">הרשמה</button>
+                            {loading && <Loadbar small={true} />}
+                        </div>
                     </form>
                 </div>
             </div>

@@ -5,6 +5,7 @@
     justify-items: center;
     width: 100%;
     row-gap: 2rem;
+    padding: 2rem 0;
 
     &:last-child {
         border-bottom: 0;
@@ -12,23 +13,33 @@
 }
 
 .groups-list {
-    justify-items: center;
+    width: 100%;
 }
 
 .group-fields {
-    width: 70rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) 5rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     align-items: center;
-    align-content: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
+    justify-content: space-between;
+
+    &__fields {
+        width: 50rem;
+        display: flex;
+        flex-direction: row;
+        column-gap: 1rem;
+        flex-wrap: wrap;
+
+        &.simulated {
+            width: 45rem;
+        }
+
+        @media only screen and(max-width: 768px) {
+            padding-right: 2rem;
+        }
+    }
 
     @media only screen and(max-width: 768px) {
-        display: flex;
-        flex-wrap: wrap;
-        column-gap: 2rem;
-        row-gap: 1rem;
         width: 100%;
 
         .group-name {
@@ -37,6 +48,7 @@
     }
 
     .group-name {
+        width: 13rem;
         color: $main-color;
         font-size: 2rem;
     }
@@ -46,28 +58,26 @@
         display: inline-block;
     }
 
-    & > div {
-        display: inline;
-        justify-self: center;
-
-        &:first-child {
-            justify-self: start;
-        }
+    .remove-vals {
+        display: flex;
+        align-items: center;
     }
 
-    &:hover > .remove-vals {
-        opacity: 1;
+    &:hover {
+        .remove-vals {
+            opacity: 1;
+        }
     }
 }
 
-.staged-groups {   
-    width: 70rem;
+.staged-groups {
+    width: 100%;
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
     margin-bottom: 1rem;
     position: relative;
-    
+
     @media only screen and(max-width: 768px) {
         display: flex;
         flex-wrap: wrap;
@@ -79,7 +89,7 @@
             width: 100%;
         }
     }
-    
+
     .choose-staged-group {
         direction: ltr;
         z-index: 100;
@@ -146,31 +156,31 @@
                 transition: opacity 0.2s ease;
                 width: 0.5rem;
             }
-            
+
             &::-webkit-scrollbar-track {
                 padding: 0.1rem;
-                background-color: transparent
+                background-color: transparent;
             }
-            
+
             &::-webkit-scrollbar-thumb {
                 background-color: rgba(#aaa, 0);
                 border-radius: 1rem;
                 cursor: pointer;
-    
+
                 &:hover {
-                    background-color: rgba(#888, 0); 
+                    background-color: rgba(#888, 0);
                 }
             }
-    
+
             &:hover {
                 &::-webkit-scrollbar-thumb {
                     background-color: #aaa;
-    
+
                     &:hover {
-                        background-color: $main-color; 
+                        background-color: $main-color;
                     }
                 }
-            }    
+            }
 
             .choose-group-item {
                 border-radius: 0.5rem;
@@ -224,4 +234,3 @@
     justify-self: start;
     opacity: 0;
 }
-

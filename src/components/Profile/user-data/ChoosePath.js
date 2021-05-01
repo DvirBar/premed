@@ -15,7 +15,6 @@ function ChoosePath() {
         handleChange,
         handleSubmit,
         values,
-        errors
     } = useForm(addUserData, defaultValues)
 
     return (

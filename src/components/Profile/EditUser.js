@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 import { editUser } from '../../redux/actions/auth';
 import useForm from '../../forms/useForm';
 import FormInput from '../common/FormInput';
-import Checkbox from '../common/Checkbox';
+import { isLoading } from '../../redux/loader/selectors';
+import { EDIT_USER } from '../../redux/auth/types';
+import { Fragment } from 'react';
+import Loadbar from '../layout/Loadbar';
 
 
 function EditUser({ user }) {
@@ -28,28 +31,28 @@ function EditUser({ user }) {
         errors
     } = useForm(editUser, defaultValues)
 
+    const loading = useSelector(isLoading(EDIT_USER))
+
     return (
         <form onSubmit={handleSubmit} noValidate>
-            <div className="name-block">
-                <FormInput
-                type="text"
-                label="שם"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleChange}
-                error={errors.firstName}
-                limit='20' />
+            <FormInput
+            type="text"
+            label="שם"
+            name="firstName"
+            value={values.firstName}
+            onChange={handleChange}
+            error={errors.firstName}
+            limit='20' />
 
-                <FormInput
-                type="text"
-                label="שם משפחה"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleChange}
-                error={errors.lastName}
-                limit='20'/>
-            </div>
-        
+            <FormInput
+            type="text"
+            label="שם משפחה"
+            name="lastName"
+            value={values.lastName}
+            onChange={handleChange}
+            error={errors.lastName}
+            limit='20'/>
+
             <FormInput
             type="text"
             label="שם משתמש"
@@ -65,26 +68,18 @@ function EditUser({ user }) {
             name='email'
             value={values.email}
             onChange={handleChange}
-            error={errors.email}
-            />
+            error={errors.email} />
 
-            <div className="is-student-block">
-                <Checkbox
-                name="isStudent"
-                label="אני סטודנט/ית"
-                onChange={handleChange}
-                checked={values.isStudent}
-                disabled={reqPending} />
-
-                {reqPending &&
-                    <span className="student-approval-pending">
-                        ממתין לאישור
-                    </span>
-                }
+            <div className="submit-block">
+                <button 
+                disabled={loading}
+                type="submit">
+                    {loading
+                    ? <Loadbar small={true} />
+                    : <Fragment>עדכון</Fragment>
+                    }
+                </button>
             </div>
-            <button type="submit">
-                עדכון
-            </button>
         </form>
     )
 }

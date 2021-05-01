@@ -9,6 +9,9 @@ import { selTableSelector } from '../../../redux/selectors/userdata';
 import ToggleSwitch from '../../common/ToggleSwitch';
 import { GroupsContext } from './data-block/GroupsContext';
 import DatePicker from '../../common/DatePicker';
+import { isFailure, isLoading, isSuccess } from '../../../redux/loader/selectors';
+import { USER_DATA_INSERT } from '../../../redux/actions/types';
+import { FAILURE, LOADING, SUCCESS } from '../../../redux/loader/types';
 
 
 function MatchFormFragment({ 
@@ -95,7 +98,7 @@ function MatchFormFragment({
             setError('')
         }
     }
-    
+
     switch(fieldType) {
         case 'textbox': 
             return <div>

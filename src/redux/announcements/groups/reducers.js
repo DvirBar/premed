@@ -6,7 +6,7 @@ import {
     GROUP_ADD,
     GROUP_UPDATE,
     GROUP_CHANGE_SUB,
-    GROUP_COMMIT_SUBSCRIPTION,
+    GROUP_COMMIT_SUBSCRIPTION_SUCCESS,
     GROUP_DELETE,
 } from './types';
 
@@ -66,7 +66,7 @@ export default function(state = initialState, action) {
                     : group)
             }
 
-        case GROUP_COMMIT_SUBSCRIPTION:
+        case GROUP_COMMIT_SUBSCRIPTION_SUCCESS:
             return {
                 ...state,
                 loading: false,

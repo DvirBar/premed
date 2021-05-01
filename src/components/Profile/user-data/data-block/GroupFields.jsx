@@ -21,23 +21,25 @@ function GroupFields({ group, isStaged, removeStagedGroup, insertData }) {
             <div className="group-name">
                 {group.name}
             </div>
-            {group.fields?.map(field =>
-                <FormFragment
-                key={field._id}
-                field={field}
-                isCalc={false}
-                group={group}
-                insertData={insertData} />
-            )}
+            <div className={`group-fields__fields ${isSimulated ? 'simulated' : ''}`}>
+                {group.fields?.map(field =>
+                    <FormFragment
+                    key={field._id}
+                    field={field}
+                    isCalc={false}
+                    group={group}
+                    insertData={insertData} />
+                )}
 
-            {displayRemove &&
-                <RemoveVals 
-                groupId={group._id}
-                cusGroupParent={group.cusGroupParent}
-                removeAll={true}
-                removeStagedGroup={removeStagedGroup}
-                isStaged={isStaged} />
-            }
+                {displayRemove &&
+                    <RemoveVals 
+                    groupId={group._id}
+                    cusGroupParent={group.cusGroupParent}
+                    removeAll={true}
+                    removeStagedGroup={removeStagedGroup}
+                    isStaged={isStaged} />
+                }
+            </div>
         </div>
     )
 }
