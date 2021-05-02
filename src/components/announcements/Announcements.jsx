@@ -30,6 +30,10 @@ function Announcements() {
 
     return (
         <div className="ancs-container">
+            <div className="ancs-container__title">
+                פרסומים
+            </div>
+
             <AncsCarousel 
             selectAnc={selectAnc}
             ancs={ancs} />

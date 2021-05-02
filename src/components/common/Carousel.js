@@ -37,9 +37,7 @@ const Carousel = ({ className, children }) => {
     }
     
     return (
-        <div className={className
-            ? `carousel ${className}`
-            : 'carousel'}>
+        <div className={`carousel ${className} noselect`}>
             <div className={loc > 0 
                 ? "nav-arrow display"
                 : "nav-arrow"}>
