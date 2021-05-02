@@ -1,0 +1,10 @@
+.display-in-table {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    &__title {
+        color: $main-color;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+}

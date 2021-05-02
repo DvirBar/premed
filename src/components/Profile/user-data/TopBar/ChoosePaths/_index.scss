@@ -1,0 +1,17 @@
+.user-data-choose-paths {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    &__title {
+        color: $main-color;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
+    &__paths-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+    }
+}

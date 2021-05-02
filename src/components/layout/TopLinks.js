@@ -22,12 +22,12 @@ function TopLinks({
                 className={child.props.id === selected
                 ? "link-item current"
                 : "link-item"}>
-                    <span>
-                        <span 
-                        className="span-hover">
+                    <div className="link-item-content-wrapper">
+                        <div 
+                        className="link-item-content-wrapper span-hover">
                             {child}
-                        </span>
-                    </span>
+                        </div>
+                    </div>
                 </li>
             )}
         </ul>

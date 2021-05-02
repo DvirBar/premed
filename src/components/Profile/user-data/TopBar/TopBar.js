@@ -6,26 +6,15 @@ import TableSelect from './TableSelect/TableSelect';
 import DataPathsList from './DataPathsList/DataPathsList';
 import CardContent from '../../../layout/Containers/CardContainer/CardContent';
 import CardContainer from '../../../layout/Containers/CardContainer/CardContainer';
+import SelectPaths from './SelectPaths/SelectPaths';
+import DisplayInTable from './DisplayInTable/DisplayInTable';
 
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
-
-    const options = [
-        {
-            name: 'אל תציג',
-            value: false
-        },
-        {
-            name: 'הצג',
-            value: true,
-        },
-    ]
-
     const toggleOptions = () => {
         dispatch(toggleEnabled(tableId))
     }
-
-
+ 
     return (
         <CardContainer>
             <CardContent>
@@ -35,17 +24,15 @@ function TopBar({ data, tableId, changeTable, paths }) {
                     table={tableId}
                     changeTable={changeTable} />
 
-                    <div className="switch-block">
-                        <p className="switch-name">הצגת הנתונים שלי בטבלה המרכזית:</p>
-                        <ToggleSwitch
-                        options={options}
-                        onChange={toggleOptions}
-                        value={data.tableData.enabled} />
-                    </div>
-
+                    <DisplayInTable 
+                    onChange={toggleOptions}
+                    value={data.tableData.enabled} />
+       
                     <DataPathsList paths={paths} tableId={tableId} />        
                 </div>
             </CardContent>
+            <SelectPaths paths={paths} />
+        
         </CardContainer>
     )
 }

@@ -19,17 +19,22 @@ function ToggleSwitch({ options, onChange, value, className }) {
         onChange(changeTo)
     }
 
+    const isValueMissing = () => {
+        const isFalse = !value && typeof value !== 'boolean'
+        return isFalse
+    }
+
     return (
         <p className={className 
             ?   "toggle-switch " + className
             :   "toggle-switch"}>
             <span>{options[1].name}</span>
             <span 
-            className={value 
-            ?   "toggle-button"
-            :   "toggle-button no-value"} 
+            className={isValueMissing()
+            ?   "toggle-button no-value"
+            :   "toggle-button"} 
             onClick={() => handleChange()}>
-                <span className={value
+                <span className={!isValueMissing()
                 ? selectedOption === options[1].value
                     ? "switch on"
                     : "switch"

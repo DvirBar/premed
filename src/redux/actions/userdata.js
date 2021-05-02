@@ -132,8 +132,21 @@ export const getUsersDataByPathTable = (tableId, pathId) => dispatch => {
 
 // Create new user data collection
 export const addUserData = data => dispatch => {
+    const finalDataObj = {
+        ...data,
+        defaults: [
+            {
+                field: "sector",
+                group: "bagrut",
+                isCalc: "false",
+                isType: true,
+                value: "jew"
+            }
+        ]
+    }
+    
     // Request body
-    const body = JSON.stringify(data);
+    const body = JSON.stringify(finalDataObj);
 
     axios.post('api/userdata', body)
          .then(res => {

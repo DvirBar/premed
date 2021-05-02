@@ -1,0 +1,48 @@
+.choose-base-data {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;
+    padding: 0 2rem;
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        width: 50rem;
+        color: #333;
+
+        @media only screen and(max-width: 500px) {
+            width: 100%;
+        }
+
+        b {
+            color: $main-color;
+        }
+
+        &__title {
+            color: $main-color;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        &__text {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            border: 3px solid $main-color;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    }
+
+    &__form {
+        &__options {
+            display: flex;
+            column-gap: 3rem;
+            row-gap: 2rem;
+            flex-wrap: wrap;
+        }
+    }
+}

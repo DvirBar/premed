@@ -93,14 +93,18 @@ export const editUser = data => dispatch => {
     const body = JSON.stringify(data);
 
     axios.put('/api/auth/user', body)
-         .then(res => dispatch({
-             type: EDIT_USER_SUCCESS,
-             payload: res.data
-         }))
+         .then(res => {
+            dispatch({
+                type: EDIT_USER_SUCCESS,
+                payload: res.data.user
+            })
+
+            dispatch(getMessage(res.data.msg))
+        })
          .catch(err => {
              dispatch({
                  type: EDIT_USER_FAILURE
              })
-             dispatch(getMessage(err))
+             dispatch(getError(err))
          })
 }

@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react'
-import EditDataPaths from '../../EditDataPaths'
+import React, { useState } from 'react'
+import EditPaths from './EditPaths/EditPaths'
 
 function DataPathsList({ paths, tableId }) {
     const [displayEdit, setDisplayEdit] = useState(false)
@@ -27,7 +27,7 @@ function DataPathsList({ paths, tableId }) {
             </p>
             
 
-            <EditDataPaths
+            <EditPaths
             userPaths={paths}
             display={displayEdit}
             toggleModal={toggleEdit}

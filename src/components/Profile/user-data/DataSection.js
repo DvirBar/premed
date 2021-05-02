@@ -13,7 +13,7 @@ function DataSection({ paths, selPath }) {
     useEffect(() => {
         dispatch(getStatsInputs(paths.map(path => path._id)))
     }, [paths])
-    console.log(paths);
+ 
     const {
         loading 
     } = useSelector(statsInputsSelector)

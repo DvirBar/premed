@@ -1,10 +1,9 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneUserData } from '../../../redux/actions/userdata';
 import Loadbar from '../../layout/Loadbar';
-import SoftLoadbar from '../../layout/SoftLoadBar';
 import Calculator from './calculator/Calculator';
-import ChoosePath from './ChoosePath';
+import ChooseBaseData from './ChooseBaseData/ChooseBaseData';
 import GroupsProvider from './data-block/GroupsContext';
 import UserStats from './UserStats';
 
@@ -18,7 +17,6 @@ function ValidatePath() {
     const { 
         data, 
         loading, 
-        softLoading, 
         selTable } = useSelector(state => 
         state.userdata);
 
@@ -29,10 +27,6 @@ function ValidatePath() {
     else if(data && Object.keys(data).length !== 0) {
         return (
             <Fragment>
-               
-               {softLoading &&
-                    <SoftLoadbar message="שמירה מתבצעת" />
-               }
                 <GroupsProvider isSimulated={false}>
                     <UserStats data={data} selTable={selTable} />
                 </GroupsProvider>
@@ -42,7 +36,7 @@ function ValidatePath() {
     }
 
     else  {
-        return <ChoosePath />
+        return <ChooseBaseData />
     }
 }
 

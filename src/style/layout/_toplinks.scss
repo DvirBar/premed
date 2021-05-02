@@ -4,8 +4,9 @@
     justify-content: space-evenly;
     width: 100%;
 
-    a {
+    .span-hover > * {
         width: 100%;
+        height: 100%;
     }
 
     .link-item {
@@ -20,12 +21,12 @@
             color: $main-color;
             border-bottom: 3px solid $main-color;
 
-            span > .span-hover:hover {
+            div > .span-hover:hover {
                 background-color: inherit;
             }
         }
 
-        span {
+        .link-item-content-wrapper {
             position: relative;
             padding: 0.5rem;
             width: 100%;

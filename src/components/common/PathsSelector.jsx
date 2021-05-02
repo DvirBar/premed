@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../redux/selectors/paths'
 import InlineSelect from './InlineSelect'
@@ -9,6 +9,7 @@ function PathsSelector({ selPath, selectPath }) {
         name: path.name,
         value: path._id
     })) 
+
     return (
         <div>
             <InlineSelect

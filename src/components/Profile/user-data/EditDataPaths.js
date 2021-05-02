@@ -1,28 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { editUserDataPaths } from '../../../redux/actions/userdata';
-import useForm from '../../../forms/useForm';
+import React from 'react';
 import Checkbox from '../../common/Checkbox';
 import Modal from '../../layout/Modal'
-import { useSelector } from 'react-redux';
 
 
-function EditDataPaths({ userPaths, display, toggleModal, tableId, title }) {
-    const [defaultValues, setDefaultValues] = useState({})
-    const allPaths = useSelector(state => state.paths.paths)
-    useEffect(() => {
-        setDefaultValues({
-            pathIds: userPaths?.map(path => path._id)
-        })
-    }, [userPaths])
-
-    const {
-        handleChange,
-        handleSubmit,
-        values,
-        errors
-    } = useForm(editUserDataPaths, defaultValues, tableId)
-
-    console.log(values);
+function EditDataPaths() {
+   
 
     return (
         <Modal

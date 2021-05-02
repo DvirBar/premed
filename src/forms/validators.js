@@ -23,7 +23,7 @@ export function isNotEmail(value, message) {
 }
 
 export function isNotHebName(value, message) {
-    const pattern = new RegExp('^[א-ת]+[-]*[א-ת]+$')
+    const pattern = new RegExp("^[א-ת']+[-]*[א-ת']+$")
     if(!pattern.test(value)) {
         return message
     }

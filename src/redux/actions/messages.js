@@ -13,7 +13,8 @@ export const initMessage = () => {
 }
 
 export const getMessage = msgObj => dispatch => {
-    if(msgObj.msg.he) {
+    
+    if(msgObj?.msg?.he) {
         dispatch({
             type: GET_MESSAGE,
             payload: {

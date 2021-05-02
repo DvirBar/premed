@@ -1,10 +1,4 @@
 .choose-path {
-    background-color: #fff;
-    box-shadow: $default-shadow;
-    height: 45rem;
-    padding: 5rem;
-    border-radius: 1rem;
-
     .title {
         color: $main-color;
         font-size: 2.2rem;
@@ -24,7 +18,7 @@
             height: 20rem;
             border: 2.5px solid #ccc;
             border-radius: 1rem;
-            transition: border-color 0.5s ease; 
+            transition: border-color 0.5s ease;
             cursor: pointer;
 
             &.checked {
@@ -56,9 +50,9 @@
                 color: #999;
                 transition: color 0.5s ease;
             }
-        }  
+        }
     }
-    
+
     .button-block {
         margin-top: 5rem;
         width: 100%;

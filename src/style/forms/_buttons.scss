@@ -17,6 +17,8 @@ button {
     cursor: pointer;
 
     &:disabled:hover {
+        color: $main-color;
+        cursor: default;
         background-color: #fff;
     }
 
