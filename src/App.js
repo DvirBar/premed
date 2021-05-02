@@ -14,7 +14,7 @@ import MessageAlerts from "./components/layout/MessageAlerts/MessageAlerts";
 import { isLoading } from "./redux/loader/selectors";
 import { GET_USER } from "./redux/auth/types";
 import Loadbar from "./components/layout/Loadbar";
-import { authSelector, selectUser } from "./redux/selectors/auth";
+import { authSelector } from "./redux/selectors/auth";
 import { BASE_DATA } from "./redux/actions/types";
 
 function App() {

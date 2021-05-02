@@ -15,12 +15,12 @@ export const config = {
 
         firstName: {
             isRequired: { message: 'דרוש שם פרטי' },
-            isNotHebName: { message: 'שם לא תקין'}
+            isNotHebName: { message: 'שם צריך להיות בעברית'}
         },
 
         lastName: {
             isRequired: { message: 'דרוש שם משפחה' },
-            isNotHebName: { message: 'שם משפחה לא תקין'}
+            isNotHebName: { message: 'שם משפחה צריך להיות בעברית'}
         },
 
         username: {
