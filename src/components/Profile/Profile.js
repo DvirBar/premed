@@ -18,10 +18,6 @@ function Profile() {
         {
             url: `${path}/userdata`,
             name: 'נתונים'
-        },
-        {
-            url: `${path}/suggestions`,
-            name: 'הפניות שלי'
         }
     ]
 
