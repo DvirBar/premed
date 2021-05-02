@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import IconsObj from '../../../../libraries/IconsMap';
 
@@ -21,7 +21,7 @@ function IconsSelect({ value, onChange }) {
                 : "icon-item"}
                 key={i}
                 onClick={() => changeSelected(name)}>
-                    <img src={IconsObj[name]} />
+                    <img alt="file-type" src={IconsObj[name]} />
                 </div>
             ))}
         </div>

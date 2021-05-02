@@ -8,7 +8,7 @@ import FormInput from '../../../../../common/FormInput';
 import Modal from '../../../../../layout/Modal';
 
 function AddGroupForm({ display, toggleDisplay }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         name: '',
         path: ''
     })

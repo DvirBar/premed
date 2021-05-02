@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import useSearch from '../../../../common/hooks/useSearch'
 
 function ChooseGroupList({ groups, chooseGroup, keyword }) {

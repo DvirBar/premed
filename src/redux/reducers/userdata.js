@@ -8,7 +8,6 @@ import {
     USER_DATA_ADD,
     CHANGE_TABLE,
     COPY_DATA_SIMULATION,
-    SIMULATE_CALCS,
     INSERT_DATA_SIMULATION,
     REMOVE_SIMULATED_VALUES,
     VALID_ERROR_SIMULATED,
@@ -18,7 +17,6 @@ import {
     USER_DATA_SWITCH_TABLE,
     USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
-    EXEC_CALC,
     ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
     FILTER_DATA,
@@ -491,9 +489,6 @@ export const filterData = (state, ordering) => {
         }
 
         if(filter.field.type === 'str') {
-            // console.log("herer");
-            // console.log(fieldId);
-            // console.log(filter);
             filteredData = filteredData.filter(data => 
                 data.dataVals.find(val => 
                     val.field === fieldId && val.value === filter.text))

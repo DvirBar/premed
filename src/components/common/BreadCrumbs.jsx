@@ -1,13 +1,12 @@
-import React, { Fragment, useEffect, useRef } from 'react'
-import { useLocation } from 'react-router'
+import React, { Fragment } from 'react'
+
 
 function BreadCrumbs({ children, highlightIndex }) {
     // The default index to highlight is the last one
     const lightenIndex = highlightIndex || children.length - 1
-    const location = useLocation()
     
-    // Scroll to the end on load
-    const ref = useRef()
+    // // Scroll to the end on load
+    // const ref = useRef()
     // useEffect(() => {
     //     ref.current.scrollLeft = -ref.current.scrollWidth
     // }, [location])

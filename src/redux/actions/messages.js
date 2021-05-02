@@ -1,4 +1,3 @@
-import messages from '../reducers/messages';
 import { 
     INIT_MESSAGE,
     GET_MESSAGE,

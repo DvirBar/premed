@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import CommentText from './CommentText/CommentText'
 import CommentOptions from './CommentOptions/CommentOptions'
 

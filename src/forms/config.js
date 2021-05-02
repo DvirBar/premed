@@ -83,10 +83,6 @@ export const config = {
 
         group: {
             isRequired: { message: 'יש לבחור קבוצה'}
-        },
-
-        path: {
-            isRequired: { message: 'יש לבחור מסלול' }
         }
     }
 }

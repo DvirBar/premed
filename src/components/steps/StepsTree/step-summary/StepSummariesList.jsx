@@ -1,6 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { getStepsSummaries } from '../../../../redux/selectors/steps'
 import StepSummaryItem from './StepSummaryItem'
 
 function StepSummariesList({ stepId, summaries, color }) {

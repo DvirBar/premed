@@ -8,13 +8,12 @@ import useOnClickOutside from '../../../../common/useOnClickOutside'
 
 function AncOptions({ anc }) {
     const [display, setDisplay] = useState(false)
-    const [displayEdit, setDisplayEdit] = useState(false)
     const [displayDelete, setDisplayDelete] = useState(false)
     
     const options = [
         {
             name: 'עריכה',
-            action: () => setDisplayEdit(true)
+            action: () => {}
         },
         {
             name: 'מחיקה',

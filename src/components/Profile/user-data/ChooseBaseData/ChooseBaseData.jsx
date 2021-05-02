@@ -5,7 +5,7 @@ import ChoosePaths from '../TopBar/ChoosePaths/ChoosePaths'
 import DisplayInTable from '../TopBar/DisplayInTable/DisplayInTable'
 
 function ChooseBaseData() {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         pathIds: []
     })
 

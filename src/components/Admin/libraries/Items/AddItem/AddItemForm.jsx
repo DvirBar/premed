@@ -9,7 +9,7 @@ import IconsSelect from '../IconSelect/IconsSelect';
 import AddMeta from './AddMeta';
 
 function AddItemForm({ display, toggleModal, libId }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         name: '',
         icon: '',
         link: '',

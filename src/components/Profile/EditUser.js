@@ -12,7 +12,6 @@ import Loadbar from '../layout/Loadbar';
 
 function EditUser({ user }) {
     const [defaultValues, setDefaultValues] = useState({})
-    const reqPending = user?.isStudent?.isPending
 
     useEffect(() => {
         setDefaultValues({

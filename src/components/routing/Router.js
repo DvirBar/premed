@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from './ProtectedRoute';

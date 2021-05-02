@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Fragment } from 'react';
 import TopLinks from '../../../../layout/TopLinks';
-import TopLinksWrapper from '../../../../layout/TopLinksWrapper';
 import { GroupsContext } from '../../data-block/GroupsContext';
 
 function SelectPaths({ paths }) {

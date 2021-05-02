@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import ContentContainer from '../layout/Containers/ContentContainer/ContentContainer';
 import TopLinks from '../layout/TopLinks';
 import TopLinksWrapper from '../layout/TopLinksWrapper';
-import { splitUrl } from '../routing/utils';
 import ProfileRouter from './ProfileRouter';
 
 function Profile() {

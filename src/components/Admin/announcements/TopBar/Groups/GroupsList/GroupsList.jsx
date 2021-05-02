@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { getGroups } from '../../../../../../redux/announcements/groups/selectors'
 import { getAllPaths } from '../../../../../../redux/selectors/paths'
 import PathGroups from './PathGroups'
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import StepUnisItem from './StepUnisItem'
 
 function StepUnisList({ uniData }) {

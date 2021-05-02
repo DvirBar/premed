@@ -10,7 +10,7 @@ function Logout() {
         dispatch(logout())
     }
     return (
-        <li 
+        <div 
         onClick={commitLogout}
         className="side-bar__logout">
             <LogoutIcon 
@@ -20,7 +20,7 @@ function Logout() {
             <span>
                 התנתקות 
             </span>
-        </li>
+        </div>
     )
 }
 

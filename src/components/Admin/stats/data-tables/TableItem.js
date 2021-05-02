@@ -1,6 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { toggleEnabled } from '../../../../redux/actions/datatables';
 import TableDetails from './TableDetails';
 
 

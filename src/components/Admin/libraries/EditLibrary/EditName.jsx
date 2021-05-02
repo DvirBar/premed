@@ -4,7 +4,7 @@ import { editLibrary } from '../../../../redux/libraries/actions'
 import FormInput from '../../../common/FormInput'
 
 function EditName({ lib }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         ...lib
     })
 

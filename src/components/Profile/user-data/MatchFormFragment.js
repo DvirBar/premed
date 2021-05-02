@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import FormInputBorder from '../../common/FormInputBorder';
 import Dropdown from '../../common/Dropdown';
 import Checkbox from '../../common/Checkbox';
@@ -9,10 +8,6 @@ import { selTableSelector } from '../../../redux/selectors/userdata';
 import ToggleSwitch from '../../common/ToggleSwitch';
 import { GroupsContext } from './data-block/GroupsContext';
 import DatePicker from '../../common/DatePicker';
-import { isFailure, isLoading, isSuccess } from '../../../redux/loader/selectors';
-import { USER_DATA_INSERT } from '../../../redux/actions/types';
-import { FAILURE, LOADING, SUCCESS } from '../../../redux/loader/types';
-
 
 function MatchFormFragment({ 
     field, 

@@ -5,7 +5,7 @@ import FormInput from '../../../common/FormInput';
 import Modal from '../../../layout/Modal';
 
 function AddTable() {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         name: ''
     });
     const [display, setDisplay] = useState(false);

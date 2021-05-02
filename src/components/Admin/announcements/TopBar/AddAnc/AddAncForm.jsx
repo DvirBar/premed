@@ -10,7 +10,7 @@ import Checkbox from '../../../../common/Checkbox'
 import { getGroups } from '../../../../../redux/announcements/groups/selectors'
 
 function AddAncForm({ display, setDisplay }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         title: '',
         group: ''
     })

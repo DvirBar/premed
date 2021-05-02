@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import GroupsList from './GroupsList'
 
 function CustomGroup({ customGroup, groups }) {

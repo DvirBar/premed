@@ -1,7 +1,7 @@
 import React from 'react'
 import TopLinksWrapper from '../../layout/TopLinksWrapper'
 import TopLinks from '../../layout/TopLinks';
-import { generatePath, useLocation, useRouteMatch } from 'react-router';
+import { generatePath, useRouteMatch } from 'react-router';
 import { useSelector } from 'react-redux';
 import { getAllPaths } from '../../../redux/selectors/paths';
 import { Link } from 'react-router-dom';

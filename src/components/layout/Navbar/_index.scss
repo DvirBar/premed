@@ -44,6 +44,12 @@
         animation: tilt 1s 1;
     }
 
+    @media not all and (min-resolution: 0.001dpcm) {
+        @supports (-webkit-appearance: none) {
+            display: none;
+        }
+    }
+
     @media only screen and(max-width: 900px) {
         display: none;
     }

@@ -5,7 +5,7 @@ import FormInput from '../../common/FormInput';
 import { addQuest } from '../../../redux/questions/actions';
 
 function AddQuestion({ group }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         question: '',
         answer: ''
     })

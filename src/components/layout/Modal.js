@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from '../common/useOnClickOutside';
 import TopLinks from './TopLinks';

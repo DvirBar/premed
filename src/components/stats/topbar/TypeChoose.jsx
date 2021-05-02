@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import TopLinks from '../../layout/TopLinks'
 
 function TypeChoose({ pathId, tableId, type, newPath }) {

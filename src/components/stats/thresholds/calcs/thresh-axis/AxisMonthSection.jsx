@@ -1,6 +1,5 @@
 import React from 'react';
-import moment, { months } from 'moment'
-import ThreshItem from './ThreshItem';
+import moment from 'moment'
 import { groupAxis } from './groupAxis';
 import ThreshGroup from './ThreshGroup';
 import MonthDaysList from './MonthDaysList';

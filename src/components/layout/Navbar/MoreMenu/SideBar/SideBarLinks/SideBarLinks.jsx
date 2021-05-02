@@ -38,8 +38,9 @@ function SideBarLinks() {
     
     return (
         <ul className="side-bar__links">
-            {links.map(link =>
+            {links.map((link, index) =>
                 <SideBarItem
+                key={index}
                 link={link} />
             )}
         </ul>

@@ -23,17 +23,7 @@ export default function EditThreshold({ tableId, thresh, toggleEdit }) {
         handleSubmit,
         values,
         errors,
-        initValues
     } = useForm(editThreshold, defaultValues, tableId, thresh._id)
-
-    const leaveEdit = () => {
-        toggleEdit(false)
-        initValues()
-    }
-
-    useEffect(() => {
-        console.log(errors);
-    }, [errors])
 
     return (
         <form className="threshold-form" onSubmit={handleSubmit}>

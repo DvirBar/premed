@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../../../redux/selectors/paths'
-import QuestionAnswer from '@material-ui/icons/QuestionAnswer'
 import LinkItem from './LinkItem/LinkItem'
 import BarChart from '../../../common/icons/BarChart/BarChart'
 import Bubbles from '../../../common/icons/Bubbles/Bubbles'

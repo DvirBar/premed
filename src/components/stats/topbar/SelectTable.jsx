@@ -1,10 +1,7 @@
 import React from 'react';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { 
-    generatePath,
-    Link,  
-    useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TABLE } from '../../../redux/actions/types';
 import { isLoading } from '../../../redux/loader/selectors';
 import { getAllTables } from '../../../redux/selectors/datatables';

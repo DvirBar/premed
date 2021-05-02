@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTableById } from '../../../redux/selectors/datatables'
 import { getStatsInputs } from '../../../redux/actions/basedata'
-import { getUnisByPath, getUnisFields, getUnisFieldsByPath } from '../../../redux/selectors/unis'
+import { getUnisByPath } from '../../../redux/selectors/unis'
 import UniItem from './UniItem'
 import ContentContainer from '../../layout/Containers/ContentContainer/ContentContainer'
 

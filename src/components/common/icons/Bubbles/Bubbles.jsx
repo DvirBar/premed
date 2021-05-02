@@ -20,9 +20,9 @@ function Bubbles({ color, outlined, width, height }) {
             id="Layer_2" data-name="Layer 2">
                 <g id="Layer_1-2" data-name="Layer 1">
                     <g id="Layer_1-2-2" data-name="Layer 1-2">
-                        <circle class="cls-1" cx="112.67" cy="77.08" r="72.08"/>
-                        <circle class="cls-1" cx="207.31" cy="209.5" r="53.05"/>
-                        <circle class="cls-1" cx="68.35" cy="281.81" r="63.35"/>
+                        <circle className="cls-1" cx="112.67" cy="77.08" r="72.08"/>
+                        <circle className="cls-1" cx="207.31" cy="209.5" r="53.05"/>
+                        <circle className="cls-1" cx="68.35" cy="281.81" r="63.35"/>
                     </g>
                 </g>
             </g>

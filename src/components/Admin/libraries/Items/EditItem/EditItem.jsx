@@ -9,7 +9,7 @@ import Editor from '../../../../common/forms/Editor/Editor'
 import AddMeta from '../AddItem/AddMeta';
 
 function EditItem({ display, setDisplay, item, libId }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         ...item
     })
     

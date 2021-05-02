@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import PathStats from './PathStats';
 import Thresholds from './thresholds/Thresholds';

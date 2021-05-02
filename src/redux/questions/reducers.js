@@ -1,4 +1,3 @@
-import { PlaylistAddOutlined } from '@material-ui/icons';
 import {
     QUEST_GROUP_LOADING,
     QUEST_GROUP_SUCCESS,

@@ -27,7 +27,7 @@ function QuestionItem({ question }) {
                     className="question-source"
                     href={question.sourceLink}
                     target="_blank"
-                    rel="noopener norefrrer">
+                    rel="noopener noreferrer">
                         צפייה במקור
                     </a>                    
                 }

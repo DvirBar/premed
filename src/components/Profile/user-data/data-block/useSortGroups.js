@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getGroupsVals, getSelTypes } from '../../../../redux/selectors/userdata'
+import { getSelTypes } from '../../../../redux/selectors/userdata'
 import { GroupsContext } from './GroupsContext'
 
 function useSortGroups(group, groups, stagedGroupsList) {

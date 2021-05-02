@@ -5,7 +5,7 @@ import useForm from '../../../../forms/useForm';
 import { editLibrary } from '../../../../redux/libraries/actions';
 
 function EditInfo({ lib }) {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         ...lib
     })
 

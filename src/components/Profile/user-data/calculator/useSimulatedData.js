@@ -1,8 +1,20 @@
 import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSimulatedGroup, insertDataSimulation, removeSimulatedGroup, removeSimulatedValues, simulateCalcs, validError, validErrorSimulated } from '../../../../redux/actions/userdata';
+import { 
+    addSimulatedGroup, 
+    insertDataSimulation, 
+    removeSimulatedGroup, 
+    removeSimulatedValues, 
+    validErrorSimulated } from '../../../../redux/actions/userdata';
 import { v4 as uuidv4 } from 'uuid'
-import { getCustomGroupsSimulated, getFieldValSimulated, getGroupsValsReal, getGroupValsSimulated, getSimErrorByCalc, getSimulatedErrors, getSimulatedErrorsByCalc, getSimulatedVals, getSimValidErrors } from '../../../../redux/selectors/userdata';
+import { 
+    getCustomGroupsSimulated, 
+    getFieldValSimulated, 
+    getGroupsValsReal, 
+    getGroupValsSimulated, 
+    getSimErrorByCalc, 
+    getSimulatedVals, 
+    getSimValidErrors } from '../../../../redux/selectors/userdata';
 
 const useSimulatedData = () => {
     const dispatch = useDispatch()

@@ -25,9 +25,9 @@ function BarChart({
             id="Layer_2" data-name="Layer 2">
                 <g id="Layer_1-2" data-name="Layer 1">
                     <g id="Layer_1-2-2" data-name="Layer 1-2">
-                        <rect class="cls-1" x="5" y="76.32" width="63.91" height="268.84"/>
-                        <rect class="cls-1" x="177.74" y="5" width="63.91" height="340.16"/>
-                        <rect class="cls-1" x="91.37" y="160.37" width="63.91" height="184.78"/>
+                        <rect className="cls-1" x="5" y="76.32" width="63.91" height="268.84"/>
+                        <rect className="cls-1" x="177.74" y="5" width="63.91" height="340.16"/>
+                        <rect className="cls-1" x="91.37" y="160.37" width="63.91" height="184.78"/>
                     </g>
                 </g>
             </g>

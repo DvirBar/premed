@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { orderSteps, stepMatchUnis } from '../../utils/steps';
+import { stepMatchUnis } from '../../utils/steps';
 
 export const stepsSelector = state => state.steps.uniSteps
 

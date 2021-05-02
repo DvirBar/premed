@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { getCommentsByParent } from '../../../../redux/comments/selectors'
 import CommentItem from './CommentItem/CommentItem'

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { getError } from '../../redux/actions/messages';
 import { GET_USER_FAILURE } from '../../redux/auth/types';
 
 const refreshTokenUrl = 'auth/refreshToken'

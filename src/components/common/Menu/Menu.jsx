@@ -1,5 +1,4 @@
 import React, { memo, useRef } from 'react'
-import useScreenAware from '../hooks/useScreenAware'
 
 const Menu = ({ display, children })  => {
     const ref = useRef()

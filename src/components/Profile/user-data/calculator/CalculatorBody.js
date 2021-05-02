@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ChooseCalcs from './choose-calcs/ChooseCalcs';
 import Modal from '../../../layout/Modal';

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeSelTable, getOneUserData } from '../../../redux/actions/userdata';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getOneUserData } from '../../../redux/actions/userdata';
 import ListLayout from '../../layout/ListLayout/ListLayout';
 import Loadbar from '../../layout/Loadbar';
 import DataSections from './DataSections';

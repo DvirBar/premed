@@ -7,7 +7,7 @@ import {
     ANC_DELETE
 } from './types';
 import axios from 'axios';
-import { getMessage, getError } from '../../actions/messages';
+import { getError } from '../../actions/messages';
 
 
 // Basic types

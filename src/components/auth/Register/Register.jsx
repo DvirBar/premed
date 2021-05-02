@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import useForm from '../../../forms/useForm';
@@ -9,7 +9,7 @@ import FormInput from '../../common/FormInput';
 import Loadbar from '../../layout/Loadbar';
 
 const Register = () => {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         firstName: '',
         lastName: '',
         username: '',

@@ -1,7 +1,14 @@
 import { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCustomGroup, executeCalc, insertData, removeValue, validError } from '../../../../redux/actions/userdata';
-import { getCustomGroups, getCustomGroupsReal, getDataVals, getFieldValReal, getGroupsValsReal, getGroupValsReal, getRealErrorByCalc, getRealErrors, getRealErrorsByCalc, getRealValidErrors } from '../../../../redux/selectors/userdata';
+import { addCustomGroup, insertData, removeValue, validError } from '../../../../redux/actions/userdata';
+import { 
+    getCustomGroupsReal, 
+    getDataVals, 
+    getFieldValReal, 
+    getGroupsValsReal, 
+    getGroupValsReal, 
+    getRealErrorByCalc,
+    getRealValidErrors } from '../../../../redux/selectors/userdata';
 
 const useRealData = () => {
     const dispatch = useDispatch()

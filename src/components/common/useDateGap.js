@@ -1,5 +1,3 @@
-import React from 'react'
-
 function useDateGap() {
     const dateGap = (dateStr) => {
         const date = new Date(dateStr)

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import LabelButton from '../../../../common/buttons/LabelButton'
 import { StepsContext } from '../../../StepsContext'
 import AddContent from './AddContent'

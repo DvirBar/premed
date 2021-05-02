@@ -1,5 +1,4 @@
 import validator from 'validator';
-import { validAdd } from '../redux/actions/datafields';
 
 export function isRequired(value, message) {
     if(!value)

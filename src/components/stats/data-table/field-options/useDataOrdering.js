@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { filterData, sortData } from '../../../../redux/actions/userdata'
 import { isObjEmpty } from '../../../../utils/objects'

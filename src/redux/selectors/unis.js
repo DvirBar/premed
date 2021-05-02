@@ -9,8 +9,7 @@ export const getUnisFields = (unis, calcFields) => {
 
 export const getUnisByInputs = (fields, groups, calcs) => createSelector(
     state => state.unis.unis,
-    unis => {
-        return unis.filter(uni => {
+    unis => unis.filter(uni => {
         if(fields?.find(field => field.uni === uni._id))
             return true
 
@@ -19,9 +18,9 @@ export const getUnisByInputs = (fields, groups, calcs) => createSelector(
 
         if(calcs?.find(calc => calc.uni === uni._id))
             return true
-    })
-}
-)
+
+        return false
+    }))
 
 export const getUnisByPath = pathId => createSelector(
         state => state.unis.unis, 

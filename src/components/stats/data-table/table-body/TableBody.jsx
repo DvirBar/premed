@@ -46,8 +46,8 @@ function TableBody({ tableSections, matchColor, ordering }) {
                                 ? "field-cell sorted"
                                 : "field-cell"} 
                             style={matchColor(uni)}>
-                                {ordering.sort.fieldId === field._id ||
-                                highlightRow === dataItem._id &&
+                                {(ordering.sort.fieldId === field._id ||
+                                highlightRow === dataItem._id) &&
                                     <div className="cover"></div>
                                 }
                                 <span>

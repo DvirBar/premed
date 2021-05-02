@@ -110,6 +110,8 @@ export const getInputsByArgs = chosenCalcs => createSelector(
 
                 return false
             }
+
+            return false
         })
 
         groupsArr.push.apply(groupsArr, parents)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { generatePath, Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { generatePath, Link, useRouteMatch } from 'react-router-dom';
 import { getAllPaths } from '../../redux/selectors/paths'
 import TopLinks from '../layout/TopLinks';
 import TopLinksWrapper from '../layout/TopLinksWrapper';

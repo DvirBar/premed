@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import FormInput from '../../../../common/FormInput'
-import useForm from '../../../../../forms/useForm'
 import { addStepSummaryGroup, addStepSummaryGroupContent } from '../../../../../redux/actions/steps'
 import { useDispatch } from 'react-redux'
 

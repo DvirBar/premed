@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 function SingleLink({ pathCords, isBezier, color }) {
     const {

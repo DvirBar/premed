@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { toggleEnabled } from '../../../../redux/actions/userdata'
-import ToggleSwitch from '../../../common/ToggleSwitch';
 import TableSelect from './TableSelect/TableSelect';
 import DataPathsList from './DataPathsList/DataPathsList';
 import CardContent from '../../../layout/Containers/CardContainer/CardContent';

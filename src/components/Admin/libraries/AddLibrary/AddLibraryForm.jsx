@@ -6,7 +6,6 @@ import useForm from '../../../../forms/useForm'
 import { addLibrary } from '../../../../redux/libraries/actions'
 import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../../../redux/selectors/paths'
-import { useParams } from 'react-router'
 import { LibraryContext } from '../../../libraries/LibraryContext'
 import Editor from '../../../common/forms/Editor/Editor'
 
@@ -15,7 +14,7 @@ function AddLibraryForm({ display, toggleDisplay, parent }) {
         pathId
     } = useContext(LibraryContext)
 
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         name: '',
         pathIds: [pathId && pathId],
         parentId: parent?._id

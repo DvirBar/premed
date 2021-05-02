@@ -50,6 +50,7 @@ function CardItem({ item, libId }) {
                         {item.name}
                     </p>
                     <img 
+                    alt="file-icon"
                     className="item-icon noselect"
                     src={IconObj[item.icon]} />
                     <ItemFooter

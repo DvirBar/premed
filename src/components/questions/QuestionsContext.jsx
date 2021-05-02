@@ -10,7 +10,7 @@ const QuestionsProvider = ({ children, isAdmin }) => {
         isAdmin
     }
 
-    const { pathId, groupId } = useParams()
+    const { pathId } = useParams()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getQuestGroupByPath(pathId))

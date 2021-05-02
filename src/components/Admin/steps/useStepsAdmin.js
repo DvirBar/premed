@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useStepsGlobal from '../../steps/hooks/useStepsGlobal';
 
 function useStepsAdmin() {

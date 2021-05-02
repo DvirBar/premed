@@ -6,8 +6,7 @@ function BorderTextbox({
     placeholder, 
     onChange, 
     onBlur, 
-    error,
-    status }) {
+    error }) {
     const [displayError, setDisplayError] = useState(false)
 
     useEffect(() => {
@@ -19,10 +18,6 @@ function BorderTextbox({
             setDisplayError(false)
         }
     }, [value, error])
-
-    const statusComponent = () => {
-        
-    }
 
     return (
         <div className="border-textbox">

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { getUnisByPath } from '../../../redux/selectors/unis'
 import Editor from '../../common/forms/Editor/Editor'

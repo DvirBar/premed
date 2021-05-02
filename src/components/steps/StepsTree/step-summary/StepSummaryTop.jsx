@@ -17,10 +17,6 @@ function StepSummaryTop({
         isStepsAdmin
     } = useContext(StepsContext)
 
-    const sumTopStyle = {
-        borderColor: color
-    }
-
     return (
         <div 
         onMouseDown={() => toggleGroups(!displayGroups)}

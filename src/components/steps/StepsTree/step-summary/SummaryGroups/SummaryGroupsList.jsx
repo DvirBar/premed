@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useRef, useState } from 'react'
+import React, { Fragment, useContext, useRef } from 'react'
 import SummaryGroupItem from './SummaryGroupItem'
 import { StepsContext } from '../../../StepsContext';
 import MultiSumGroups from './MultiSumGroups';

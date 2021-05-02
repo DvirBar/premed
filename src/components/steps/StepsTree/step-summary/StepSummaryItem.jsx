@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import SummaryGroupsList from './SummaryGroups/SummaryGroupsList';
 import { StepsContext } from '../../StepsContext';
 import StepSummaryTop from './StepSummaryTop';
 import SummaryGroupContent from './SummaryGroups/SummaryGroupContent';

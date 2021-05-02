@@ -18,18 +18,17 @@ function EditableTextBox({
 
     const keyOptionsMap = event => {
         if(event) {
-            switch(event.key) {
-                case 'Enter': 
-                    if(event.shiftKey) {
-                        return;
-                    }
+            if(event.key === 'Enter') {
+                if(event.shiftKey) {
+                    return;
+                }
 
-                    if(onEnter) {
-                        onEnter(ref.current)
-                    }
+                if(onEnter) {
+                    onEnter(ref.current)
+                }
 
-                    event.preventDefault()
-                    return false;
+                event.preventDefault()
+                return false;
             }
         }
     }

@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react';
-import PropTypes from 'prop-types';
 import TreeNodeContent from './TreeNodeContent';
 import { useSelector } from 'react-redux';
 import StepsGroup from './StepsGroup';

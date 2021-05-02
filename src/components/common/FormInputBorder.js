@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import FieldStatuses from './FieldStatuses/FieldStatuses'
 
 function FormInputBorder({ 
     title, 
@@ -11,7 +10,7 @@ function FormInputBorder({
     error, 
     disabled }) {
 
-    const [displayError, setDisplayError] = useState(false)
+    const [, setDisplayError] = useState(false)
 
     useEffect(() => {
         if(error && error.length !== 0) {

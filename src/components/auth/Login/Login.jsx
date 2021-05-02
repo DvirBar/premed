@@ -11,7 +11,7 @@ import { LOGIN } from '../../../redux/auth/types';
 import Loadbar from '../../layout/Loadbar';
 
 const Login = () => {
-    const [defaultValues, setDefaultValues] = useState({
+    const [defaultValues] = useState({
         email: '',
         password: ''
     });

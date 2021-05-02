@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
 import CommentsList from './CommentsList/CommentsList';
 import AddComment from './AddComment/AddComment';
 import { useDispatch, useSelector } from 'react-redux';
