@@ -1,5 +1,4 @@
-import React, { Fragment, useContext } from 'react'
-import { StepsContext } from '../../StepsContext'
+import React from 'react'
 import JumpToStepItem from './JumpToStepItem'
 
 function NextStepsList({ nextSteps }) {

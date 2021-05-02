@@ -2,7 +2,10 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    overflow-x: auto;
+
+    @media only screen and (max-width: 650px) {
+        justify-content: flex-start;
+    }
 }
 
 .steps-tree {

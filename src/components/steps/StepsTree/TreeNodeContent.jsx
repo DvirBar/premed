@@ -5,7 +5,8 @@ import { StepsContext } from '../StepsContext'
 
 function TreeNodeContent({ step, color }) {
     const {
-        selectStep
+        selectStep,
+        isFinal
     } = useContext(StepsContext)
 
     const nodeStyle = {
@@ -16,16 +17,15 @@ function TreeNodeContent({ step, color }) {
     const indicatorStyle = {
         backgroundImage: `linear-gradient(${color}, ${color})`
     }
-    
+
     const uniData = step.uniData[0]
-    const isFinal = step.uniData.length === 1 && uniData.isFinal
-
+    
     const uniName = useSelector(getUniById(uniData.uni))?.name
-
+    const isStepFinal = isFinal(step)
     return (
         <div
         style={nodeStyle}
-        onClick={e => selectStep(e, step, isFinal)}
+        onClick={e => selectStep(e, step)}
         className="tree-node-content">
             <div 
             style={indicatorStyle}
@@ -35,7 +35,7 @@ function TreeNodeContent({ step, color }) {
                 <p className="node-step-name">
                     {step.name}
                 </p>
-                {isFinal &&
+                {isStepFinal &&
                     <p className="node-step-uni">
                         {uniName}
                     </p>

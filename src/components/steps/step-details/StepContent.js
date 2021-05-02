@@ -1,11 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router';
+import DisplayStepUni from './DisplayStepUni';
 
-function StepContent({ step }) {
+function StepContent({ step, isFinal }) {
     return (
         <div className="step-content">
-            <span className="step-title">{step.name}</span>
+            <span className="step-title">
+                {step.name} &nbsp;
+                {isFinal &&
+                    <DisplayStepUni uniId={step?.uniData[0].uni} />
+                }
+            </span>
             {step.genContent 
             ?
                 <div 

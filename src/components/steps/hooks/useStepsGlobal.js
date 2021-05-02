@@ -8,7 +8,6 @@ import { isSingleMatch } from './utils';
 
 function useStepsGlobal(pathId) {
     const unis = useSelector(getUnisByPath(pathId))
-    const [hasInit, setHasInit] = useState(false)
     const [selUnis, setSelUnis] = useState([])
     
     const selectUni = uniObj => {
@@ -18,15 +17,13 @@ function useStepsGlobal(pathId) {
         }
     }
 
-    const dispatch = useDispatch()
-    
     useEffect(() => {
-        if(unis.length > 0 && !hasInit) {
-            setHasInit(true)
+        if(pathId) {
             setSelUnis(unis.map(uni => uni._id))
         }
-    }, [unis])
+    }, [pathId])
 
+    const dispatch = useDispatch()
     const steps = useSelector(getStepsByUnis(selUnis))
 
 
@@ -66,6 +63,11 @@ function useStepsGlobal(pathId) {
         return uniContent
     }
 
+    const isFinal = step => {
+        const uniData = step.uniData[0]
+        return step.uniData.length === 1 && uniData.isFinal
+    }
+
    
     return {
         unis,
@@ -73,7 +75,8 @@ function useStepsGlobal(pathId) {
         selectUni,
         getTreeColor,
         steps,
-        getUniContent
+        getUniContent,
+        isFinal
     }
 }
 

@@ -74,8 +74,6 @@ export const getSteps = pathId => dispatch => {
 
 // Create new step
 export const addStep = data => dispatch => {
-    dispatch(stepLoad());
-
     // Request body
     const body = JSON.stringify(data);
 
@@ -88,8 +86,6 @@ export const addStep = data => dispatch => {
 }
 
 export const editStep = (id, data) => dispatch => {
-    dispatch(stepLoad());
-    
     // Request body
     const body = JSON.stringify(data);
 
@@ -278,7 +274,10 @@ export const deleteStep = id => dispatch => {
 
     axios.delete(`api/steps/${id}`)
          .then(res => {
-             dispatch(stepDelete(id));
+             dispatch({
+                 type: STEP_DELETE,
+                 payload: id
+             });
              dispatch(getSteps());
              dispatch(getMessage(res.data));
          })

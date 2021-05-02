@@ -32,6 +32,7 @@ export const ITEM_UPDATE = 'ITEM_UPDATE';
 export const ITEM_DELETE = 'ITEM_DELETE';
 
 // Steps
+export const STEP = 'STEP';
 export const STEP_LOADING = 'STEP_LOADING';
 export const STEP_SUCCESS = 'STEP_SUCCESS';
 export const STEP_ERROR = 'STEP_ERROR';

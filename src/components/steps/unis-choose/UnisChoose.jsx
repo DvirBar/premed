@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getUnisByPath } from '../../../redux/selectors/unis';
 import UniItem from './UniItem';
 
 function UnisChoose({ unis, selectUni, selUnis }) {

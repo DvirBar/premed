@@ -250,7 +250,6 @@ export default function(state = initialState, action) {
             }
 
         case STEP_DELETE:
-            // Waits for get steps
             return {
                 ...state,
                 uniSteps: state.uniSteps.filter(step => step._id !== payload)

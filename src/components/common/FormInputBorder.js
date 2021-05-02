@@ -44,16 +44,11 @@ function FormInputBorder({
                 autoComplete="off"
                 disabled={disabled} /> 
             </fieldset>
-            <span className={displayError 
+            {/* <span className={displayError 
             ? "input-error display"
             : "input-error"}>
-                <i 
-                className="material-icons"
-                onClick={() => setDisplayError(false)}>
-                    close
-                </i>
                 <span>{error}</span>
-            </span>
+            </span> */}
         </Fragment>
     )
 }

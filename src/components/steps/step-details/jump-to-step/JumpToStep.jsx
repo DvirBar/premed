@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getStepChildren } from '../../../../redux/selectors/steps'
 import ChildrenNextSteps from './ChildrenNextSteps'
@@ -7,7 +7,6 @@ import NextStepsBlock from './NextStepsBlock'
 
 function JumpToStep({ step }) {
     const children = useSelector(getStepChildren(step._id))
-
     return (
         <div className="jump-to-step">
             <span className="jump-to-step-title">

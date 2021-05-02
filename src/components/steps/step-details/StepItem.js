@@ -12,25 +12,29 @@ import { isObjEmpty } from '../../../utils/objects';
 function StepItem() {
     let { params } = useRouteMatch();
     const { pathId, stepId } = params;
-    const { getUniContent } = useStepsGlobal()
+    const { getUniContent, isFinal } = useStepsGlobal()
     
     const step = useSelector(getStepById(stepId))
     const uniContent = getUniContent(step)
 
-    
+    const isStepFinal = isFinal(step)
     return (
         <div className="step-item">
             <ShowTree />
             { step &&
                 <Fragment>
-                    <StepContent step={step} /> 
+                    <StepContent 
+                    isFinal={isStepFinal}
+                    step={step} /> 
                     {!isObjEmpty(uniContent) &&
                         <UniContent 
                         content={uniContent}
                         pathId={pathId} />
                     }
-                    <JumpToStep
-                    step={step} />
+                    {!isStepFinal &&
+                        <JumpToStep
+                        step={step} />                        
+                    }
                 </Fragment>
             }
             

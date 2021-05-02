@@ -8,26 +8,24 @@ function useStepsClient() {
     const { pathname } = useLocation()
     const { pathId, stepId } = params
     
-    const selectStep = (event, step, isFinal) => {
+    const selectStep = (event, step) => {
         if(event)
             event.stopPropagation()
 
-        if(!isFinal) {
-            let url
-            const newStep = step._id
-            if(stepId) {
-                url = generatePath(path, { 
-                    pathId,  
-                    stepId: newStep 
-                })
-            }
-
-            else {
-                url = `${pathname}/${newStep}`
-            }
-
-            history.push(url)
+        let url
+        const newStep = step._id
+        if(stepId) {
+            url = generatePath(path, { 
+                pathId,  
+                stepId: newStep 
+            })
         }
+
+        else {
+            url = `${pathname}/${newStep}`
+        }
+
+        history.push(url)
     }
 
     const stepsGlobal = useStepsGlobal(pathId)
