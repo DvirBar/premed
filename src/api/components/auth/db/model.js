@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import { ConstructStaticMethods } from '../../../db/plugins';
 const Schema = mongoose.Schema;
 import * as staticMethods from './methods'
+import { authPreSave } from './middlewares';
 
 // Create schema
 export const UserSchema = new Schema({
@@ -67,6 +68,9 @@ export const UserSchema = new Schema({
         default: Date.now
     }
 })
+
+// Middlewares
+UserSchema.pre('save', authPreSave)
 
 // Define static methods
 UserSchema.plugin(

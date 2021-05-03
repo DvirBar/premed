@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import config from 'config'
 
 const refreshTokenExp = 31536000 // 1 year
 const accessTokenExp = 900 // 15 minutes
@@ -39,24 +38,24 @@ export const hashString = async(string) => {
 }
 
 export const verifyAccessToken = token => {
-    return jwt.verify(token, config.get('jwtSecret'))
+    return jwt.verify(token, process.env.JWT_SECRET)
 }
 
 export const verifyRefreshToken = token => {
-    return jwt.verify(token, config.get('jwtSecretRefresh'))
+    return jwt.verify(token, process.env.JWT_SECRET_REFRESH)
 }
 
 export const createAccessToken = payload => {
     return jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.JWT_SECRET,
         { expiresIn: accessTokenExp })
 }
 
 export const createRefreshToken = payload => {
     return jwt.sign(
         payload,
-        config.get('jwtSecretRefresh'),
+        process.env.JWT_SECRET_REFRESH,
         { expiresIn: refreshTokenExp })
 }
 

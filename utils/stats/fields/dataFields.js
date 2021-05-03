@@ -71,6 +71,21 @@ const fields = [
             }
         ]
     },
+    {
+        name: 'מבחן ידע',
+        _id: 'knowledge',
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        paths: ['four-year'],
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
+    },
     ...taufields,
     ...bgufields,
     ...hujifields,

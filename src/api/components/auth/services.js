@@ -13,7 +13,8 @@ const {
     InvalidCredentials, 
     NotAuthorizedSelf, 
     UserIsBlocked,
-    UserAlreadyExists } = messages
+    UserAlreadyExists,
+    UsernameAvailable } = messages
 
 class UserService {
     static getAllUsers() {
@@ -40,10 +41,16 @@ class UserService {
     static async create(data) {
         // Hash password string and create user
         data.password = await hashString(data.password)
-        const possibleUser = User.getUserByEmail(data.email)
-
-        if(possibleUser) {
+        const possibleEmail = await User.getUserByEmail(data.email)
+        
+        if(possibleEmail) {
             throw UserAlreadyExists
+        }
+
+        const possibleUsername = await User.getUserByUsername(data.username)
+
+        if(possibleUsername) {
+            throw UsernameAvailable
         }
 
         const user = await User.createUser(data)
@@ -70,7 +77,7 @@ class UserService {
             if(!user) {
                 throw InvalidCredentials
             }
-
+            
             if(User.isUserBlocked(user)) {
                 throw UserIsBlocked
             }
@@ -115,14 +122,9 @@ class UserService {
     }
 
     static async editUser(user, userId) {
-        try {
-            // TODO: add verification email if email was changed
-            const editedUser = await User.editUser(user, userId)
-            return userWithoutPassword(editedUser)
-        }
-        catch(err) {
-            next(err)
-        }
+        // TODO: add verification email if email was changed
+        const editedUser = await User.editUser(user, userId)
+        return userWithoutPassword(editedUser)
     }
 
     static async deleteUser(delUserId, reqUserId) {

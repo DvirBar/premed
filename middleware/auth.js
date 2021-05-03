@@ -1,4 +1,3 @@
-const config = require('config');
 const jwt = require('jsonwebtoken');
 import UserService from '../src/api/components/auth/services';
 import { getAccessCookie } from '../src/api/components/auth/utils';
@@ -9,7 +8,7 @@ const auth = async(req, res, next) => {
         if(!accessToken) {
             throw new Error("No access token provided")
         }
-        const decoded = jwt.verify(accessToken, config.get('jwtSecret'))
+        const decoded = jwt.verify(accessToken, process.env.JWT_SECRET)
         const user = await UserService.getUserById(decoded.id)
 
         // Check that user isn't blocked

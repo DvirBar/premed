@@ -23,12 +23,14 @@ export async function sendEmail(emailOptions, templateName, context) {
                 throw err
             }
             
-            if(info.accepted?.length > 0) {
-                console.log(`Successfully sent email to ${info.accepted}`);
-            }
-
-            if(info.rejected?.length > 0) {
-                console.log(`Email rejected by ${info.rejected}`);
+            if(process.env.NODE_ENV === 'development') {
+                if(info.accepted?.length > 0) {
+                    console.log(`Successfully sent email to ${info.accepted}`);
+                }
+    
+                if(info.rejected?.length > 0) {
+                    console.log(`Email rejected by ${info.rejected}`);
+                }
             }
         })
     }

@@ -1,13 +1,16 @@
 import { dateInPast } from '../../../../utils/dates'
 import messages from '../messages'
-const { UserDoesNotExist } = messages
+const { 
+    UserDoesNotExist, 
+    UserAlreadyExists, 
+    UsernameUnavailable } = messages
 
 export function getAllUsers() {
     return this.find().select("-password")
 }
 
 export function getUserByEmail(email) {
-    return this.findOne({ email })
+    return this.findOne({ email: email.toLowerCase() })
 }
 
 export function getUserByUsername(username) {
@@ -78,7 +81,6 @@ export async function editUser(userDetails, userId) {
         firstName,
         lastName,
         username,
-        isStudent,
         email
     } = userDetails
 
@@ -88,18 +90,21 @@ export async function editUser(userDetails, userId) {
             throw UserDoesNotExist
         }
 
+        const possibleEmail = await this.getUserByEmail(email)
+        const possibleUsername = await this.getUserByUsername(username)
+
+        if(possibleEmail && email.toLowerCase() !== user.email) {
+            throw UserAlreadyExists
+        }
+
+        if(possibleUsername && username !== user.username) {
+            throw UsernameUnavailable
+        }
+
         user.email = email;
         user.firstName = firstName;
         user.lastName = lastName;
         user.username = username;
-
-        if(isStudent && !user.isStudent.status) {
-            user.isStudent.isPending = true
-        }
-
-        else {
-            user.isStudent.status = isStudent
-        }
 
         return user.save()
     } 

@@ -3,8 +3,7 @@ import templateMap from '../../../../services/email/templates/templateMap'
 const Announcement = require('./db/model')
 import * as AncGroupService from '../groups/services'
 import jwt from 'jsonwebtoken'
-import config from 'config'
-import path from 'path'
+
 
 export function getLast() {
     return Announcement.get(5)
@@ -81,10 +80,10 @@ async function sendAncEmail(anc, isEdit) {
 
         const token = jwt.sign(
             {id: sub.user.id}, 
-            config.get('jwtSecretEmail'))
+            process.env.JWT_SECRET_EMAIL)
         
         const unsubscribe_link = 
-        `${config.get('serverURI')}/unsubscribe?token=${token}`
+        `${process.env.SERVER_URI}/unsubscribe?token=${token}`
 
         sendEmail({
             subject: title,

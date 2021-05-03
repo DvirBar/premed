@@ -123,6 +123,7 @@ router.get('/:tableId/:pathId', auth, (req, res, next) => {
 router.post('/', auth, (req, res, next) => {
     const { 
         pathIds,
+        enabled,
         defaults
     } = req.body;
 
@@ -149,6 +150,7 @@ router.post('/', auth, (req, res, next) => {
                                     {
                                         table: table._id,
                                         paths: pathIds,
+                                        enabled,
                                         dataVals: defaults
                                     }
                                 ]

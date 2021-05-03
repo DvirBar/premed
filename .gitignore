@@ -6,3 +6,4 @@ utils/googleSheetsApi.js
 # messages/data-tables.js
 messages/ggl-api.js
 build
+env

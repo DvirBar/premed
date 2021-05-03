@@ -46,6 +46,10 @@ const LibrarySchema = new Schema({
         meta: {
             credit: {
                 type: String
+            },
+            uploadedAt: {
+                type: Date,
+                default: Date.now
             }
         },
         upvotes: [{

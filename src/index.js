@@ -1,19 +1,25 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import config from 'config';
 import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
-import path from 'path';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import path from 'path'
 
 // Init app
 const app = express();
+
+// Environment variables
+dotenv.config({
+    path: path.resolve("env",`.env.${process.env.NODE_ENV}`)
+})
 
 // Middlewares
 // Entry middlewares
 app.use(express.json());
 app.use(morgan('tiny'))
 app.use(cookieParser())
+
 
 // App routes
 
@@ -53,11 +59,11 @@ app.use(errorHandler);
 
 
 // Create connection
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
 // Database config
-const db = config.get('mongoURI');
+const db = process.env.MONGO_URI;
 
 
 // Connect to MongoDB

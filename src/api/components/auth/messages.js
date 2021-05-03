@@ -6,6 +6,13 @@ const messages = {
         },
         status: 200
     },
+    SuccessEdit: {
+        msg: {
+            en: 'User edited successfully',
+            he: 'פרטי המשתמש נשמרו'
+        },
+        status: 200
+    },
     UsernameAvailable: {
         msg: {
             en: 'Username is available',
@@ -14,7 +21,7 @@ const messages = {
         type: "local",
         status: 200
     },
-    UsernameAvailable: {
+    UsernameUnavailable: {
         msg: {
             en: 'Username is unavailable',
             he: 'שם המשתמש תפוס'

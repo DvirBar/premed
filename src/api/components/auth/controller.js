@@ -4,7 +4,7 @@ import UserService from './services';
 import messages from './messages';
 import { sendHttpMessage } from '../../../services/messages';
 import { clearAccessCookie, clearRefreshCookie, createAccessCookie, createRefreshCookie, getRefreshCookie, refreshCookieName } from './utils';
-const { SuccessDelete, UsernameAvailable } = messages
+const { SuccessDelete, UsernameAvailable, SuccessEdit } = messages
 
 
 class UserController {
@@ -125,7 +125,10 @@ class UserController {
     static async editUser(req, res, next) {
         try {
             const editedUser = await UserService.editUser(req.body, res.locals.user.id)
-            res.send(editedUser)
+            res.send({
+                msg: SuccessEdit,
+                user: editedUser
+            })
         }
         catch(err) {
             next(err)
