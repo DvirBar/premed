@@ -1,5 +1,6 @@
 import { dateInPast } from '../../../../utils/dates'
 import messages from '../messages'
+import { hashString } from '../utils'
 const { 
     UserDoesNotExist, 
     UserAlreadyExists, 
@@ -32,6 +33,19 @@ export function resetFailedAttempts(user) {
 export function blockUser(user, expiry) {
     user.blocked.isBloked = true
     user.blocked.expiry = expiry 
+
+    return user.save()
+}
+
+export async function changePassword(user, plainPassword) {
+    const hashedPassword = await hashString(plainPassword)
+    user.password = hashedPassword
+
+    return user.save()
+}
+
+export function addToFormerPasswords(user, password) {
+    user.formerPasswords.push(password)
 
     return user.save()
 }

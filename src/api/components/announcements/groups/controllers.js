@@ -57,9 +57,9 @@ export async function updateSubscriptions(req, res, next) {
         const userId = res.locals.user.id
         const subs = await AncGroupServices.updateSubscriptions(req.body.subs, userId)
       
-        return res.status(200).send({
+        return res.status(SubscribeUpdated.status).send({
             subs,
-            message: SubscribeUpdated
+            message: SubscribeUpdated.msg
         })
     }
 

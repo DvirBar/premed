@@ -44,6 +44,11 @@ router.post('/logout', UserController.logout)
 // @access  Private
 router.put('/user', auth, UserController.editUser)
 
+// @route   PUT api/auth/user/:id
+// @desc    Update user details
+// @access  Private
+router.put('/changePassword', auth, UserController.changePassword)
+
 // @route   DELETE api/auth/user/:id
 // @desc    Delete user
 // @access  Admin

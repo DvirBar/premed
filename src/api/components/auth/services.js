@@ -14,7 +14,9 @@ const {
     NotAuthorizedSelf, 
     UserIsBlocked,
     UserAlreadyExists,
-    UsernameAvailable } = messages
+    UsernameAvailable,
+    PasswordIncorrect,
+    PasswordAlreadyUsed } = messages
 
 class UserService {
     static getAllUsers() {
@@ -98,7 +100,7 @@ class UserService {
                 throw InvalidCredentials
             }
             
-        // Verification completed, log user in
+        // Authorization completed, log user in
             User.resetFailedAttempts(user)
             const tokenPayload = { id: user._id }
             const accessToken = createAccessToken(tokenPayload)
@@ -129,6 +131,37 @@ class UserService {
         // TODO: add verification email if email was changed
         const editedUser = await User.editUser(user, userId)
         return userWithoutPassword(editedUser)
+    }
+
+    static async changePassword(userId, oldPassword, newPassword) {
+        const user = await User.getByIdOrFail(userId)
+
+        // Check that current password is correct
+        const isOldMatch = await compareBcrypt(oldPassword, user.password)
+
+        if(!isOldMatch) {
+            throw PasswordIncorrect
+        }
+
+        // Check that new password wasn't in use before
+        if(oldPassword === newPassword) {
+            throw PasswordAlreadyUsed
+        }
+
+        for(let formerPass of user.formerPasswords) {
+            const isMatch = await compareBcrypt(newPassword, formerPass)
+
+            if(isMatch) {
+                throw PasswordAlreadyUsed
+            }
+        }
+
+        const oldHashedPassword = user.password
+        // Change password 
+        await User.changePassword(user, newPassword)
+
+        // Add old password to former passwords
+        await User.addToFormerPasswords(user, oldHashedPassword)
     }
 
     static async deleteUser(delUserId, reqUserId) {

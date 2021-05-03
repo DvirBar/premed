@@ -4,7 +4,11 @@ import UserService from './services';
 import messages from './messages';
 import { sendHttpMessage } from '../../../services/messages';
 import { clearAccessCookie, clearRefreshCookie, createAccessCookie, createRefreshCookie, getRefreshCookie, refreshCookieName } from './utils';
-const { SuccessDelete, UsernameAvailable, SuccessEdit } = messages
+const { 
+    SuccessDelete, 
+    UsernameAvailable, 
+    SuccessEdit,
+    PasswordChangedSuccessfully } = messages
 
 
 class UserController {
@@ -122,11 +126,29 @@ class UserController {
         }
     }
 
+    static async changePassword(req, res, next) {
+        const userId = res.locals.user.id
+        const {
+            oldPassword,
+            newPassword
+        } = req.body
+
+        try {
+            await UserService.changePassword(userId, oldPassword, newPassword)
+
+            return sendHttpMessage(res, PasswordChangedSuccessfully)
+        }
+
+        catch(err) {
+            next(err)
+        }
+    }
+
     static async editUser(req, res, next) {
         try {
             const editedUser = await UserService.editUser(req.body, res.locals.user.id)
-            res.send({
-                msg: SuccessEdit,
+            res.status(SuccessEdit.status).send({
+                msg: SuccessEdit.msg,
                 user: editedUser
             })
         }

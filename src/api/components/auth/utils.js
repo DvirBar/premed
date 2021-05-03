@@ -105,6 +105,7 @@ export const compareBcrypt = (string, hash) => {
 export const userWithoutPassword = user => {
     const {
         password,
+        formerPassword,
         ...newUser
     } = user.toObject()
 

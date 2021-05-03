@@ -21,6 +21,13 @@ const messages = {
         type: "local",
         status: 200
     },
+    PasswordChangedSuccessfully: {
+        msg: {
+            en: "Password changed successfully",
+            he: "הסיסמה שונתה בהצלחה"
+        },
+        status: 200
+    },
     UsernameUnavailable: {
         msg: {
             en: 'Username is unavailable',
@@ -63,6 +70,20 @@ const messages = {
             en: "Refresh token is invalid"
         },
         status: 401
+    },
+    PasswordIncorrect: {
+        msg: {
+            en: "Password is incorrect",
+            he: "הסיסמה שגויה"
+        },
+        status: 401
+    },
+    PasswordAlreadyUsed: {
+        msg: {
+            en: "Password already used, please choose a new one",
+            he: "הסיסמה שהוזנה כבר הייתה בשימוש בעבר, יש להזין סיסמה חדשה"
+        },
+        status: 400
     },
     UserDoesNotExist: {
         msg: {

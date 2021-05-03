@@ -41,7 +41,7 @@ export const UserSchema = new Schema({
         required: [true, 'Password is required']
         // Password validation
     },
-    former_passwords: [{
+    formerPasswords: [{
         type: String
     }],
     blocked: {
