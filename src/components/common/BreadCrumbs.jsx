@@ -15,16 +15,14 @@ function BreadCrumbs({ children, highlightIndex }) {
         <ul 
         className="bread-crumbs">
             {children.map((child, index) =>
-                <Fragment>
-                    <li 
-                    className={`bread-crumbs__item
-                    ${lightenIndex === index ? 'highlight' : ''}`}>
-                        <div>
-                            {child}
-                        </div>
-                    </li>
-                </Fragment> 
-                  
+                <li 
+                key={index}
+                className={`bread-crumbs__item
+                ${lightenIndex === index ? 'highlight' : ''}`}>
+                    <div>
+                        {child}
+                    </div>
+                </li>  
             )}
         </ul>
     )

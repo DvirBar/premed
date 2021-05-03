@@ -37,11 +37,17 @@ function LibDetails({ lib }) {
                         libId={lib._id} />
                     }
                 </div>
-                
-                <LibsList 
-                parent={lib}
-                noItems={!hasItems}
-                libs={libChildren} />
+                    
+                {libChildren.length > 0 
+                ?   <LibsList 
+                    parent={lib}
+                    noItems={!hasItems}
+                    libs={libChildren} />
+ 
+                :   <div className="no-resource-error">
+                        לא נמצאו קבצים
+                    </div>
+                }
                
                {hasItems &&
                     <LibItemsList

@@ -10,6 +10,7 @@ function LinkLabels({ nextSteps, color, isMulti }) {
         <Fragment>
             {nextSteps.map((step, index) =>
                 <LinkLabel
+                key={index}
                 step={step}
                 color={color}
                 position={position}

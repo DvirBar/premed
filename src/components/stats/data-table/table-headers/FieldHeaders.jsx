@@ -21,6 +21,7 @@ function FieldHeaders({ tableSections, matchColor, ordering }) {
             {tableSections.map(uni =>
                 uni.fields.length === 0
                 ?  <th
+                key={uni._id}
                 className="field-header"
                 style={matchColor(uni, true)}>
                     -
@@ -28,6 +29,7 @@ function FieldHeaders({ tableSections, matchColor, ordering }) {
 
                 : uni.fields.map(field =>
                     <th
+                    key={field._id}
                     className={ordering.sort.fieldId === field._id
                         ? "field-header sorted"
                         : "field-header"}

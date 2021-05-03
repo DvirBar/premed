@@ -18,7 +18,9 @@ function QuestionGroupsList() {
                 <AddQuestionGroup />
             }
             {groups.map(group => 
-                <QuestionGroupItem group={group} />
+                <QuestionGroupItem 
+                key={group._id}
+                group={group} />
             )}
         </Grid>
     )

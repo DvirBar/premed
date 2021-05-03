@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import TreeContent from './TreeContent';
 import { getStartingStep } from '../../../redux/selectors/steps';
 import { getSteps } from '../../../redux/actions/steps';
@@ -42,9 +41,5 @@ function StepsTree() {
     )
 }
 
-StepsTree.propTypes = {
-    steps: PropTypes.array.isRequired,
-    selectStep: PropTypes.func.isRequired
-}
 
 export default StepsTree

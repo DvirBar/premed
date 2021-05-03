@@ -8,7 +8,7 @@ import StatsContent from './StatsContent';
 
 const StatsRouter = () => {
     let { path } = useRouteMatch();
-    console.log("hi");
+
     return ( 
         <Switch>
             <ProtectedRoute exact 

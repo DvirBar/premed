@@ -42,6 +42,7 @@ function TableBody({ tableSections, matchColor, ordering }) {
                     
                     : uni.fields.map(field =>
                             <td 
+                            key={field._id}
                             className={ordering.sort.fieldId === field._id 
                                 ? "field-cell sorted"
                                 : "field-cell"} 

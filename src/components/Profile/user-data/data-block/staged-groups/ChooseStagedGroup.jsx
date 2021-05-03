@@ -62,4 +62,4 @@ function ChooseStagedGroup({
     )
 }
 
-export default ChooseStagedGroup
+export default React.memo(ChooseStagedGroup)

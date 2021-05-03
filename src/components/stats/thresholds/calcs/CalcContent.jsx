@@ -29,7 +29,7 @@ function CalcContent({
 
             <CalcThreshAxis
             threshes={threshes}
-            type='accept' />
+            type={selType} />
         </div>
     )
 }

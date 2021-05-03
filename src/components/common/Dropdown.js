@@ -34,15 +34,20 @@ const Dropdown = ({ options, defaultOption, name, title,
             onChange(data)
             setDisplay(false)
         }
-    }
-
-    const widthStyle = {
-        width: width
-    }
+    } 
 
     const ref = useRef()
     useOnClickOutside(ref, display, () => setDisplay(false))
+    // console.log(ref.current?.getBoundingClientRect());
+    const rect = ref.current?.getBoundingClientRect()
+    const selectStyle = {
+        top: rect?.top || 0,
+        left: rect?.left || 0,
+    }
 
+    const widthStyle = {
+        width
+    }
     return (
         <div 
         className="dropdown" 
@@ -60,22 +65,25 @@ const Dropdown = ({ options, defaultOption, name, title,
                 </p>
                 
             </fieldset>
-            <ul 
-            style={display ? paddingSelect : defaultStyle}
-            className="dropdown-select" 
-            id={display && "open"}>
-            {options.map(option => 
-                <li
-                key={option.value}
-                onClick={() => selectData(option)}
-                className={option.forbidden && "forbidden-option"}
-                id={selected && option.value === selected.value ? "selected" : ""}>
-                    <div className="option-container">
-                        <span>{option.name}</span>
-                    </div>
-                </li>
-                )}
-            </ul>
+            {display &&
+                <ul 
+                style={selectStyle}
+                className="dropdown-select" 
+                id={display && "open"}>
+                {options.map(option => 
+                    <li
+                    key={option.value}
+                    onClick={() => selectData(option)}
+                    className={option.forbidden && "forbidden-option"}
+                    id={selected && option.value === selected.value ? "selected" : ""}>
+                        <div className="option-container">
+                            <span>{option.name}</span>
+                        </div>
+                    </li>
+                    )}
+                </ul>
+            } 
+            
         </div>
     )
 }
@@ -90,12 +98,6 @@ Dropdown.propTypes = {
     uniqueListKey: PropTypes.string
 }
 
-
-const paddingSelect = {
-    padding: "0.5rem 0"
-}
-
-const defaultStyle = {}
 
 
 

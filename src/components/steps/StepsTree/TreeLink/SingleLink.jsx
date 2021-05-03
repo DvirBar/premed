@@ -19,7 +19,7 @@ function SingleLink({ pathCords, isBezier, color }) {
                 :   `V ${length}`
                 }`} 
         stroke={color} 
-        stroke-width='5' 
+        strokeWidth='5' 
         fill="transparent"/>
         
     )

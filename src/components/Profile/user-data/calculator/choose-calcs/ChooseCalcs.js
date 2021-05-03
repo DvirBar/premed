@@ -5,6 +5,7 @@ import { getUnisByCalcs } from '../../../../../redux/selectors/unis';
 import { getAllStoredCalcs } from '../../../../../redux/selectors/statsinputs';
 import UniCalcsItem from './UniCalcsItem';
 import ChooseAllCalcs from './ChooseAllCalcs';
+import Explanation from './Explanation';
 
 function ChooseCalcs({ 
     chosenCalcs, 
@@ -29,6 +30,8 @@ function ChooseCalcs({
     
     return (
         <div className="choose-calcs">
+            <Explanation />
+            
             <span className={error 
             ?   "choose-calcs-error display"
             :   "choose-calcs-error"}>

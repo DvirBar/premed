@@ -36,6 +36,7 @@ function CalculatorBody({ display, toggleModal }) {
     return (
         <Modal
         display={display}
+        title="המחשבון"
         toggleModal={toggleModal}>
             {pickCalcs 
             ?   <ChooseCalcs 

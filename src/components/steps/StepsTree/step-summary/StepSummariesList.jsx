@@ -6,6 +6,7 @@ function StepSummariesList({ stepId, summaries, color }) {
         <div className="step-summaries-list">
             {summaries.map(sum =>
                 <StepSummaryItem
+                key={sum._id}
                 summary={sum}
                 stepId={stepId}
                 color={color} />

@@ -69,7 +69,7 @@ const Modal = ({
           <div 
           className="modal-box" 
           ref={ref}>
-            <p class="close-modal" onClick={() => toggleModal(false)}>&times;</p>
+            <p className="close-modal" onClick={() => toggleModal(false)}>&times;</p>
             <div className="modal-header">
               <p className="modal-titles">
                 <span className="modal-title">{title}</span>

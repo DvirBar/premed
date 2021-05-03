@@ -7,15 +7,14 @@ function CalcsList({ calcs, tableId, backColor }) {
         <div 
         className="calcs-list">
             {calcs.map(calc =>
-                <ThresholdProvider calc={calc}>
+                <ThresholdProvider 
+                key={calc._id} 
+                calc={calc}>
                     <CalcItem
-                    key={calc._id}
                     calc={calc}
                     tableId={tableId}
                     color={backColor} />
                 </ThresholdProvider>
-                
-                
             )}
         </div>
     )

@@ -5,6 +5,7 @@ function UniHeaders({ tableSections, matchColor }) {
         <tr className="uni-headers">
             {tableSections.map(uni => 
                 <th 
+                key={uni._id}
                 className="uni-header"
                 colSpan={uni.fields.length}>
                     <span style={matchColor(uni, true)}>

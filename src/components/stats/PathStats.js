@@ -31,7 +31,6 @@ function PathStats({ pathId, tableId }) {
             :   <DataTable 
                 pathId={pathId} />
             }
-
         </Fragment>
     )
 }

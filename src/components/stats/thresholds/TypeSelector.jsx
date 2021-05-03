@@ -3,9 +3,10 @@ import React from 'react'
 function TypeSelector({ types, selType, selectType }) {
     return (
         <ul className="select-thresh-type">
-            {types.map(type => 
+            {types.map((type, index) => 
                 type === 'accept'
                 ? <li 
+                    key={index}
                     className={selType === 'accept'
                     ?   "thresh-type accept selected"
                     :   "thresh-type accept"}
@@ -14,6 +15,7 @@ function TypeSelector({ types, selType, selectType }) {
                     </li>
 
                 : <li 
+                    key={index}
                     className={selType === 'reject'
                     ?   "thresh-type reject selected"
                     :   "thresh-type reject"}
