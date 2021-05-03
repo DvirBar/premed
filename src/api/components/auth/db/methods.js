@@ -61,17 +61,21 @@ export function isUserBlocked(user) {
 
 export function createUser(user) {
     const {
-        isStudent,
-        ...userObj
+        email,
+        password,
+        username,
+        firstName,
+        lastName
     } = user
-
+    
     const newUser = new this({
-        ...userObj
+        email,
+        password,
+        username,
+        firstName,
+        lastName,
+        isAdmin: false
     })
-
-    if(user.isStudent) {
-        newUser.isStudent.isPending = true
-    }
 
     return newUser.save()
 }

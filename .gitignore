@@ -7,3 +7,4 @@ utils/googleSheetsApi.js
 messages/ggl-api.js
 build
 env
+deploy

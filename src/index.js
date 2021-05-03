@@ -65,7 +65,6 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
 // Database config
 const db = process.env.MONGO_URI;
 
-
 // Connect to MongoDB
 mongoose
     .connect(db, { 

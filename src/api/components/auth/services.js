@@ -25,6 +25,10 @@ class UserService {
         return User.getByIdOrFail(id)
     }
 
+    static getUserByEmail(email) {
+        return User.getUserByEmail(email)
+    }
+
     static isUsernameAvailable(username) {
         return User.getUserByUsername(username)
     }
