@@ -13,12 +13,11 @@ export const initMessage = () => {
 
 export const getMessage = msgObj => dispatch => {
     
-    if(msgObj?.msg?.he) {
+    if(msgObj?.he) {
         dispatch({
             type: GET_MESSAGE,
             payload: {
-                msg: msgObj.msg.he,
-                status: msgObj.status
+                msg: msgObj.he
             }
         })
 

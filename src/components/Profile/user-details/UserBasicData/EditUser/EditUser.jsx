@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { editUser } from '../../redux/actions/auth';
-import useForm from '../../forms/useForm';
-import FormInput from '../common/FormInput';
-import { isLoading } from '../../redux/loader/selectors';
-import { EDIT_USER } from '../../redux/auth/types';
+import { editUser } from '../../../../../redux/actions/auth';
+import useForm from '../../../../../forms/useForm';
+import FormInput from '../../../../common/FormInput';
+import { isLoading } from '../../../../../redux/loader/selectors';
+import { EDIT_USER } from '../../../../../redux/auth/types';
 import { Fragment } from 'react';
-import Loadbar from '../layout/Loadbar';
+import Loadbar from '../../../../layout/Loadbar';
 
 
 function EditUser({ user }) {
@@ -33,7 +33,13 @@ function EditUser({ user }) {
     const loading = useSelector(isLoading(EDIT_USER))
 
     return (
-        <form onSubmit={handleSubmit} noValidate>
+        <form 
+        className="edit-user-details"
+        onSubmit={handleSubmit} 
+        noValidate>
+            <div className="edit-user-details__title">
+                עריכת פרטים
+            </div>
             <FormInput
             type="text"
             label="שם"

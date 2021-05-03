@@ -13,6 +13,18 @@ export const config = {
             // isNotStrongPass: { message: 'הסיסמה חלשה מדי' }
         },
 
+        oldPassword: {
+            isRequired: { message: 'יש להזין סיסמה נוכחית' },
+        },
+
+        newPassword: {
+            isRequired: { message: 'יש להזין סיסמה חדשה' },
+        },
+
+        confirmPassword: {
+            isRequired: { message: 'יש לחזור על הסיסמה החדשה' },
+        },
+
         firstName: {
             isRequired: { message: 'דרוש שם פרטי' },
             isNotHebName: { message: 'שם צריך להיות בעברית'}

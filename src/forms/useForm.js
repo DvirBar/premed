@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addOrRemove } from '../utils/arrays';
 import validateForm from './formValidator';
@@ -19,7 +19,6 @@ const useForm = (callback, defaultValues, ...params) => {
         if(Object.keys(errors).length === 0 && isSubmitting)
             dispatch(callback(...params, values))
         
-
         // If there are errors cancel submit
         if(errors)
             setIsSubmitting(false)
@@ -127,7 +126,9 @@ const useForm = (callback, defaultValues, ...params) => {
         handleSubmit,
         values,
         errors,
-        initValues
+        initValues,
+        validateForm,
+        setErrors
     }
  }
 

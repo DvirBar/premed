@@ -44,7 +44,7 @@ function BannerMap({ rootUrl }) {
             img: <Post />
         },
         '/profile': {
-            name: 'פרופיל',
+            name: 'איזור אישי',
             img: <Personal />
         }    
     }

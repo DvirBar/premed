@@ -1,0 +1,12 @@
+.confirm-password {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    border-radius: 0.5rem;
+
+    &__error {
+        color: $error-color;
+        height: 25px;
+        font-size: 1.5rem;
+    }
+}

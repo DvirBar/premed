@@ -50,11 +50,14 @@
 
 .close-modal {
     color: #aaa;
-    display: block;
-    right: 0;
-    font-size: 2.8rem;
+    display: flex;
     font-weight: bold;
-    padding: 1.5rem 1.5rem 0 0;
+    padding-top: 1rem;
+    padding-right: 1rem;
+
+    .MuiSvgIcon-root {
+        font-size: 30px;
+    }
 }
 
 .close-modal:hover,

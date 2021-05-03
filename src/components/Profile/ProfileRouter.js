@@ -7,7 +7,7 @@ import {
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from '../routing/ProtectedRoute';
 import ValidatePath from './user-data/ValidatePath';
-import UserDetails from './UserDetails';
+import UserDetails from './user-details/UserDetails';
 
 
 const ProfileRouter = () => {

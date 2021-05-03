@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import useOnClickOutside from '../common/useOnClickOutside';
 import TopLinks from './TopLinks';
 import { useLocation } from 'react-router-dom';
+import { Close } from '@material-ui/icons';
 
 const Modal = ({ 
   display, 
@@ -69,7 +70,9 @@ const Modal = ({
           <div 
           className="modal-box" 
           ref={ref}>
-            <p className="close-modal" onClick={() => toggleModal(false)}>&times;</p>
+            <p className="close-modal" onClick={() => toggleModal(false)}>
+                <Close />
+            </p>
             <div className="modal-header">
               <p className="modal-titles">
                 <span className="modal-title">{title}</span>

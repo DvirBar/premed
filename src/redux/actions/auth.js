@@ -11,6 +11,9 @@ import {
     EDIT_USER_LOADING,
     EDIT_USER_SUCCESS,
     EDIT_USER_FAILURE,
+    CHANGE_PASSWORD_LOADING,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILURE,
     LOGOUT
 } from '../auth/types';
 import { getError, getMessage } from './messages';
@@ -107,4 +110,20 @@ export const editUser = data => dispatch => {
              })
              dispatch(getError(err))
          })
+}
+
+export const changePassword = data => async(dispatch) => {
+    dispatch({ type: CHANGE_PASSWORD_LOADING })
+
+    const body = JSON.stringify(data)
+
+    try {
+        const res = await axios.put('/api/auth/changePassword', body)
+        dispatch({ type: CHANGE_PASSWORD_SUCCESS })
+        dispatch(getMessage(res.data))
+    }
+    catch(err) {
+        dispatch({ type: CHANGE_PASSWORD_FAILURE })
+        dispatch(getError(err))
+    }
 }

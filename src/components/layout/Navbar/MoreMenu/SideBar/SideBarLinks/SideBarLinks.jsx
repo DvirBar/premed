@@ -7,7 +7,7 @@ import SideBarItem from './SideBarItem/SideBarItem'
 function SideBarLinks() {
     let links = [
         {
-            name: "פרופיל",
+            name: "איזור אישי",
             url: '/profile',
             icon: ({ outlined }) => 
                 <Profile

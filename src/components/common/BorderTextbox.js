@@ -30,16 +30,6 @@ function BorderTextbox({
             onChange={onChange}
             onBlur={onBlur}
             placeholder={placeholder} />
-            <span className={displayError 
-            ? "input-error display"
-            : "input-error"}>
-                <i 
-                className="material-icons"
-                onClick={() => setDisplayError(false)}>
-                    close
-                </i>
-                <span>{error}</span>
-            </span>
         </div>
     )
 }

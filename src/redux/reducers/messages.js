@@ -19,8 +19,7 @@ export default function(state = initialState, action) {
         case GET_MESSAGE:
             return {
                 ...state,
-                msg: payload.msg,
-                status: payload.status
+                msg: payload.msg
             }
 
         case GET_ERROR:
