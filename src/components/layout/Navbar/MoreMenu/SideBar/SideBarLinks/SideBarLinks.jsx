@@ -23,6 +23,11 @@ function SideBarLinks() {
         {
             name: 'בלוג',
             isUpcoming: true,
+        },
+        {
+            name: "יצירת קשר",
+            url: 'https://m.me/100015029253568',
+            external: true
         } 
     ]
 

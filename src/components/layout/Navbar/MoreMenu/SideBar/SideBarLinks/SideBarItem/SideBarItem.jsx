@@ -17,12 +17,23 @@ function SideBarItem({ link }) {
                         בקרוב
                     </div>
                 </div>
-            :   <Link to={link.url}>
-                    <div className="side-bar__links__item__content">
-                        <div>{link.icon && link.icon({ outlined: false })}</div>
-                        <div>{link.name}</div>
-                    </div>
-                </Link>
+            :   link.external
+                ?   <a
+                    href={link.url} 
+                    target="_blank"
+                    rel="noopener noreferrer">
+                        <div className="side-bar__links__item__content">
+                            <div>{link.icon && link.icon({ outlined: false })}</div>
+                            <div>{link.name}</div>
+                        </div>
+                    </a>
+
+                :   <Link to={link.url}>
+                        <div className="side-bar__links__item__content">
+                            <div>{link.icon && link.icon({ outlined: false })}</div>
+                            <div>{link.name}</div>
+                        </div>
+                    </Link>
             }
         </li>
     )
