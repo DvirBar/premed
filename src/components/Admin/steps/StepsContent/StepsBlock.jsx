@@ -27,9 +27,8 @@ function StepsBlock() {
             display={displayAdd}
             toggleDisplay={toggleAdd}/>
         }
-        
+      
         <StepsTree />
-        
     </div>
     )
 }

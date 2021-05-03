@@ -1,44 +1,22 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouteMatch } from 'react-router-dom';
-import StepContent from './StepContent';
+import { useParams } from 'react-router-dom';
 import { getStepById } from '../../../redux/selectors/steps';
-import ShowTree from './ShowTree';
-import JumpToStep from './jump-to-step/JumpToStep';
-import useStepsGlobal from '../hooks/useStepsGlobal';
-import UniContent from './UniContent';
-import { isObjEmpty } from '../../../utils/objects';
+import { isLoading } from '../../../redux/loader/selectors';
+import Loadbar from '../../layout/Loadbar';
+import { LOADING } from '../../../redux/loader/types';
+import StepItemContent from './StepItemContent';
 
 function StepItem() {
-    let { params } = useRouteMatch();
-    const { pathId, stepId } = params;
-    const { getUniContent, isFinal } = useStepsGlobal()
-    
-    const step = useSelector(getStepById(stepId))
-    const uniContent = getUniContent(step)
+    const { stepId } = useParams()
+    const loading = useSelector(isLoading(LOADING))
 
-    const isStepFinal = isFinal(step)
+    const step = useSelector(getStepById(stepId))
+    if(loading) return <Loadbar />
+
+    if(!step) return <Fragment></Fragment>
     return (
-        <div className="step-item">
-            <ShowTree />
-            { step &&
-                <Fragment>
-                    <StepContent 
-                    isFinal={isStepFinal}
-                    step={step} /> 
-                    {!isObjEmpty(uniContent) &&
-                        <UniContent 
-                        content={uniContent}
-                        pathId={pathId} />
-                    }
-                    {!isStepFinal &&
-                        <JumpToStep
-                        step={step} />                        
-                    }
-                </Fragment>
-            }
-            
-        </div>
+        <StepItemContent step={step} />
     )
 }
 
