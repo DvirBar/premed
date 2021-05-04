@@ -6,12 +6,7 @@ class DataTableService {
     }
 
     static create(data) {
-        const {
-            name,
-            tableUrl
-        } = data
-
-        return DataTable.createTable(name, tableUrl)
+        return DataTable.createTable(data)
     }
 
     static edit(tableId, data) {

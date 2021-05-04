@@ -14,10 +14,9 @@ export function getAll() {
     return this.find().sort({ date_created: -1 })
 }
 
-export function createTable(name, url) {
+export function createTable(data) {
     const newTable = new this({
-        name,
-        url
+        ...data
     })
 
     return newTable.save()
@@ -28,11 +27,13 @@ export async function editTable(tableId, data) {
 
     const {
         name,
-        tableUrl
+        tableUrl,
+        year
     } = data
 
     table.name = name
     table.url = tableUrl
+    table.year = year
 
     return table.save()
 }
@@ -43,7 +44,7 @@ export async function toggleEnabled(tableId) {
     /* If we are about to enable table (i.e.: currently disabled),
         find an already enabled table and disable it */
     if(!table.enabled) {
-        const tableToDisable = this.findOne({ $and: 
+        const tableToDisable = await this.findOne({ $and: 
             [{enabled: true}, {_id: {$ne: tableId}}] })
         
         // First disable formerly enabled table

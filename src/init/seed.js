@@ -6,7 +6,6 @@ import { hashString } from '../api/components/auth/utils'
 const filePath = path.resolve('deploy', 'users.json')
 
 const startup = () => {
-    
     try {
         if(!fs.existsSync(filePath)) {
             console.log("Startup skipped");
@@ -43,7 +42,7 @@ const createUsers = async(admins) => {
             })
 
             await newUser.save()
-            console.log(`Created ${admin.username} successfully`);
+            console.log(`Created admin ${admin.username} successfully`);
         }
     }  
 }

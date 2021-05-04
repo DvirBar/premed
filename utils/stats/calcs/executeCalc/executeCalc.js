@@ -36,10 +36,7 @@ const executeCalc = async(storCalc, values, customGroups, year) => {
                 val.field === arg._id)
 
             if(!argValue)
-                throw {
-                    status: ArgsInsuffice.status,
-                    msg: ArgsInsuffice.msg
-                }
+                throw ArgsInsuffice
 
             params[arg._id] = argValue.value || argValue.suggestValue
         }
