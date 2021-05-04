@@ -35,7 +35,6 @@ import steps from '../routes/api/steps';
 import announcements from './api/components/announcements/announcements/routes'
 import ancGroups from './api/components/announcements/groups/routes'
 import viewIndex from './views/index'
-import startup from './init/seed';
 
 
 app.use('/api/auth', auth);

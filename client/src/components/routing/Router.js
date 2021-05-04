@@ -7,14 +7,14 @@ import AdminRoute from './AdminRoute';
 import Default from '../Default';
 import Register from '../auth/Register/Register';
 import Login from '../auth/Login/Login';
-import Profile from '../profile/Profile';
-import Admin from '../admin/Admin';
 import Steps from '../steps/Steps';
 import NoMatchPage from '../layout/NoMatchPage/NoMatchPage';
 import Stats from '../stats/Stats';
 import Questions from '../questions//Questions';
 import LibrariesClient from '../libraries/LibrariesClient';
 import ViewAncs from '../announcements/ViewAncs/ViewAncs';
+import Admin from '../admin/Admin';
+import Profile from '../Profile/Profile';
 
 const Router = () => {
     const location = useLocation();

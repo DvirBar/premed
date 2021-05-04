@@ -1,5 +1,3 @@
-import c from "config"
-
 export function get(limit) {
     return this.find()
             .sort({ date: -1})

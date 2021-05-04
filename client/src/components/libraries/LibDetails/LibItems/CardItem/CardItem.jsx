@@ -4,8 +4,8 @@ import ItemDetails from '../ItemDetails/ItemDetails'
 import ItemFooter from '../ItemFooter/ItemFooter'
 import IconObj from '../../../IconsMap';
 import { LibraryContext } from '../../../LibraryContext';
-import EditItem from '../../../../admin/libraries/Items/EditItem/EditItem';
 import Info from '@material-ui/icons/Info'
+import EditItem from '../../../../admin/libraries/Items/EditItem/EditItem';
 
 function CardItem({ item, libId }) {
     const [display, setDisplay] = useState(false)

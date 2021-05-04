@@ -3,6 +3,7 @@ import EditInfo from '../../admin/libraries/EditLibrary/EditInfo'
 import Modal from '../../layout/Modal'
 import { LibraryContext } from '../LibraryContext'
 
+
 function LibInfo({ lib }) {
     const [display, setDisplay] = useState(false)
 

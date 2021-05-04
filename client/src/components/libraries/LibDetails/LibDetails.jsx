@@ -6,14 +6,15 @@ import { LibraryContext } from '../LibraryContext'
 import LibsList from '../LibsList/LibsList'
 import LibInfo from './LibInfo'
 import LibItemsList from './LibItems/LibItemsList'
+import AddItem from '../../admin/libraries/Items/AddItem/AddItem'
+import AddLibrary from '../../admin/libraries/AddLibrary/AddLibrary'
 import DeleteLibrary from '../../admin/libraries/DeleteLibrary/DeleteLibrary'
 import EditName from '../../admin/libraries/EditLibrary/EditName'
-import AddLibrary from '../../admin/libraries/AddLibrary/AddLibrary'
-import AddItem from '../../admin/libraries/Items/AddItem/AddItem'
+
+
 
 function LibDetails({ lib }) {
     const libChildren = useSelector(getLibChildren(lib?._id))
-
     const hasItems = lib?.items.length > 0
 
     const {isAdmin} = useContext(LibraryContext)
