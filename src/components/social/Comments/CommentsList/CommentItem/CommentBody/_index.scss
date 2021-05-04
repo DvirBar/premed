@@ -1,0 +1,8 @@
+.comment-body {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+}
+
+@import "./CommentOptions/index";
+@import "./CommentText/index";

@@ -1,0 +1,47 @@
+.loadbar-main {
+    display: flex;
+    justify-content: center;
+
+    &.invert {
+        .MuiCircularProgress-colorPrimary {
+            color: #fff;
+        }
+    }
+    .MuiCircularProgress-colorPrimary {
+        color: $main-color;
+    }
+}
+
+.loadbar-soft {
+    left: 5%;
+    bottom: 5%;
+    position: fixed;
+    color: $main-color;
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+    animation: opacity-load 0.5s;
+
+    .loader {
+        width: $text-size;
+        height: $text-size;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes opacity-load {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

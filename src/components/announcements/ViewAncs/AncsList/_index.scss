@@ -1,0 +1,7 @@
+.ancs-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+
+@import "./AncItem/index";

@@ -1,0 +1,10 @@
+.material-icons {
+    &.close-red {
+        color: #333333;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $error-color;
+        }
+    }
+}

@@ -1,0 +1,68 @@
+.menu-wrapper {
+    position: absolute;
+    z-index: 1;
+    width: 12rem;
+    transition: transform 0.2s ease-in-out, opacity 0.35s ease-in-out;
+
+    &.display {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    @media only screen and(min-width: 768px) {
+        transform: scale(0);
+        opacity: 0;
+        transform-origin: top right;
+    }
+
+    @media only screen and(max-width: 768px) {
+        transform: scale(1);
+        opacity: 1;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        max-height: 0;
+        height: auto;
+        transition: max-height 0.2s ease-in-out;
+        width: 100%;
+
+        &.display {
+            max-height: 20rem;
+        }
+    }
+}
+
+.dd-menu {
+    box-shadow: $default-shadow-hover;
+    background-color: #fff;
+    color: $main-color;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    height: 100%;
+
+    @media only screen and(max-width: 768px) {
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    &__item {
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        width: 100%;
+
+        & > * {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 0.5rem 0.5rem;
+        }
+
+        &:hover {
+            background-color: rgba($main-color, 0.2);
+        }
+    }
+}

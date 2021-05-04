@@ -1,0 +1,19 @@
+#editable-textbox {
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 1rem;
+    outline: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
+
+    transition: box-shadow 0.2s ease-in-out;
+
+    &:empty::before {
+        content: attr(placeholder);
+        color: #555;
+    }
+
+    &.focused {
+        box-shadow: $default-shadow-hover;
+    }
+}

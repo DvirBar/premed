@@ -1,0 +1,51 @@
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    padding: 2rem 0;
+
+    .dropdown {
+        margin: 0;
+    }
+}
+
+.form-error {
+    font-size: 15px;
+    color: #af2d2d;
+    font-weight: 500;
+}
+
+.form-buttons {
+    display: flex;
+    align-items: center;
+
+    & > * {
+        margin-left: 0.1rem;
+    }
+}
+
+.add-float {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 7%;
+    bottom: 7%;
+    width: 7rem;
+    height: 7rem;
+    padding: 2rem;
+    border-radius: 50%;
+    font-size: 3rem;
+    color: #3d3d3d;
+    background-color: #fff;
+    transition: color 0.3s ease;
+    transition: box-shadow 0.3s ease;
+    box-shadow: $default-shadow;
+    cursor: pointer;
+    z-index: 8;
+
+    &:hover {
+        color: $main-color;
+        box-shadow: $default-shadow-hover;
+    }
+}

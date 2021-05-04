@@ -1,0 +1,44 @@
+.steps-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .steps-group-name {
+        cursor: pointer;
+    }
+
+    &.nested {
+        padding: 0.5rem;
+
+        & > .wrapper {
+            padding: 1rem;
+            background-color: rgba($main-color, 0.1);
+            border-radius: 0.5rem;
+        }
+
+        .steps-group-name {
+            font-size: 2rem;
+        }
+    }
+
+    &.top-level {
+        width: 650px;
+
+        .wrapper.top-level > .steps-group-name {
+            width: 100%;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 5px solid;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            transition: border-color 0.2s ease-in-out;
+        }
+    }
+
+    .group-content {
+        width: 100%;
+    }
+}

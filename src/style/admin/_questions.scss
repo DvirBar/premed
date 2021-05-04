@@ -1,0 +1,96 @@
+.questions-admin {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+
+    .question-groups-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.5rem;
+
+        .section-header:hover {
+            .group-menu {
+                display: block;
+            }
+        }
+
+        .group-menu {
+            display: none;
+            bottom: -80px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }  
+
+        .questions-list {
+            display: flex;
+            flex-direction: column;    
+            row-gap: 3rem;
+
+            .question-item {
+                background-color: #fff;
+                box-shadow: $default-shadow;
+                cursor: pointer;
+                border-radius: 0.5rem;
+                transition: box-shadow 0.3s ease;
+
+                &:hover {
+                    box-shadow: $default-shadow-hover;
+                }
+
+                .question-header {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 1rem;
+                    box-shadow: 0 3px 6px #00000030; 
+                    font-size: 2rem;
+
+                    &:hover > i {
+                        display: block;
+                    }
+
+                    i {
+                        display: none;
+                        color: #727272;
+                        transition: color 0.3s ease;
+
+                        &:hover {
+                            color: $error-color;
+                        }
+                    }
+
+                    .question-name {
+                        color: $main-color;
+                    }
+    
+                }
+
+                .question-content {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1.5rem;
+                    row-gap: 1.5rem;
+
+                    .question-source {
+                        display: inline;
+                        font-weight: 500;
+                        font-size: 1.6rem;
+                        color: #727272;   
+                        padding-right: 1rem;
+                        border-right: 3px solid $main-color;
+                        transition: color 0.3s ease;
+
+                        &:hover {
+                            color: $main-color;
+                        }
+                    }
+
+                    .question-answer {
+                        color: #3b3b3b;
+                    }
+                }
+            }
+        }
+    }
+}

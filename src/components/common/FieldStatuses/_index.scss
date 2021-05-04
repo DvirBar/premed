@@ -1,0 +1,14 @@
+.statuses {
+    .MuiSvgIcon-root {
+        font-size: 2rem;
+        cursor: default;
+    }
+
+    &.status_success {
+        color: $okay_color;
+    }
+
+    &.status_failure {
+        color: $error-color;
+    }
+}

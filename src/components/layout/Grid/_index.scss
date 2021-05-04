@@ -1,0 +1,11 @@
+.grid {
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    row-gap: 3rem;
+    column-gap: 4rem;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20rem);
+    justify-content: center;
+}

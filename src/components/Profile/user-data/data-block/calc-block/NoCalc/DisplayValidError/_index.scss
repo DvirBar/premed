@@ -1,0 +1,38 @@
+.valid-error {
+    &__error-text {
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: $main-color;
+        text-decoration: underline;
+    }
+
+    &__payload-list {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+        align-items: flex-start;
+
+        &__subj-item {
+            display: flex;
+            column-gap: 1rem;
+            align-items: center;
+
+            &__name {
+                display: flex;
+                justify-content: center;
+                border-radius: 1rem;
+                padding: 0.5rem 1rem;
+                background: $main-color;
+                color: #fff;
+                width: 12rem;
+            }
+
+            &__min-units {
+                color: #999;
+                font-weight: 500;
+            }
+        }
+    }
+}

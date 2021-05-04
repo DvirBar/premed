@@ -1,0 +1,116 @@
+.calendar-float {
+    box-shadow: $default-shadow;
+    border: none;
+    border-radius: 0.5rem;
+    width: 360px;
+    padding: 0.5rem;
+
+    button[disabled] {
+        background-color: inherit;
+        color: #ccc !important;
+        cursor: default;
+    }
+
+    .react-calendar__navigation {
+        button {
+            color: $main-color !important;
+
+            &[disabled] {
+                color: #ccc !important;
+            }
+        }
+    }
+
+    .react-calendar__month-view__weekdays {
+        color: $main-color;
+        font-size: 1.5rem;
+    }
+
+    .react-calendar__tile {
+        font-size: 1.8rem;
+    }
+
+    .react-calendar__tile--now {
+        background-color: #aaa;
+        color: #fff;
+
+        &:hover {
+            background-color: #aaa;
+            color: #fff !important;
+        }
+    }
+
+    .react-calendar__month-view__days__day--weekend {
+        color: $main-color;
+    }
+
+    .react-calendar__month-view__days__day--neighboringMonth {
+        color: #ccc;
+    }
+
+    .react-calendar__tile--active {
+        background: $main-color;
+        color: #fff !important;
+
+        &:hover {
+            color: #fff !important;
+        }
+    }
+
+    .react-calendar__tile--active:enabled:hover,
+    .react-calendar__tile--active:enabled:focus {
+        background-color: $main-color;
+    }
+
+    .react-calendar__tile:hover {
+        color: $main-color;
+    }
+}
+
+.form-date-picker {
+    position: relative;
+
+    .modal-wrapper {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #0006;
+        z-index: 100;
+        position: fixed;
+        overflow-y: auto;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .cal-wrapper {
+        display: block;
+        position: relative;
+    }
+}
+
+.date-input {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+
+    &__cancel {
+        position: absolute;
+        left: 0;
+        bottom: -1px;
+
+        .MuiSvgIcon-root {
+            color: #555;
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+
+            &:hover {
+                color: $error-color;
+            }
+        }
+    }
+}

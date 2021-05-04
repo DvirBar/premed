@@ -1,0 +1,56 @@
+.steps-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .path-select {
+        display: inline-block;
+        margin: auto;
+    }
+
+    .select-parent-prev {
+        display: flex;
+
+        & > div {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+    }
+
+    .steps-block {
+        position: relative;
+        display: block;
+        background-color: #eee;
+        width: 100%;
+        margin: 5rem 0;
+        max-height: 60rem;
+        
+        .add-step {
+            display: block;
+            width: 100%;
+            padding: 3rem 5rem 0 5rem;
+        }
+
+        .tree-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 0 5rem;
+            height: 50rem;
+        }
+    }
+
+
+    .edit-step {
+        margin-top: 10rem;
+        .text-editor {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .edit-del-buttons > button {
+            display: inline;
+        }
+    }
+}

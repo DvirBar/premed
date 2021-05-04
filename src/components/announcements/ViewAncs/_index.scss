@@ -1,0 +1,8 @@
+.view-ancs {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+}
+
+@import "./FilterAncs/index";
+@import "./AncsList/index";

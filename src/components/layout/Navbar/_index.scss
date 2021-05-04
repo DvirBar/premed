@@ -1,0 +1,69 @@
+.navbar-main {
+    height: 8rem;
+    box-shadow: $default-shadow;
+    width: 100%;
+    background-color: $main-color;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+
+    @media only screen and(max-width: 750px) {
+        height: 6rem;
+    }
+
+    @media only screen and(max-width: 600px) {
+        height: 5rem;
+    }
+
+    &__left-links {
+        width: 10rem;
+        height: 100%;
+
+        @media only screen and(max-width: 750px) {
+            width: 8rem;
+        }
+
+        @media only screen and(max-width: 750px) {
+            width: 6rem;
+        }
+
+        @media only screen and(max-width: 350px) {
+            width: 5rem;
+        }
+    }
+}
+
+.logo {
+    display: flex;
+    height: 8rem;
+    width: 8rem;
+    padding: 1.5rem;
+
+    &:hover {
+        animation: tilt 1s 1;
+    }
+
+    @media not all and (min-resolution: 0.001dpcm) {
+        @supports (-webkit-appearance: none) {
+            display: none;
+        }
+    }
+
+    @media only screen and(max-width: 900px) {
+        display: none;
+    }
+}
+
+@keyframes tilt {
+    25% {
+        transform: rotate(15deg);
+    }
+    75% {
+        transform: rotate(-15deg);
+    }
+}
+
+@import "./LoginLink/index";
+@import "./MoreMenu/index";
+@import "./MainLinks/index";

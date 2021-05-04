@@ -1,0 +1,58 @@
+$checkbox-color: $main-color;
+
+.checkbox-elem {
+    display: flex;
+    align-items: center;
+
+    .checkbox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border: 3px solid #ddd;
+        border-radius: 5px;
+        margin-left: 5px;
+        background-image: linear-gradient($checkbox-color, $checkbox-color);
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: 0% 0%;
+        cursor: pointer;
+
+        transition: background-size 150ms ease-out, border 0.5s ease;
+
+        &.enabled {
+            &:hover {
+                @media (hover: hover) {
+                    border-color: $checkbox-color;
+                }
+                cursor: pointer;
+            }
+        }
+
+        &:hover {
+            transition: border 0.5s ease;
+        }
+
+        .MuiSvgIcon-root {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        &.checked {
+            background-size: 100% 100%;
+            border: 3px solid $checkbox-color;
+            transition: opacity 0.25s ease, background-size 150ms ease-in;
+
+            @media (hover: hover) {
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        .checkbox-label {
+            color: $main-color;
+        }
+    }
+}

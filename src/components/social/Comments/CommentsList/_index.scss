@@ -1,0 +1,20 @@
+@import "./CommentItem/index";
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    width: 100%;
+
+    .show-replies {
+        color: $main-color;
+        font-weight: 500;
+        transition: opacity 0.2s ease-in-out;
+        font-size: 1.5rem;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

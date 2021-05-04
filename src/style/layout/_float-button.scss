@@ -1,0 +1,38 @@
+.float-button-wrapper {
+    position: fixed;
+    bottom: 4rem;
+    right: 4rem;
+    box-shadow: none;
+    z-index: 2;
+
+    @media only screen and(max-width: 768px) {
+        bottom: 2rem;
+        right: 2rem;
+    }
+
+    @media only screen and(min-width: 768px) {
+        &:hover > .tool-tip {
+            transform: scale(1);
+        }
+    }
+
+    .float-button {
+        width: 7rem;
+        height: 7rem;
+        background-color: $main-color;
+        box-shadow: $default-shadow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 3rem;
+        transition: all 0.5s ease;
+
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: $default-shadow-hover;
+        }
+    }
+}

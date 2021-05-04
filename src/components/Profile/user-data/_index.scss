@@ -1,0 +1,31 @@
+.user-data {
+    margin-bottom: 10rem;
+    width: 80rem;
+    margin: auto;
+
+    &__top-bar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 2rem;
+        column-gap: 2rem;
+    }
+
+    &__data-sections {
+        justify-content: center;
+    }
+
+    @media only screen and (max-width: 800px) {
+        width: 100%;
+    }
+}
+
+.section-data-block {
+    box-shadow: $default-shadow;
+    border-radius: 0.5rem;
+}
+
+@import "./calculator/index";
+@import "./ChooseBaseData/index";
+@import "./data-block/index";
+@import "./TopBar/index";

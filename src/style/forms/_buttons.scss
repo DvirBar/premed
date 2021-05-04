@@ -1,0 +1,112 @@
+$danger-color: #b33131;
+$info-color: #253385;
+
+button {
+    display: flex;
+    width: 12rem;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: $main-color;
+    font-size: 1.8rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.4s ease;
+    height: 4rem;
+    border: 1px solid $main-color;
+    outline: none;
+    cursor: pointer;
+
+    &:disabled:hover {
+        color: $main-color;
+        cursor: default;
+        background-color: #fff;
+    }
+
+    .material-icons {
+        color: inherit;
+
+        &:hover {
+            color: inherit;
+        }
+    }
+
+    &:hover {
+        background-color: $main-color;
+        color: #fff;
+    }
+}
+
+.inline-button {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    background-color: #ddd;
+    color: #777;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out !important;
+    transition: color 0.2s ease-in-out;
+    display: inline-block;
+
+    &.danger {
+        background-color: $danger-color;
+        color: #fff;
+
+        &:hover {
+            background-color: lighten($danger-color, 10);
+        }
+    }
+
+    &:hover {
+        background-color: $main-color;
+        color: #fff;
+    }
+}
+
+.danger {
+    border-color: $danger-color;
+    color: $danger-color;
+
+    &:hover {
+        background-color: $danger-color;
+        color: #fff;
+    }
+}
+
+.info {
+    background-color: $info-color;
+
+    &:hover {
+        background-color: #ddd;
+        border: 0.2rem solid $info-color;
+        color: $info-color;
+    }
+}
+
+.btn-small {
+    width: 7rem;
+    font-size: 1.6rem;
+    height: 3rem;
+}
+
+.label-button {
+    width: 100%;
+    background-color: $main-color;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    color: #fff;
+    margin: 1rem 0;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+    border-radius: 0.5rem;
+
+    .material-icons {
+        color: #fff;
+    }
+
+    &:hover {
+        background-color: lighten($main-color, 15%);
+    }
+}

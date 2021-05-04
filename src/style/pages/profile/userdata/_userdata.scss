@@ -1,0 +1,112 @@
+.navigate-data-sections {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    position: fixed;
+    justify-content: center;
+    text-align: center;
+    right: 3%;
+    top: 20%;
+    font-size: 1.6rem;
+    color: $main-color;
+    z-index: 2;
+  
+    .nav-section-item {
+        cursor: pointer;
+
+        
+        &:hover  {
+            & > .path-uni-list {
+                max-height: 30rem;
+            }
+        }
+
+
+        .section-item {
+            &::after {
+                content: "";
+                display: block;
+                padding: 0.1rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                border: 1px solid transparent;
+                background-color: $main-color;
+                border-radius: 50%;
+                margin: auto;
+                transition: all 0.3s ease;
+            }
+
+            &:hover:not(.main) {
+                &::after {
+                    background-color: transparent;
+                    border: 1px solid $main-color;
+                }
+            }
+
+            &.main {
+                margin-bottom: 1rem;
+                font-size: 1.8rem;
+            }
+        }
+
+        .path-uni-list {
+            display: block;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        &.multi-path {
+            &:hover {
+                & > .section-item::after {
+                    width: 4rem;
+                    height: 1rem;
+                    background-color: #bbb;
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1200px) {
+        display: none
+
+    }
+}
+
+.data-block {
+    animation: opacity-load 0.5s ease;
+
+    @keyframes opacity-load {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    .block-header {
+        box-shadow: 0 3px 6px #00000030;
+        font-size: 2.5rem;
+        padding: 2rem;
+        font-size: 2.5rem;
+        color: $main-color;
+    }
+
+    .data-block-fragment {
+        display: flex;
+        column-gap: 3rem;
+        row-gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .data-block-content {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+}
+
+
+
+

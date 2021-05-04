@@ -1,0 +1,25 @@
+.ancs-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 100%;
+    border-bottom: 1px solid #aaa;
+
+    &__title {
+        font-size: 3rem;
+        color: $main-color;
+    }
+
+    .see-all-ancs {
+        font-size: 1.5rem;
+        color: $main-color;
+        font-weight: 500;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+@import "./AncsCarousel/index";
+@import "./ViewAncs/index";

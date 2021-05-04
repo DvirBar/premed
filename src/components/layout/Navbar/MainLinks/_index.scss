@@ -1,0 +1,14 @@
+.navbar__main-links {
+    justify-self: center;
+
+    &__wrapper {
+        display: flex;
+        height: 100%;
+    }
+
+    @media only screen and(max-width: 750px) {
+        justify-self: flex-start;
+    }
+}
+
+@import "./LinkItem/index";

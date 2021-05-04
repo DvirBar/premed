@@ -1,0 +1,31 @@
+.login-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 2px solid #fff;
+
+    &__login-icon {
+        color: #fff;
+        height: 4rem;
+        width: 4rem;
+        justify-self: center;
+
+        @media only screen and(max-width: 600px) {
+            height: 3rem;
+            width: 3rem;
+        }
+
+        &__label {
+            color: $main-color;
+            font-weight: 500;
+
+            @media only screen and(max-width: 750px) {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,138 @@
+.pages-admin {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+
+.pages-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    
+    .page-item {
+        background-color: #fff;
+        box-shadow: $default-shadow;
+        border-radius: 0.5rem;
+        position: relative;
+    
+        .section-header:hover {
+            .page-menu {
+                display: block;
+            }
+        }
+    
+        .page-menu {
+            display: none;
+            position: absolute;
+            top: 13px;
+        }
+    }
+}
+
+.block-title {
+    padding: 1.5rem;
+    font-size: 2.2rem;
+    position: relative;
+    box-shadow: 0 3px 6px #00000030;
+    
+    .page-menu {
+        display: none;
+        position: absolute;
+        font-size: 2.8rem;
+        top: 18px;
+    }
+
+    .page-title {
+        color: $main-color;
+    }
+
+    &:hover > .page-menu {
+        display: inline;
+    }
+}
+
+.block-content {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    position: relative;
+
+    .subpage-item {
+        position: relative;
+
+        &:hover {
+            .inline-menu {
+                display: block;
+            }
+        }
+    
+        .inline-menu {
+            display: none;
+            position: absolute;
+            top: 13px;
+        }
+    }
+}
+
+.links-list {
+    width: 30rem;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    text-align: center;
+    color: #505050;
+    margin: 1rem;
+
+    & > * {
+        padding: 1rem;
+    }
+
+    .link-item {   
+        display: flex;
+        justify-content: space-between;     
+
+        & > a {
+            border-bottom: 1px solid transparent;
+            transition: all 0.25s ease-in-out;
+            margin-right: 1rem;
+            color: #505050;
+    
+            &:hover {
+                border-color: inherit;
+            }
+        }
+
+        .link-menu {
+            display: none;
+            font-size: 2.8rem;
+        }
+
+        &:hover > .link-menu {
+            display: inline;
+        }
+    }
+
+    .add-subpage-link {
+        font-size: 3rem;
+        transition: background-color 0.5s ease;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #ddd
+        } 
+    }
+}
+
+.link-entry {
+    display: flex;
+    align-items: center;
+
+    & > a {
+        border-bottom: 1px solid transparent;
+        transition: all 0.25s ease-in-out;
+        margin-right: 1rem;
+        color: #505050;
+            
+        &:hover {
+            border-color: inherit;
+        }
+    }
+}

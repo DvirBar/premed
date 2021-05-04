@@ -1,0 +1,19 @@
+.labels-container {
+    position: relative;
+}
+
+.link-label {
+    position: absolute;
+    width: 7rem;
+
+    .add-link-label {
+        position: absolute;
+        text-align: center;
+        width: 7rem;
+    }
+
+    .link-label-name {
+        position: absolute;
+        font-size: 1.5rem;
+    }
+}

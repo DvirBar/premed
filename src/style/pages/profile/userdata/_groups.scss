@@ -1,0 +1,236 @@
+.groups-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    row-gap: 2rem;
+    padding: 2rem 0;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+}
+
+.groups-list {
+    width: 100%;
+}
+
+.group-fields {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    &__fields {
+        width: 50rem;
+        display: flex;
+        flex-direction: row;
+        column-gap: 1rem;
+        flex-wrap: wrap;
+
+        &.simulated {
+            width: 45rem;
+        }
+
+        @media only screen and(max-width: 768px) {
+            padding-right: 2rem;
+        }
+    }
+
+    @media only screen and(max-width: 768px) {
+        width: 100%;
+
+        .group-name {
+            width: 100%;
+        }
+    }
+
+    .group-name {
+        width: 13rem;
+        color: $main-color;
+        font-size: 2rem;
+    }
+
+    .dropdown {
+        margin: 0;
+        display: inline-block;
+    }
+
+    .remove-vals {
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover {
+        .remove-vals {
+            opacity: 1;
+        }
+    }
+}
+
+.staged-groups {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+
+    @media only screen and(max-width: 768px) {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 2rem;
+        row-gap: 1rem;
+        width: 100%;
+
+        .group-name {
+            width: 100%;
+        }
+    }
+
+    .choose-staged-group {
+        direction: ltr;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#000, 0.3);
+        backdrop-filter: blur(8px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        overflow-y: scroll;
+
+        .search-groups {
+            background-color: #fff;
+            padding: 2rem;
+            box-shadow: $default-shadow;
+            border-radius: 0.5rem;
+        }
+
+        &.display {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.2s ease;
+        }
+
+        .choose-staged-container {
+            width: 50rem;
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            row-gap: 3rem;
+            direction: rtl;
+            position: relative;
+            padding: 3rem;
+        }
+
+        .cancel-staged {
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            &:hover {
+                color: $main-color;
+            }
+        }
+
+        .choose-group-list {
+            background-color: #fff;
+            box-shadow: $default-shadow;
+            padding: 2rem;
+            height: 30rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 0.5rem;
+            color: $main-color;
+
+            &::-webkit-scrollbar {
+                transition: opacity 0.2s ease;
+                width: 0.5rem;
+            }
+
+            &::-webkit-scrollbar-track {
+                padding: 0.1rem;
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(#aaa, 0);
+                border-radius: 1rem;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(#888, 0);
+                }
+            }
+
+            &:hover {
+                &::-webkit-scrollbar-thumb {
+                    background-color: #aaa;
+
+                    &:hover {
+                        background-color: $main-color;
+                    }
+                }
+            }
+
+            .choose-group-item {
+                border-radius: 0.5rem;
+                transition: background-color 0.1s ease-in-out;
+                padding: 0.5rem;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba($main-color, 0.3);
+                }
+            }
+        }
+
+        .add-custom-group {
+            background-color: #fff;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 150ms ease-in-out;
+            border-radius: 0.5rem;
+            box-shadow: $default-shadow;
+
+            &.display {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+}
+
+.add-staged-group {
+    color: #aaa;
+    transition: all 0.3s ease;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    cursor: pointer;
+
+    .add {
+        border: 1px solid #aaa;
+        border-radius: 50%;
+        padding: 0.5rem;
+    }
+
+    &:hover {
+        color: $main-color;
+    }
+}
+
+.remove-vals {
+    justify-self: start;
+    opacity: 0;
+}

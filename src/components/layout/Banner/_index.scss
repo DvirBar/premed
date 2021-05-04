@@ -1,0 +1,33 @@
+.banner {
+    height: 25rem;
+    background-color: rgba($main-color, 0.3);
+    position: relative;
+    z-index: -1;
+    overflow: hidden;
+
+    &__title {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: linear-gradient(177deg, transparent 70%, $main-color);
+
+        &__text {
+            font-size: 4rem;
+            padding: 2rem;
+            color: #fff;
+            z-index: 1;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+    }
+
+    &__img {
+        width: 30rem;
+        height: 30rem;
+        position: absolute;
+        top: 10px;
+        left: 15%;
+        z-index: -1;
+    }
+}

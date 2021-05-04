@@ -1,0 +1,124 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .arg-block {
+        .role-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 1rem;
+
+            &.not-assigned {
+                border: 2px solid #cf1414;
+            }
+        }
+
+        .dropdown {
+            margin: 0;
+        }
+
+        .nested-args {
+            margin-right: 2rem;
+            padding-right: 5rem;
+            border-right: 3px solid $main-color;
+        }
+    }
+
+    .material-icons {
+        margin-left: 10rem;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.middle-bar {
+    display: flex;
+    align-items: center;
+}
+
+// .calcs-list {
+//     .calc-item {
+//         margin: 2rem;
+//         margin-top: 0;
+//         padding: 1.5rem;
+//         background-color: #eee;
+//         border-radius: 0.5rem;
+
+//         .calc-top {
+//             display: flex;
+//             justify-content: space-between;
+
+//             .calc-title {
+//                 margin-bottom: 1.5rem;
+//                 position: relative;
+                
+//                 .calc-name {
+//                     color: $main-color;
+//                     font-weight: 500;
+//                     font-size: 2rem;
+//                     margin-left: 0.5rem;
+//                 }
+    
+//                 .calc-menu {
+//                     position: absolute;
+//                     bottom: -15%;
+//                     display: none;
+        
+//                     .material-icons {
+//                         &:hover {
+//                             opacity: 0.6;
+//                         }
+//                     }
+//                 }
+        
+//                 &:hover > .calc-menu {
+//                     display: inline;
+//                 }
+//             }
+        
+//         }
+        
+//         .calc-section {
+//             padding: 1.5rem;
+//         }
+
+//         .calc-details-link {
+//             margin-right: 0.5rem;
+//             font-size: 1.6rem;
+//             transition: opacity 0.25s ease;
+//             cursor: pointer;
+//             color: #707070;
+
+//             &:hover {
+//                 opacity: 0.6;
+//             }
+//         }
+
+//         .section-title {
+//             margin-top: 1rem;
+//             color: #707070;
+//             border-bottom: 1px solid #ddd;
+//         }
+//     }
+    
+// }
+
+.arg-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    column-gap: 1.5rem;
+
+    .arg-type {
+        color: #707070;
+        font-size: 1.6rem;
+    }
+}
+

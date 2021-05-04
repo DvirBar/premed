@@ -1,0 +1,27 @@
+.payload-info__omitted-args {
+    &__list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.5rem;
+        align-items: flex-start;
+
+        &__item {
+            display: flex;
+            align-items: center;
+            color: $error-color;
+            font-size: 1.8rem;
+            padding: 0.5rem;
+            font-weight: 500;
+
+            .MuiSvgIcon-root {
+                cursor: default;
+                font-size: 2rem;
+                align-self: flex-end;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

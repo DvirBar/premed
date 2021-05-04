@@ -1,0 +1,31 @@
+.admin-panel {
+    display: flex;
+    column-gap: 2rem;
+
+    .side-menu-admin {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        width: 15rem;
+        padding: 1rem;
+        background-color: #ddd;
+
+        .link-item-admin {
+            color: $main-color;
+            font-weight: 500;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+    .admin-content {
+        padding: 5rem 1rem;
+        width: 100%;
+    }
+}
+
+@import "libraries/index";
+@import "announcements/index";
+@import "questions/index";

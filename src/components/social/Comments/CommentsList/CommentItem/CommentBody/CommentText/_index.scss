@@ -1,0 +1,29 @@
+.comment-text {
+    font-size: 1.6rem;
+    word-wrap: break-word;
+    background-color: #ececec;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.cancel-edit {
+    font-size: 1.4rem;
+    color: $main-color;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    font-weight: 500;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    @media only screen and(max-width: 768px) {
+        display: none;
+    }
+}
+
+.add-comment {
+    height: 5rem;
+    font-size: 1.6rem;
+    overflow: none;
+}

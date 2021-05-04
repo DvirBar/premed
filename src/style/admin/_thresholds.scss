@@ -1,0 +1,123 @@
+.thresholds {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.thresholds-selectors {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+
+    .uni-calcs-selectors {
+        display: flex;
+        column-gap: 1rem;
+    }
+}
+
+.threshold-form {
+    display: flex;
+    flex-direction: row;
+    column-gap: 2rem;
+    align-items: center;
+
+    .close-red {
+        visibility: hidden;
+    }
+
+    &:hover > .close-red {
+        visibility: visible;
+    }
+}
+
+.select-thresh-type {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+
+    .thresh-type {
+        padding: 0.5rem 1rem;
+        border: 1px solid;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &.accept {
+            color: $okay-color;
+            border-color: $okay-color;
+
+            &.selected {
+                background-color: $okay-color;
+                color: #fff;
+            }
+        }
+
+        &.reject {
+            color: $error-color;
+            border-color: $error-color;
+
+            &.selected {
+                background-color: $error-color;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.thresh-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding-top: 1rem;
+
+    &.accept {
+        .thresh-value {
+            color: $okay-color;
+        }
+    }
+
+    &.reject {
+        .thresh-value { 
+            color: $error-color;
+        }
+    }
+
+    .thresh-value {
+        width: 10rem;
+        border-left: 2px solid #aaa;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        column-gap: 2rem;
+        position: relative;
+
+        .inline-menu {
+            visibility: hidden;
+        }
+
+        &:hover > .inline-menu {
+            visibility: visible;
+        }
+    }
+
+    .display-add-but {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.6rem;
+        color: $main-color;
+        border-radius: 50%;
+        border: 1px solid $main-color;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $main-color;
+            color: #fff;
+        }
+    }
+}

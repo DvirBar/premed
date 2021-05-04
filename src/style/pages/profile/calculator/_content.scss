@@ -1,0 +1,25 @@
+.calculator-content {
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: auto;
+
+    .goto-pick-calcs {
+        display: flex;
+        color: $main-color;
+        position: relative;
+        cursor: pointer;
+        font-size: 1.8rem;
+
+        i {
+            justify-self: flex-start;
+            transform: translateX(0px);
+            font-size: 2.8rem;
+        }
+
+        &:hover > i {
+            animation: tiltHorizontal 2s infinite;
+            animation-timing-function: ease-in-out;
+        }
+    }
+}

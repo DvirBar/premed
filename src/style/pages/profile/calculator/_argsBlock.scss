@@ -1,0 +1,44 @@
+.args-fields-block {
+    display:flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    position: relative;
+
+    .groups-block {
+        row-gap: 1rem;
+    }
+
+    .block-header {
+        box-shadow: none;
+        padding: 1rem 0;
+    }
+
+    .data-block-content {
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .no-uni-section {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+    }
+
+    .groups-list {
+        width: 100%;
+    }
+
+    .group-fields {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr) 5rem;
+        row-gap: 1rem;
+
+        .group-name {
+            grid-column: 1 / span 4;
+        }
+    }
+    
+    .staged-groups {
+        width: 100%;
+    }
+}

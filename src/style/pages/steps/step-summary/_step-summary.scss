@@ -1,0 +1,53 @@
+.step-summary {
+    .step-summaries-list {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+
+    .step-summary-item {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin: 1rem 0;
+
+        &.admin {
+            padding: 1.5rem;
+            border: 1.5px solid $main-color;
+            border-radius: 5px;
+            row-gap: 1rem;
+        }
+    }
+
+    .step-summary-top {
+        display: flex;
+        justify-content: center;
+
+        &:hover {
+            .delete-content {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        &.client {
+            padding: 1rem;
+            border-top: 2px solid $main-color;
+            border-bottom: 2px solid $main-color;
+            cursor: pointer;
+        }
+
+        .step-summary-name {
+            font-size: 2rem;
+        }
+    }
+
+    .summary-details-wrapper {
+        position: relative;
+        z-index: 3;
+    }
+
+    .groups-list-wrapper {
+        display: flex;
+    }
+}

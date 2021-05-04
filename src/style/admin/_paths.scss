@@ -1,0 +1,28 @@
+.path-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+        .inline-menu {
+            display: inline-block;
+        }
+    }
+
+    .inline-menu {
+        display: none;
+    }
+}
+
+.add-path {
+    box-sizing: border-box;
+    color: $key-color;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+
+    &:hover {
+        color: $key-color-hover;
+        background-color: #dadada88;
+    }
+}

@@ -1,0 +1,48 @@
+.tool-tip-anchor {
+    color: #555;
+    display: inline-block;
+}
+
+.tool-tip-wrapper {
+    position: relative;
+}
+
+.tool-tip-content {
+    $tool-tip-color: #303030d0;
+    position: absolute;
+    max-width: 20rem;
+    width: 35vh;
+    min-height: 2.5rem;
+    padding: 0.5rem;
+    background-color: $tool-tip-color;
+    color: #fff;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out;
+    transform: scale(0);
+    transform-origin: bottom right;
+    bottom: 37px;
+    right: -5px;
+
+    & > span {
+        width: 100%;
+    }
+
+    &::before {
+        $size: 0.7rem;
+        position: absolute;
+        bottom: -$size;
+        right: 5px;
+        content: "";
+        border-left: $size solid transparent;
+        border-right: $size solid transparent;
+        border-top: $size solid $tool-tip-color;
+    }
+
+    &.display {
+        transform: scale(1);
+    }
+}

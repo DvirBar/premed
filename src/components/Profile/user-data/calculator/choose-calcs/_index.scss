@@ -1,0 +1,11 @@
+.calculator-explanation {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    &__title {
+        color: $main-color;
+        font-size: 2rem;
+        font-weight: 500;
+    }
+}

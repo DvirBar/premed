@@ -1,0 +1,19 @@
+.calc-block-new {
+    margin: 0.9rem 0;
+    border-radius: 0.5rem;
+    border: 2px solid $main-color;
+    width: 25rem;
+    height: 45px;
+
+    &__loader {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@import "./SuggestedCalc/index";
+@import "./NoCalc/index";
+@import "./NoCalcYear/index";

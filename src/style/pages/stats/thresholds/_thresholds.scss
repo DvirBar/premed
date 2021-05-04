@@ -1,0 +1,68 @@
+.thresholds {
+  cursor: default;
+
+  .unis-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+
+    .uni-name {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .calcs-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+  }
+
+  .calc-item {
+    background-color: transparent;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  // Type selector style in admin scss file
+
+  .init-last-values {
+    padding: 1rem;
+    color: #fff;
+    border-radius: 0.5rem;
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+
+    &__value-label {
+      font-weight: 500;
+    }
+  }
+
+  .calc-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .calc-name {
+    font-size: 2rem;
+  }
+
+  .indent-block {
+    padding-right: 1rem;
+  }
+
+  .const-calc-value {
+    font-size: 1.7rem;
+    padding-top: 1rem;
+  }
+
+  .no-thresh-message {
+    font-weight: 500;
+  }
+}

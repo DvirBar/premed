@@ -1,0 +1,12 @@
+.lib-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+
+    &__options {
+        display: flex;
+        column-gap: 1rem;
+    }
+}
+
+@import "./LibItems/index";

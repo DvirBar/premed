@@ -1,0 +1,32 @@
+.section {
+    max-height: 95vh;
+    overflow: hidden;
+    width: 100%;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: #646464;
+    cursor: pointer;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.section-content {
+    max-height: 0;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+
+    &.open {
+        transition: all 0.3s ease-in-out;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    &__holder {
+        padding: 2rem;
+        padding-top: 1rem;
+    }
+}

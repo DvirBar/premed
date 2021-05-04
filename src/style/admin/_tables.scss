@@ -1,0 +1,96 @@
+$valid-green: #146411;
+$warning-red: #be1b1b;
+
+.tables-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    align-items: center;
+
+    .table-list-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        row-gap: 1.5rem;
+        padding: 2rem;
+        width: 30rem;
+        height: 30rem;
+        background-color: #fff;
+        box-shadow: $default-shadow;
+        border-radius: 0.5rem;
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: $default-shadow-hover;
+
+            & > .table-name {
+                color: $main-color;
+            }
+        }
+
+        .table-name {
+            color: #888;
+            transition: color 0.3s ease;
+            font-size: 2.5rem;
+        }
+
+        .ext-table {
+            $link-color: #3d3d3d;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+            color: $link-color;
+
+            &:hover {
+                border-color: $link-color;
+            }
+        }
+
+        .enabled-status {
+            .enabled {
+                color: $valid-green;
+            }
+
+            .disabled {
+                color: $warning-red;
+            }
+        }
+    }
+}
+
+.edit-section {
+    display: flex;
+    column-gap: 4rem;
+    
+    .toggle-enabled {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > span {
+            text-align: center;
+            width: 15rem;
+            display: inline-block;
+            border: 1px solid;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+
+        .enable-table {
+            color: $valid-green;
+            border-color: $valid-green;
+        }
+
+        .disable-table {
+            color: $warning-red;
+            border-color: $warning-red;
+        }
+
+        .enabling-info {
+            font-size: 1.6rem;
+            color: #888;
+        }
+    }
+}

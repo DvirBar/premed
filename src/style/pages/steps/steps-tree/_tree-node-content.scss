@@ -1,0 +1,47 @@
+.tree-node-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.1rem;
+    align-items: center;
+    margin: 2px 0;
+    cursor: pointer;
+
+    &:hover {
+        .node-indicator {
+            background-size: 100% 100%;
+            transition: opacity 0.25s ease, background-size 150ms ease-in;
+        }
+
+        .node-step-name {
+            animation: tiltHorizontal 2s;
+            animation-timing-function: ease-in-out;
+        }
+    }
+
+    .node-indicator {
+        width: 2rem;
+        height: 2rem;
+        border: 2px solid;
+        border-radius: 50%;
+        background-color: transparent;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: 0% 0%;
+        transition: background-size 150ms ease-in-out;
+    }
+
+    .node-step-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .node-step-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .node-step-uni {
+            font-size: 1.4rem;
+        }
+    }
+}

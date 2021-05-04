@@ -1,0 +1,10 @@
+.item-footer {
+    padding-top: 10px;
+    background-color: #eee;
+    display: inline-block;
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+@import "./Comments/index";
+@import "./Votes/index";

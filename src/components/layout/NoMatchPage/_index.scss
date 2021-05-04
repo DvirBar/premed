@@ -1,0 +1,25 @@
+.no-match-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 2rem;
+
+    &__illustration {
+        width: 50rem;
+    }
+
+    &__text {
+        font-size: 2.5rem;
+        color: #777;
+    }
+
+    a {
+        color: $main-color;
+        font-size: 2.5rem;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

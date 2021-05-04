@@ -1,0 +1,30 @@
+.dropdown-menu {
+    position: absolute;
+    padding: 0;
+    z-index: 10;
+    box-shadow: $default-shadow;
+    color: $main-color;
+    background-color: #fff;
+    max-height: 15rem;
+    min-width: 12rem;
+    font-size: 1.8rem;
+    overflow: hidden;
+    font-size: 1.6rem;
+    transform: scale(0);
+    transform-origin: top right;
+    transition: transform 0.2s ease-in-out;
+
+    &.open {
+        transform: scale(1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+    li {
+        cursor: pointer;
+        padding: 5px;
+
+        &:hover {
+            background-color: #ececec;
+        }
+    }
+}

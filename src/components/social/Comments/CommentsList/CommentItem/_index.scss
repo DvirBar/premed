@@ -1,0 +1,38 @@
+.comment-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    width: 100%;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #aaa;
+    }
+
+    .MuiSvgIcon-root {
+        font-size: 20px;
+        color: #777;
+        cursor: pointer;
+    }
+
+    .comment-author {
+        font-size: 1.6rem;
+        color: $main-color;
+        font-weight: 500;
+    }
+
+    .comment-footer {
+        display: flex;
+        align-items: center;
+        color: #777;
+        font-size: 1.5rem;
+        column-gap: 0.5rem;
+    }
+
+    & > .item-content:hover > .comment-body > div > .options-anchor {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@import "./CommentLikes/index";
+@import "./CommentBody/index";

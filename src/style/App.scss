@@ -1,0 +1,316 @@
+$main-color: #486974;
+$main-color-light: #bfc9cc;
+$error-color: #c01b1b;
+$okay-color: #1b922f;
+$pending-color: #e79806;
+$default-shadow-hover: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$default-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
+    0 3px 10px 0 rgba(0, 0, 0, 0.19);
+$key-color: #4e4e4e;
+$key-color-hover: #838383;
+$header-color: #727272;
+$header-height: 5rem;
+$cover-height: 20rem;
+$text-size: 1.6rem;
+$line-height: 1.5em;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    direction: rtl;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #fff;
+    font-size: $text-size;
+    line-height: $line-height;
+    outline: none;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.App {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+h1 {
+    color: $main-color;
+    font-weight: 450;
+    padding-bottom: 2rem;
+}
+
+.wrapper {
+    position: sticky;
+}
+
+h2 {
+    display: block;
+    color: $main-color;
+    font-size: 1.5em;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    font-weight: normal;
+    width: 100%;
+}
+
+.ck-editor {
+    line-height: 2.5rem;
+
+    ol,
+    ul {
+        padding-right: 3rem;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: numeric;
+
+        ol {
+            list-style-type: hebrew;
+        }
+    }
+
+    li {
+        padding: 0.5rem;
+
+        strong {
+            color: $main-color;
+        }
+    }
+
+    h2 {
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        padding: 0 0.5rem;
+        margin: 1rem 0;
+        text-decoration: none;
+        font-weight: 500;
+        color: #aaa;
+        font-size: 1.17em;
+        border-right: 5px solid #ccc;
+    }
+
+    a {
+        font-weight: 500;
+        color: $main-color;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+h4 {
+    display: inline;
+    text-decoration: none;
+    font-weight: normal;
+    color: #494949;
+    font-size: 2rem;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.cover-photo {
+    z-index: 0;
+    width: 100%;
+    height: $cover-height;
+    background-image: url("https://images.unsplash.com/photo-1509869175650-a1d97972541a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+    background-size: cover;
+    background-position-y: 30%;
+
+    .cover-top-layer {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            -45deg,
+            rgba(34, 34, 34, 0.76) 0%,
+            transparent 100%
+        );
+        z-index: 1;
+        // backdrop-filter: blur(1px);
+    }
+}
+
+.content {
+    max-width: 900px;
+    margin: auto;
+    z-index: 0;
+}
+
+.router {
+    animation-name: opacity-load;
+    animation-duration: 1s;
+}
+
+@keyframes opacity-load {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding: 1rem;
+    width: 100%;
+    height: 5rem;
+    border-top: 0.1rem solid #aaa;
+    color: #777;
+
+    a {
+        color: inherit;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.material-icons {
+    cursor: pointer;
+    margin: 0;
+    &.remove:hover {
+        color: $error-color;
+    }
+}
+
+.MuiSvgIcon-root {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.content-wrapper {
+    margin-top: 5rem;
+    width: 100%;
+    box-shadow: $default-shadow;
+    border-radius: 1rem;
+    padding: 3rem;
+}
+
+th {
+    font-weight: 400;
+}
+
+.no-resource-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5rem auto;
+    height: 100%;
+    font-size: 2.5rem;
+    color: #555;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+        supported by Chrome, Edge, Opera and Firefox */
+}
+
+.scrollbar-main {
+    &::-webkit-scrollbar {
+        width: 1rem;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &::-webkit-scrollbar-track {
+        width: 1rem;
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($main-color, 0.5);
+        border-radius: 1rem;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $main-color;
+    }
+}
+
+@import "animations";
+
+@import "layout";
+@import "layout/index";
+
+@import "common";
+@import "common/dropdown";
+@import "common/dropdownmenu";
+@import "common/inlineselect";
+@import "common/switch";
+@import "common/selectBox";
+@import "common/section";
+@import "common/multiselect";
+@import "common/carousel";
+@import "common/inlinemultiselect";
+@import "common/datepicker";
+@import "common/icons";
+@import "common/breadcrumbs";
+
+@import "forms/main";
+@import "forms/input";
+@import "forms/buttons";
+@import "forms/checkbox";
+
+@import "pages/pages";
+@import "pages/index";
+@import "pages/dashboard";
+@import "pages/drive";
+@import "pages/profile/index";
+@import "pages/stats/index";
+@import "pages/questions";
+
+@import "admin";
+@import "admin/admin";
+@import "admin/default";
+@import "admin/paths";
+@import "admin/anouncements";
+@import "admin/steps";
+@import "admin/pages";
+@import "admin/topics";
+@import "admin/stats";
+@import "admin/calcs";
+@import "admin/tables";
+@import "admin/questions";
+@import "admin/thresholds";
+
+@import "../components/auth/index";
+@import "../components/social/Comments/index";
+@import "../components/announcements/index";
+@import "../components/questions/index";
+@import "../components/profile/index";
+@import "../components/forms/index";

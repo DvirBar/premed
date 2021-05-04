@@ -1,0 +1,47 @@
+.steps-tree-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    @media only screen and (max-width: 650px) {
+        justify-content: flex-start;
+    }
+}
+
+.steps-tree {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    width: $tree-width;
+}
+
+// .steps-block {
+//     width: 100vw;
+// }
+
+.steps-level {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-shrink: 1;
+    flex-wrap: wrap;
+}
+
+.tree-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0 !important;
+    transition: color 0.3s ease-in-out;
+    transition: stroke-width 0.3s ease-in-out;
+
+    .node-circle {
+        stroke-width: 2px;
+    }
+}
+
+.path-section {
+    position: relative;
+}

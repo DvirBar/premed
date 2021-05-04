@@ -1,0 +1,32 @@
+.vote-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.6rem;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover > .thumb-icon {
+        opacity: 0.8;
+    }
+
+    .thumb-icon {
+        cursor: pointer;
+        margin-top: 5px;
+        margin-bottom: -7px;
+    }
+
+    &.voted {
+        &.upvote {
+            color: $okay-color;
+        }
+
+        &.downvote {
+            color: $error-color;
+        }
+    }
+}
+
+.votes {
+    display: flex;
+    flex-direction: row-reverse;
+}
