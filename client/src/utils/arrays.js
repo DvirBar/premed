@@ -1,24 +1,12 @@
-/**
- * This function removes a type item from the array. 
- * 
- * @param arr(Array): The array to remove item from
- * @param item(String | Number): The item to remove 
- * @param key?(String): If specified, item will be treated as refrential. 
- *                      If not, it will be treated as primitive
- * 
- * @returns: a new array without item
- **/
+/* 
+* This function gets and array and a value. 
+* If the value exists in the array it will be removed.
+* Else, it will be added to the array.
+*/ 
+export const addOrRemove = (arr, val) => {
+    if(arr.includes(val)) {
+        return arr.filter(arrItem => arrItem !== val)
+    }
 
-export const removeFromArray = (arr, item, key) => {
-    const index = arr.findIndex(thisItem => key 
-        ? thisItem[key].toString() === item[key] 
-        : thisItem.toString() === item)
-
-    
-    if(index === -1) {
-        return arr
-    }   
-    
-    // We are using slice to keep the function pure
-    return arr.slice(index + 1, index + 2)
+    return [...arr, val]
 }
