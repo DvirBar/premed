@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הודעה מאתר המועמדים</title>
+    <style>
+        .email-body {
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .body-container {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            width: 90%;
+            margin: auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .anc-title {
+            font-weight: 500;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .is-edit {
+            font-size: 11px;
+            color: #c20000;
+            margin-bottom: 5px;
+        }
+
+        .anc-body {
+            padding: 10px;
+            background-color: #eee;
+        }
+
+        .banner {
+            background-color: #486974;
+        }
+
+        @media only screen and (max-width: 300px) {
+            .logo {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 300px) {
+            .logo {
+                width: 80%;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .logo {
+                width: 70%;
+            }
+        }
+
+        @media only screen and (min-width: 700px) {
+            .logo {
+                width: 60%;
+            }
+        }
+
+        @media only screen and (min-width: 800px) {
+            .logo {
+                width: 50%;
+            }
+        }
+
+
+        @media only screen and (min-width: 900px) {
+            .logo {
+                width: 40%;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .logo {
+                width: 30%;
+            }
+        }
+
+        a {
+            color: #888;
+        }
+
+        .email-footer {
+            background-color: #eee;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body
+    style="font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;margin: 0;padding: 0;color: #555;direction: rtl;">
+    <div class="email-body" width="100%"
+        style="background-color: #486974; width: 100%; align-self: center; font-size: 16px;">
+        <div class="body-container">
+            <div class="anc-title">
+                {{ anc_title }}
+            </div>
+            {{#isEdit}}
+            <div class="is-edit">
+                זהו עדכון של המייל הקודם שנשלח
+            </div>
+            {{/isEdit}}
+            {{#anc_body}}
+            <div class="anc-body">
+                {{{anc_body}}}
+            </div>
+            {{/anc_body}}
+        </div>
+    </div>
+    <div class="banner">
+        <img class="logo" src="cid:banner">
+    </div>
+    <div class="email-footer">
+        מידע זה אינו רשמי ואין להסתמך עליו.
+        <a href={{unsubscribe_link}}>הסרת הרשמה למיילים</a>.
+    </div>
+</body>
+
+</html>
