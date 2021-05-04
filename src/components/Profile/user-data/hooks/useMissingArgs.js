@@ -17,7 +17,7 @@ const useMissingArgs = (storedCalcs, dataVals) => {
         let tempArgs = []
 
         if(storedCalcs && storedCalcs.length !== 0 && dataVals) {
-            // Loop through stored calc and find missing args
+            // Loop through stored calc args and find missing args
             for(let storedCalc of storedCalcs) {
                 let missing = []
                 const args = storedCalc?.args || []
