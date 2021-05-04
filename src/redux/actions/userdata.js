@@ -20,6 +20,8 @@ import {
     USER_DATA_INSERT_SUCCESS,
     USER_DATA_INSERT_FAILURE,
 
+    CLEAR_CHANGED_FIELD,
+
     USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
     ADD_CUSTOM_GROUP,
@@ -409,6 +411,11 @@ export const removeValue = (data, tableId) => dispatch => {
         })
 }
 
+export const clearChangedField = () => dispatch => {
+    dispatch({
+        type: CLEAR_CHANGED_FIELD
+    })
+}
 export const filterData = filter => dispatch => {
     dispatch({
         type: FILTER_DATA,
@@ -422,6 +429,7 @@ export const clearFilters = fieldId => dispatch => {
         payload: fieldId
     })
 }
+
 
 export const sortData = (type, fieldId) => dispatch => {
     dispatch({

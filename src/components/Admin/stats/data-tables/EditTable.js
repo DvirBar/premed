@@ -8,8 +8,7 @@ function EditTable({ table }) {
 
     useEffect(() => {
         setDefaultValues({
-            name: table.name,
-            tableUrl: table.url
+            ...table
         })
     }, [table])
 
@@ -48,6 +47,13 @@ function EditTable({ table }) {
             </div>
             
 
+            <FormInput
+            label="שנה"
+            type="text"
+            name="year"
+            value={values.year}
+            onChange={handleChange}
+            error={errors.year} />
 
             <button type="submit">עריכה</button>
         </form>

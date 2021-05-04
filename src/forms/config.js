@@ -95,6 +95,10 @@ export const config = {
 
         group: {
             isRequired: { message: 'יש לבחור קבוצה'}
+        },
+
+        year: {
+            isRequired: { message: 'יש לבחור שנה'}
         }
     }
 }

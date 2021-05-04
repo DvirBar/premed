@@ -8,6 +8,8 @@ import LibInfo from './LibInfo'
 import LibItemsList from './LibItems/LibItemsList'
 import DeleteLibrary from '../../admin/libraries/DeleteLibrary/DeleteLibrary'
 import EditName from '../../admin/libraries/EditLibrary/EditName'
+import AddLibrary from '../../admin/libraries/AddLibrary/AddLibrary'
+import AddItem from '../../admin/libraries/Items/AddItem/AddItem'
 
 function LibDetails({ lib }) {
     const libChildren = useSelector(getLibChildren(lib?._id))
@@ -37,22 +39,29 @@ function LibDetails({ lib }) {
                         libId={lib._id} />
                     }
                 </div>
+
+                {isAdmin &&
+                    <div className="admin-options">
+                        <AddLibrary parent={lib} />
+                        <AddItem libId={lib._id} />
+                    </div>
+                }
                     
-                {libChildren.length > 0 
-                ?   <LibsList 
-                    parent={lib}
+                {libChildren.length > 0 &&
+                    <LibsList 
                     noItems={!hasItems}
                     libs={libChildren} />
  
+                }
+               
+               {hasItems 
+                ?   <LibItemsList
+                    libId={lib._id}
+                    items={lib.items} />
+
                 :   <div className="no-resource-error">
                         לא נמצאו קבצים
                     </div>
-                }
-               
-               {hasItems &&
-                    <LibItemsList
-                    libId={lib._id}
-                    items={lib.items} />
                 }
             </div>
         )

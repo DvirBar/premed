@@ -6,7 +6,8 @@ import Modal from '../../../layout/Modal';
 
 function AddTable() {
     const [defaultValues] = useState({
-        name: ''
+        name: '',
+        year: ''
     });
     const [display, setDisplay] = useState(false);
 
@@ -59,7 +60,15 @@ function AddTable() {
                             rel="noopener noreferrer">בדיקת קישור</a>
                         }               
                     </div>
-                
+                    
+                    <FormInput
+                    label="שנה"
+                    type="text"
+                    name="year"
+                    value={values.year}
+                    onChange={handleChange}
+                    error={errors.year} />
+
                     <button type="submit">יצירה</button>
                 </form>
             </Modal>

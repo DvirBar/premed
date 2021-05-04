@@ -5,9 +5,8 @@ import { getCustomGroupsSimulated, getSimulatedVals, selTableSelector } from '..
 import { GroupsContext } from '../data-block/GroupsContext';
 import { getNextCalcs } from '../hooks/useExecCalc';
 
-const isFirstCalc = (calc, validErrors) => {
-    return (!validErrors.find(item => item.calc === calc._id) &&
-           !calc.args.find(arg => arg.type === 'calc'))
+const isValidCalc = (calc, validErrors) => {
+    return !validErrors.find(item => item.calc === calc._id)
 }
 
 /*  Check that one of the args of the calc is in chosen calcs. 
@@ -32,24 +31,28 @@ function useSimulateExecCalcs(
     } = useContext(GroupsContext)
 
     const validErrors = useSelector(getValidErrors)
-
     useEffect(() => {
         if(startSimulate) {
-            /* Find calcs that doesn't have valid errors
+            /* Find calcs that don't have valid errors
             and that don't have calcs as args */
             let firstCalcs = []
             let nextCalcs = []
-
+            let failed = false
             for(let calc of chosenCalcs) {
-                if((isFirstCalc(calc, validErrors) ||
-                   !DepOnChosenCalc(calc, chosenCalcs))) 
-                    firstCalcs.push(calc._id)
+                if(isValidCalc(calc, validErrors)) {
+                    if(!DepOnChosenCalc(calc, chosenCalcs)) 
+                        firstCalcs.push(calc._id)
 
-                else 
-                    nextCalcs.push(calc)
+                    else 
+                        nextCalcs.push(calc)
+                }
+                else {
+                    failed = true 
+                    break;
+                }
             }
 
-            if(firstCalcs.length > 0) {
+            if(!failed && firstCalcs.length > 0) {
                 const calcSequence = [firstCalcs, ...getNextCalcs(
                     firstCalcs,
                     nextCalcs,
@@ -61,8 +64,9 @@ function useSimulateExecCalcs(
                     values,
                     customGroups, 
                     selTable))
-                changeStartSimulate(false)
             }
+
+            changeStartSimulate(false)
         }
     }, [startSimulate])
 }

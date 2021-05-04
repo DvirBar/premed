@@ -18,7 +18,7 @@
         }
 
         &:hover > i {
-            animation: tilt 2s infinite;
+            animation: tiltHorizontal 2s infinite;
             animation-timing-function: ease-in-out;
         }
     }

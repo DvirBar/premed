@@ -15,21 +15,18 @@ function FieldOptions({
     const setDataOrdering = useDataOrdering(toggleModal)
 
     return (
-        <td>
-            <Modal
-            display={display}
-            toggleModal={toggleModal}
-            title={title}>
-                <div className="field-options">
-                    <Filters />
-                    {field.dataType?.value === 'num' &&
-                        <SortFields />
-                    }
-                    <button onClick={() => setDataOrdering()}>החלה</button>
-                </div>
-            </Modal>
-        </td>
-        
+        <Modal
+        display={display}
+        toggleModal={toggleModal}
+        title={title}>
+            <div className="field-options">
+                <Filters />
+                {field.dataType?.value === 'num' &&
+                    <SortFields />
+                }
+                <button onClick={() => setDataOrdering()}>החלה</button>
+            </div>
+        </Modal>  
     )
 }
 

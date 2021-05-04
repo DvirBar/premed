@@ -65,7 +65,7 @@
 .return-choose {
     padding-left: 1rem;
     &:hover {
-        animation: tilt 2s infinite;
+        animation: tiltHorizonal 2s infinite;
         animation-timing-function: ease-in-out;
     }
 }

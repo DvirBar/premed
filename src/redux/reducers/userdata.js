@@ -17,6 +17,7 @@ import {
     USER_DATA_SWITCH_TABLE,
     USER_DATA_REMOVE,
     USER_DATA_TOGGLE_ENABLED,
+    CLEAR_CHANGED_FIELD,
     ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
     FILTER_DATA,
@@ -101,7 +102,7 @@ export default function(state = initialState, action) {
                         dataVal.isCalc
                         ? {
                             ...dataVal,
-                            value: dataVal.suggestValue
+                            value: dataVal.suggestValue || dataVal.value
                         }
                         : dataVal),
                     customGroups: state.data.tableData.customGroups
@@ -406,6 +407,12 @@ export default function(state = initialState, action) {
                         customGroups: payload
                     }
                 }
+            }
+
+        case CLEAR_CHANGED_FIELD: 
+            return {
+                ...state,
+                changedField: {},
             }
 
         case FILTER_DATA: { // Use brackets to define scope

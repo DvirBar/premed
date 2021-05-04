@@ -23,7 +23,10 @@ function useDataValidation(storedCalcs, dataVals) {
         setFinishSequence(status)
     }, [])
 
+    console.log(storedCalcs);
+
     const { missingArgs, finished } = useMissingArgs(storedCalcs, dataVals)
+
     const minUnits = useMinUnits(
         missingArgs, 
         finished, 
@@ -36,6 +39,7 @@ function useDataValidation(storedCalcs, dataVals) {
 
     const dispatch = useDispatch()
     const [errArr, setErrArr] = useState([])
+
 
     useEffect(() => {
         if(finishSequence) {

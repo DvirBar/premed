@@ -35,7 +35,7 @@ function AncSubscriptions() {
                     הרשמה לפרסומים  
                 </CardTitle>
                 <CardInfo>
-                    סמנו את הקבוצות שברצונכם לקבל פרסומים עבורן
+                    סמנו את הקבוצות שברצונכם לקבל התראות במייל עבורן
                 </CardInfo>
             </CardHeader>
             <CardContent>

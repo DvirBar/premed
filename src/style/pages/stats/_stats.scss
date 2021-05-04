@@ -22,7 +22,7 @@
         padding: 1rem;
         transition: all 0.3s ease;
         color: #fff;
-         
+
         &:hover {
             background-color: #fff;
             color: $main-color;
@@ -30,8 +30,6 @@
         }
     }
 }
-
-
 
 .table-container {
     position: absolute;
@@ -45,41 +43,40 @@
         width: 0.3rem;
         opacity: 0;
     }
-    
+
     &::-webkit-scrollbar-track {
         width: 0.3rem;
         background-color: transparent;
     }
-    
+
     &::-webkit-scrollbar-thumb {
         background-color: #ccc;
         border-radius: 1rem;
     }
 
-    
     &::-webkit-scrollbar-thumb:hover {
         background-color: #aaa;
     }
-
 }
 
 .data-table {
     display: inline-grid;
-    grid-template-areas: 
-    "head-fixed"
-    "body-scrollable";
+    grid-template-areas:
+        "head-fixed"
+        "body-scrollable";
 
     font-size: 1.5rem;
     text-align: center;
     color: #464646;
 
-    th, td {
+    th,
+    td {
         padding: 1rem;
         min-width: 15rem;
         max-width: 15rem;
         position: relative;
         cursor: pointer;
-        
+
         .cover {
             position: absolute;
             top: 0;
@@ -95,7 +92,7 @@
         border-left-color: $main-color;
         border-right-color: $main-color;
     }
-    
+
     th {
         color: #fff !important;
     }
@@ -163,7 +160,7 @@
                     visibility: visible;
                 }
             }
-    
+
             .field-name {
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -241,7 +238,6 @@
             border-color: #0438a8;
             color: #0438a8;
         }
-        
     }
 
     .filter-fields {
@@ -293,6 +289,5 @@
                 color: $selected-color;
             }
         }
-
     }
 }
