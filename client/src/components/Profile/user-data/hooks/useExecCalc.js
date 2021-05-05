@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { executeCalc } from '../../../../redux/actions/userdata';
+import { clearChangedField, executeCalc } from '../../../../redux/actions/userdata';
 import { getAllStoredCalcs, getGroupById } from '../../../../redux/selectors/statsinputs';
 import { getGroupValsReal } from '../../../../redux/selectors/userdata';
 import { GroupsContext } from '../data-block/GroupsContext';
@@ -86,7 +86,7 @@ function useExecCalc() {
     const groupVals = useSelector(getGroupValsReal(changedField?.group || undefined))
 
     useEffect(() => {
-        if(validErrors && changedField) {
+        if(validErrors && Object.keys(changedField).length > 0) {
             const relevantCalcs = storedCalcs
             .filter(storCalc => 
                 storCalc.args.find(arg =>
@@ -117,6 +117,8 @@ function useExecCalc() {
                  
                 dispatch(executeCalc(calcSequence))
             }
+
+            dispatch(clearChangedField())
         }
     }, [validErrors])
 }

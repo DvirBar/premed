@@ -390,7 +390,7 @@ export default function(state = initialState, action) {
                         }
                         
                 },
-                changedField: undefined,
+                changedField: {},
                 dataRemoved: false
             }
         
