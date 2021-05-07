@@ -52,16 +52,6 @@ export const UserSchema = new Schema({
             type: Date
         }
     },
-    prefs: [{
-        name: {
-            type: String
-            // Validate name
-        },
-        value: {
-            type: String
-            // Validate value (with associated name)
-        }
-    }],
     isAdmin: {
         type: Boolean,
         default: false

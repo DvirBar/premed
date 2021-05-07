@@ -9,7 +9,8 @@ const refreshCookieSettings = {
     options: {
         httpOnly: true,
         path: '/api/auth/refreshToken',
-        maxAge: refreshTokenExp * 1000
+        maxAge: refreshTokenExp * 1000,
+        secure: process.env.NODE_ENV === 'production'
     }
 }
 
@@ -17,7 +18,8 @@ const accessCookieSettings = {
     name: '_at',
     options: {
         httpOnly: true,
-        maxAge: accessTokenExp * 1000
+        maxAge: accessTokenExp * 1000,
+        secure: process.env.NODE_ENV === 'production'
     }
 }
 

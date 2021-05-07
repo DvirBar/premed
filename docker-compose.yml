@@ -1,0 +1,45 @@
+version: "3"
+services:
+    react-app:
+        image: react-app
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            - premed
+        links:
+            - api-server
+        volumes:
+            - /etc/ssl:/usr/share/nginx/ssl
+
+    api-server:
+        image: api-server
+        ports:
+            - "5000:5000"
+        networks:
+            - premed
+        depends_on:
+            - mongodb
+
+    mongodb:
+        image: mongo:4.4-bionic
+        env_file:
+            - .env
+        environment:
+            - MONGO_INITDB_DATABASE=${DB_NAME}
+            - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+            - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+        ports:
+            - "27017:27017"
+        networks:
+            - premed
+        volumes:
+            - mongo:/data/db
+
+networks:
+    premed:
+        driver: bridge
+volumes:
+    mongo:
+        driver: local

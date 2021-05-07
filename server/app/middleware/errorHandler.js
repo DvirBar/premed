@@ -14,7 +14,7 @@ const errorHandler = (err, req, res, next) => {
             }
 
             else {
-                // Log to database
+                console.log(err);
             }
             
             return res.status(500).send({ msg: "Internal server error" })

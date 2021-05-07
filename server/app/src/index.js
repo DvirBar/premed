@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 import express from 'express';
 import mongoose from 'mongoose';
 import errorHandler from  '../middleware/errorHandler';
@@ -19,6 +22,10 @@ dotenv.config({
 app.use(express.json());
 app.use(morgan('tiny'))
 app.use(cookieParser())
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'))
+}
 
 
 // App routes
@@ -52,7 +59,7 @@ app.use('/api/announcements/groups', ancGroups)
 app.set('view engine', 'hjs')
 app.set('views', path.join(__dirname, 'views'))
 app.engine('hjs', require('hogan-express'))
-app.use('/', viewIndex)
+app.use('/api/service', viewIndex)
 
 // Exit middlewares
 app.use(errorHandler);
@@ -62,8 +69,21 @@ app.use(errorHandler);
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
+const {
+    MONGO_URI,
+    DB_NAME,
+    DB_USER,
+    DB_PASS,
+    DB_PORT,
+    DB_SERVICE
+} = process.env
+
 // Database config
-const db = process.env.MONGO_URI;
+const db = 
+MONGO_URI ||
+`mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
+
+console.log(db)
 
 // Connect to MongoDB
 mongoose

@@ -4,8 +4,9 @@
   "description": "Api for premed apps",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production && node --exec babel-node src/index.js",
-    "dev": "SET \"NODE_ENV=development\" && nodemon --exec babel-node src/index.js",
+    "start": "npm run build && node build/src/index.js ",
+    "build": "babel app -d build",
+    "dev": "SET \"NODE_ENV=development\" && nodemon --exec babel-node app/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.12.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "email-templates": "^8.0.4",
@@ -39,7 +41,8 @@
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
     "pug": "^3.0.2",
-    "query-string": "^6.14.0"
+    "query-string": "^6.14.0",
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

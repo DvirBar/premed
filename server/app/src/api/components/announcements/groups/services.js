@@ -6,7 +6,7 @@ export async function getAll() {
 
     let newGroups = []
 
-    for(let group of groups) {
+    for(let group of groups) {``
         const subCount = group.subscribers?.length || 0
         
         const newGroup = groupWithoutSubscribers(group)
@@ -42,10 +42,15 @@ export async function getAllGroupSubs(groupId) {
     
 }
 
-export function create(data) {
+export async function create(data) {
     const newGroup = new AncGroup(data)
 
-    return newGroup.save()
+    const group = await newGroup.save()
+
+    return {
+        ...group,
+        subCount: 0
+    }
 }
 
 export async function edit(id, data) {

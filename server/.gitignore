@@ -1,10 +1,6 @@
 node_modules
 config
 utils/googleSheetsApi.js
-# routes/api/data-tables.js
-# models/DataTable.js
-# messages/data-tables.js
 messages/ggl-api.js
 build
 env
-deploy
