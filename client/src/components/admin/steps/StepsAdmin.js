@@ -1,14 +1,12 @@
 import React from 'react';
-import StepsEditSeciton from './StepsEditSection/StepsEditSeciton';
-import StepsContent from './StepsContent/StepsContent';
 import StepsProvider from '../../steps/StepsContext'; 
+import StepsAdminContent from './StepsAdminContent';
 
 function StepsAdmin() {
 
     return (
         <StepsProvider isAdmin={true}>
-            <StepsContent />
-            <StepsEditSeciton />
+            <StepsAdminContent />
         </StepsProvider>
     )
 }
