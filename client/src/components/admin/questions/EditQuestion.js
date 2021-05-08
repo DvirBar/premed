@@ -3,6 +3,7 @@ import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
 import { editQuest } from '../../../redux/questions/actions'
+import Editor from '../../common/forms/Editor/Editor';
 
 function EditQuestion({ groupId, question, display, toggleModal }) {
     const [defaultValues, setDefaultValues] = useState({})
@@ -26,8 +27,11 @@ function EditQuestion({ groupId, question, display, toggleModal }) {
         <Modal
         display={display}
         toggleModal={toggleModal}
-        title='עריכת שאלה'>
-            <form onSubmit={handleSubmit}>
+        title='עריכת שאלה'
+        className="edit-question">
+            <form 
+            className="edit-question__form"
+            onSubmit={handleSubmit}>
                 <FormInput
                 label="שאלה"
                 type="text"
@@ -36,12 +40,10 @@ function EditQuestion({ groupId, question, display, toggleModal }) {
                 onChange={handleChange}
                 error={errors.question} />
 
-                <textarea
-                cols="80" rows="10"
-                name='answer'
+                <Editor
+                value={values.answer}
                 onChange={handleChange}
-                placeholder="תשובה"
-                value={values.answer} />
+                name="answer" />
 
                 <div className="url-details">     
                     <input 

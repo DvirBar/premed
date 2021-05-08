@@ -11,7 +11,8 @@ const Modal = ({
   children, 
   title, 
   subTitle, 
-  links })=> {
+  links,
+  className })=> {
     
     /* We'll use ref of modal box, 
     so when clicking outside it'll close */
@@ -56,7 +57,6 @@ const Modal = ({
     }, [location])
 
     const selectLink = loc => {
-      console.log(loc);
       if(links && links.selectLink) {
         links.selectLink(loc)
       }
@@ -64,7 +64,7 @@ const Modal = ({
 
     return (
         <div 
-        className="gen-modal" 
+        className={`gen-modal ${className ? className : ''}`} 
         style={display ? showOpacity : hideOpacity} 
         onKeyPress={event => escapeModal(event)}>
           <div 
