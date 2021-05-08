@@ -3,6 +3,7 @@ import Modal from '../../layout/Modal';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
 import { addQuest } from '../../../redux/questions/actions';
+import Editor from '../../common/forms/Editor/Editor';
 
 function AddQuestion({ group }) {
     const [defaultValues] = useState({
@@ -37,12 +38,10 @@ function AddQuestion({ group }) {
                     onChange={handleChange}
                     error={errors.question} />
 
-                    <textarea
-                    cols="80" rows="10"
-                    name='answer'
-                    placeholder='תשובה'
+                    <Editor
+                    value={values.answer}
                     onChange={handleChange}
-                    value={values.answer} />
+                    name="answer" />
 
                     <div className="url-details">     
                         <input 

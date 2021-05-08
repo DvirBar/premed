@@ -19,9 +19,9 @@ function QuestionItem({ question }) {
             </Section.Header>
             
             <Section.Body className="question-content">
-                <p className="question-answer">
-                    {question.answer}
-                </p>
+                <div 
+                dangerouslySetInnerHTML={{__html: question.answer}}
+                className="question-answer scrollbar-main" />
                 {question.sourceLink &&
                     <a 
                     className="question-source"
