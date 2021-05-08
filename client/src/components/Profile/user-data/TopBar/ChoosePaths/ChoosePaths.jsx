@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux'
 import { getAllPaths } from '../../../../../redux/selectors/paths'
 import Checkbox from '../../../../common/Checkbox'
 
-function ChoosePaths({ selPaths, onChange }) {
+function ChoosePaths({ name, selPaths, onChange }) {
     const paths = useSelector(getAllPaths)
-
+    console.log(selPaths);
     return (
         <div className="user-data-choose-paths">
             <p className="user-data-choose-paths__title">בחירת מסלול</p>
             <div className="user-data-choose-paths__paths-list">
                 {paths.map(path =>
                     <Checkbox 
-                    name="pathIds"
+                    name={name}
                     value={path._id}
                     onChange={onChange}
                     isMulti={true}

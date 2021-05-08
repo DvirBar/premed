@@ -59,6 +59,7 @@ function ChooseBaseData() {
             noValidate>
                 <div className="choose-base-data__form__options">
                     <ChoosePaths 
+                    name="pathIds"
                     selPaths={values.pathIds}
                     onChange={handleChange} />
 

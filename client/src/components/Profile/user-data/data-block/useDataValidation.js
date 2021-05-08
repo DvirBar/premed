@@ -23,8 +23,6 @@ function useDataValidation(storedCalcs, dataVals) {
         setFinishSequence(status)
     }, [])
 
-    console.log(storedCalcs);
-
     const { missingArgs, finished } = useMissingArgs(storedCalcs, dataVals)
 
     const minUnits = useMinUnits(

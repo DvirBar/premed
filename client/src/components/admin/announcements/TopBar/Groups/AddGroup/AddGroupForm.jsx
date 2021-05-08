@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import useForm from '../../../../../../forms/useForm';
-import { getAllPaths } from '../../../../../../redux/selectors/paths';
 import { addGroup } from '../../../../../../redux/announcements/groups/actions';
-import Dropdown from '../../../../../common/Dropdown';
 import FormInput from '../../../../../common/FormInput';
 import Modal from '../../../../../layout/Modal';
+import ChoosePaths from '../../../../../Profile/user-data/TopBar/ChoosePaths/ChoosePaths';
 
 function AddGroupForm({ display, toggleDisplay }) {
     const [defaultValues] = useState({
         name: '',
-        path: ''
+        paths: []
     })
 
     const {
@@ -19,13 +17,6 @@ function AddGroupForm({ display, toggleDisplay }) {
         values,
         errors
     } = useForm(addGroup, defaultValues)
-
-    const paths = useSelector(getAllPaths)
-    const options = paths.map(path => ({
-        name: path.name,
-        value: path._id
-    }))
-
     
     return (
         <Modal
@@ -41,12 +32,10 @@ function AddGroupForm({ display, toggleDisplay }) {
                 onChange={handleChange}
                 error={errors.name} />
 
-                <Dropdown 
-                options={options}
-                name="path"
-                onChange={handleChange}
-                placeholder="בחירה"
-                title="מסלול" />
+                <ChoosePaths 
+                name="paths"
+                selPaths={values.paths}
+                onChange={handleChange} />
 
                 <button type="submit">
                     יצירה

@@ -14,11 +14,11 @@ const AncGroupSchema = new Schema({
         required: [true, 'Name is required'],
         unique: true
     },
-    path: {
+    paths: [{
         type: String,
         required: [true, 'Path is required'],
         enum: path.getPaths().map(pathItem => pathItem._id)
-    },
+    }],
     subscribers: [{
         user: {
             type: ObjectId, 
