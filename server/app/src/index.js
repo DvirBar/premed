@@ -83,7 +83,6 @@ const db =
 MONGO_URI ||
 `mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
 
-console.log(db)
 
 // Connect to MongoDB
 mongoose

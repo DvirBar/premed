@@ -3,8 +3,6 @@ const { sendHttpMessage } = require('../src/services/messages');
 
 const errorHandler = (err, req, res, next) => {
     try {
-      
-        
         if(err.status && err.msg) {
             return sendHttpMessage(res, err)
         }
@@ -14,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
             }
 
             else {
-                console.log(err);
+                // Log to database
             }
             
             return res.status(500).send({ msg: "Internal server error" })
