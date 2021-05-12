@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import AcceptCalc from './AcceptCalc'
 import CalcDetails from './CalcDetails/CalcDetails'
+import OtherCalcs from './OtherCalcs/OtherCalcs'
 
 function SuggestedCalc({ value, suggestedValue, calc, payload }) {
-    const [display, setDisplay] = useState(false)
+    const [displayInfo, setDisplayInfo] = useState(false)
+    const [displayOther, setDisplayOther] = useState(false)
     
     return (
         <div className="suggested-calc">
@@ -16,11 +18,24 @@ function SuggestedCalc({ value, suggestedValue, calc, payload }) {
                 </div>
                 {payload &&
                     <div 
-                    onClick={() => setDisplay(true)}
+                    onClick={() => setDisplayInfo(true)}
                     className="suggested-calc__info__display-info">
                         פירוט
                     </div>
                 }  
+                {calc.reverseCalcs &&
+                  <div className="other-calcs">
+                        <span 
+                        onClick={() => setDisplayOther(true)}
+                        className="other-calcs__link">
+                            עוד שקלולים
+                        </span>
+                        <OtherCalcs 
+                        display={displayOther}
+                        setDisplay={setDisplayOther}
+                        calc={calc} />
+                  </div>
+                }
             </div>
             <AcceptCalc 
             calcId={calc?._id} 
@@ -28,8 +43,8 @@ function SuggestedCalc({ value, suggestedValue, calc, payload }) {
             suggestedValue={suggestedValue} />
 
             <CalcDetails
-            display={display}
-            setDisplay={setDisplay}
+            display={displayInfo}
+            setDisplay={setDisplayInfo}
             payload={payload}
             calcName={calc?.name} />
             

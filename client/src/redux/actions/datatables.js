@@ -38,7 +38,6 @@ export const getTables = () => dispatch => {
                 payload: res.data
             })})
          .catch(err => {
-             console.log(err);
              dispatch(tableError());
              dispatch(getError(err));
          });

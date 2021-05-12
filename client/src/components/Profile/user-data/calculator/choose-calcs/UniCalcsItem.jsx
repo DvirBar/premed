@@ -7,8 +7,6 @@ function UniCalcsItem({
     chooseCalc, 
     chosenCalcs }) {
 
-        
-
     return (
         <div
         key={uni._id} 

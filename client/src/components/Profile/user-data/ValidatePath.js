@@ -1,5 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getTables } from '../../../redux/actions/datatables';
 import { getOneUserData } from '../../../redux/actions/userdata';
 import Loadbar from '../../layout/Loadbar';
 import Calculator from './calculator/Calculator';
@@ -12,6 +13,7 @@ function ValidatePath() {
 
     useEffect(() => {
         dispatch(getOneUserData());
+        dispatch(getTables())
     }, [])
 
     const { 

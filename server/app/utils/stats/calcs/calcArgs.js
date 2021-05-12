@@ -28,6 +28,30 @@ const args = {
     bagrutBgu: {
         _id: 'bagrutBgu',
         type: 'calc'
+    },
+    initialTau: {
+        _id: 'initialTau',
+        type: 'calc'
+    },
+    finalTau: {
+        _id: 'finalTau',
+        type: 'calc'
+    },
+    initialHuji: {
+        _id: 'initialHuji',
+        type: 'calc'
+    },
+    finalHuji: {
+        _id: 'finalHuji',
+        type: 'calc'
+    },
+    initialTech: {
+        _id: 'initialTech',
+        type: 'calc'
+    },
+    initialBgu: {
+        _id: 'initialBgu',
+        type: 'calc'
     }
 }
 

@@ -37,6 +37,15 @@ export const getFieldById = fieldId => createSelector(
     fields => fields.find(field => field._id === fieldId)
 )
 
+export const getInputsByFieldId = fieldId => createSelector(
+    fieldsSelector,
+    calcsSelector,
+    (fields, calcs) => {
+        return fields.find(field => field._id === fieldId) || 
+               calcs.find(calc => calc._id === fieldId)
+    }
+)
+
 export const getFieldsAndCalcs = state => {
     return [
         ...state.statsinputs.fields,
@@ -157,3 +166,18 @@ export const getCalcsByUniAndPath = (pathId, uniId) => createSelector(
         (!field.paths || field.paths.includes(pathId))
     })
 )
+
+export const getFieldMinMaxValues = field => {
+    const rangeObj = field.validators.find(valid => valid.value === "numRange")
+
+    if(rangeObj) {
+        return {
+            min: rangeObj.min,
+            max: rangeObj.max
+        }
+    }
+
+    return {}
+}
+    
+

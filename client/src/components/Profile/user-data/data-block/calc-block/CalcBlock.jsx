@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { EXEC_CALC } from '../../../../../redux/actions/types'
 import { isLoading } from '../../../../../redux/loader/selectors'
-import { hasCalcForYear } from '../../../../../redux/selectors/userdata'
+import { getTableYear, hasCalcForYear } from '../../../../../redux/selectors/userdata'
 import Loadbar from '../../../../layout/Loadbar'
 import { GroupsContext } from '../GroupsContext'
 import NoCalc from './NoCalc/NoCalc'
@@ -15,15 +15,14 @@ function CalcBlock({ calc, value, suggestedValue, payload }) {
     } = useContext(GroupsContext)
 
     const validError = useSelector(getErrorByCalc(calc._id))
-
+    const tableYear = useSelector(getTableYear)
     const calcVersions = calc.versions
-    const hasCalc = useSelector(hasCalcForYear(calcVersions, calcVersions?.tableGap))
     const loading = useSelector(isLoading(EXEC_CALC, calc._id))
     return (
         <div className="calc-block-new">
-            {hasCalc 
+            {!calcVersions || calcVersions.includes(tableYear)
             ? validError
-                ?    <NoCalc 
+                ?   <NoCalc 
                     calcName={calc.name}
                     validError={validError} />   
                 :   loading
@@ -35,7 +34,9 @@ function CalcBlock({ calc, value, suggestedValue, payload }) {
                     value={value} 
                     calc={calc}
                     payload={payload} />
-            : <NoCalcYear />
+            :   <NoCalcYear 
+                calc={calc} 
+                tableYear={tableYear} />
             }
         </div>
     )

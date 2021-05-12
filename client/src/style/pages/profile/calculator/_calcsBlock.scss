@@ -4,7 +4,6 @@
     align-items: center;
     position: fixed;
     right: 1rem;
-    bottom: 5rem;
     width: 5rem;
     height: 5rem;
     background-color: $main-color;
@@ -19,8 +18,11 @@
     }
 
     &.display {
-        bottom: 8rem;
         transform: scale(0.6);
+    }
+
+    &.displayInfo {
+        top: 20px !important;
     }
 
     .material-icons {
@@ -31,31 +33,40 @@
 
 .calculator-calcs-block {
     position: fixed;
-    display: grid;
     align-items: center;
-    grid-template-columns: auto 100px;
     background-color: #fff;
     width: 100%;
-    bottom: 0;
+    transition: all 0.3s ease;
+    height: auto;
     right: 0;
+    bottom: 0;
     border-top: 5px solid $main-color;
     padding: 0.5rem 1rem;
-    height: 10rem;
-    opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+
+    .calcs-unis-list {
+        grid-template-columns: auto 100px;
+        display: grid;
+        width: 100%;
+    }
 
     &.display {
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+    }
+
+    &.displayInfo {
+        top: 50px !important;
     }
 
     .calcs-list {
         display: flex;
         column-gap: 5rem;
         overflow-y: auto;
+        overflow-x: hidden;
         flex-wrap: wrap;
         height: 10rem;
     }
@@ -76,6 +87,8 @@
             border-radius: 0.5rem;
             padding: 3px 1.5rem;
             min-width: 10rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
 
             .calc-name {
                 font-size: 1.2rem;

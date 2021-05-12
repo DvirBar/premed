@@ -5,7 +5,8 @@ import { getTableYear } from '../../../../../redux/selectors/userdata'
 
 function ChooseCalcsOption({ chooseCalc, chosenCalcs, calc }) {
     const tableYear = useSelector(getTableYear)
-    const calcYear = tableYear + calc.versions?.calcGap
+    const calcYear = calc.versions?.includes(tableYear) 
+    ? tableYear : tableYear - 1
 
     return (
         <div

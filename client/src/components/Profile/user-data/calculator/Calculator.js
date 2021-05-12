@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import FloatButton from '../../../layout/FloatButton';
+import CalcItemInfo from './CalcsBlock/CalcItemInfo';
 import CalculatorBody from './CalculatorBody';
 
 function Calculator() {

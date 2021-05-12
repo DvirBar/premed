@@ -1,8 +1,9 @@
 .no-calc-year {
     display: flex;
+    color: $main-color;
+    padding: 0.5rem;
+    font-size: 1.5rem;
     &__main {
-        padding: 0.5rem;
-        color: $main-color;
-        font-size: 1.5rem;
+        margin-left: 0.5rem;
     }
 }

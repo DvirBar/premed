@@ -47,6 +47,11 @@ const DataTableSchema = new Schema({
             default: false
             // Validate is final is the only one
         },
+        isInitial: {
+            type: Boolean,
+            default: false
+            // Validate is initial is the only one
+        },
         field: {
             type: String
         },

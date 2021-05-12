@@ -61,6 +61,12 @@ function ThreshItem({ thresh, tableId }) {
             toggleMenu={toggleMenu}
             options={options} />
 
+            {thresh.isInitial &&
+                <span className="thresh-isinitial">
+                    ראשוני
+                </span>
+            }
+
             {thresh.isFinal &&
                 <span className="thresh-isfinal">
                     סופי

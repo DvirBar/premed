@@ -8,6 +8,7 @@ import { getInputsByArgs } from '../../../../redux/selectors/statsinputs';
 import ArgsBlock from './ArgsBlock';
 import useSimulateExecCalcs from './useSimulateExecCalcs';
 import useDataValidation from '../data-block/useDataValidation';
+import CalculatorProvider from './CalculatorContext';
 
 function CalculatorContent({ chosenCalcs, togglePickCalcs, display }) {
     const {
@@ -62,9 +63,11 @@ function CalculatorContent({ chosenCalcs, togglePickCalcs, display }) {
             calcs={calcs} />
             
             {display &&
-                <CalcsBlock 
-                calcs={chosenCalcs}
-                changeStartSimulate={changeStartSimulate} />
+                <CalculatorProvider>
+                    <CalcsBlock 
+                    calcs={chosenCalcs}
+                    changeStartSimulate={changeStartSimulate} />
+                </CalculatorProvider>
             }
         </div>
     )

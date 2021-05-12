@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { simulateCalcs } from '../../../../redux/actions/userdata';
-import { getCustomGroupsSimulated, getSimulatedVals, selTableSelector } from '../../../../redux/selectors/userdata';
+import { getCustomGroupsSimulated, getSimulatedVals, getTableYear, selTableSelector } from '../../../../redux/selectors/userdata';
 import { GroupsContext } from '../data-block/GroupsContext';
 import { getNextCalcs } from '../hooks/useExecCalc';
 
@@ -26,6 +26,7 @@ function useSimulateExecCalcs(
     const selTable = useSelector(selTableSelector)
     const values = useSelector(getSimulatedVals);
     const customGroups = useSelector(getCustomGroupsSimulated);
+    const tableYear = useSelector(getTableYear)
     const {
         getValidErrors
     } = useContext(GroupsContext)
@@ -58,11 +59,12 @@ function useSimulateExecCalcs(
                     nextCalcs,
                     validErrors
                 )]
-        
+                    
                 dispatch(simulateCalcs(
                     calcSequence, 
                     values,
                     customGroups, 
+                    tableYear,
                     selTable))
             }
 

@@ -13,7 +13,8 @@ const {
 
 const {
     psycho, mor, bagrut, bagrutHuji, bagrutTau, bagrutTech, 
-    bagrutBgu
+    bagrutBgu, initialTau, finalTau, initialHuji, finalHuji,
+    initialTech, initialBgu
 } = args
 
 const storedCalcs = [
@@ -36,11 +37,15 @@ const storedCalcs = [
         ]
     },
     {
-        _id: "hujiInitial",
+        _id: initialHuji._id,
         name: "סכם ראשוני",
         func: hujiCalcs.hujiInitial,
         threshField: true,
         fractionDigits: 3,
+        calcRecog: {
+            ...hujiCalcs.hujiInitialArgs
+        },
+        reverseCalcs: hujiCalcs.hujiReverse[initialHuji._id],
         args: [
             bagrutHuji,
             psycho
@@ -58,14 +63,14 @@ const storedCalcs = [
         ]
     },
     {
-        _id: "hujiFinal",
+        _id: finalHuji._id,
         name: "סכם סופי",
         func: hujiCalcs.hujiFinal,
-        versions: {
-            years: [2019, 2020],
-            tableGap: 0,
-            calcGap: -1
+        versions: [2020, 2019],
+        calcRecog: {
+            ...hujiCalcs.hujiFinalArgs
         },
+        reverseCalcs: hujiCalcs.hujiReverse[finalHuji._id],
         threshField: true,
         fractionDigits: 3,
         args: [
@@ -104,16 +109,16 @@ const storedCalcs = [
         ]
     },
     {
-        _id: "tauInitial",
+        _id: initialTau._id,
         name: "סכם ראשוני",
         func: tauCalcs.tauInitial,
         threshField: true,
         fractionDigits: 2,
-        versions: {
-            years: [2020, 2021],
-            tableGap: 0,
-            calcGap: -1
+        versions: [2021, 2020],
+        calcRecog: {
+            ...tauCalcs.tauInitialArgs
         },
+        reverseCalcs: tauCalcs.tauReverse[initialTau._id],
         args: [
             bagrutTau,
             psycho
@@ -126,16 +131,16 @@ const storedCalcs = [
         ]
     },
     {
-        _id: "tauFinal",
+        _id: finalTau._id,
         name: "סכם סופי",
         func: tauCalcs.tauFinal,
         threshField: true,
         fractionDigits: 2,
-        versions: {
-            years: [2020],
-            tableGap: 0,
-            calcGap: -1
+        versions: [2020],
+        calcRecog: {
+            ...tauCalcs.tauFinalArgs
         },
+        reverseCalcs: tauCalcs.tauReverse[finalTau._id],
         args: [
             bagrutTau,
             psycho,
@@ -167,11 +172,15 @@ const storedCalcs = [
         ]
     }, 
     {
-        _id: "initialTech",
+        _id: initialTech._id,
         name: "סכם ראשוני",
         func: techCalcs.techInitial,
         threshField: true,
         fractionDigits: 2,
+        calcRecog: {
+            ...techCalcs.techInitialArgs
+        },
+        reverseCalcs: techCalcs.techReverse[initialTech._id],
         args: [
             psycho,
             bagrutTech
@@ -207,7 +216,7 @@ const storedCalcs = [
         ]
     },
     {
-        _id: "bguInitial",
+        _id: initialBgu._id,
         name: "סכם ראשוני",
         func: bguCalcs.bguInitial,
         constValue: 735,

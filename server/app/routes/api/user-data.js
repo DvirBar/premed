@@ -193,7 +193,8 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
     const {
         values,
         calcsToExec,
-        customGroups
+        customGroups,
+        tableYear
     } = req.body
     
     let resultArray = []
@@ -202,15 +203,14 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
 
     for(let calcLevel of calcsToExec) {
         for(let storCalcId of calcLevel) {
-
             const storCalc = storedCalcs.find(calc => 
                 calc._id === storCalcId)
 
             const calcVersions = storCalc.versions
-            const year = (new Date()).getFullYear()
-            const yearToExec = year + calcVersions?.calcGap
+            const yearToExec = calcVersions?.includes(tableYear) 
+            ? tableYear : tableYear - 1 
             if(!calcVersions 
-            || calcVersions.years.includes(yearToExec)) {
+            || calcVersions?.includes(yearToExec)) {
                     let calcObj = {}
 
                 try {
@@ -539,102 +539,100 @@ router.put('/execCalc', auth, (req, res, next) => {
         if(!data)
             return res.status(DataNotExist.status)
                       .send(DataNotExist.msg)
-            
+        
         const enabledTable = data.tables.find(curTable => 
             curTable.table.enabled) 
         let values = enabledTable.dataVals
-
+        const year = enabledTable.table.year
+    
         let newCalcs = []
         for(let calcLevel of calcsToExec) {
             for(let storCalcId of calcLevel) {
+                // Find stored calc
                 const storCalc = storedCalcs.find(calc => 
                     calc._id === storCalcId)
-                
+
                 const calcVersions = storCalc.versions
-                const year = enabledTable.table.year
                 
-                const yearToExec = year + calcVersions?.tableGap
-                if(!calcVersions 
-                    || calcVersions.years.includes(yearToExec)) {
+                if(!calcVersions || calcVersions.includes(year)) {
                         let calcObj = {}
 
-                try {
-                    calcObj = await executeCalc(
-                        storCalc, 
-                        values,  
-                        enabledTable.customGroups,
-                        yearToExec)
-                }
-        
-                catch(err) {
-                    console.log(err);
-                    return res.status(err.status || 500).send(err.msg)
-                }
-            
-                const payload = calcObj.payload
-
-                const dataVal = values.find(val => 
-                    val.field === storCalcId)
-
-                // If the user already has a value for the field
-                if(dataVal) {
-                    if(!storCalc.isSuggestion) {
-                        dataVal.value = calcObj.value;
+                    try {
+                        calcObj = await executeCalc(
+                            storCalc, 
+                            values,  
+                            enabledTable.customGroups,
+                            year)
                     }
+            
+                    catch(err) {
+                        console.log(err);
+                        return res.status(err.status || 500).send(err.msg)
+                    }
+                    
+                    const payload = calcObj.payload
 
-                    else {
-                        if(dataVal.suggestValue &&
-                        Number(dataVal.suggestValue) !== 
-                        Number(calcObj.value)) {
-                            dataVal.suggestedAccepted = false
+                    const dataVal = values.find(val => 
+                        val.field === storCalcId)
+
+                    // If the user already has a value for the field
+                    if(dataVal) {
+                        if(!storCalc.isSuggestion) {
+                            dataVal.value = calcObj.value;
                         }
 
-                        dataVal.suggestValue = calcObj.value;    
-                    }
+                        else {
+                            if(dataVal.suggestValue &&
+                            Number(dataVal.suggestValue) !== 
+                            Number(calcObj.value)) {
+                                dataVal.suggestedAccepted = false
+                            }
 
-                    dataVal.payload = payload ? payload : {}
-                }
+                            dataVal.suggestValue = calcObj.value;    
+                        }
+
+                        dataVal.payload = payload ? payload : {}
+                    }
+                    
+                    // If the field is yet to have a value
+                    else {
+                        const isSuggestion = storCalc.isSuggestion
+                        let valObj = {
+                            field: storCalcId,
+                            isCalc: true,
+                            payload: payload ? payload : {}
+                        }
+
+                        if(!isSuggestion)
+                            valObj.value = calcObj.value
+
+                        else {
+                            valObj.suggestValue = calcObj.value
+                            valObj.suggestedAccepted = false
+                        }
+                            
+                        values.push(valObj)
+                    }
+                    await data.save()
+                        .then(async(data) => {
+                            async function populateAndGroup() {
+                                await data
+                                    .populate("tables.table")
+                                    .execPopulate();
+                                values = data.tables.find(curTable => 
+                                    curTable.table.enabled).dataVals
+                                const newValue = values.find(val => 
+                                    val.field === storCalcId)
                 
-                // If the field is yet to have a value
-                else {
-                    const isSuggestion = storCalc.isSuggestion
-                    let valObj = {
-                        field: storCalcId,
-                        isCalc: true,
-                        payload: payload ? payload : {}
-                    }
+                                newCalcs.push(Object.assign(
+                                    newValue, 
+                                    { payload: calcObj.payload }
+                                ))
+                            }
 
-                    if(!isSuggestion)
-                        valObj.value = calcObj.value
-
-                    else {
-                        valObj.suggestValue = calcObj.value
-                        valObj.suggestedAccepted = false
-                    }
-                       
-
-                    values.push(valObj)
-                }
-                await data.save()
-                    .then(async(data) => {
-                        async function populateAndGroup() {
-                            await data
-                                .populate("tables.table")
-                                .execPopulate();
-                            values = data.tables.find(curTable => 
-                                curTable.table.enabled).dataVals
-                            const newValue = values.find(val => 
-                                val.field === storCalcId)
-            
-                            newCalcs.push(Object.assign(
-                                newValue, 
-                                { payload: calcObj.payload }
-                            ))
-                        }
-
-                        await populateAndGroup()
-                    })
-                    .catch(next);
+                            await populateAndGroup()
+                        })
+                        .catch(next);
                 }
             }
         }
@@ -743,7 +741,6 @@ router.put('/addCustomGroup/:tableId', auth, (req, res, next) => {
 // @desc    Delete user data
 // @access  Admin
 router.delete('/:userId', [auth, authAdmin], (req, res, next) => {
-
     UserData.findOne({ user: userId})
               .then(data => {
                 if(!data) 
@@ -758,5 +755,53 @@ router.delete('/:userId', [auth, authAdmin], (req, res, next) => {
             })
             .catch(next); // Find user data
 })
+
+// async function executeCalcs({
+//     storCalc, 
+//     values,  
+//     customGroups,
+//     thisTable,
+//     lastYearTable
+// }) {
+//     let yearsToExec = []
+ 
+//     if(storCalc.versions) {
+//         yearsToExec = storCalc.versions.filter(verYear => 
+//             verYear === thisTable.year || 
+//             verYear === lastYearTable.year)
+//     }
+
+//     else {
+//         yearsToExec = [thisTable.year]
+//     }
+
+//     let mainCalcObj = {}
+//     let otherCalcObj = {}
+//     for(let year of yearsToExec) {
+//         const {
+//             result: calcObj,
+//             params
+//         } = await executeCalc(
+//             storCalc, 
+//             values,  
+//             customGroups,
+//             year)
+
+//         if(storCalc.reverseCalcs) {
+//             const thresholdsToUse = thisTable.year === year 
+//             ? thisTable.thresholds : lastYearTable.thresholds
+//             const revCalcs = []
+//             for(revCalc of storCalc.reverseCalcs) {
+
+                
+//                 revCalcs.push({
+//                     field: revCalc.field,
+//                     value: revCalc.calc({ ...params, year})
+//                 })
+//             }
+//         }
+        
+//     }
+// }
 
 module.exports = router;

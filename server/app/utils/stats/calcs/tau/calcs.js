@@ -1,23 +1,11 @@
 import getBonus from './bonusMap';
 import getBestAverage  from "../executeCalc/getBestAverage";
 import getBaseAvg from '../executeCalc/getBaseAvg';
-import { 
-    tauInitial as initial2020, 
-    tauFinal as final2020
-} from './versions/2020';
-import {
-    tauInitial as initial2021
-} from './versions/2021'
-
-const calcMap = {
-    initial: {
-        2020: initial2020,
-        2021: initial2021
-    },
-    final: {
-        2020: final2020
-    }
-}
+import { tauInitialMain } from './tauInitial';
+import { tauFinalCalc } from './tauFinal';
+import { tauInitial as initialStd, tauFinal as finalStd } from './standardization'
+import args from '../calcArgs';
+const { psycho, mor, bagrutTau, initialTau, finalTau } = args
 
 export const tauInitial = async({ params, year }) => {
     const {
@@ -25,7 +13,7 @@ export const tauInitial = async({ params, year }) => {
         'psycho': psycho,
     } = params
 
-    const grade = await calcMap.initial[year]({ bagrut, psycho })
+    const grade = await tauInitialMain({ bagrut, psycho, year })
 
     return {
         value: (grade).toFixed(2)
@@ -38,8 +26,7 @@ export const tauFinal = async({ params, year }) => {
         'psycho': psycho,
         'mor': mor
     } = params
-    
-    const grade = calcMap.final[year]({ bagrut, psycho, mor })
+    const grade = tauFinalCalc({ bagrut, psycho, mor, year })
 
     return {
         value: (grade).toFixed(2)
@@ -66,4 +53,49 @@ export const tauBargut = ({ params, values }) => {
         value: (value).toFixed(2)
     }
     return result
+}
+
+
+export const tauInitialArgs = {
+    [psycho._id]: {
+        coef: initialStd.psycho,
+        hasYear: true
+    },
+    [bagrutTau._id]: {
+        coef: initialStd.bagrut,
+        hasYear: true
+    },
+    "intercept": {
+        coef: initialStd.intercept,
+        hasYear: true
+    }
+} 
+
+export const tauFinalArgs = {
+    [psycho._id]: {
+        coef: finalStd.psycho,
+        hasYear: true
+    },
+    [bagrutTau._id]: {
+        coef: finalStd.bagrut,
+        hasYear: true
+    },
+    [mor._id]: {
+        coef: finalStd.mor,
+        hasYear: true
+    },
+    "intercept": {
+        coef: finalStd.intercept,
+        hasYear: true
+    }
+}
+
+
+export const tauReverse = {
+    [initialTau._id]: [
+        bagrutTau._id, psycho._id
+    ],
+    [finalTau._id]: [
+        bagrutTau._id, psycho._id, mor._id
+    ]
 }

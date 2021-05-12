@@ -9,6 +9,7 @@ function AddThreshold({ selField, tableId, threshType }) {
     const [defaultValues, setDefaultValues] = useState({
         date: new Date(),
         isFinal: false,
+        isInitial: false,
         value: ''
     })
 
@@ -44,6 +45,12 @@ function AddThreshold({ selField, tableId, threshType }) {
             value={values.date}
             onChange={handleChange} />
             
+            <Checkbox
+            name="isInitial"
+            label="ראשוני"
+            onChange={handleChange}
+            checked={values.isInitial} />
+
             <Checkbox
             name="isFinal"
             label="סופי"

@@ -44,6 +44,14 @@ const UserDataSchema = new Schema({
             value: {
                 type: String
             },
+            otherValue: {
+                value: {
+                    type: Number
+                },
+                year: {
+                    type: Number
+                }
+            },
             suggestValue: {
                 type: String
             },
@@ -54,10 +62,13 @@ const UserDataSchema = new Schema({
                 type: Mixed
             },
             reverseCalcs: [{
-                name: {
+                field: {
                     type: String
                 },
                 value: {
+                    type: Number
+                },
+                year: {
                     type: Number
                 }
             }]

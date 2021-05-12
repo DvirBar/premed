@@ -1,0 +1,30 @@
+.other-calcs__content__version-year {
+    color: $main-color;
+    font-size: 2.3rem;
+}
+
+.other-calcs-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        &__item {
+            padding: 1rem;
+        }
+    }
+}
+
+.constant-calc {
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: $main-color;
+    margin-bottom: 2rem;
+    border-bottom: 2px $main-color solid;
+    padding-bottom: 1rem;
+}
+
+@import "../OtherCalcsItem/index";

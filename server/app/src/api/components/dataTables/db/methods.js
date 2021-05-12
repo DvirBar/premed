@@ -10,6 +10,12 @@ export async function findByIdRequired(model, id) {
     return doc
 }
 
+export function getInitAndFinalThreshes(calcId, thresholds) {
+    thresholds.filter(thresh => 
+        thresh.calc === calcId && 
+        (thresh.isFinal || thresh.isInitial))
+}
+
 export function getAll() {
     return this.find().sort({ date_created: -1 })
 }
@@ -66,21 +72,14 @@ export async function toggleEnabled(tableId) {
 
 export async function addThreshold(tableId, threshData) {
     const {
-        threshType,
-        date,
-        isFinal,
         fieldId,
-        value
     } = threshData
 
     const table = await findByIdRequired(this, tableId)
 
     const newThreshold = {
-        threshType,
-        date,
-        isFinal,
-        field: fieldId,
-        value
+        ...threshData,
+        field: fieldId
     }
 
     const thresholds = table.thresholds

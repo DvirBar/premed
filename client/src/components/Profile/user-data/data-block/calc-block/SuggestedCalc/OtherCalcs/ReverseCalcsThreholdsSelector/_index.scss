@@ -1,0 +1,72 @@
+.reverse-calc-thresholds {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+
+    &__item:first-child {
+        margin-left: 2rem;
+    }
+
+    .thresh-unavailable {
+        font-weight: 500;
+    }
+
+    &__item {
+        $not-selected-color: #aaa;
+        $selected-color: $okay-color;
+
+        padding: 1rem;
+        color: #aaa;
+        text-align: center;
+        width: 12rem;
+        transition: color 0.2s ease-in-out;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+
+        &__type {
+            // Trans browser
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        &__value {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        &__date {
+            background-color: $not-selected-color;
+            color: #fff;
+            font-weight: 500;
+            font-size: 1.4rem;
+            align-self: center;
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        &.selected {
+            color: $selected-color;
+
+            .reverse-calc-thresholds__item__date {
+                background-color: $selected-color;
+            }
+
+            &::after {
+                transform: scaleX(1);
+                transform-origin: 100% 50%;
+            }
+        }
+
+        &::after {
+            display: block;
+            content: "";
+            border-bottom: solid 5px $selected-color;
+            transform: scaleX(0);
+            transition: transform 0.2s ease-in-out;
+        }
+    }
+}

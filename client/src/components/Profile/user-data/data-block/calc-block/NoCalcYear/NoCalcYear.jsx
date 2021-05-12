@@ -1,14 +1,28 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { getTableYear } from '../../../../../../redux/selectors/userdata'
+import React, { useState } from 'react'
+import OtherCalcs from '../SuggestedCalc/OtherCalcs/OtherCalcs'
 
-function NoCalcYear() {
-    const tableYear = useSelector(getTableYear)
+function NoCalcYear({ calc, tableYear }) {
+    const [displayOther, setDisplayOther] = useState(false)
+    
     return (
         <div className="no-calc-year">
             <div className="no-calc-year__main">
-                השקלול לשנת {tableYear} עדיין לא זמין
+                אין שקלול ל-{tableYear}
             </div>
+            {calc.versions.includes(tableYear-1) &&
+                <div className="other-calcs">
+                    <span 
+                    onClick={() => setDisplayOther(true)}
+                    className="other-calcs__link">
+                        (שנה קודמת)
+                    </span>
+                    <OtherCalcs 
+                    display={displayOther}
+                    setDisplay={setDisplayOther}
+                    calc={calc} />
+                </div>
+            }
+            
         </div>
     )
 }

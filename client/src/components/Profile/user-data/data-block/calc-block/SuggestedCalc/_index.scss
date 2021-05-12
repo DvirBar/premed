@@ -11,7 +11,7 @@
         column-gap: 0.5rem;
 
         &__label {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
         &__suggested-value {
@@ -54,4 +54,5 @@
     }
 }
 
+@import "./OtherCalcs/index";
 @import "./CalcDetails/index";

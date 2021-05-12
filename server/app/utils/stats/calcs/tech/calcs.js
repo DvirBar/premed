@@ -3,6 +3,14 @@ import getBonus from './bonusMap';
 import getBaseAvg from '../executeCalc/getBaseAvg';
 import groups from '../../groups/dataGroups';
 import getGroupConfig from '../../groups/getGroupConfig';
+import args from '../calcArgs';
+const { psycho, bagrutTech, initialTech } = args
+
+
+const bagrutCof = 0.5
+const psychoCof = 0.075
+const intercept = - 19
+
 
 export const techInitial = ({ params }) => {
     const {
@@ -10,11 +18,19 @@ export const techInitial = ({ params }) => {
         'psycho': psycho,
     } = params
 
-    const techCog = 0.5 * bagrut + 0.075 * psycho - 19
+    const techCog = bagrutCof * bagrut + psychoCof * psycho + intercept
 
     return {
-        value: Math.ceil(techCog * 100) / 100
+        value: techCog.toFixed(2)
     }
+}
+
+export const techInitialRevBagrut = ({ psycho, initial }) => {
+    return (initial - intercept + psychoCof * psycho) / bagrutCof
+}
+
+export const techInitialRevPsycho = ({ bagrut, initial }) => {
+    return (initial - intercept + bagrutCof * bagrut) / psychoCof
 }
 
 export const techBagrut = ({ params, values }) => {
@@ -73,3 +89,23 @@ export const techBagrut = ({ params, values }) => {
     }
     return result
 }
+
+export const techInitialArgs = {
+    [psycho._id]: {
+        coef: psychoCof
+    },
+    [bagrutTech._id]: {
+        coef: bagrutCof
+    },
+    "intercept": {
+        coef: intercept
+    }
+} 
+
+
+export const techReverse = {
+    [initialTech._id]: [
+        bagrutTech._id, psycho._id
+    ]
+}
+

@@ -10,6 +10,11 @@ import {
     getRealErrorByCalc,
     getRealValidErrors } from '../../../../redux/selectors/userdata';
 
+import {
+    selectRealFieldValue,
+    selectRealFieldValues
+}  from '../../../../redux/stats/userdata/real-data/selectors';
+
 const useRealData = () => {
     const dispatch = useDispatch()
     const dataVals = useSelector(getDataVals)
@@ -57,6 +62,8 @@ const useRealData = () => {
         validError: validError,
         getValidErrors: getRealValidErrors,
         getErrorByCalc: getRealErrorByCalc,
+        selectFieldValues: selectRealFieldValues,
+        selectFieldValue: selectRealFieldValue,
         isSimulated: false
     }
 

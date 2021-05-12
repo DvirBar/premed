@@ -200,6 +200,7 @@ export const simulateCalcs = (
     calcsToExec, 
     values, 
     customGroups, 
+    tableYear,
     tableId) => dispatch => {
 
     dispatch({ type: SIMULATE_CALCS_LOADING })
@@ -208,7 +209,8 @@ export const simulateCalcs = (
     const body = JSON.stringify({
         calcsToExec,
         values,
-        customGroups
+        customGroups,
+        tableYear
     });
 
     axios.post(`api/userdata/simulateCalcs/${tableId}`, body)

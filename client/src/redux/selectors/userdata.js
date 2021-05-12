@@ -119,7 +119,7 @@ export const getTableYear = createSelector(
     userdata => userdata.data.tableData.table.year
 )
 
-export const hasCalcForYear = (calcVersions, gap) => createSelector(
+export const hasCalcForYear = calcVersions => createSelector(
     getTableYear,
-    tableYear => !calcVersions || calcVersions.years.includes(tableYear + gap)
+    tableYear => !calcVersions || calcVersions.includes(tableYear)
 ) 

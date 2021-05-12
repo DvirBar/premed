@@ -5,7 +5,7 @@ import Checkbox from '../../../../common/Checkbox'
 
 function ChoosePaths({ name, selPaths, onChange }) {
     const paths = useSelector(getAllPaths)
-    console.log(selPaths);
+
     return (
         <div className="user-data-choose-paths">
             <p className="user-data-choose-paths__title">בחירת מסלול</p>

@@ -1,14 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Modal from '../../../../../../layout/Modal'
-import { SectionContext } from '../../../../SectionContext'
 import PayloadInfo from './PayloadInfo/PayloadInfo'
 
 function CalcDetails({ display, setDisplay, payload, calcName }) {
-    const {
-        uni
-    } = useContext(SectionContext)    
-
-    const title = `${calcName}${uni ? ' ' + uni.name : ''}`
+    const title = `${calcName}`
     return (
         <Modal
         title={title}

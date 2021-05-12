@@ -14,7 +14,7 @@
 .modal-box {
     background-color: #fff;
     margin: 3rem auto;
-    border-radius: 0.5rem;
+    border-radius: 0.6rem;
     max-width: 70rem;
 }
 
@@ -22,6 +22,31 @@
     width: 100%;
     text-align: center;
     box-shadow: 0 3px 6px #00000019;
+    display: flex;
+    flex-direction: column;
+    background-color: $main-color;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+
+    .close-modal {
+        color: #fff;
+        display: flex;
+        font-weight: bold;
+        padding-top: 1rem;
+        padding-right: 1rem;
+        align-self: flex-start;
+
+        .MuiSvgIcon-root {
+            font-size: 30px;
+        }
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+        color: #da2a2a;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
     .modal-titles {
         padding: 2rem;
@@ -29,13 +54,13 @@
 
         .modal-title {
             font-size: 2.5rem;
-            color: $main-color;
+            color: #fff;
             padding: 0.5rem;
             display: block;
         }
 
         .modal-subtitle {
-            color: #777;
+            color: #fff;
             font-size: 1.5rem;
             text-align: center;
         }
@@ -46,25 +71,6 @@
     padding: 4rem;
     padding-top: 2rem;
     word-wrap: break-word;
-}
-
-.close-modal {
-    color: #aaa;
-    display: flex;
-    font-weight: bold;
-    padding-top: 1rem;
-    padding-right: 1rem;
-
-    .MuiSvgIcon-root {
-        font-size: 30px;
-    }
-}
-
-.close-modal:hover,
-.close-modal:focus {
-    color: #da2a2a;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 .modal-form {

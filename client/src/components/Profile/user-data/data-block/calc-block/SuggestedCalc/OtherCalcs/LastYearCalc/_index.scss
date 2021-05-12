@@ -1,0 +1,18 @@
+.year-calc {
+    display: flex;
+    font-size: 1.7rem;
+
+    &__name {
+        color: #aaa;
+        font-weight: 500;
+        margin-right: 0.5rem;
+    }
+
+    &__value {
+        margin-right: 1rem;
+        color: $main-color;
+        font-weight: 500;
+        padding-bottom: 0.3rem;
+        border-bottom: 4px #aaa solid;
+    }
+}

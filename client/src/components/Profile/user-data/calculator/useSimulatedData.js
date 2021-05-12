@@ -16,6 +16,12 @@ import {
     getSimulatedVals, 
     getSimValidErrors } from '../../../../redux/selectors/userdata';
 
+
+import {
+    selectSimFieldValue,
+    selectSimFieldValues
+}  from '../../../../redux/stats/userdata/simulated-data/selectors';
+
 const useSimulatedData = () => {
     const dispatch = useDispatch()
     const simulatedVals= useSelector(getSimulatedVals)
@@ -82,6 +88,8 @@ const useSimulatedData = () => {
         validError: validErrorSimulated,
         getValidErrors: getSimValidErrors,
         getErrorByCalc: getSimErrorByCalc,
+        selectFieldValues: selectSimFieldValues,
+        selectFieldValue: selectSimFieldValue,
         isSimulated: true
     }
 

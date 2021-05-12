@@ -3,6 +3,9 @@ import getBonus from "./bonusMap";
 import getBaseAvg from "../executeCalc/getBaseAvg";
 import { hujiCog } from "./hujiCog";
 import { hujiFinalCalc } from "./hujiFinalCalc";
+import { hujiInitial as initialStd, hujiFinal as finalStd } from './standardization'
+import args from '../calcArgs';
+const { psycho, mor, bagrutHuji, initialHuji, finalHuji } = args
 
 
 
@@ -11,8 +14,8 @@ export const hujiInitial = ({ params }) => {
         'bagrutHuji': bagrut,
         'psycho': psycho,
     } = params
-
-    const stdCog = hujiCog(bagrut/10, psycho)
+    
+    const stdCog = hujiCog({ bagrut, psycho })
 
     // Calculate reverse calcs
     return {
@@ -26,10 +29,9 @@ export const hujiFinal = ({ params, year }) => {
         'psycho': psycho,
         'mor': mor
     } = params
-    
-    const cog = hujiCog(bagrut/10, psycho)
 
-    const result = hujiFinalCalc(mor, cog, year)
+
+    const result = hujiFinalCalc({ bagrut, psycho, mor, year})
 
     // Return result rounded to 3 decimals
     return {
@@ -58,3 +60,44 @@ export const hujiBargut = ({ params, values }) => {
     }
     return result
 }
+
+
+export const hujiInitialArgs = {
+    [psycho._id]: {
+        coef: initialStd.psycho
+    },
+    [bagrutHuji._id]: {
+        coef: initialStd.bagrut
+    },
+    "intercept": {
+        coef: initialStd.intercept
+    }
+} 
+
+export const hujiFinalArgs = {
+    [psycho._id]: {
+        coef: finalStd.psycho
+    },
+    [bagrutHuji._id]: {
+        coef: finalStd.bagrut
+    },
+    [mor._id]: {
+        coef: finalStd.mor,
+        hasYear: true
+    },
+    "intercept": {
+        coef: finalStd.intercept,
+        hasYear: true
+    }
+}
+
+
+export const hujiReverse = {
+    [initialHuji._id]: [
+        bagrutHuji._id, psycho._id
+    ],
+    [finalHuji._id]: [
+        bagrutHuji._id, psycho._id, mor._id
+    ]
+}
+
