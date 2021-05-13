@@ -1,9 +1,20 @@
 import { createSelector } from "reselect"
 import { userdataSelector } from "../../../selectors/userdata"
 
-const selectSimData = createSelector(
+const selectSimulatedData = createSelector(
     userdataSelector,
-    userdata => userdata.simulatedData.values
+    userdata => userdata.simulatedData
+)
+
+const selectSimData = createSelector(
+    selectSimulatedData,
+    simulatedData => simulatedData.values
+)
+
+export const selectSimCustomGroup = groupId => createSelector(
+    selectSimulatedData,
+    simulatedData =>  simulatedData.customGroups.find(customGroup =>
+        customGroup._id === groupId)
 )
 
 export const selectSimFieldValue = fieldId => createSelector(
@@ -11,6 +22,8 @@ export const selectSimFieldValue = fieldId => createSelector(
     simData => simData.find(dataVal => 
         dataVal.field === fieldId)
 )
+
+
 
 export const selectSimFieldValues = fieldIds => createSelector(
     selectSimData,

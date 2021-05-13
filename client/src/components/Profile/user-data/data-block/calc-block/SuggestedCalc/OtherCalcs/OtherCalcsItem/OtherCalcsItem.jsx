@@ -13,14 +13,15 @@ function OtherCalcsItem({ calc, year }) {
     if(thresholds?.length > 0 && selectedThreshold) {
         return (
             <div className="other-calcs__content__item">
-                {(!calc.versions || calc.versions?.includes(year) )
-                ?   <LastYearCalc 
-                    calc={calc}
-                    year={year}/>                    
-                :   <div className="no-calc-available">
-                        עדיין אין שקלול זמין
-                    </div>
-                }
+                {calc.versions &&
+                    (calc.versions?.includes(year)
+                    ?   <LastYearCalc 
+                        calc={calc}
+                        year={year}/>                    
+                    :   <div className="no-calc-available">
+                            עדיין אין שקלול זמין
+                        </div>)
+                    }
                 
                 <RerverseCalcsThresholdsSelector
                 calc={calc}

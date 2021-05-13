@@ -6,6 +6,7 @@ export const selectTableByYear = year => createSelector(
     dataTablesSelector, 
     tables => tables.find(table => table.year === year)
 )
+
 export const selectThresholdsByYear = year => createSelector(
     selectTableByYear(year),
     table => table?.thresholds

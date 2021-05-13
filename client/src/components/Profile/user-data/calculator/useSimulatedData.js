@@ -18,6 +18,7 @@ import {
 
 
 import {
+    selectSimCustomGroup,
     selectSimFieldValue,
     selectSimFieldValues
 }  from '../../../../redux/stats/userdata/simulated-data/selectors';
@@ -90,6 +91,7 @@ const useSimulatedData = () => {
         getErrorByCalc: getSimErrorByCalc,
         selectFieldValues: selectSimFieldValues,
         selectFieldValue: selectSimFieldValue,
+        selectCustomGroup: selectSimCustomGroup,
         isSimulated: true
     }
 

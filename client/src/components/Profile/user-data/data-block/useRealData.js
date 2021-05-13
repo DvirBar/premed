@@ -11,6 +11,7 @@ import {
     getRealValidErrors } from '../../../../redux/selectors/userdata';
 
 import {
+    selectRealCustomGroup,
     selectRealFieldValue,
     selectRealFieldValues
 }  from '../../../../redux/stats/userdata/real-data/selectors';
@@ -64,6 +65,7 @@ const useRealData = () => {
         getErrorByCalc: getRealErrorByCalc,
         selectFieldValues: selectRealFieldValues,
         selectFieldValue: selectRealFieldValue,
+        selectCustomGroup: selectRealCustomGroup,
         isSimulated: false
     }
 

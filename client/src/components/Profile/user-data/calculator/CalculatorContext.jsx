@@ -6,7 +6,6 @@ const CalculatorProvider = ({ children }) => {
     const [values, setValues] = useState({})
 
     const setDisplay = (display, calcValue, calc) => {
-        console.log(display);
         setValues({
             display,
             calc,

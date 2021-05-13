@@ -2,10 +2,22 @@ const { createSelector } = require("reselect")
 
 const userdataSelector = state => state.userdata
 
-const selectDataVals = createSelector(
+const selectTableData = createSelector(
     userdataSelector,
-    userdata => userdata.data.tableData.dataVals
+    userdata => userdata.data.tableData
 )
+
+const selectDataVals = createSelector(
+    selectTableData,
+    tableData => tableData.dataVals
+)
+
+export const selectRealCustomGroup = groupId => createSelector(
+    selectTableData,
+    tableData => tableData.customGroups.find(customGroup => 
+        customGroup._id == groupId)
+)
+
 
 export const selectRealFieldValue = fieldId => createSelector(
     selectDataVals,
