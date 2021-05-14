@@ -1,14 +1,14 @@
 import React from 'react'
 import TreeNode from './TreeNode'
 
-function StepsLevel({ nextSteps, levelWidth }) {
-    const width = {
-        width: levelWidth || '100%'
+function StepsLevel({ nextSteps, width }) {
+    const levelWidth = {
+        width
     }
     
     return (
         <div 
-        style={width}
+        style={levelWidth}
         className="steps-level">
             {nextSteps.map(step =>
                 <TreeNode

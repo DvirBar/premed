@@ -12,7 +12,8 @@ const Modal = ({
   title, 
   subTitle, 
   links,
-  className })=> {
+  className,
+  noFrame })=> {
     
     /* We'll use ref of modal box, 
     so when clicking outside it'll close */
@@ -47,6 +48,11 @@ const Modal = ({
     const hideOpacity = {
       opacity: 0,
       visibility: 'hidden'
+    }
+
+    const noFrameStyle = {
+      paddingRight: 0,
+      paddingLeft: 0
     }
 
     // Close modal when url changes 
@@ -90,7 +96,9 @@ const Modal = ({
                       </div> )}
                 </TopLinks>}
             </div>
-            <div className="modal-body">
+            <div 
+            style={noFrame ? noFrameStyle : {}}
+            className="modal-body">
               {children}
             </div>
           </div>

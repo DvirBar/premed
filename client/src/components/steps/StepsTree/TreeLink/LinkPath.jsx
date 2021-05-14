@@ -2,7 +2,8 @@ import React from 'react'
 import LinkSplit from './LinkSplit'
 import SingleLink from './SingleLink'
 
-function LinkPath({ 
+function LinkPath({
+    nodeX, 
     linkWidth, 
     svgHeight, 
     multiNext, 
@@ -27,6 +28,10 @@ function LinkPath({
                     {nextSteps.map((step, index) =>
                         <LinkSplit
                         key={step._id}
+                        length={length}
+                        step={step}
+                        nodeX={nodeX}
+                        step={step}
                         middlePoint={middlePoint}
                         isEven={isEven}
                         index={index}

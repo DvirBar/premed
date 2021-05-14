@@ -40,6 +40,23 @@ export const getFirstSteps = parentId => createSelector(
     steps => steps.filter(step => !step.prev)
 )
 
+export const areChildrenGroups = parentId => createSelector(
+    stepsSelector,
+    getStepChildren(parentId),
+    (steps, children) => {
+        for(let child of children) {
+            const posChildren = steps.filter(step => 
+                step.parent === child._id)
+
+            if(posChildren > 0) {
+                return true
+            }
+        }
+
+        return false
+    }
+)
+
 
 
 

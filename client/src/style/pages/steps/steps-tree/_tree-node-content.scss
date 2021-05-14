@@ -28,6 +28,11 @@
         background-repeat: no-repeat;
         background-size: 0% 0%;
         transition: background-size 150ms ease-in-out;
+
+        @media only screen and(max-width: 450px) {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
     }
 
     .node-step-details {
@@ -38,10 +43,30 @@
         .node-step-name {
             font-size: 1.8rem;
             font-weight: 500;
+
+            @media only screen and(max-width: 450px) {
+                font-size: 1.5rem;
+            }
+
+            @media only screen and(max-width: 350px) {
+                font-size: 1.4rem;
+            }
+
+            @media only screen and(max-width: 320px) {
+                font-size: 1.3rem;
+            }
         }
 
         .node-step-uni {
             font-size: 1.4rem;
+
+            @media only screen and(max-width: 380px) {
+                font-size: 1.2rem;
+            }
+
+            @media only screen and(max-width: 320px) {
+                font-size: 1.1rem;
+            }
         }
     }
 }

@@ -13,6 +13,10 @@
     flex-direction: column;
     row-gap: 5rem;
     width: $tree-width;
+
+    @media only screen and(max-width: 650px) {
+        width: 100%;
+    }
 }
 
 // .steps-block {
@@ -34,8 +38,8 @@
     justify-content: flex-start;
     align-items: center;
     margin: 0 !important;
-    transition: color 0.3s ease-in-out;
-    transition: stroke-width 0.3s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    transition: stroke-width 0.2s ease-in-out;
 
     .node-circle {
         stroke-width: 2px;

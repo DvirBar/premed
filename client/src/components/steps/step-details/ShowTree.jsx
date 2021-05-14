@@ -18,6 +18,7 @@ function ShowTree() {
                 </i>
             </FloatButton>
             <Modal
+            noFrame={true}
             display={displayModal}
             toggleModal={toggleModal}
             title="מסלול הקבלה">

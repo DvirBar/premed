@@ -1,9 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { getUniById } from '../../../redux/selectors/unis'
+import useWindowDim from '../../common/useWindowDim'
 import { StepsContext } from '../StepsContext'
+import { LinkContext } from './TreeLink/LinkContext'
 
-function TreeNodeContent({ step, color }) {
+function TreeNodeContent({ step, color, isMulti }) {
     const {
         selectStep,
         isFinal
@@ -22,6 +24,7 @@ function TreeNodeContent({ step, color }) {
     
     const uniName = useSelector(getUniById(uniData.uni))?.name
     const isStepFinal = isFinal(step)
+    
     return (
         <div
         style={nodeStyle}

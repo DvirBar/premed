@@ -5,7 +5,7 @@ import StepsLevel from './StepsLevel'
 import StepSummary from './step-summary/StepSummary'
 import { getFirstSteps } from '../../../redux/selectors/steps'
  
-function StepsGroup({ parent, isTopLevel, color }) {
+function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
     const {
         selectStep
     } = useContext(StepsContext)
@@ -40,6 +40,8 @@ function StepsGroup({ parent, isTopLevel, color }) {
                 <div className="group-content">
                     {firstSteps?.length > 0 &&
                         <StepsLevel 
+                        childrenGroup={childrenGroup}
+                        isGroup={true}
                         nextSteps={firstSteps} />
                     }
 

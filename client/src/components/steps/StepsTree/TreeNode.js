@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import TreeNodeContent from './TreeNodeContent';
 import { useSelector } from 'react-redux';
 import StepsGroup from './StepsGroup';
@@ -6,6 +6,7 @@ import TreeLink from './TreeLink/TreeLink';
 import StepsLevel from './StepsLevel';
 import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps';
 import { StepsContext } from '../StepsContext';
+import useWindowDim from '../../common/useWindowDim';
 
 function TreeNode({ step, length }) { 
     const nextSteps = useSelector(getNextSteps(step?._id))
@@ -26,9 +27,29 @@ function TreeNode({ step, length }) {
     } = useContext(StepsContext)
 
     const color = getTreeColor(step.uniData)
+    const {
+        width: windowWidth
+    } = useWindowDim()
 
+    const levelWidth = (windowWidth <= 650) ? 150 : 300
+
+    const width = nextSteps.length === 0 ? levelWidth : '100%'
+
+    const ref = useRef()
+
+    const [divWidth, setDivWidth] = useState(0)
+
+    useEffect(() => {
+        setDivWidth(ref.current?.offsetWidth)
+    }, [ref.current, windowWidth, length])
+
+    const nodeX = nextSteps.length % 2 === 0  
+        ?   divWidth/(nextSteps.length + 1)
+        :   divWidth/nextSteps.length
+    
     return (
         <div
+        ref={ref}
         style={nodeWidth} 
         className="tree-node">
             {isGroup 
@@ -37,18 +58,20 @@ function TreeNode({ step, length }) {
                 color={color}
                 isTopLevel={isTopLevel} />
             :   <TreeNodeContent
+                isMulti={length > 1}
                 color={color}
                 step={step} />
             }
             {nextSteps?.length > 0 && 
                 <Fragment>
                     <TreeLink
-                    linkWidth='300'
+                    nodeX={nodeX}
+                    linkWidth={divWidth}
                     linkInfo={step.linkInfo}
                     nextSteps={nextSteps}
                     color={color} />
                     <StepsLevel
-                    levelWidth='300px'
+                    width={width}
                     nextSteps={nextSteps} />
                 </Fragment>
             }

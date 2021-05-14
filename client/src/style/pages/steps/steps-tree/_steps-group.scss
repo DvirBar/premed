@@ -24,6 +24,10 @@
     &.top-level {
         width: 650px;
 
+        @media only screen and(max-width: 650px) {
+            width: 100%;
+        }
+
         .wrapper.top-level > .steps-group-name {
             width: 100%;
             width: 150px;

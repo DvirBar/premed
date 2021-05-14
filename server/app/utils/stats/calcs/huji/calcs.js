@@ -8,7 +8,6 @@ import args from '../calcArgs';
 const { psycho, mor, bagrutHuji, initialHuji, finalHuji } = args
 
 
-
 export const hujiInitial = ({ params }) => {
     const {
         'bagrutHuji': bagrut,

@@ -4,16 +4,54 @@
 
 .link-label {
     position: absolute;
-    width: 7rem;
+    width: 8rem;
+
+    @media only screen and(max-width: 550px) {
+        width: 7rem;
+    }
+
+    @media only screen and(max-width: 450px) {
+        width: 6rem;
+    }
+
+    @media only screen and(max-width: 400px) {
+        width: 5rem;
+    }
+
+    @media only screen and(max-width: 320px) {
+        width: 4.5rem;
+    }
 
     .add-link-label {
         position: absolute;
         text-align: center;
-        width: 7rem;
+        width: 100%;
     }
 
     .link-label-name {
         position: absolute;
         font-size: 1.5rem;
+        text-align: center;
+        width: 100%;
+        background-color: #fff;
+        border: 2px transparent solid;
+        border-radius: 0.5rem;
+        font-weight: 500;
+
+        @media only screen and(max-width: 550px) {
+            font-size: 1.4rem;
+        }
+
+        @media only screen and(max-width: 450px) {
+            font-size: 1.3rem;
+        }
+
+        @media only screen and(max-width: 400px) {
+            font-size: 1.1rem;
+        }
+
+        @media only screen and(max-width: 320px) {
+            font-size: 0.95rem;
+        }
     }
 }
