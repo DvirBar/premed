@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { StepsContext } from '../../StepsContext'
 import SingleLink from './SingleLink'
 
 function LinkSplit({ 
     isEven, 
+    step,
     length,
     middlePoint, 
     index,
     startX,
     startY,
-    color,
     nodeX }) {
 
     const endY = 150
@@ -24,6 +25,12 @@ function LinkSplit({
         endY,
         length: 210
     }
+
+    const {
+        getTreeColor
+    } = useContext(StepsContext)
+
+    const color = getTreeColor(step.uniData)
         
     return (
         <SingleLink

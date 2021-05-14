@@ -55,6 +55,7 @@ function TreeNode({ step, length, duplicateParent }) {
             {isGroup 
             ?   <StepsGroup
                 parent={step}
+                length={length}
                 color={color}
                 isTopLevel={isTopLevel} />
             :   <TreeNodeContent

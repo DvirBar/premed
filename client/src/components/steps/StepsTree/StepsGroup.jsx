@@ -5,7 +5,7 @@ import StepsLevel from './StepsLevel'
 import StepSummary from './step-summary/StepSummary'
 import { getFirstSteps } from '../../../redux/selectors/steps'
  
-function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
+function StepsGroup({ length, parent, isTopLevel, color, childrenGroup }) {
     const {
         selectStep
     } = useContext(StepsContext)
@@ -21,9 +21,27 @@ function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
         borderColor: color + '90'
     }
 
+    let duplicateMaskStyle = {
+        position: 'absolute',
+        height: "165.7px",
+        right: 0,
+        top: "-165.7px",
+        width: "100%"
+    }
+
+    if(length === 1) {
+        duplicateMaskStyle = {
+            ...duplicateMaskStyle,
+            height: "85.5px",
+            top: "-85.5px",
+        }
+    }
+
     const duplicateSize = {
         height: 70 + 'px'
     }
+
+    const isDuplicate = length > 1 && parent.duplicate
 
     return (
         <div 
@@ -36,7 +54,10 @@ function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
             style={!isTopLevel ? groupStyle : {}}>
                 {parent.duplicate &&
                     <div
-                    style={groupStyle}
+                    style={{
+                        ...groupStyle,
+                        ...duplicateMaskStyle
+                    }}
                     className="steps-group-duplicate-mask"></div>
                 }
                 {!parent.duplicate &&
@@ -54,7 +75,7 @@ function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
                     {firstSteps?.length > 0 &&
                         <StepsLevel 
                         childrenGroup={childrenGroup}
-                        duplicateParent={parent.duplicate ? true : false}
+                        duplicateParent={isDuplicate}
                         isGroup={true}
                         nextSteps={firstSteps} />
                     }

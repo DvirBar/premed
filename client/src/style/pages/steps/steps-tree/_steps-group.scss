@@ -7,16 +7,6 @@
         cursor: pointer;
     }
 
-    &-duplicate-mask {
-        position: absolute;
-        content: "";
-        height: 165.7px;
-        right: 0;
-        top: -165.7px;
-        width: 100%;
-        z-index: -1;
-    }
-
     &.nested {
         padding: 0.5rem;
 

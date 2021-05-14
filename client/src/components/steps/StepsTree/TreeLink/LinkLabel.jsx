@@ -6,14 +6,16 @@ import AddLinkLabel from './AddLinkLabel'
 function LinkLabel({ 
     length,
     step, 
-    color, 
     position, 
     index,
     nodeX }) {
 
     const {
-        isStepsAdmin
+        isStepsAdmin,
+        getTreeColor
     } = useContext(StepsContext)
+
+    const color = getTreeColor(step.uniData)
 
     const ref = useRef()
 

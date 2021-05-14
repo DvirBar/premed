@@ -14,6 +14,7 @@ function LinkPath({
         const isEven = length % 2 === 0
 
         const middlePoint = (length / 2) - 0.5
+
     return (
         <svg 
         width={linkWidth} 
@@ -25,7 +26,7 @@ function LinkPath({
                 color={color} />
             
             :   <g>
-                    {nextSteps.map((step, index) =>
+                    {nextSteps.slice(0).reverse().map((step, index) =>
                         <LinkSplit
                         key={step._id}
                         length={length}

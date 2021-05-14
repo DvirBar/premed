@@ -23,6 +23,14 @@ function TreeNodeContent({ step, color, duplicateParent }) {
     const uniName = useSelector(getUniById(uniData.uni))?.name
     const isStepFinal = isFinal(step)
 
+    if(duplicateParent) {
+        nodeStyle = {
+            ...nodeStyle,
+            position: 'absolute',
+            left: '61%',
+            top: '-16px'
+        }
+    }
     
     return (
         <div
