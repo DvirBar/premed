@@ -1,8 +1,10 @@
 import React from 'react'
 
-function Grid({ children }) {
+function Grid({ children, className}) {
+    
     return (
-        <div className='grid'>
+        <div 
+        className={`grid ${className ? className : ''}`}>
             {children}
         </div>
     )

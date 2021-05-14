@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loadbar from '../layout/Loadbar';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const auth = useSelector(state => state.auth)
+    const { pathname }= useLocation()
 
     return (
         <Route {...rest} render = {props => {
@@ -13,7 +14,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
             } else if(auth.loading) {
                 return <Loadbar />
             } else {
-                return <Redirect to='/login' />;
+                return <Redirect to={{
+                    pathname: '/login',
+                    state: { referrer: pathname }
+                }} />;
             }
         }
         } />

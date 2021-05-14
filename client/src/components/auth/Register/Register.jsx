@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import useForm from '../../../forms/useForm';
 import { register } from '../../../redux/actions/auth';
 import { REGISTER } from '../../../redux/auth/types';
@@ -27,10 +27,15 @@ const Register = () => {
     const auth = useSelector(state => state.auth);
 
     const loading = useSelector(isLoading(REGISTER))
+    const location = useLocation()
 
+    if(auth.isAuthenticated) {
+        if(location.state?.referrer) {
+            return <Redirect to={location.state?.referrer} />
+        }
 
-    if(auth.isAuthenticated)
         return <Redirect to="/" />;
+    }
 
     else {
         return (

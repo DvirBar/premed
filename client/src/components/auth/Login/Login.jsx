@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, useHistory, useLocation } from 'react-router-dom';
 import { login } from '../../../redux/actions/auth';
 import useForm from '../../../forms/useForm';
 import FormInput from '../../common/FormInput';
@@ -23,12 +23,19 @@ const Login = () => {
         errors} = useForm(login, defaultValues);
 
     const auth = useSelector(authSelector);
-
     const loading = useSelector(isLoading(LOGIN))
-    
-    if(auth.isAuthenticated)
-        return <Redirect to="/" />;
 
+    const location = useLocation()
+    console.log(location.state);
+
+    if(auth.isAuthenticated) {
+        if(location.state?.referrer) {
+            return <Redirect to={location.state?.referrer} />
+        }
+
+        return <Redirect to="/" />;
+    }
+        
     return (
         <div className="login-page">
             <div className="login-container">
@@ -65,7 +72,10 @@ const Login = () => {
                         עדיין אין משתמש?&nbsp; 
                         <Link 
                         className="no-user-register-link"
-                        to="/register">
+                        to={{ 
+                            ...location,
+                            pathname: '/register'
+                        }}>
                             להרשמה
                         </Link>
                     </p>

@@ -4,7 +4,7 @@ import { Route, Switch, useLocation } from 'react-router-dom';
 import { initMessage } from '../../redux/actions/messages';
 import ProtectedRoute from './ProtectedRoute';
 import AdminRoute from './AdminRoute';
-import Default from '../Default';
+import Default from '../Default/Default';
 import Register from '../auth/Register/Register';
 import Login from '../auth/Login/Login';
 import Steps from '../steps/Steps';

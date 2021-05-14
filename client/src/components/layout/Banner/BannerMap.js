@@ -12,7 +12,7 @@ import Personal from "./Illustrations/Personal"
 function BannerMap({ rootUrl }) {
     const map = {
         '/': {
-            name: 'ברוכים הבאים',
+            name: '',
             img: <Doctors />
         },
         '/steps': {
