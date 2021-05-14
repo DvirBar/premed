@@ -64,6 +64,10 @@ const StepSchema = new Schema({
     isTransition: {
         type: Boolean
     },
+    duplicate: {
+        type: ObjectId,
+        ref: 'Step'
+    },
     last_edited: {
         type: Date,
         required: true,

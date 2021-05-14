@@ -82,6 +82,15 @@ function AddStep({
                         placeholder="בחירה" />                                    
                     }
 
+                    {prevSteps?.length > 0 &&
+                        <Dropdown
+                        options={prevSteps}
+                        name="duplicate"
+                        title="העתק"
+                        onChange={handleChange}
+                        placeholder="בחירה" />                                    
+                    }
+
                     <CheckBox
                     name="isFinal"
                     label="שלב סופי"

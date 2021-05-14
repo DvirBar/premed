@@ -24,8 +24,6 @@ function LinkSplit({
         endY,
         length: 210
     }
-
-    console.log(pathCords);
         
     return (
         <SingleLink
@@ -35,4 +33,4 @@ function LinkSplit({
     )
 }
 
-export default LinkSplit
+export default React.memo(LinkSplit)

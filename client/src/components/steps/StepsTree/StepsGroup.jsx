@@ -13,7 +13,7 @@ function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
     const firstSteps = useSelector(getFirstSteps(parent?._id))
 
     const groupStyle = {
-        backgroundColor: color + '20',
+        backgroundColor: color + '20'
     }
 
     const groupNameStyle = {
@@ -21,26 +21,40 @@ function StepsGroup({ parent, isTopLevel, color, childrenGroup }) {
         borderColor: color + '90'
     }
 
+    const duplicateSize = {
+        height: 70 + 'px'
+    }
+
     return (
         <div 
+        style={parent.duplicate ? duplicateSize : {}}
         className={`steps-group 
         ${isTopLevel ?  'top-level' : 'nested'}`}>
             <div 
             className={`wrapper 
             ${isTopLevel ?  'top-level' : 'nested'}`}
             style={!isTopLevel ? groupStyle : {}}>
+                {parent.duplicate &&
+                    <div
+                    style={groupStyle}
+                    className="steps-group-duplicate-mask"></div>
+                }
+                {!parent.duplicate &&
+                    <div 
+                    style={groupNameStyle}
+                    onClick={e => selectStep(e, parent)}
+                    className="steps-group-name">
+                        <span>
+                            {parent.name}
+                        </span>
+                    </div>
+                }
                 <div 
-                style={groupNameStyle}
-                onClick={e => selectStep(e, parent)}
-                className="steps-group-name">
-                    <span>
-                        {parent.name}
-                    </span>
-                </div>
-                <div className="group-content">
+                className="group-content">
                     {firstSteps?.length > 0 &&
                         <StepsLevel 
                         childrenGroup={childrenGroup}
+                        duplicateParent={parent.duplicate ? true : false}
                         isGroup={true}
                         nextSteps={firstSteps} />
                     }

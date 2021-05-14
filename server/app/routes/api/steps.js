@@ -45,7 +45,7 @@ router.get('/:pathId', async(req, res, next) => {
 
     catch(err) {
         next(err)
-    }
+    } 
 })
 
 
@@ -59,6 +59,7 @@ router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
         parentId,
         isFinal,
         isTransition,
+        duplicate,
         pathId,
         uniIds
     } = req.body;
@@ -119,6 +120,7 @@ router.post('/addStep', [auth, authAdmin], async(req, res, next) => {
         parent: parentId,
         path: pathId,
         isTransition,
+        duplicate,
         author: userId
     })
 

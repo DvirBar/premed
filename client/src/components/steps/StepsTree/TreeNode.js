@@ -8,7 +8,7 @@ import { getNextSteps, getStepChildren } from '../../../redux/selectors/steps';
 import { StepsContext } from '../StepsContext';
 import useWindowDim from '../../common/useWindowDim';
 
-function TreeNode({ step, length }) { 
+function TreeNode({ step, length, duplicateParent }) { 
     const nextSteps = useSelector(getNextSteps(step?._id))
     const children = useSelector(getStepChildren(step?._id))
     const isTopLevel = !step.parent
@@ -58,7 +58,7 @@ function TreeNode({ step, length }) {
                 color={color}
                 isTopLevel={isTopLevel} />
             :   <TreeNodeContent
-                isMulti={length > 1}
+                duplicateParent={duplicateParent}
                 color={color}
                 step={step} />
             }

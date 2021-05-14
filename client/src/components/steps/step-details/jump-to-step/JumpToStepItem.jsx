@@ -1,5 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { getStepChildren } from '../../../../redux/selectors/steps'
 import useStepsClient from '../../hooks/useStepsClient'
+import ChildrenNextSteps from './ChildrenNextSteps'
+import NextStepsBlock from './NextStepsBlock'
 import StepUnisList from './StepUnisList'
 
 function JumpToStepItem({ step }) {
@@ -15,6 +19,18 @@ function JumpToStepItem({ step }) {
         color
     }
 
+    const children = useSelector(getStepChildren(step._id))
+
+    if(step.duplicate) {
+        if(children.length > 0) {
+            return <ChildrenNextSteps nextSteps={children} />
+        }
+
+        else {
+            return <NextStepsBlock step={step}/>
+        }
+    }
+    
     return (
         <div
         onClick={e => selectStep(e, step)}

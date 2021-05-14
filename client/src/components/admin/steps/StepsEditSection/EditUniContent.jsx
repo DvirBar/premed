@@ -6,7 +6,7 @@ function EditUniContent({ uniContent, handleChange }) {
     const {
         pathId 
     } = useContext(StepsContext)
-    console.log(uniContent);
+
     const onChange = data => {
         handleChange({
             name: 'uniContent',

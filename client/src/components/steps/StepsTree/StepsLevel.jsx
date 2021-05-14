@@ -1,7 +1,7 @@
 import React from 'react'
 import TreeNode from './TreeNode'
 
-function StepsLevel({ nextSteps, width }) {
+function StepsLevel({ nextSteps, width, duplicateParent }) {
     const levelWidth = {
         width
     }
@@ -13,6 +13,7 @@ function StepsLevel({ nextSteps, width }) {
             {nextSteps.map(step =>
                 <TreeNode
                 key={step._id}
+                duplicateParent={duplicateParent}
                 step={step}
                 length={nextSteps.length} />
             )}

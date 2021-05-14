@@ -35,10 +35,18 @@
             border-top: 2px solid $main-color;
             border-bottom: 2px solid $main-color;
             cursor: pointer;
+
+            @media only screen and(max-width: 450px) {
+                padding: 0.5rem;
+            }
         }
 
         .step-summary-name {
             font-size: 2rem;
+
+            @media only screen and(max-width: 450px) {
+                font-size: 1.8rem;
+            }
         }
     }
 
