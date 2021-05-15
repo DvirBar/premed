@@ -40,18 +40,20 @@ function SideMenu() {
     ]
 
     return (
-        <ul className="side-menu-admin">
-            {linksList.map(link =>
-                <li
-                key={link.url} 
-                className={link.url === pathname
-                ? "link-item-admin current"
-                : "link-item-admin"}>
-                    <Link to={link.url}>
-                        <span>{link.name}</span>
-                    </Link>
-                </li>)}
-        </ul>
+        <div className="side-menu-admin scrollbar-main">
+            <ul className="side-menu-admin__content">
+                {linksList.map(link =>
+                    <li
+                    key={link.url} 
+                    className={link.url === pathname
+                    ? "side-menu-admin__content__item current"
+                    : "side-menu-admin__content__item"}>
+                        <Link to={link.url}>
+                            <span>{link.name}</span>
+                        </Link>
+                    </li>)}
+            </ul>
+        </div>
     )
 }
 

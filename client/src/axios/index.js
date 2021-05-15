@@ -2,7 +2,7 @@ import axios from 'axios';
 import useInterceptors from './interceptors/useInterceptors';
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production'
-    ? "https://refuah.org.il" : "http://10.0.0.17:3000";
+    ? "https://refuah.org.il" : "http://10.0.0.12:3000";
 axios.defaults.headers["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 

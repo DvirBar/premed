@@ -116,12 +116,6 @@ $border-input-width: 10rem;
             color: $error-color;
         }
     }
-
-    @media only screen and(max-width: 768px) {
-        .text-input {
-            width: 100%;
-        }
-    }
 }
 
 input[type="search"] {
