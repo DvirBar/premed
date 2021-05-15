@@ -2,6 +2,15 @@ import {
     GET_USER_LOADING,
     GET_USER_SUCCESS,
     GET_USER_FAILURE,
+    
+    GET_USERS_LOADING,
+    GET_USERS_SUCCESS,
+    GET_USERS_FAILURE,
+
+    GET_USERS_LOAD_MORE_LOADING,
+    GET_USERS_LOAD_MORE_SUCCESS,
+    GET_USERS_LOAD_MORE_FAILURE,
+
     LOGIN_LOADING,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
@@ -40,6 +49,45 @@ export const getUser = () => dispatch => {
         .catch(err => {
             dispatch({
                 type: GET_USER_FAILURE
+            });
+        })
+}
+
+
+// Get users 
+export const getUsers = filters => dispatch => {
+    dispatch(setLoader(GET_USERS_LOADING))
+
+    const body = JSON.stringify(filters)
+
+    axios
+        .post('/api/auth/users', body)
+        .then(res => dispatch({
+            type: GET_USERS_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch({
+                type: GET_USERS_FAILURE
+            });
+        })
+}
+
+// Load more users
+export const getMoreUsers = filters => dispatch => {
+    dispatch(setLoader(GET_USERS_LOAD_MORE_LOADING))
+
+    const body = JSON.stringify(filters)
+
+    axios
+        .post('/api/auth/users', body)
+        .then(res => dispatch({
+            type: GET_USERS_LOAD_MORE_SUCCESS,
+            payload: res.data
+        }))
+        .catch(err => {
+            dispatch({
+                type: GET_USERS_LOAD_MORE_FAILURE
             });
         })
 }

@@ -40,7 +40,6 @@ function FilterAncs({ filters, changeFilters, filterAncs }) {
         }
 
         else {
-            console.log("sent");
             dispatch(getUserSubs())
         }
     }, [isAdmin])

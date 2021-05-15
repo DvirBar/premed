@@ -19,8 +19,37 @@ const {
     PasswordAlreadyUsed } = messages
 
 class UserService {
-    static getAllUsers() {
-        return User.getAllUsers()
+    static async getUsers(filters) {
+        let count
+
+        if(filters.count) {
+            count = await User.countDocuments()
+        }
+
+        const limit = 15
+        const user = await User.findById(filters.lastUserId) 
+
+        if(user) {
+            filters.maxDate = user.date_created
+        }
+    
+        if(!filters.maxDate) {
+            filters.maxDate = new Date()
+        }
+    
+        if(!filters.minDate) {
+            filters.minDate = new Date(1997, 2, 7)
+        }
+
+        const users = await User.getUsers(filters, limit)
+        // Tells the client that the server has got all results
+        const finished = users.length < limit 
+
+        return { 
+            users,
+            count,
+            finished
+        }
     }
 
     static getUserById(id) {
@@ -37,6 +66,10 @@ class UserService {
 
     static getUserByToken(user) {
         return userWithoutPassword(user)
+    }
+
+    static getUserCount() {
+        return User.countDocuments()
     }
 
     static isUserBlocked(user) {

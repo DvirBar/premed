@@ -1,0 +1,14 @@
+.admin-users {
+    &__general-stats {
+        font-weight: 500;
+        font-size: 1.8rem;
+        color: $main-color;
+    }
+
+    & > * {
+        margin-bottom: 4rem;
+    }
+}
+
+@import "UsersFilters/index";
+@import "UsersTable/index";

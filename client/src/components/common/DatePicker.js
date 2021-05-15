@@ -28,16 +28,6 @@ function DatePicker({
 
     const ref = useRef();
     useOnClickOutside(ref, displayCal, () => setDisplayCal(false))
-
-    const showOpacity = {
-        opacity: 1,
-        visibility: 'visible' 
-      }
-      
-      const hideOpacity = {
-        opacity: 0,
-        visibility: 'hidden'
-      } 
     
     const now = new Date()
     const minDate = new Date()
@@ -68,20 +58,21 @@ function DatePicker({
                 }
             </div>
             
-
-            <div
-            style={displayCal ? showOpacity : hideOpacity} 
-            className="modal-wrapper">
-                <div className="cal-wrapper" ref={ref}>
-                    <Calendar
-                    onChange={changeDate}
-                    value={value}
-                    calendarType="Hebrew"
-                    className="calendar-float open" />   
-                </div>
-            </div>
+            
+            {displayCal &&
+                <div
+                className="modal-wrapper">
+                    <div className="cal-wrapper" ref={ref}>
+                        <Calendar
+                        onChange={changeDate}
+                        value={value}
+                        calendarType="Hebrew"
+                        className="calendar-float open" />   
+                    </div>
+                </div>  
+            }
         </div>
     )
 }
 
-export default DatePicker
+export default React.memo(DatePicker)

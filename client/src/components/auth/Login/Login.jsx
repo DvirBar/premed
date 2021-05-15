@@ -26,7 +26,6 @@ const Login = () => {
     const loading = useSelector(isLoading(LOGIN))
 
     const location = useLocation()
-    console.log(location.state);
 
     if(auth.isAuthenticated) {
         if(location.state?.referrer) {

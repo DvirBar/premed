@@ -12,9 +12,9 @@ const {
 
 
 class UserController {
-    static async getAllUsers(_req, res, next) {
+    static async getUsers(req, res, next) {
         try {
-            const users = await UserService.getAllUsers()
+            const users = await UserService.getUsers(req.body)
             return res.send(users)
         }
 

@@ -1,0 +1,50 @@
+.users-table-wrapper {
+    width: 100%;
+    padding: 0 1rem;
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    box-shadow: $default-shadow;
+    font-size: 1.8rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    min-width: 70rem;
+
+    thead {
+        background-color: $main-color;
+        color: #fff;
+        font-weight: 500;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+
+    td,
+    th {
+        padding: 1.5rem;
+    }
+
+    tbody {
+        max-height: 10rem;
+        transition: height 0.2s ease-in-out;
+
+        tr:nth-child(even) {
+            background-color: rgba($main-color, 0.2);
+        }
+    }
+
+    tfoot {
+        tr {
+            color: $main-color;
+            font-weight: 500;
+            cursor: pointer;
+
+            &:hover {
+                span {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+}

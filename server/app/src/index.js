@@ -7,10 +7,14 @@ import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import path from 'path'
+import path from 'path';
+const helmet = require('helmet')
 
 // Init app
 const app = express();
+
+app.use(helmet())
+app.use(helmet.hidePoweredBy())
 
 // Environment variables
 dotenv.config({
@@ -20,8 +24,8 @@ dotenv.config({
 // Middlewares
 // Entry middlewares
 app.use(express.json());
-app.use(morgan('tiny'))
-app.use(cookieParser())
+app.use(morgan('tiny'));
+app.use(cookieParser());
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))

@@ -12,6 +12,7 @@ import StepsAdmin from './steps/StepsAdmin';
 import Questions from './questions/Questions';
 import DataTables from './stats/DataTables';
 import LibrariesAdmin from './libraries/LibrariesAdmin';
+import Users from './users/Users';
 
 
 const AdminRouter = () => {
@@ -32,6 +33,7 @@ const AdminRouter = () => {
                 <AdminRoute path={`${path}/libraries/:pathId`} component={LibrariesAdmin} />
                 <AdminRoute path={`${path}/questions/:pathId`} component={Questions} />
                 <AdminRoute exact path={`${path}/stats`} component={DataTables} />                
+                <AdminRoute exact path={`${path}/users`} component={Users} />                
             </Switch>
     )
 }

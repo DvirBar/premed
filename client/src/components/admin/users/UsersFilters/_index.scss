@@ -1,0 +1,19 @@
+.users-filters-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #fff;
+    box-shadow: $default-shadow;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.users-filters {
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-end;
+    & > *:not(:last-child) {
+        margin-left: 2rem;
+    }
+}

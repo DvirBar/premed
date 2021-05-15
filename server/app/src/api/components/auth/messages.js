@@ -38,8 +38,8 @@ const messages = {
     },
     UsernameAvailable: {
         msg: {
-            en: 'Username is unavailable',
-            he: 'שם המשתמש תפוס'
+            en: 'Username is available',
+            he: 'שם המשתמש פנוי'
         },
         type: "local",
         status: 409
@@ -80,8 +80,8 @@ const messages = {
     },
     PasswordAlreadyUsed: {
         msg: {
-            en: "Password already used, please choose a new one",
-            he: "הסיסמה שהוזנה כבר הייתה בשימוש בעבר, יש להזין סיסמה חדשה"
+            en: "Password was already in use, please choose a new one",
+            he: "הסיסמה שהוזנה כבר הייתה בשימוש בעבר, יש לבחור אחרת"
         },
         status: 400
     },

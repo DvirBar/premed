@@ -4,15 +4,15 @@ import auth from '../../../../middleware/auth'
 import authAdmin from '../../../../middleware/authAdmin'
 import UserController from './controller'
 
-// @route   GET api/auth/users
+// @route   POST api/auth/users
 // @desc    Get all users
 // @access  Admin
-router.get('/users', [auth, authAdmin], UserController.getAllUsers)
+router.post('/users', [auth, authAdmin], UserController.getUsers)
 
-// @route   GET api/auth/users
-// @desc    Get all users
-// @access  Admin
-router.get('/isUsernameAvailable', UserController.getAllUsers)
+// // @route   GET api/auth/users
+// // @desc    Get all users
+// // @access  Admin
+// router.get('/isUsernameAvailable', UserController.getAllUsers)
 
 // @route   GET api/auth/user
 // @desc    Get user by id from token

@@ -32,15 +32,11 @@ function SideMenu() {
         {
             url: `${path}/questions/${pathItems[0]?._id}`,
             name: 'שאלות נפוצות'
+        },
+        {
+            url: `${path}/users`,
+            name: 'משתמשים'
         }
-        // {
-        //     url: `${path}/anouncements`,
-        //     name: 'פניות' 
-        // },
-        // {
-        //     url: `${path}/anouncements`,
-        //     name: 'הגדרות ומשתמשים' 
-        // }
     ]
 
     return (

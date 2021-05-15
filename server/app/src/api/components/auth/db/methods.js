@@ -6,8 +6,50 @@ const {
     UserAlreadyExists, 
     UsernameUnavailable } = messages
 
-export function getAllUsers() {
-    return this.find().select("-password")
+export function getUsers(filters, limit) {
+    const {
+        minDate,
+        maxDate,
+        firstName,
+        lastName,
+        username,
+        isBlocked,
+        lastUserId: id
+      } = filters
+   
+      const queries = {}
+  
+      if(username) {
+        queries.username = {$regex: username, options: 'i'}
+      }
+
+      if(firstName) {
+        queries.firstName = {$regex: firstName, $options: 'i'}
+      }
+
+      if(lastName) {
+        queries.lastName = {$regex: lastName, $options: 'i'}
+      }
+
+      if(isBlocked) {
+        queries.blocked = {
+            isBlocked
+        }
+      }
+      
+      queries._id = {$ne: id}
+      queries.$and = [
+        {date_created: {$lte: maxDate}},
+        {date_created: {$gte: minDate}}
+      ]
+  
+  
+      return this.find({$and: [
+        {...queries}
+      ]})
+        .limit(limit) 
+        .sort({ date_created: -1 })
+        .select("-password -formerPasswords -email -failedAttempts")
 }
 
 export function getUserByEmail(email) {

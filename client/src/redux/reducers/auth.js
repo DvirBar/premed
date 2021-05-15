@@ -1,4 +1,6 @@
 import {
+    GET_USERS_SUCCESS,
+    GET_USERS_LOAD_MORE_SUCCESS,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     REGISTER_SUCCESS,
@@ -10,7 +12,12 @@ import {
 
 const initialState = {
     isAuthenticated: false,
-    user: null
+    user: null,
+    users: {
+        users: [],
+        count: 0
+    }
+    
 }
 
 export default function(state = initialState, action) {
@@ -24,6 +31,25 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 user: payload
+            }
+
+        case GET_USERS_SUCCESS:
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    ...payload
+                }  
+            }
+
+        case GET_USERS_LOAD_MORE_SUCCESS:
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    ...payload,
+                    users:  [...state.users.users, ...payload.users]
+                }
             }
         
         case LOGIN_FAILURE:
