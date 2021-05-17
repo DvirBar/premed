@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import DisplayValidError from '../NoCalc/DisplayValidError/DisplayValidError'
+import NoCalc from '../NoCalc/NoCalc'
 import OtherCalcs from '../SuggestedCalc/OtherCalcs/OtherCalcs'
 
-function NoCalcYear({ calc, tableYear }) {
+function NoCalcYear({ calc, tableYear, validError }) {
     const [displayOther, setDisplayOther] = useState(false)
     
     return (
@@ -16,10 +18,18 @@ function NoCalcYear({ calc, tableYear }) {
                     className="other-calcs__link">
                         (שנה קודמת)
                     </span>
-                    <OtherCalcs 
-                    display={displayOther}
-                    setDisplay={setDisplayOther}
-                    calc={calc} />
+                    {validError
+                    ?   <DisplayValidError
+                        title={calc.name}
+                        display={displayOther}
+                        setDisplay={setDisplayOther}
+                        error={validError} />
+                    :   <OtherCalcs
+                        display={displayOther}
+                        setDisplay={setDisplayOther}
+                        calc={calc} />
+                    }
+                   
                 </div>
             }
             

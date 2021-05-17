@@ -36,16 +36,13 @@ function FieldHeaders({ tableSections, matchColor, ordering }) {
                             : "field-header"}
                         style={matchColor(uni, true)}
                         onClick={() => openFieldOptions(field)}>
-                            <div>
-                                <span></span>
-                                <span className="field-name">{field.name}</span>
-                                {<i className={ordering.filters.find(filter => 
-                                    filter.field.id === field._id) 
-                                    ? "material-icons shown"
-                                    : "material-icons"}>
-                                    filter_alt
-                                </i>}
-                            </div>
+                            <span className="field-name">{field.name}</span>
+                            {<i className={ordering.filters.find(filter => 
+                                filter.field.id === field._id) 
+                                ? "material-icons shown"
+                                : "material-icons"}>
+                                filter_alt
+                            </i>}
                         </th>
                 ))}
             </tr>

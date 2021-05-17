@@ -2,8 +2,9 @@
     padding: 2rem;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 
-    &__item:first-child {
+    &__item {
         margin-left: 2rem;
     }
 

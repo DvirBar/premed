@@ -93,18 +93,20 @@ export default function(state = initialState, action) {
             }
  
         case COPY_DATA_SIMULATION: 
+            const tableData = state.data.tableData
+
             return {
                 ...state,
                 loading: false,
                 simulatedData: {
                     ...state.simulatedData,
-                    values: state.data.tableData.dataVals.map(dataVal =>
+                    values: [...tableData.dataVals.map(dataVal =>
                         dataVal.isCalc
                         ? {
                             ...dataVal,
                             value: dataVal.suggestValue || dataVal.value
                         }
-                        : dataVal),
+                        : dataVal), ...tableData.groupVals],
                     customGroups: state.data.tableData.customGroups
                 }
             }
@@ -277,7 +279,9 @@ export default function(state = initialState, action) {
             }
 
         case USER_DATA_INSERT_SUCCESS: {
-            const dataVals = state.data.tableData.dataVals
+            let keyToUse = payload.dataVal.group ? 'groupVals' : 'dataVals'
+            const dataVals = state.data.tableData[keyToUse]
+
             return {
                 ...state,
                 softLoading: false,
@@ -288,7 +292,7 @@ export default function(state = initialState, action) {
                         ? {
                             ...state.data.tableData,
                             last_updated: new Date(Date.now()),
-                            dataVals: 
+                            [keyToUse]: 
                                 dataVals.length === 0
                                 ?  [payload.dataVal]
 
@@ -313,6 +317,7 @@ export default function(state = initialState, action) {
 
         case USER_DATA_REMOVE: {
             const payData = payload.data
+            const keyToUse = payData.groupId ? 'groupVals' : 'dataVals'
             return {
                 ...state,
                 softLoading: false,
@@ -323,8 +328,8 @@ export default function(state = initialState, action) {
                         ? {
                             ...state.data.tableData,
                             last_updated: new Date(Date.now()),
-                            dataVals: 
-                                state.data.tableData.dataVals.filter(val =>
+                            [keyToUse]: 
+                                state.data.tableData[keyToUse].filter(val =>
                                     payData.removeAll
                                     ?   val.group !== payData.groupId
                                     :   val.group !== payData.groupId &&
@@ -374,7 +379,7 @@ export default function(state = initialState, action) {
                             last_updated: new Date(Date.now()),
                             dataVals: 
                                 dataVals.length === 0
-                                ?  [payload]
+                                ?  [...payload]
 
                                 : 
                                 [...dataVals.map(dataVal => {

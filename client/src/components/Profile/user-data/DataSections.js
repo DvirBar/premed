@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import DataSection from './DataSection';
 import useExecCalc from './hooks/useExecCalc';
 import { getAllStoredCalcs } from '../../../redux/selectors/statsinputs';
-import { getDataVals } from '../../../redux/selectors/userdata';
+import {  selectRealVals } from '../../../redux/selectors/userdata';
 import useDataValidation from './data-block/useDataValidation';
 import ListLayout from '../../layout/ListLayout/ListLayout';
 import { GroupsContext } from './data-block/GroupsContext';
@@ -14,10 +14,10 @@ function DataSections({ paths }) {
     } = useContext(GroupsContext)
 
     const storedCalcs = useSelector(getAllStoredCalcs)
-    const dataVals = useSelector(getDataVals)
+    const dataVals = useSelector(selectRealVals)
 
     useDataValidation(storedCalcs, dataVals)
- 
+
     useExecCalc()
 
     return (

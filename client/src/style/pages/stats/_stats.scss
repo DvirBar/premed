@@ -65,17 +65,43 @@
         "head-fixed"
         "body-scrollable";
 
-    font-size: 1.5rem;
     text-align: center;
     color: #464646;
+
+    th {
+        font-weight: 500;
+        font-size: 1.4rem;
+
+        @media only screen and (max-width: 750px) {
+            font-size: 1.3rem;
+            min-width: 10rem;
+        }
+    }
+
+    td {
+        font-size: 1.5rem;
+
+        @media only screen and (max-width: 450px) {
+            font-size: 1.3rem;
+            min-width: 10rem;
+        }
+    }
 
     th,
     td {
         padding: 1rem;
-        min-width: 15rem;
-        max-width: 15rem;
+        min-width: 12rem;
+
         position: relative;
         cursor: pointer;
+
+        @media only screen and (max-width: 750px) {
+            min-width: 10rem;
+        }
+
+        @media only screen and (max-width: 450px) {
+            min-width: 9rem;
+        }
 
         .cover {
             position: absolute;
@@ -119,7 +145,6 @@
     }
 
     thead {
-        box-shadow: $default-shadow;
         grid-area: head-fixed;
     }
 
@@ -135,6 +160,8 @@
             border-top-left-radius: 1.5rem;
             border-top-right-radius: 1.5rem;
             transition: padding 0.2s ease-in;
+            font-weight: 500;
+            font-size: 1.7rem;
         }
 
         &:hover {
@@ -148,24 +175,30 @@
     }
 
     .field-header {
-        & > div {
-            display: grid;
-            grid-template-columns: 24px auto 24px;
+        padding: 1rem 0.5rem;
+        position: relative;
 
-            .material-icons {
-                color: #fff;
-                visibility: hidden;
+        .material-icons {
+            color: #fff;
+            visibility: hidden;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            position: absolute;
 
-                &.shown {
-                    visibility: visible;
-                }
+            &.shown {
+                visibility: visible;
             }
+        }
 
-            .field-name {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                max-width: 12rem;
+        .field-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 12rem;
+
+            @media only screen and (max-width: 750px) {
+                font-size: 1.4rem;
             }
         }
     }

@@ -1,9 +1,14 @@
 .reverse-calcs-list {
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
 
     &__item {
-        margin-left: 5rem;
         font-weight: 500;
+        margin-left: 3rem;
+        margin-bottom: 3rem;
+        width: 14rem;
 
         &__name {
             color: #fff;

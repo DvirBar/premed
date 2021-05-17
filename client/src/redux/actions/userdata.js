@@ -133,15 +133,15 @@ export const getUsersDataByPathTable = (tableId, pathId) => dispatch => {
 export const addUserData = data => dispatch => {
     const finalDataObj = {
         ...data,
-        defaults: [
-            {
+        defaults: { 
+            groupVals: [{
                 field: "sector",
                 group: "bagrut",
                 isCalc: "false",
                 isType: true,
                 value: "jew"
-            }
-        ]
+            }]
+        }
     }
     
     // Request body
@@ -300,6 +300,7 @@ export const insertData = (data, tableId) => dispatch => {
              })
          })
          .catch(err => {
+                console.log(err);
                 loaderInstance.type = USER_DATA_INSERT_FAILURE             
                 dispatch(loaderInstance)
                 // Returns modified/added dataVal

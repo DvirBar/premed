@@ -104,11 +104,21 @@ router.get('/:tableId/:pathId', auth, (req, res, next) => {
                             curTable.paths.includes(pathId) &&
                             curTable.enabled && curTable.dataVals))
 
-                    const tableData = tableUserData.map(item => ({
-                        _id: item._id,
-                        dataVals: item.tables.find(curTable => 
-                            curTable.table.equals(tableId)).dataVals
-                    }))
+
+                    let tableData = [] 
+
+                    for(let dataItem of tableUserData) {
+                        const dataVals = dataItem.tables.find(curTable => 
+                            curTable.table.equals(tableId))
+                            .dataVals
+
+                        if(dataVals.length > 0) {
+                            tableData.push({
+                                _id: dataItem._id,
+                                dataVals
+                            })
+                        }
+                    }
                         
                     return res.send(tableData)
                 })
@@ -151,7 +161,7 @@ router.post('/', auth, (req, res, next) => {
                                         table: table._id,
                                         paths: pathIds,
                                         enabled,
-                                        dataVals: defaults
+                                        ...defaults
                                     }
                                 ]
                             })
@@ -350,95 +360,96 @@ router.put('/switchtable', auth, (req, res, next) => {
 // @route   PUT api/userdata/insertdata/:tableId
 // @desc    Insert data 
 // @access  Private
-router.put('/insertdata/:tableId', auth, (req, res, next) => {
+router.put('/insertdata/:tableId', auth, async(req, res, next) => {
     const {
         fieldId,
         groupId,
         isCalc,
         cusGroupParent,
-        value,
-        suggestedAccepted
+        value
     } = req.body;
 
     const tableId = req.params.tableId
     const userId = res.locals.user.id
-    
-    UserData.findOne({ user: userId })
-            .populate('tables.table')
-            .then(data => {
-                if(!data)
-                    return res.status(DataNotExist.status)
-                              .send(DataNotExist.msg)
-                
-                const enabledTable = data.tables.find(curTable => 
-                    curTable.table.enabled && curTable.table._id.equals(tableId))
 
-                if(!enabledTable)
-                    return res.status(NoEnabledTable.status)
-                              .send(NoEnabledTable.msg)
+    try {
+        const data = await UserData
+                    .findOne({ user: userId })
+                    .populate('tables.table')
+        if(!data)
+        return res.status(DataNotExist.status)
+                    .send(DataNotExist.msg)
+                
+        const enabledTable = data.tables.find(curTable => 
+            curTable.table.enabled && curTable.table._id.equals(tableId))
+
+        if(!enabledTable)
+            return res.status(NoEnabledTable.status)
+                        .send(NoEnabledTable.msg)
+
+        const values = groupId 
+            ? enabledTable.groupVals 
+            : enabledTable.dataVals
+        let found = false
+
                     
-                
-                const values = enabledTable.dataVals
-                let found = false
-                            
-            // If the user already has a value for the field
-                for(let item of values) {
-                    if(item.field === fieldId && item.group === groupId) {
-                        item.value = value;
-                        found = true;
-                        if(suggestedAccepted) {
-                            item.suggestedAccepted = true
-                        }
+        // If the user already has a value for the field
+        for(let item of values) {
+            if(item.field === fieldId && item.group === groupId) {
+                item.value = value;
+                found = true;
 
-                        break;
-                    }
+                break;
+            }
+        }
+
+        // If the field is yet to have a value
+        if(!found) {
+            let isType
+            if(groupId) {
+                const groupField = groups.find(group =>
+                    cusGroupParent 
+                    ?  group._id === cusGroupParent
+                    :  group._id === groupId).fields.find(field =>
+                        fieldId === field._id)
+
+                if(groupField.isType) {
+                    isType = true
                 }
+            }
 
-            // If the field is yet to have a value
-                if(!found) {
-                    let isType
-                    if(groupId) {
-                        const groupField = groups.find(group =>
-                            cusGroupParent 
-                            ?  group._id === cusGroupParent
-                            :  group._id === groupId).fields.find(field =>
-                                fieldId === field._id)
+            let newVal = {
+                field: fieldId,
+                group: groupId,
+                isCalc,
+                cusGroupParent,
+                isType,
+                value
+            }
 
-                        if(groupField.isType) {
-                            isType = true
-                        }
-                    }
+            values.push(newVal)
+        }
 
-                    let newVal = {
-                        field: fieldId,
-                        group: groupId,
-                        isCalc,
-                        cusGroupParent,
-                        isType,
-                        value
-                    }
+        enabledTable.last_updated = Date.now();
 
-                    if(suggestedAccepted) {
-                        newVal.suggestedAccepted = true
-                    }
+        const savedData = await data.save()
+        const savedTable = savedData.tables.find(curTable => 
+            curTable.table.enabled)
+        
+        const savedValues = groupId
+            ? savedTable.groupVals
+            : savedTable.dataVals
 
-                    values.push(newVal)
-                }
-
-                enabledTable.last_updated = Date.now();
-
-                data.save()
-                    .then(data => {
-                        const valueObj = data.tables.find(curTable => 
-                            curTable.table.enabled)
-                            .dataVals.find(val => 
-                                val.field === fieldId && 
-                                val.group === groupId)
-                        return res.send(valueObj); 
-                    })
-                    .catch(next); // Save user data
-            })
-            .catch(next); // Find user data
+        const valueObj = savedValues.find(val => 
+                val.field === fieldId && 
+                val.group === groupId)
+        
+        return res.send(valueObj); 
+    }
+    
+    catch(err) {
+        next(err)
+    }
 })
 
 // @route   PUT api/userdata/removedata/:tableId
@@ -473,7 +484,9 @@ router.put('/removedata/:tableId', auth, (req, res, next) => {
                     return res.status(UserDataNotInTable.status)
                               .send(UserDataNotInTable.msg)
 
-                const values = enabledTable.dataVals
+                const values = groupId 
+                ? enabledTable.groupVals 
+                : enabledTable.dataVals
                 
                 /* If removeAll is true, remove all values associated 
                 with group ID */
@@ -560,18 +573,17 @@ router.put('/execCalc', auth, (req, res, next) => {
                     try {
                         calcObj = await executeCalc(
                             storCalc, 
-                            values,  
+                            [...values, ...enabledTable.groupVals],  
                             enabledTable.customGroups,
                             year)
                     }
             
                     catch(err) {
-                        console.log(err);
                         return res.status(err.status || 500).send(err.msg)
                     }
                     
                     const payload = calcObj.payload
-
+                    
                     const dataVal = values.find(val => 
                         val.field === storCalcId)
 
@@ -632,13 +644,13 @@ router.put('/execCalc', auth, (req, res, next) => {
 
                             await populateAndGroup()
                         })
-                        .catch(next);
+                        .catch(err => next(err));
                 }
             }
         }
         return res.send(newCalcs)
     })
-    .catch(next)
+    .catch(err => next(err))
 })
 
 
@@ -756,52 +768,5 @@ router.delete('/:userId', [auth, authAdmin], (req, res, next) => {
             .catch(next); // Find user data
 })
 
-// async function executeCalcs({
-//     storCalc, 
-//     values,  
-//     customGroups,
-//     thisTable,
-//     lastYearTable
-// }) {
-//     let yearsToExec = []
- 
-//     if(storCalc.versions) {
-//         yearsToExec = storCalc.versions.filter(verYear => 
-//             verYear === thisTable.year || 
-//             verYear === lastYearTable.year)
-//     }
-
-//     else {
-//         yearsToExec = [thisTable.year]
-//     }
-
-//     let mainCalcObj = {}
-//     let otherCalcObj = {}
-//     for(let year of yearsToExec) {
-//         const {
-//             result: calcObj,
-//             params
-//         } = await executeCalc(
-//             storCalc, 
-//             values,  
-//             customGroups,
-//             year)
-
-//         if(storCalc.reverseCalcs) {
-//             const thresholdsToUse = thisTable.year === year 
-//             ? thisTable.thresholds : lastYearTable.thresholds
-//             const revCalcs = []
-//             for(revCalc of storCalc.reverseCalcs) {
-
-                
-//                 revCalcs.push({
-//                     field: revCalc.field,
-//                     value: revCalc.calc({ ...params, year})
-//                 })
-//             }
-//         }
-        
-//     }
-// }
 
 module.exports = router;

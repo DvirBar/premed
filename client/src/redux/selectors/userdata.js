@@ -4,9 +4,6 @@ export const userdataSelector = state => state.userdata
 
 export const selTableSelector = state => state.userdata.selTable
 
-export const getDataVals = state => 
-    state.userdata.data.tableData.dataVals
-
 export const getSimulatedVals = state => 
     state.userdata.simulatedData.values
 
@@ -16,16 +13,35 @@ export const getCustomGroupsReal = state =>
 export const getCustomGroupsSimulated = state => 
     state.userdata.simulatedData.customGroups
 
+const selectDataVals = createSelector(
+    userdataSelector,
+    userdata => userdata.data.tableData.dataVals
+)
+
+export const selectGroupVals = createSelector(
+    userdataSelector,
+    userdata => userdata.data.tableData.groupVals
+)
+
+export const selectRealVals = createSelector(
+    selectDataVals,
+    selectGroupVals,
+    (dataVals, groupVals) => {
+        return [...dataVals, ...groupVals]
+    }
+)
+
 export const getFieldValReal = (fieldId, groupId) => createSelector(
-    state => state.userdata.data.tableData.dataVals,
-    vals => {
+    selectDataVals,
+    selectGroupVals,
+    (dataVals, groupVals) => {
         if(groupId) {
-            return vals.find(val => 
+            return groupVals.find(val => 
                 val.group === groupId && 
                 val.field === fieldId)
         }
 
-        return vals.find(val => 
+        return dataVals.find(val => 
             val.field === fieldId)
     }
 )
@@ -36,13 +52,12 @@ export const getFieldValSimulated = (fieldId, groupId) => createSelector(
         return vals.find(val => 
             val.group === groupId && 
             val.field === fieldId)
-        // return vals.find(val => 
-        //     val.field === fieldId)
+
     }
 )
 
-export const getGroupValsReal = groupId => createSelector(
-    state => state.userdata.data.tableData.dataVals,
+export const selectGroupValsByIdReal = groupId => createSelector(
+    selectGroupVals,
     vals => vals.filter(val => val.group === groupId)
 )
 
@@ -51,18 +66,13 @@ export const getGroupValsSimulated = groupId => createSelector(
     vals => vals.filter(val => val.group === groupId)
 )
 
-export const getGroupsValsReal = createSelector(
-    state => state.userdata.data.tableData.dataVals,
-    vals => vals.filter(val => val.group)
-)
-
 export const getGroupsValsSimulated = createSelector(
     state => state.userdata.simulatedData.values,
     vals => vals.filter(val => val.group)
 )
 
 export const getSelTypes = createSelector(
-    state => state.userdata.data.tableData.dataVals,
+    state => state.userdata.data.tableData.groupVals,
     vals => vals.filter(val => val.isType)
 )
 

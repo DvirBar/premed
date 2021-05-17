@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { 
     getCustomGroupsSimulated, 
     getFieldValSimulated, 
-    getGroupsValsReal, 
+    getGroupsValsSimulated, 
     getGroupValsSimulated, 
     getSimErrorByCalc, 
     getSimulatedVals, 
@@ -85,7 +85,7 @@ const useSimulatedData = () => {
         customGroups,
         getFieldVal: getFieldValSimulated,
         getGroupVals: getGroupValsSimulated,
-        getGroupsVals: getGroupsValsReal,
+        getGroupsVals: getGroupsValsSimulated,
         validError: validErrorSimulated,
         getValidErrors: getSimValidErrors,
         getErrorByCalc: getSimErrorByCalc,

@@ -33,7 +33,9 @@ function DataTable({ pathId }) {
         <div className="table-container">
             {(!tableSections || loadData) 
             ?   <Loadbar />
-            :   <table className="data-table">
+            :   <table 
+                cellSpacing="1"
+                className="data-table">
                     <TableHeaders 
                     matchColor={matchColor}
                     tableSections={tableSections}

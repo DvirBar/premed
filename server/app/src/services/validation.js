@@ -19,12 +19,15 @@ export const checkOwnedResource = (
     userId, 
     isAdmin,
     adminAllowed) => {
-
     const modelName = model.schema.options.modelName
 
-    // Log this incidence
-    if(owner !== userId && (!adminAllowed || !isAdmin)) {
-        throw `Security error: a user tried to modify or 
+    // Log this incident
+    if(!owner.equals(userId)) {
+        if(!isAdmin || (isAdmin && !adminAllowed) ) {
+            throw `Security error: a user tried to modify or 
         get resource (${modelName}) that they do not own`
+        }
     }
+
+    return true;
 }

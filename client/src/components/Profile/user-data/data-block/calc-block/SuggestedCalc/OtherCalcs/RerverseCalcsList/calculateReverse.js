@@ -24,7 +24,9 @@ const calculateReverse = (
         }
 
         if(key !== 'intercept' && key !== calculatedField._id) {
-            const valueToSub = valueToUse * fieldsValues.find(val => val.field === key)?.value
+            const fieldToUse = fieldsValues.find(val => val.field === key)
+            const fieldValue = fieldToUse?.value || fieldToUse?.suggestValue
+            const valueToSub = valueToUse * fieldValue
             result -= valueToSub
         }
 

@@ -8,6 +8,7 @@ function OtherCalcs({ calc, display, setDisplay }) {
         <Modal
         display={display}
         toggleModal={setDisplay}
+        noFrame={true}
         title={title}
         className="other-calcs__content">
             <OtherCalcsContent 

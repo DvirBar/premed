@@ -1,6 +1,8 @@
 .year-calc {
     display: flex;
-    font-size: 1.7rem;
+    font-size: 1.9rem;
+    flex-wrap: wrap;
+    justify-content: center;
 
     &__name {
         color: #aaa;

@@ -13,7 +13,7 @@ function LastYearCalc({ calc, year }) {
     const tableYear = useSelector(getTableYear)
     // Get relevant fields values
     const fieldsValues = useSelector(selectFieldValues(calc.reverseCalcs))
-
+    
     const result = calculateLastYear(
         fieldsValues, 
         calc.calcRecog, 

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCustomGroup, insertData, removeValue, validError } from '../../../../redux/actions/userdata';
 import { 
     getCustomGroupsReal, 
-    getDataVals, 
+    selectRealVals, 
     getFieldValReal, 
-    getGroupsValsReal, 
-    getGroupValsReal, 
+    selectGroupVals, 
+    selectGroupValsByIdReal, 
     getRealErrorByCalc,
     getRealValidErrors } from '../../../../redux/selectors/userdata';
 
@@ -18,7 +18,7 @@ import {
 
 const useRealData = () => {
     const dispatch = useDispatch()
-    const dataVals = useSelector(getDataVals)
+    const dataVals = useSelector(selectRealVals)
 
     const newCustomGroup = useCallback((dataObj, selTable) => {
         dispatch(addCustomGroup(dataObj, selTable))
@@ -58,8 +58,8 @@ const useRealData = () => {
         stagedGroupsList,
         customGroups,
         getFieldVal: getFieldValReal,
-        getGroupVals: getGroupValsReal,
-        getGroupsVals: getGroupsValsReal,
+        getGroupVals: selectGroupValsByIdReal,
+        getGroupsVals: selectGroupVals,
         validError: validError,
         getValidErrors: getRealValidErrors,
         getErrorByCalc: getRealErrorByCalc,

@@ -7,7 +7,6 @@ const calculateLastYear = (
 ) => { 
 
     let result = 0
-
     Object.keys(calcRecog).map(key => {
         const recogItem = calcRecog[key]
         
@@ -21,7 +20,9 @@ const calculateLastYear = (
         }
 
         if(key !== 'intercept') {
-            const valueToSub = valueToUse * fieldsValues.find(val => val.field === key)?.value
+            const fieldToUse = fieldsValues.find(val => val.field === key)
+            const fieldValue = fieldToUse?.value || fieldToUse?.suggestValue
+            const valueToSub = valueToUse * fieldValue
             result += Number(valueToSub)
         }
 

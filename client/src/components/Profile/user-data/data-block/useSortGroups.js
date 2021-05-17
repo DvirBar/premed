@@ -17,7 +17,7 @@ function useSortGroups(group, groups, stagedGroupsList) {
     const selType = selTypes.find(type => 
         type.group === group?._id)?.value
     
-    useEffect(() => {
+    useEffect(() => {//
         if(groups && !softLoading) {
             let reqGroups = []
             let optGroups = []

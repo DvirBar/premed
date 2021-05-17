@@ -12,10 +12,12 @@
         margin-bottom: 4rem;
     }
 
-    &__content {
+    &-content {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-x: auto;
     }
 }
 

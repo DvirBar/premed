@@ -22,13 +22,23 @@ const UserDataSchema = new Schema({
             default: false
         },
         dataVals: [{
+            table: {
+                type: ObjectId,
+                ref: 'DataTable'
+            },
             field: {
+                type: String
+            },
+            group: {
                 type: String
             },
             cusGroupParent: {
                 type: String
             },
             isCalc: {
+                type: Boolean
+            },
+            isType: {
                 type: Boolean
             },
             value: {
@@ -50,23 +60,6 @@ const UserDataSchema = new Schema({
             },
             payload: {
                 type: Mixed
-            }
-        }],
-        groupVals: [{
-            field: {
-                type: String
-            },
-            group: {
-                type: String
-            },
-            cusGroupParent: {
-                type: String
-            },
-            isType: {
-                type: Boolean
-            },
-            value: {
-                type: String
             }
         }],
         customGroups: [{

@@ -3,7 +3,6 @@ const getGroupConfig = (values, group) => {
     const selType = selTypes.find(type => 
         type.field === group.typeId).value
 
-
     const config = group.config?.uniqueGroupType
                 ?   selType ? group.config[selType] : group.config
                 :   group.config

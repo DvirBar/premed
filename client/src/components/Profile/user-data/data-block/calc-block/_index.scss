@@ -5,6 +5,12 @@
     width: 26rem;
     height: 45px;
 
+    .no-value-error {
+        font-size: 1.4rem;
+        color: $error-color;
+        font-weight: 500;
+    }
+
     &__loader {
         height: 100%;
         width: 100%;

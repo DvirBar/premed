@@ -23,7 +23,6 @@ export function tauFinalCalc({ bagrut, psycho, mor, year }) {
         morCof,
         intercept
     } = getStd(year)
-    console.log(morCof);
 
     return bagCof * Number(bagrut) + 
            psyCof * Number(psycho) + 

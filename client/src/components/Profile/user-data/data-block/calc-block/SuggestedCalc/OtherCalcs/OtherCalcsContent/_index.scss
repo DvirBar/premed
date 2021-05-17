@@ -11,9 +11,16 @@
     &__list {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: center;
+        width: 100%;
+
         &__item {
             padding: 1rem;
+            width: 60rem;
+
+            @media only screen and(max-width: 600px) {
+                width: 100%;
+            }
         }
     }
 }
