@@ -16,6 +16,7 @@ import { GET_USER } from "./redux/auth/types";
 import Loadbar from "./components/layout/Loadbar";
 import { authSelector } from "./redux/selectors/auth";
 import { BASE_DATA } from "./redux/actions/types";
+import NoInternet from "./informatives/NoInternet";
 
 function App() {
     useAxios()
@@ -42,6 +43,7 @@ function App() {
                 <Banner />
                 <Router />
                 <MessageAlerts />
+                <NoInternet />
                 {/* <Footer /> */}
             </div>
         </BrowserRouter>
