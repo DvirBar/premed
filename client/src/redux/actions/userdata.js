@@ -1,8 +1,7 @@
 import {
     USER_DATA_LOADING,
     USER_DATA_LOAD_SOFT,
-    USER_DATA_SUCCESS,
-    USER_DATA_PATH_SUCCESS,    
+    USER_DATA_SUCCESS,   
     USER_DATA_ERROR,
     VALID_ERROR,
     USER_DATA_ADD,
@@ -16,6 +15,12 @@ import {
     USER_DATA_UPDATE_PATHS,
     USER_DATA_SWITCH_TABLE,
 
+    USER_DATA_PATH_LOADING, 
+    USER_DATA_PATH_SUCCESS, 
+
+    USER_DATA_TABLE_LOAD_MORE_LOADING,
+    USER_DATA_TABLE_LOAD_MORE_SUCCESS,
+
     USER_DATA_INSERT_LOADING,
     USER_DATA_INSERT_SUCCESS,
     USER_DATA_INSERT_FAILURE,
@@ -26,15 +31,13 @@ import {
     USER_DATA_TOGGLE_ENABLED,
     ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
-    FILTER_DATA,
-    REMOVE_FILTER_DATA,
-    SORT_DATA,
     EXEC_CALC_LOADING,
     EXEC_CALC_SUCCESS,
     EXEC_CALC_FAILURE,
     SIMULATE_CALCS_LOADING,
     SIMULATE_CALCS_SUCCESS,
-    SIMULATE_CALCS_FAILURE
+    SIMULATE_CALCS_FAILURE,
+    UPDATE_TABLE_FILTER_DATA
 } from './types';
 import axios from 'axios';
 import { getMessage, getError } from './messages';
@@ -114,14 +117,39 @@ export const getOneUserData = tableId => dispatch => {
 }
 
 // Get all users data by path and tableId
-export const getUsersDataByPathTable = (tableId, pathId) => dispatch => {
-    dispatch(dataLoad());
+export const getUsersDataByPathTable = (tableId, pathId, filters, lastId) => dispatch => {
+    const isMore = lastId ? true : false
 
-    axios.get(`api/userdata/${tableId}/${pathId}`)
+    dispatch({
+        type: isMore 
+            ?   USER_DATA_TABLE_LOAD_MORE_LOADING
+            :   USER_DATA_PATH_LOADING
+    })
+    
+    const data = {
+        filters
+    }
+
+    if(lastId) {
+        data.lastId = lastId
+    }
+
+    const body = JSON.stringify(data)
+
+    
+
+    axios.post(`api/userdata/${tableId}/${pathId}`, body)
          .then(res => { 
              dispatch({
-                type: USER_DATA_PATH_SUCCESS,
-                payload: res.data
+                type: isMore 
+                    ? USER_DATA_TABLE_LOAD_MORE_SUCCESS
+                    :  USER_DATA_PATH_SUCCESS,
+                payload: {
+                    dataVals: res.data.data,
+                    filters: filters || [],
+                    finished: res.data.finished,
+                    lastId: res.data.newLastId
+                }
             })})
          .catch(err => {
              dispatch(dataError());
@@ -417,30 +445,6 @@ export const removeValue = (data, tableId) => dispatch => {
 export const clearChangedField = () => dispatch => {
     dispatch({
         type: CLEAR_CHANGED_FIELD
-    })
-}
-export const filterData = filter => dispatch => {
-    dispatch({
-        type: FILTER_DATA,
-        payload: filter
-    })
-}
-
-export const clearFilters = fieldId => dispatch => {
-    dispatch({
-        type: REMOVE_FILTER_DATA,
-        payload: fieldId
-    })
-}
-
-
-export const sortData = (type, fieldId) => dispatch => {
-    dispatch({
-        type: SORT_DATA,
-        payload: {
-            type, 
-            fieldId
-        }
     })
 }
 

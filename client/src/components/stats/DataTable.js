@@ -5,6 +5,9 @@ import { getTableSectionsByPath } from '../../redux/selectors/statsinputs';
 import TableHeaders from './data-table/table-headers/TableHeaders';
 import Loadbar from '../layout/Loadbar';
 import TableBody from './data-table/table-body/TableBody';
+import { selectTableData } from '../../redux/stats/userdata/real-data/selectors';
+import { isLoading } from '../../redux/loader/selectors';
+import { USER_DATA_PATH } from '../../redux/actions/types';
 
 function DataTable({ pathId }) {
     const dispatch = useDispatch()
@@ -27,11 +30,14 @@ function DataTable({ pathId }) {
     const ordering = useSelector(state => 
         state.userdata.ordering);
 
-    const loadData = useSelector(state => state.userdata.loading)
+    const loading = useSelector(isLoading(USER_DATA_PATH))
+
+    const data = useSelector(selectTableData)
+
 
     return (
         <div className="table-container">
-            {(!tableSections || loadData) 
+            {!tableSections
             ?   <Loadbar />
             :   <table 
                 cellSpacing="1"
@@ -39,12 +45,24 @@ function DataTable({ pathId }) {
                     <TableHeaders 
                     matchColor={matchColor}
                     tableSections={tableSections}
-                    ordering={ordering}
-                    />
-                    <TableBody 
-                    tableSections={tableSections}
-                    matchColor={matchColor}
                     ordering={ordering} />
+                    
+                    {loading
+                    ?  <div className="data-table__body-load-wrapper">
+                            <div>
+                                <Loadbar />
+                            </div>
+                        </div>
+                    :  data?.length > 0
+                        ?   <TableBody 
+                            data={data}
+                            tableSections={tableSections}
+                            matchColor={matchColor}
+                            ordering={ordering} />
+                        :   <p className="userdata-table-no-results">
+                                <span>לא נמצאו תוצאות</span>
+                            </p>
+                    }
                 </table>
             }
         </div>

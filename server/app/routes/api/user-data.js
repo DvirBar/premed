@@ -80,52 +80,57 @@ router.post('/user', auth, (req, res, next) => {
             .catch(next)
 })
 
+import * as UserDataControllers from '../../src/api/components/stats/userData/controllers'
 
-
-// @route   GET api/userdata/:tableId/:pathId
+// @route   POST api/userdata/:tableId/:pathId
 // @desc    Get all users data by table and path
 // @access  Private
-router.get('/:tableId/:pathId', auth, (req, res, next) => { 
-    const pathId = req.params.pathId;
-    const tableId = req.params.tableId;
+router.post('/:tableId/:pathId', auth, UserDataControllers.getTableDataVals)
 
-    DataTable.findById(tableId)
-             .then(table => {
-                 if(!table)
-                    return res.status(DataTableNotExist.status)
-                              .send(DataTableNotExist.msg)
+// // @route   GET api/userdata/:tableId/:pathId
+// // @desc    Get all users data by table and path
+// // @access  Private
+// router.get('/:tableId/:pathId', auth, (req, res, next) => { 
+//     const pathId = req.params.pathId;
+//     const tableId = req.params.tableId;
+
+//     DataTable.findById(tableId)
+//              .then(table => {
+//                  if(!table)
+//                     return res.status(DataTableNotExist.status)
+//                               .send(DataTableNotExist.msg)
                     
-                UserData.find({ "tables.table": tableId })
-                .select("-user")
-                .then(dataItems => {
-                    // Filter tables that are not the table requested
-                    const tableUserData = dataItems.filter(item =>
-                        item.tables.find(curTable => 
-                            curTable.paths.includes(pathId) &&
-                            curTable.enabled && curTable.dataVals))
+//                 UserData.find({ "tables.table": tableId })
+//                 .select("-user")
+//                 .then(dataItems => {
+//                     // Filter tables that are not the table requested
+//                     const tableUserData = dataItems.filter(item =>
+//                         item.tables.find(curTable => 
+//                             curTable.paths.includes(pathId) &&
+//                             curTable.enabled && curTable.dataVals))
 
 
-                    let tableData = [] 
+//                     let tableData = [] 
 
-                    for(let dataItem of tableUserData) {
-                        const dataVals = dataItem.tables.find(curTable => 
-                            curTable.table.equals(tableId))
-                            .dataVals
+//                     for(let dataItem of tableUserData) {
+//                         const dataVals = dataItem.tables.find(curTable => 
+//                             curTable.table.equals(tableId))
+//                             .dataVals
 
-                        if(dataVals.length > 0) {
-                            tableData.push({
-                                _id: dataItem._id,
-                                dataVals
-                            })
-                        }
-                    }
+//                         if(dataVals.length > 0) {
+//                             tableData.push({
+//                                 _id: dataItem._id,
+//                                 dataVals
+//                             })
+//                         }
+//                     }
                         
-                    return res.send(tableData)
-                })
-                .catch(next);                  
-            })
-            .catch(next);                      
-})
+//                     return res.send(tableData)
+//                 })
+//                 .catch(next);                  
+//             })
+//             .catch(next);                      
+// })
  
 // @route   POST api/userdata
 // @desc    Create user data entry
@@ -396,7 +401,7 @@ router.put('/insertdata/:tableId', auth, async(req, res, next) => {
         // If the user already has a value for the field
         for(let item of values) {
             if(item.field === fieldId && item.group === groupId) {
-                item.value = value;
+                item.value = isNaN(value) ? value : Number(value);
                 found = true;
 
                 break;
@@ -424,7 +429,7 @@ router.put('/insertdata/:tableId', auth, async(req, res, next) => {
                 isCalc,
                 cusGroupParent,
                 isType,
-                value
+                value: isNaN(value) ? value : Number(value)
             }
 
             values.push(newVal)
@@ -576,6 +581,8 @@ router.put('/execCalc', auth, (req, res, next) => {
                             [...values, ...enabledTable.groupVals],  
                             enabledTable.customGroups,
                             year)
+
+                        calcObj.value = Number(calcObj.value)
                     }
             
                     catch(err) {

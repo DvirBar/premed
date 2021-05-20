@@ -8,7 +8,7 @@ import datagroups from './datagroups';
 import datafields, * as fieldSelectors from './datafields';
 import unis from './universities';
 import calcs from './calculations';
-import userdata, * as dataSelectors from './userdata';
+import userdata from './userdata';
 import datatables from './datatables';
 import questions from '../questions/reducers';
 import inquiries from './inquiries';
@@ -49,19 +49,3 @@ export default rootReducer;
 
 export const getGroupFields = fields => 
     fieldSelectors.getGroupFields(fields)
-
-
-export const getFilteredSortedData = state => {
-    let stateCollection = state.tableData
-    let ordering = state.ordering
-
-    if(state.ordering.filters) {
-        stateCollection = dataSelectors.filterData(stateCollection, ordering);
-    }
-
-    if(state.ordering.sort.type) {
-        stateCollection = dataSelectors.sortData(stateCollection, ordering);
-    }
-    
-    return stateCollection;
-}

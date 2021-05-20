@@ -67,13 +67,12 @@ function NumFilters({ min, max }) {
 
     return (
         <Fragment>
-
             <BorderTextbox
             type="text" 
             value={minVal}
             onChange={e => handleChange(e, changeMinVal)}
             onBlur={() => validateFilterValue(minVal, 'min')}
-            placeholder="גדול מ-"
+            placeholder="גדול/שווה ל-"
             error={error.min} />
 
             <BorderTextbox
@@ -81,7 +80,7 @@ function NumFilters({ min, max }) {
             value={maxVal}
             onChange={e => handleChange(e, changeMaxVal)}
             onBlur={() => validateFilterValue(maxVal, 'max')}
-            placeholder="קטן מ-"
+            placeholder="קטן/שווה ל-"
             error={error.max} />
 
             <div className="general-error">

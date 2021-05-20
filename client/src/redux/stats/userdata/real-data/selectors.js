@@ -2,18 +2,39 @@ const { createSelector } = require("reselect")
 
 const userdataSelector = state => state.userdata
 
-const selectTableData = createSelector(
+const selectUserTableData = createSelector(
     userdataSelector,
     userdata => userdata.data.tableData
 )
 
+export const selectTableData = createSelector(
+    userdataSelector,
+    userdata => userdata.tableData.dataVals
+)
+
+export const selectTableFilters = createSelector(
+    userdataSelector,
+    userdata => userdata.tableData.filters
+)
+
+export const selectTableDataFull = createSelector(
+    userdataSelector,
+    userdata => userdata.tableData
+)
+
+
+export const selectTableFilterByField = fieldId => createSelector(
+    selectTableFilters,
+    filters => filters.find(filter => filter.field === fieldId)?.value
+)
+
 const selectDataVals = createSelector(
-    selectTableData,
+    selectUserTableData,
     tableData => tableData.dataVals
 )
 
 export const selectRealCustomGroup = groupId => createSelector(
-    selectTableData,
+    selectUserTableData,
     tableData => tableData.customGroups.find(customGroup => 
         customGroup._id == groupId)
 )
@@ -30,3 +51,4 @@ export const selectRealFieldValues = fieldIds => createSelector(
     dataVals => dataVals.filter(dataVal => 
         fieldIds.includes(dataVal.field))
 )
+

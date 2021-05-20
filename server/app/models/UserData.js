@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Mixed = mongoose.Schema.Types.Mixed;
+import * as staticMethods from '../src/api/components/stats/userData/db/methods'
+import { ConstructStaticMethods } from '../src/api/db/plugins';
 
 // Create schema
 const UserDataSchema = new Schema({
@@ -32,7 +34,7 @@ const UserDataSchema = new Schema({
                 type: Boolean
             },
             value: {
-                type: String
+                type: Mixed
             },
             otherValue: {
                 value: {
@@ -87,5 +89,9 @@ const UserDataSchema = new Schema({
         default: false 
     }
 });
+
+UserDataSchema.plugin(
+    ConstructStaticMethods, 
+    { customStaticMethods: staticMethods })
 
 module.exports = mongoose.model('UserData', UserDataSchema);

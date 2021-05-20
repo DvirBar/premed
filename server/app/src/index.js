@@ -46,6 +46,7 @@ import steps from '../routes/api/steps';
 import announcements from './api/components/announcements/announcements/routes'
 import ancGroups from './api/components/announcements/groups/routes'
 import viewIndex from './views/index'
+import { mockUserData, mockUsers } from "./__mock";
 
 
 app.use('/api/auth', auth);
@@ -98,6 +99,9 @@ mongoose
     })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
+
+
+
 
 
 

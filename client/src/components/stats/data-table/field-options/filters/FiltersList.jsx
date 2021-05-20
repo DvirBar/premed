@@ -1,29 +1,28 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearFilters } from '../../../../../redux/actions/userdata'
+// import { clearFilters } from '../../../../../redux/actions/userdata'
 import { orderingSelector } from '../../../../../redux/selectors/userdata'
+import { selectTableFilters } from '../../../../../redux/stats/userdata/real-data/selectors'
+import useDataOrdering from '../useDataOrdering'
 
 function FiltersList() {
-    const dispatch = useDispatch()
-    const ordering = useSelector(orderingSelector)
+    const filters = useSelector(selectTableFilters)
 
-    const clearFilter = fieldId => {
-        dispatch(clearFilters(fieldId))
-    }
+    const { clearFilter } = useDataOrdering()
 
     return (
         <div className="filters-list">
-            {ordering.filters.length === 0
+            {filters.length === 0
             ? <p className="no-filters">
                 אין מסננים
             </p>
-            : ordering.filters.map(filter => 
+            : filters.map(filter => 
                 <span
-                key={filter.field.id}
+                key={filter}
                 className="filter-item">
-                    <span>{filter.field.name}</span>
+                    <span>{filter.fieldName}</span>
                     <i className="material-icons"
-                    onClick={() => clearFilter(filter.field.id)}>
+                    onClick={() => clearFilter(filter)}>
                         close
                     </i>
                 </span>

@@ -106,11 +106,11 @@ export const orderingSelector = createSelector(
     userdata => userdata.ordering
 )
 
-export const getFieldFilters = fieldId => createSelector(
-    orderingSelector,
-    ordering => ordering.filters.find(filter =>
-        filter.field.id === fieldId)
-)
+// export const getFieldFilters = fieldId => createSelector(
+//     orderingSelector,
+//     ordering => filters.find(filter =>
+//         filter === fieldId)
+// )
 
 export const getSort = (fieldId) => createSelector(
     orderingSelector,

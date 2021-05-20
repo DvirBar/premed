@@ -20,18 +20,19 @@ import {
     CLEAR_CHANGED_FIELD,
     ADD_CUSTOM_GROUP,
     USER_DATA_DELETE,
-    FILTER_DATA,
-    REMOVE_FILTER_DATA,
-    SORT_DATA,
     USER_DATA_INSERT_SUCCESS,
     SIMULATE_CALCS_SUCCESS,
-    EXEC_CALC_SUCCESS
+    EXEC_CALC_SUCCESS,
+    USER_DATA_TABLE_LOAD_MORE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
     loading: false,
     softLoading: false,
-    tableData: [],
+    tableData: {
+        dataVals: [],
+        filters: []
+    },
     data: {},
     selTable: null,
     changedField: {},
@@ -41,13 +42,6 @@ const initialState = {
         customGroups: [],
         errors: []
     },
-    ordering: {
-        filters: [],
-        sort: {
-            type: null,
-            fieldId: null
-        }
-    }
 }
 
 export default function(state = initialState, action) {
@@ -240,6 +234,16 @@ export default function(state = initialState, action) {
                 tableData: payload
             }
 
+        case USER_DATA_TABLE_LOAD_MORE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                tableData: {
+                    ...payload,
+                    dataVals: [...state.tableData.dataVals, ...payload.dataVals]
+                }
+            }
+
         case USER_DATA_UPDATE_PATHS:
             return {
                 ...state,
@@ -419,46 +423,7 @@ export default function(state = initialState, action) {
                 ...state,
                 changedField: {},
             }
-
-        case FILTER_DATA: { // Use brackets to define scope
-            const filters = state.ordering.filters
-            return {
-                ...state,
-                ordering: {
-                    ...state.ordering,
-                    filters: filters.find(filter => 
-                        filter.field.id === payload.field.id)  
-                        ?   filters.map(filter =>
-                            filter.field.id === payload.field.id 
-                            ? filter = payload : filter)
-
-                        :   [...filters, payload]
-                }
-            }
-        }
-
-        // Remove filters from table
-        case REMOVE_FILTER_DATA: { // Use brackets to define scope
-            const filters = state.ordering.filters
-            return {
-                ...state,
-                ordering: {
-                    ...state.ordering,
-                    filters: payload ? filters.filter(filter =>
-                        filter.field.id !== payload) : []
-                }
-            }
-        }
-
-        case SORT_DATA:
-            return {
-                ...state,
-                ordering: {
-                    ...state.ordering,
-                    sort: payload
-                }
-            }
-
+            
         case USER_DATA_DELETE:
             return {
                 ...state,
@@ -471,95 +436,95 @@ export default function(state = initialState, action) {
     }
 }
 
-export const filterData = (state, ordering) => {
-    let filteredData = state
+// export const filterData = (state, ordering) => {
+//     let filteredData = state
 
-    ordering.filters.map(filter => {
-        const fieldId = filter.field.id
+//     ordering.filters.map(filter => {
+//         const fieldId = filter.field.id
 
-        if(filter.field.type === 'num') {
-            const min = Number(filter.min);
-            const max = Number(filter.max);
+//         if(filter.field.type === 'num') {
+//             const min = Number(filter.min);
+//             const max = Number(filter.max);
 
-            if(min && max) {
-                filteredData = filteredData.filter(data => 
-                    data.dataVals.find(val =>
-                        val.field === fieldId && val.value > min && val.value < max))
-            }
+//             if(min && max) {
+//                 filteredData = filteredData.filter(data => 
+//                     data.dataVals.find(val =>
+//                         val.field === fieldId && val.value > min && val.value < max))
+//             }
         
-            else if (!min && max) {
-                filteredData = filteredData.filter(data => 
-                    data.dataVals.find(val =>
-                        val.field === fieldId && val.value < max))
-            }
+//             else if (!min && max) {
+//                 filteredData = filteredData.filter(data => 
+//                     data.dataVals.find(val =>
+//                         val.field === fieldId && val.value < max))
+//             }
         
-            else if (min && !max) {
-                filteredData = filteredData.filter(data => 
-                    data.dataVals.find(val =>
-                        val.field === fieldId && val.value > min))
-            }
-        }
+//             else if (min && !max) {
+//                 filteredData = filteredData.filter(data => 
+//                     data.dataVals.find(val =>
+//                         val.field === fieldId && val.value > min))
+//             }
+//         }
 
-        if(filter.field.type === 'str') {
-            filteredData = filteredData.filter(data => 
-                data.dataVals.find(val => 
-                    val.field === fieldId && val.value === filter.text))
-        }
-    })
+//         if(filter.field.type === 'str') {
+//             filteredData = filteredData.filter(data => 
+//                 data.dataVals.find(val => 
+//                     val.field === fieldId && val.value === filter.text))
+//         }
+//     })
 
-    return filteredData;
-}
+//     return filteredData;
+// }
 
 
-export const sortData = (state, ordering) => {
-    const fieldId = ordering.sort.fieldId
+// export const sortData = (state, ordering) => {
+//     const fieldId = ordering.sort.fieldId
 
-    switch(ordering.sort.type) {
-        case 'ascending': {
-            // Save and filter undefined values
-            let missingVals = state.filter(entry => 
-                !entry.dataVals.find(val => val.field === fieldId))
+//     switch(ordering.sort.type) {
+//         case 'ascending': {
+//             // Save and filter undefined values
+//             let missingVals = state.filter(entry => 
+//                 !entry.dataVals.find(val => val.field === fieldId))
 
-            // Sort numeric values
-            let sortedArr = state
-                   .filter(entry => entry.dataVals.find(val => 
-                    val.field === fieldId))
-                   .sort((a, b) => {
-                        return (
-                            (a.dataVals.find(val => 
-                                val.field === fieldId).value)  -
-                            (b.dataVals.find(val => 
-                                val.field === fieldId).value)
-                    ) 
-                 })
+//             // Sort numeric values
+//             let sortedArr = state
+//                    .filter(entry => entry.dataVals.find(val => 
+//                     val.field === fieldId))
+//                    .sort((a, b) => {
+//                         return (
+//                             (a.dataVals.find(val => 
+//                                 val.field === fieldId).value)  -
+//                             (b.dataVals.find(val => 
+//                                 val.field === fieldId).value)
+//                     ) 
+//                  })
                  
-            // Merge sorted array and undefined values array
-            Array.prototype.push.apply(sortedArr, missingVals)
-            return sortedArr
-        }
+//             // Merge sorted array and undefined values array
+//             Array.prototype.push.apply(sortedArr, missingVals)
+//             return sortedArr
+//         }
 
-        case 'descending': {
-              // Save and filter undefined values
-              let missingVals = state.filter(entry => 
-                !entry.dataVals.find(val => val.field === fieldId))
+//         case 'descending': {
+//               // Save and filter undefined values
+//               let missingVals = state.filter(entry => 
+//                 !entry.dataVals.find(val => val.field === fieldId))
 
-            // Sort numeric values
-            let sortedArr = state
-                .filter(entry => entry.dataVals.find(val => val.field === fieldId))
-                .sort((a, b) => {
-                    return (
-                        (b.dataVals.find(val => val.field === fieldId).value) -
-                        (a.dataVals.find(val => val.field === fieldId).value)
-                    ) 
-                })
+//             // Sort numeric values
+//             let sortedArr = state
+//                 .filter(entry => entry.dataVals.find(val => val.field === fieldId))
+//                 .sort((a, b) => {
+//                     return (
+//                         (b.dataVals.find(val => val.field === fieldId).value) -
+//                         (a.dataVals.find(val => val.field === fieldId).value)
+//                     ) 
+//                 })
 
-            // Merge sorted array and undefined values array
-            Array.prototype.push.apply(sortedArr, missingVals)
-            return sortedArr
-        }
+//             // Merge sorted array and undefined values array
+//             Array.prototype.push.apply(sortedArr, missingVals)
+//             return sortedArr
+//         }
         
-        default: 
-            return state
-    }
-}
+//         default: 
+//             return state
+//     }
+// }
 

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { getFieldFilters } from '../../../../../redux/selectors/userdata';
+import { selectTableFilterByField } from '../../../../../redux/stats/userdata/real-data/selectors';
+// import { getFieldFilters } from '../../../../../redux/selectors/userdata';
 import { FieldOptionsContext } from '../FieldOptionsContext';
 import NumFilters from './NumFilters';
 import SelectFilters from './SelectFilters';
@@ -10,7 +11,7 @@ function FilterFields() {
         field
     } = useContext(FieldOptionsContext)
 
-    const fieldFilters = useSelector(getFieldFilters(field._id))
+    const filter = useSelector(selectTableFilterByField(field._id))
 
     const { fieldOptions, fieldType, dataType } = field
 
@@ -18,8 +19,8 @@ function FilterFields() {
         <div className="filter-fields">
             {dataType?.value === 'num' 
             ?   <NumFilters
-                min={fieldFilters?.min || ''}
-                max={fieldFilters?.max || ''} />
+                min={filter?.$gte || ''}
+                max={filter?.$lte || ''} />
 
             : fieldOptions && fieldType.value === 'select' &&
                 <SelectFilters />

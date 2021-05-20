@@ -1,23 +1,19 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { clearFilters } from '../../../../../redux/actions/userdata'
+import useDataOrdering from '../useDataOrdering'
 import FilterFields from './FilterFields'
 import FiltersList from './FiltersList'
 
-function Filters() {
-    const dispatch = useDispatch()
-
-    const clearAllFilters = () => {
-        dispatch(clearFilters())
-    }
-
+function Filters({ toggleModal }) {
+    const {
+        clearAllFilters
+    } = useDataOrdering(toggleModal)
     return (
         <div className="filters">
         <p className="filters-title">סינון:</p>
         <FiltersList />
         <p 
-        className="clear-all"
-        onClick={() => clearAllFilters()}>איפוס סינון</p>
+        onClick={() => clearAllFilters()}
+        className="clear-all">איפוס סינון</p>
         <FilterFields />
     </div>
 

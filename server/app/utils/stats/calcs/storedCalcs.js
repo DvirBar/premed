@@ -232,8 +232,8 @@ const storedCalcs = [
             validationTypes.isPosNum,
             {
                 ...validationTypes.numRange,
-                min: '934',
-                max: '94'
+                min: 94,
+                max: 935
             }
         ]
     }

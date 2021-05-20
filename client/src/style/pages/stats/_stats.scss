@@ -31,6 +31,22 @@
     }
 }
 
+.userdata-table-no-results {
+    padding: 10rem;
+    width: 100%;
+    background-color: rgba($error-color, 0.2);
+    display: flex;
+
+    span {
+        position: sticky;
+        right: 0;
+        width: 100vw;
+        font-size: 3rem;
+        font-weight: 500;
+        color: #555;
+    }
+}
+
 .table-container {
     position: absolute;
     right: 0;
@@ -59,6 +75,38 @@
     }
 }
 
+.table-data-load-more {
+    width: 100%;
+    font-size: 1.8rem;
+
+    & > div {
+        position: sticky;
+        right: 0;
+        width: 100vw;
+        margin: 0;
+        padding: 1.5rem;
+        font-weight: 500;
+    }
+
+    &__button {
+        color: $main-color;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba($main-color, 0.8);
+        width: 100%;
+    }
+}
+
 .data-table {
     display: inline-grid;
     grid-template-areas:
@@ -67,6 +115,16 @@
 
     text-align: center;
     color: #464646;
+
+    &__body-load-wrapper {
+        width: 100%;
+
+        & > div {
+            position: sticky;
+            right: 0;
+            width: 100vw;
+        }
+    }
 
     th {
         font-weight: 500;
@@ -123,7 +181,7 @@
         color: #fff !important;
     }
 
-    tr {
+    tr:not(.table-data-load-more) {
         &.highlight {
             & > td {
                 border-top-color: $main-color;
@@ -207,7 +265,7 @@
         overflow-x: hidden;
         overflow-y: auto;
         grid-area: body-scrollable;
-        height: calc(100vh - 108px);
+        // height: calc(100vh - 108px);
     }
 }
 
@@ -276,10 +334,15 @@
     .filter-fields {
         display: flex;
         align-items: center;
-        column-gap: 0.5rem;
+        flex-wrap: wrap;
+
+        & > div:not(:last-child) {
+            margin-left: 0.5rem;
+        }
 
         input {
             width: 12rem;
+            margin-bottom: 0.5rem;
         }
 
         .general-error {
