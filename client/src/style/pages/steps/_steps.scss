@@ -9,8 +9,15 @@
 }
 
 .step-content {
-    margin-top: 1.5rem;
-    width: 100%;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: $default-shadow;
+    margin: auto;
+    max-width: 70rem;
+
+    @media only screen and (max-width: 700px) {
+        width: 100%;
+    }
 
     &:hover {
         .step-title::after {
@@ -22,20 +29,22 @@
     .step-title {
         display: inline-block;
         font-size: 3rem;
-        color: $main-color;
-        padding: 1.5rem 0;
-
-        &::after {
-            display: block;
-            content: "";
-            border-bottom: solid 3px $main-color;
-            transform: scaleX(0);
-            transition: transform 0.3s ease-in-out;
-        }
+        color: #fff;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        background: $main-color;
+        box-shadow: $default-shadow;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
     }
 
-    .content-container {
-        padding-right: 1.5rem;
+    &__container {
+        padding: 3rem;
+
+        .step-item-content {
+            margin-bottom: 2rem;
+        }
     }
 }
 

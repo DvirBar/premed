@@ -1,5 +1,6 @@
 .calc-thresholds__item {
     margin-bottom: 2rem;
+    margin-left: 0;
 
     &__const-value {
         width: 60rem;
@@ -7,7 +8,7 @@
         flex-direction: column;
         align-items: flex-start;
 
-        @media only screen and(max-width: 600px) {
+        @media only screen and(max-width: 620px) {
             width: 100%;
         }
 
@@ -45,14 +46,24 @@
         flex-wrap: wrap;
         width: 60rem;
 
-        @media only screen and(max-width: 600px) {
+        @media only screen and(max-width: 620px) {
             width: 100%;
+            justify-content: center;
         }
 
         .calc-threshods-type {
             width: 25rem;
             display: flex;
             flex-direction: column;
+            margin-bottom: 2rem;
+
+            @media only screen and(max-width: 620px) {
+                margin-left: 1rem;
+            }
+
+            @media only screen and(max-width: 400px) {
+                margin-left: 0;
+            }
 
             .no-margin-thresholds {
                 width: 100%;
