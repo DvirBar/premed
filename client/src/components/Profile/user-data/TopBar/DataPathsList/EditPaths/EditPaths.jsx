@@ -28,6 +28,7 @@ function EditPaths({ userPaths, display, toggleModal, tableId }) {
             className="edit-user-data-paths" 
             onSubmit={handleSubmit}>
                 <ChoosePaths 
+                name="pathIds"
                 selPaths={values.pathIds}
                 onChange={handleChange} />
 
