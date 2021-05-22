@@ -1,4 +1,4 @@
-.thresholds {
+.thresholds-admin {
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
@@ -77,7 +77,7 @@
     }
 
     &.reject {
-        .thresh-value { 
+        .thresh-value {
             color: $error-color;
         }
     }

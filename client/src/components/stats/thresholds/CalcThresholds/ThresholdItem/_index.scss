@@ -1,0 +1,83 @@
+.threshold-item {
+    &__label {
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    &.accept {
+        border-color: $okay-color !important;
+
+        .threshold-item__content {
+            background-color: rgba($okay-color, 0.2);
+            border-color: $okay-color !important;
+
+            &__date {
+                background-color: $okay-color;
+            }
+        }
+    }
+
+    &.reject {
+        border-color: $error-color !important;
+        .threshold-item__content {
+            background-color: rgba($error-color, 0.2);
+            border-color: $error-color !important;
+            &__date {
+                background-color: $error-color;
+            }
+        }
+    }
+
+    &.last {
+        justify-content: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        border: 3px transparent dashed;
+        border-radius: 0.5rem;
+
+        .threshold-item__content {
+            display: flex;
+            flex-direction: row;
+
+            &__value {
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &:not(.last) {
+        .threshold-item__content {
+            height: 7.2rem;
+            width: 8.5rem;
+        }
+    }
+
+    &__content {
+        padding: 1rem 1.5rem;
+        border-radius: 0.5rem;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+
+        &.no-threshold {
+            font-size: 1.35rem;
+            font-weight: 500;
+            border: 2px transparent dashed;
+            background-color: transparent !important;
+        }
+
+        &__value {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        &__date {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 500;
+            text-align: center;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+    }
+}

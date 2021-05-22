@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import ContentContainer from '../layout/Containers/ContentContainer/ContentContainer';
 import PathStats from './PathStats';
 import Thresholds from './thresholds/Thresholds';
 import Topbar from './topbar/TopBar';
@@ -15,9 +16,11 @@ function StatsContent() {
                 pathId={pathId} 
                 tableId={tableId} />
 
-            :   <Thresholds
-                pathId={pathId}
-                tableId={tableId} />
+            :   <ContentContainer>
+                    <Thresholds
+                    pathId={pathId}
+                    tableId={tableId} />
+                </ContentContainer>   
             }
         </div>
     )

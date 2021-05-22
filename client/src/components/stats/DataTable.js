@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTableSections } from '../../redux/actions/basedata';
 import { getTableSectionsByPath } from '../../redux/selectors/statsinputs';
@@ -19,13 +19,13 @@ function DataTable({ pathId }) {
     const tableSections = useSelector(
         getTableSectionsByPath(pathId))
 
-    const matchColor = (uni, isHeader) => {
+    const matchColor = useCallback((uni, isHeader) => {
         return {
             backgroundColor: uni._id === 'no-uni'
             ? isHeader ? '#486974' : '#48697460'
-            : isHeader ? uni.color : uni.color + '60'
+            : isHeader ? uni.color : uni.color + '50'
         }
-    }
+    }, [])
 
     const ordering = useSelector(state => 
         state.userdata.ordering);

@@ -17,7 +17,7 @@ function Thresholds({ tableId }) {
     }
 
     return (
-        <div className="thresholds">
+        <div className="thresholds-admin">
             <Selectors 
             selectField={selectField} />
 

@@ -1,8 +1,9 @@
-import internalData from "./internalData"
 import storedCalcs from "./stats/calcs/storedCalcs"
 import fields from "./stats/fields/dataFields"
+import baseData from '../src/staticData/baseData/baseData'
 
-const { universities } = internalData
+
+const { universities } = baseData
 
 const getByUniAndPath = (inputs, uniId, pathId) => {
     return inputs.filter(field => 

@@ -1,0 +1,14 @@
+.uni-calcs-thresholds {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: $default-shadow;
+    border: 3px transparent solid;
+
+    & > * {
+        margin-left: 6rem;
+        margin-bottom: 2rem;
+    }
+
+    @import "./CalcThreshold/index";
+}

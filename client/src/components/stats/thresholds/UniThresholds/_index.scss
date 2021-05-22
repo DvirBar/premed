@@ -1,0 +1,8 @@
+.thresholds__uni {
+    &__name {
+        font-size: 2.4rem;
+        font-weight: 500;
+    }
+
+    @import "../CalcThresholds/index";
+}

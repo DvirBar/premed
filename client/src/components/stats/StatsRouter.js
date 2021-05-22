@@ -15,7 +15,7 @@ const StatsRouter = () => {
             path={`${path}/:pathId/:tableId/:type`} 
             component={StatsContent} />
             <ProtectedRoute 
-            component={RedirectToDefault} />
+            component={RedirectToDefault} />    
         </Switch>
     )
 }

@@ -9,6 +9,8 @@ node_modules
 
 # testing
 /coverage
+browserstack.json
+BrowserStackLocal.exe
 
 # production
 /build

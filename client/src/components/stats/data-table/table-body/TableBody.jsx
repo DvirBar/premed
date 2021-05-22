@@ -4,7 +4,6 @@ import TableDataLoadMore from './TableDataLoadMore'
 import TableRow from './TableRow'
 
 function TableBody({ tableSections, matchColor, data }) {
-
     const [highlightRow, setHighlightRow] = useState(null)
     
     return (
@@ -20,7 +19,6 @@ function TableBody({ tableSections, matchColor, data }) {
                     highlightRow={highlightRow === index ? highlightRow : ''}
                     setHighlightRow={setHighlightRow} />
                 )}  
-                
             </tbody>
             <TableDataLoadMore />
         </Fragment>

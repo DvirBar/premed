@@ -20,7 +20,8 @@ const baseData = {
             name: 'תל-אביב',
             paths: ['six-year', 'four-year'],
             _id: 'tau',
-            color: '#850303'
+            color: '#222222'
+            // color: '#850303'
         },
         {
             name: 'טכניון',

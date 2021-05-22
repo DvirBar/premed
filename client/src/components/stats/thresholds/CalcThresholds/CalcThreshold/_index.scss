@@ -1,0 +1,107 @@
+.calc-thresholds__item {
+    margin-bottom: 2rem;
+
+    &__const-value {
+        width: 60rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        @media only screen and(max-width: 600px) {
+            width: 100%;
+        }
+
+        &__label {
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        &__content {
+            padding: 1.5rem;
+            margin: 1rem;
+            border: 2px transparent dashed;
+            border-radius: 0.5rem;
+
+            &__label {
+                font-weight: 500;
+                font-size: 1.8rem;
+            }
+
+            &__value {
+                font-size: 1.9rem;
+            }
+        }
+    }
+
+    &__name {
+        font-size: 2rem;
+        text-decoration: underline;
+    }
+
+    &__threhsolds-list {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 60rem;
+
+        @media only screen and(max-width: 600px) {
+            width: 100%;
+        }
+
+        .calc-threshods-type {
+            width: 25rem;
+            display: flex;
+            flex-direction: column;
+
+            .no-margin-thresholds {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+
+                background-color: #eee;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                color: #999;
+                font-size: 1.8rem;
+                padding: 2rem;
+
+                box-shadow: $default-shadow;
+            }
+            &.accept {
+                color: $okay-color;
+            }
+
+            &.reject {
+                color: $error-color;
+            }
+
+            &__label {
+                font-size: 1.8rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
+
+            &__content {
+                box-shadow: $default-shadow;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                &__list {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+
+    @import "../AllThresholds/index";
+    @import "../ThresholdItem/index";
+}

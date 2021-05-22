@@ -5,7 +5,7 @@ function TableRow({
     index,
     dataItem, 
     matchColor, 
-    tableSections, 
+    tableSections,  
     highlightRow, 
     setHighlightRow }) {
     return (
