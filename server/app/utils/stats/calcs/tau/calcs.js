@@ -16,7 +16,7 @@ export const tauInitial = async({ params, year }) => {
     const grade = await tauInitialMain({ bagrut, psycho, year })
 
     return {
-        value: (grade).toFixed(2)
+        value: Math.ceil(grade * 100)/100
     }
 }
 
