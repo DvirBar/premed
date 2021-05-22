@@ -37,13 +37,13 @@
     "mjml": "^4.9.0",
     "mongoose": "^5.11.15",
     "mongoose-autopopulate": "^0.12.3",
-    "mongoose-sanitizer": "^1.0.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.5.0",
     "nodemailer-express-handlebars": "^4.0.0",
     "pug": "^3.0.2",
     "query-string": "^6.14.0",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "sanitize-html": "^2.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",

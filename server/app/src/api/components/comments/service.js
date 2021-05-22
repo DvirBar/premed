@@ -1,6 +1,7 @@
 import { checkOwnedResource } from '../../../services/validation'
 import { removeFromArray } from '../../../utils/arrays'
 import Comment from './db/model'
+import sanitizeHtml from 'sanitize-html'
 
 export function getByItem(itemId) {
     return Comment.getByItem(itemId)

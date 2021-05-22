@@ -3,6 +3,7 @@ const { ConstructStaticMethods } = require('../../../db/plugins');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 import * as staticMethods from './methods'
+import { commentPreSave, commentPostRemove } from './middlewares';
 
 // Create schema
 const CommentSchema = new Schema({
@@ -35,15 +36,9 @@ const CommentSchema = new Schema({
     }
 })
 
-CommentSchema.post('remove', async function(doc, next) {
-    const children = await this.model('Comment').find({ parent: doc._id })
-    for(let child of children) {
-        child.remove()
-    }
-    
-    next()
-})
 
+CommentSchema.pre('save', commentPreSave)
+CommentSchema.post('remove', commentPostRemove)
 
 CommentSchema.plugin(require('mongoose-autopopulate'))
 CommentSchema.plugin(
