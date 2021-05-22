@@ -81,56 +81,6 @@ router.post('/user', auth, (req, res, next) => {
 })
 
 import * as UserDataControllers from '../../src/api/components/stats/userData/controllers'
-
-// @route   POST api/userdata/:tableId/:pathId
-// @desc    Get all users data by table and path
-// @access  Private
-router.post('/:tableId/:pathId', auth, UserDataControllers.getTableDataVals)
-
-// // @route   GET api/userdata/:tableId/:pathId
-// // @desc    Get all users data by table and path
-// // @access  Private
-// router.get('/:tableId/:pathId', auth, (req, res, next) => { 
-//     const pathId = req.params.pathId;
-//     const tableId = req.params.tableId;
-
-//     DataTable.findById(tableId)
-//              .then(table => {
-//                  if(!table)
-//                     return res.status(DataTableNotExist.status)
-//                               .send(DataTableNotExist.msg)
-                    
-//                 UserData.find({ "tables.table": tableId })
-//                 .select("-user")
-//                 .then(dataItems => {
-//                     // Filter tables that are not the table requested
-//                     const tableUserData = dataItems.filter(item =>
-//                         item.tables.find(curTable => 
-//                             curTable.paths.includes(pathId) &&
-//                             curTable.enabled && curTable.dataVals))
-
-
-//                     let tableData = [] 
-
-//                     for(let dataItem of tableUserData) {
-//                         const dataVals = dataItem.tables.find(curTable => 
-//                             curTable.table.equals(tableId))
-//                             .dataVals
-
-//                         if(dataVals.length > 0) {
-//                             tableData.push({
-//                                 _id: dataItem._id,
-//                                 dataVals
-//                             })
-//                         }
-//                     }
-                        
-//                     return res.send(tableData)
-//                 })
-//                 .catch(next);                  
-//             })
-//             .catch(next);                      
-// })
  
 // @route   POST api/userdata
 // @desc    Create user data entry
@@ -215,7 +165,6 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
     let resultArray = []
     let stagedValues = values
 
-
     for(let calcLevel of calcsToExec) {
         for(let storCalcId of calcLevel) {
             const storCalc = storedCalcs.find(calc => 
@@ -228,7 +177,7 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
             || calcVersions?.includes(yearToExec)) {
                     let calcObj = {}
 
-                try {
+                try {  
                     calcObj = await executeCalc(
                         storCalc, 
                         stagedValues,  
@@ -256,7 +205,7 @@ router.post('/simulateCalcs/:tableId', auth, async(req, res, next) => {
 
                 resultArray.push(resultObj) 
             }
-        }
+        }//
     }
 
     res.status(200).send(resultArray)                                 
@@ -305,6 +254,11 @@ router.put('/editpaths/:tableId', auth, (req, res, next) => {
             })
             .catch(next); // Find user data
 });
+
+// @route   POST api/userdata/:tableId/:pathId
+// @desc    Get all users data by table and path
+// @access  Private
+router.post('/:tableId/:pathId', auth, UserDataControllers.getTableDataVals)
 
 // @route   PUT api/userdata/switchtable
 // @desc    Switch user active table to be the enabled table

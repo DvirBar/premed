@@ -5,8 +5,13 @@ import ListLayout from '../../layout/ListLayout/ListLayout';
 import Loadbar from '../../layout/Loadbar';
 import DataSections from './DataSections';
 import TopBar from './TopBar/TopBar';
+import StatsExplanation from './StatsExplanation'
 
-function UserStats({ data, selTable }) {
+function UserStats({ 
+    data, 
+    selTable, 
+    setDisplayCalc
+}) {
     const [paths, setPaths] = useState([])
 
     const dispatch = useDispatch()
@@ -30,7 +35,8 @@ function UserStats({ data, selTable }) {
             changeTable={changeTable} 
             tableId={selTable}
             paths={paths} />
-            
+            <StatsExplanation 
+            setDisplayCalc={setDisplayCalc} />
             <DataSections  
             paths={paths} />
         </ListLayout>

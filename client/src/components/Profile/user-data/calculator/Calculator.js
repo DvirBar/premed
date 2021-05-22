@@ -1,29 +1,22 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import FloatButton from '../../../layout/FloatButton';
-import CalcItemInfo from './CalcsBlock/CalcItemInfo';
 import CalculatorBody from './CalculatorBody';
 
-function Calculator() {
-    const [displayCalc, setDisplayCalc] = useState(false)
-
-    const toggleCalc = toggle => {
-        setDisplayCalc(toggle)
-    }
-
+function Calculator({ display, setDisplay}) {
     return (
         <Fragment>
             <div className="calculator">
                 <FloatButton 
                 className="calculator-button" 
                 toolTip="מחשבון"
-                onClick={() => toggleCalc(true)}>
+                onClick={() => setDisplay(true)}>
                     <i className="material-icons float-button">
                         calculate
                     </i>
                 </FloatButton>
                 <CalculatorBody
-                display={displayCalc}
-                toggleModal={toggleCalc} />
+                display={display}
+                toggleModal={setDisplay} />
             </div>
         </Fragment>
     )

@@ -30,13 +30,15 @@ async function tauInitialCalc({ bagrut, psycho, year }) {
     const config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
-        }
+        },
+        timeout: 5000
     }
 
     try {
         const res = await axios.post('https://www.ims.tau.ac.il/md/ut/Sikuim_T.aspx', 
             qs.stringify(body), 
             config)
+
         const regFindTags = new RegExp(`<\s*td[^>]*>((.|\n)[^(td)]*?)<\s*\/\s*td><\s*td[^>]*>(&nbsp;ציון התאמה<span style='color:red'> ללא מור<\/span> ביה"ס )[^<]`)
         const tagContainers = res.data.match(regFindTags).toString()
         const regFindGrade = /\d{3}[.\d]*/;

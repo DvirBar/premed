@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTables } from '../../../redux/actions/datatables';
 import { getOneUserData } from '../../../redux/actions/userdata';
@@ -22,6 +22,7 @@ function ValidatePath() {
         selTable } = useSelector(state => 
         state.userdata);
 
+    const [displayCalc, setDisplayCalc] = useState(false)
 
     if(loading)
         return <Loadbar />
@@ -30,9 +31,14 @@ function ValidatePath() {
         return (
             <Fragment>
                 <GroupsProvider isSimulated={false}>
-                    <UserStats data={data} selTable={selTable} />
+                    <UserStats 
+                    setDisplayCalc={setDisplayCalc}
+                    data={data} 
+                    selTable={selTable} />
                 </GroupsProvider>
-                <Calculator />
+                <Calculator 
+                display={displayCalc}
+                setDisplay={setDisplayCalc} />
             </Fragment>
         )
     }

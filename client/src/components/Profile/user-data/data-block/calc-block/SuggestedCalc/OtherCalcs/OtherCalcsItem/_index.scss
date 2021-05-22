@@ -1,11 +1,21 @@
 .other-calcs__content__item {
     padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: $default-shadow;
+    margin-top: 1rem;
 }
 
 .reverse-calcs__content__no-thresholds {
     font-weight: 500;
-    color: #aaa;
-    padding: 1rem;
+    color: #999;
+    font-size: 1.8rem;
+    padding: 2rem;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
 }
 
 .no-calc-available {

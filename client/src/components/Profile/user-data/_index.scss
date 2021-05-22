@@ -18,6 +18,38 @@
     @media only screen and (max-width: 800px) {
         width: 100%;
     }
+
+    .stats-explanation {
+        border: 2px $main-color solid;
+        padding: 1rem;
+        border-radius: 0.5rem;
+
+        &__important-notice {
+            font-size: 2rem;
+            font-weight: 500;
+            color: $main-color;
+        }
+
+        &__content {
+            padding: 1rem;
+        }
+
+        a,
+        b,
+        &__content__open-calculator {
+            color: $main-color;
+            font-weight: 500;
+        }
+
+        &__content__open-calculator {
+            cursor: pointer;
+        }
+
+        a:hover,
+        &__content__open-calculator:hover {
+            opacity: 0.7;
+        }
+    }
 }
 
 .section-data-block {

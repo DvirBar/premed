@@ -41,7 +41,9 @@ function OtherCalcsItem({ calc, year }) {
 
     return (
         <div className="reverse-calcs__content__no-thresholds">
-            עדיין אין סיפי קבלה זמינים לשנה זו
+            <span>
+                עדיין אין סיפי קבלה זמינים לשנה זו
+            </span>
         </div>
     )
 }
