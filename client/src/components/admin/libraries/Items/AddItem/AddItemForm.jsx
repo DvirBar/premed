@@ -53,10 +53,12 @@ function AddItemForm({ display, toggleModal, libId }) {
                 value={values.icon}
                 onChange={handleChange} />
 
-                <Editor
-                value={values.info}
-                onChange={handleChange}
-                name="info" />
+                {display &&
+                    <Editor
+                    value={values.info}
+                    onChange={handleChange}
+                    name="info" />
+                }
 
                 <button type="submit">
                     הוספה

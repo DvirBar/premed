@@ -34,7 +34,6 @@ function Libraries() {
             {!isAdmin &&
                 <PathLinks />
             }
-            {/* <Loadbar /> */}
             <ContentContainer>
                 {loading
                     ?   <Loadbar />

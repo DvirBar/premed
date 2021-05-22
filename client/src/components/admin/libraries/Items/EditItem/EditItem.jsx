@@ -48,10 +48,12 @@ function EditItem({ display, setDisplay, item, libId }) {
                 value={values.icon}
                 onChange={handleChange} />
 
-                <Editor
-                value={values.info}
-                onChange={handleChange}
-                name="info" />
+                {display &&
+                    <Editor
+                    value={values.info}
+                    onChange={handleChange}
+                    name="info" />                    
+                }
 
                 <button>
                     עריכה

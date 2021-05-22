@@ -57,11 +57,13 @@ function AddLibraryForm({ display, toggleDisplay, parent }) {
                             ? true : false}
                         />      
                     </div>)}
-
-                <Editor
-                value={values.info}
-                onChange={handleChange}
-                name="info" />
+                
+                {display &&
+                    <Editor
+                    value={values.info}
+                    onChange={handleChange}
+                    name="info" />
+                }
 
                 <button type="submit">
                     יצירה

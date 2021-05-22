@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { getTopLibs } from '../../../redux/libraries/selectors'
 import RecursiveRouter from '../LibDetails/RecursiveRouter'
-import LibsList from '../LibsList/LibsList'
+import LibsMainDefault from './LibsMainDefault'
 
 function LibsMain() {
     const libs = useSelector(getTopLibs)
@@ -12,8 +12,7 @@ function LibsMain() {
         <div>
             {libId 
             ? <RecursiveRouter />
-            : <LibsList 
-              noItems={true}
+            : <LibsMainDefault
               libs={libs} />   
             }
         </div>

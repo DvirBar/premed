@@ -37,11 +37,13 @@ function AddQuestion({ group }) {
                     value={values.question}
                     onChange={handleChange}
                     error={errors.question} />
-
-                    <Editor
-                    value={values.answer}
-                    onChange={handleChange}
-                    name="answer" />
+                    
+                    {display &&
+                        <Editor
+                        value={values.answer}
+                        onChange={handleChange}
+                        name="answer" />                        
+                    }
 
                     <div className="url-details">     
                         <input 
