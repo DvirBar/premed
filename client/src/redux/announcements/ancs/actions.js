@@ -111,7 +111,7 @@ export const editAnc = (id, data) => dispatch => {
         .then(res => dispatch(ancUpdate(res.data)))
         .catch(err => {
             // Get message
-            console.log("Error editing");
+            getError(err)
         })
 }
 
@@ -126,6 +126,6 @@ export const deleteAnc = id => dispatch => {
             dispatch(ancDelete(id)))
         .catch(err => {
             // Get message
-            console.log("Error deleting");
+            getError(err)
         })
 }

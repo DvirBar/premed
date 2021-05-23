@@ -38,7 +38,6 @@ const Dropdown = ({ options, defaultOption, name, title,
 
     const ref = useRef()
     useOnClickOutside(ref, display, () => setDisplay(false))
-    // console.log(ref.current?.getBoundingClientRect());
     const rect = ref.current?.getBoundingClientRect()
     const selectStyle = {
         top: rect?.top || 0,

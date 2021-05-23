@@ -18,7 +18,6 @@ function CalcBlock({ calc, value, suggestedValue, payload }) {
     const tableYear = useSelector(getTableYear)
     const calcVersions = calc.versions
     const loading = useSelector(isLoading(EXEC_CALC, calc._id))
-    console.log(validError);
     return (
         <div className="calc-block-new">
             {!calcVersions || calcVersions.includes(tableYear)

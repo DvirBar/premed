@@ -156,7 +156,6 @@ export const dataFieldAssignRole = (id, data) => dispatch => {
              payload: res.data
          }))
          .catch(err => {
-             console.log(err);
              dispatch(dataFieldError())
              dispatch(getMessage(err))
          })

@@ -33,8 +33,6 @@ function AddQuestionGroup() {
         setDisplay(open)
     }
 
-    console.log(values);
-
     return (
         <Fragment>
             <i 

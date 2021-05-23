@@ -26,7 +26,6 @@ function PathGroups({ path }) {
         for(let group of groups) {
             if(allChecked 
                 ? group.subscriptions : !group.subscriptions) {
-                    console.log("hi");
                 dispatch(groupChangeSub(group._id, sub))
             }
         }

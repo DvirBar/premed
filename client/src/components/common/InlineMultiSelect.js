@@ -40,10 +40,6 @@ function InlineMultiSelect({ children, className, onChange, NotEmpty }) {
         setIsChanging(true)
     }
 
-    useEffect(() => {
-        console.log(selItemsIds);
-    }, [selItemsIds])
-
     return (
         <div className={className
         ?   `inline-multi-select ${className}`

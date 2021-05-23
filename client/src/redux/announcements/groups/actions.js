@@ -139,7 +139,6 @@ export const groupCommitSubscriptions = groups => dispatch => {
                 type: GROUP_COMMIT_SUBSCRIPTION_SUCCESS,
                 payload: res.data.subs
             });
-            console.log(res.data);
             dispatch(getMessage(res.data.message));
         })
         .catch(err => {

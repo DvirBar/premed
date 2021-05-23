@@ -12,7 +12,6 @@ function ThreshList({ tableId, selField, threshType }) {
         threshType))
 
     const [displayAdd, setDisplayAdd] = useState(false)
-    console.log(thresholds);
 
     return (
         <ul className={"thresh-list " + threshType}>

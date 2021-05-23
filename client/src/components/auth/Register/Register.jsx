@@ -30,7 +30,6 @@ const Register = () => {
     const location = useLocation()
 
     const handlePasswordChange = event => {
-        console.log(event.target.value.length);
         if(event.target.value.length <= 64) {
             handleChange(event)
         }

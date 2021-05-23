@@ -114,8 +114,6 @@ router.post('/', [auth, authAdmin], (req, res, next) => {
                         calc: storedCalcId
                     })
 
-                    console.log(name);
-
                     newCalc.save()
                         .then(calc => {
                             const dataObj = types.dataTypes.find(type =>

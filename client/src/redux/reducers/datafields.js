@@ -71,7 +71,6 @@ export default function(state = initialState, action) {
             }
 
         case DATA_FIELD_ASSIGN_ROLE:
-            console.log(payload);
             return {
                 ...state,
                 loading: false,

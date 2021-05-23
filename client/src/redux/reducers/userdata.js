@@ -404,7 +404,6 @@ export default function(state = initialState, action) {
             }
         
         case ADD_CUSTOM_GROUP: 
-            console.log(payload);
             return {
                 ...state,
                 softLoading: false,

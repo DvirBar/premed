@@ -84,10 +84,6 @@ function AddDataField({ path, types, unis }) {
         setDisplayModal(open)
     }
 
-    useEffect(() => {
-        console.log(values);
-    }, [values])
-
     return (
         <Fragment>
             <button onClick={() => toggleModal(true)}>

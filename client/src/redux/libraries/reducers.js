@@ -83,7 +83,6 @@ export default function(state = initialState, action) {
 
 
         case LIB_ITEM_TOGGLE_VOTE:
-            console.log(payload);
             return {
                 ...state,
                 loading: false,

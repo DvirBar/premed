@@ -328,7 +328,6 @@ export const insertData = (data, tableId) => dispatch => {
              })
          })
          .catch(err => {
-                console.log(err);
                 loaderInstance.type = USER_DATA_INSERT_FAILURE             
                 dispatch(loaderInstance)
                 // Returns modified/added dataVal

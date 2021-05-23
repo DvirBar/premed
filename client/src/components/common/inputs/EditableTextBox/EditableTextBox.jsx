@@ -11,7 +11,6 @@ function EditableTextBox({
     const ref = useRef(value)
 
     const handleChange = text => {
-        console.log(text);
         onChange(text)
         ref.current = text
     }

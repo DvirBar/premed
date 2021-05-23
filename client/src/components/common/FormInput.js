@@ -23,7 +23,6 @@ function FormInput({
     const execOnEnter = e => {
         if(onEnter && e.key === "Enter" && 
             value && value !== '') {
-            console.log("exec");
             onEnter()
         }
     } 

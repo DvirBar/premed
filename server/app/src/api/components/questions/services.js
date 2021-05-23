@@ -42,7 +42,6 @@ class QuestionServices {
     }
 
     static async addQuestion(groupId, questionDetails) {
-        console.log(questionDetails);
         const group = await Questions.getByIdOrFail(groupId)
         const questions = group.questions 
         questions.push(questionDetails)

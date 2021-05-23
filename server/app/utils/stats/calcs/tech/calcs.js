@@ -19,7 +19,6 @@ export const techInitial = ({ params }) => {
     } = params
 
     const techCog = bagrutCof * bagrut + psychoCof * psycho + intercept
-    console.log(techCog);
     return {
         value: techCog.toFixed(3)
     }

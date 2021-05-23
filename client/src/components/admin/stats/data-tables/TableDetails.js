@@ -29,8 +29,6 @@ function TableDetails({ table, display, toggleModal }) {
         linksList
     }
 
-    console.log(selectedLink);
-
     return (
         <Modal 
         display={display}

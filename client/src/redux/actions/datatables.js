@@ -144,7 +144,6 @@ export const deleteThreshold = (tableId, threshId) => dispatch => {
             dispatch(getMessage(res.data))
         })
          .catch(err => {
-             console.log(err);
              dispatch(tableError())
              dispatch(getMessage(err))
          })

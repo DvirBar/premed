@@ -92,7 +92,6 @@ router.put('/:id', [auth, authAdmin], (req, res, next) => {
 
                 group.save()
                     .then(group => {
-                        // console.log(group)
                         return res.json(group)              
                     })
                     .catch(next)

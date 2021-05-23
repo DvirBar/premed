@@ -14,7 +14,6 @@ function useLongTouch(ref, callback) {
     }
 
     function touchstart() {
-        console.log("hi");
         timer = setTimeout(callback(), touchDuration)
     }
 
