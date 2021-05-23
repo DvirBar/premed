@@ -33,11 +33,13 @@ function StepContent({ step, isFinal }) {
                     </div>
                 }
 
-                {!isObjEmpty(uniContent) &&
-                    <UniContent 
-                    content={uniContent}
-                    pathId={pathId} />
-                }
+                <div className="step-content__container__uni-content-wrapper">
+                    {!isObjEmpty(uniContent) &&
+                        <UniContent 
+                        content={uniContent}
+                        pathId={pathId} />
+                    }
+                </div>
             </div>
         </div>
     )

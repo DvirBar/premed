@@ -73,13 +73,16 @@ h2 {
 .ck-editor {
     line-height: 2.5rem;
 
-    ol,
-    ul {
+    ol {
         padding-right: 3rem;
     }
 
     ul {
-        list-style-type: disc;
+        padding-right: 1rem;
+    }
+
+    ul {
+        list-style-type: none;
     }
 
     ol {

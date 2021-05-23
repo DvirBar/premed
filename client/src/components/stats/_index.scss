@@ -1,1 +1,23 @@
+.data-table-info {
+    font-size: 1.9rem;
+    padding: 3rem;
+    font-weight: 500;
+    color: #555;
+    display: inline-block;
+    border: 4px $main-color solid;
+    border-radius: 0.5rem;
+
+    a {
+        color: $main-color;
+        font-weight: 700;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+}
+
 @import "thresholds/index";

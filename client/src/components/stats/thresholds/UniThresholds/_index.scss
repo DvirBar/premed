@@ -4,5 +4,8 @@
         font-weight: 500;
     }
 
+    @media only screen and(max-width: 630px) {
+        width: 100%;
+    }
     @import "../CalcThresholds/index";
 }

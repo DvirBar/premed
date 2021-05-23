@@ -113,8 +113,8 @@ export async function editThreshold(tableId, threshId, threshData) {
 export async function removeThreshold(tableId, threshId) {
     const table = await findByIdRequired(this, tableId)
     const threshold = table.thresholds.id(threshId)
-
-    return threshold.remove()
+    await threshold.remove()
+    return table.save()
 }
 
 export async function deleteTable(id) {

@@ -13,7 +13,7 @@
     border-radius: 0.5rem;
     box-shadow: $default-shadow;
     margin: auto;
-    max-width: 70rem;
+    width: 70rem;
 
     @media only screen and (max-width: 700px) {
         width: 100%;
@@ -40,10 +40,13 @@
     }
 
     &__container {
-        padding: 3rem;
-
         .step-item-content {
             margin-bottom: 2rem;
+            padding: 3rem;
+        }
+
+        &__uni-content-wrapper {
+            padding: 1rem;
         }
     }
 }
