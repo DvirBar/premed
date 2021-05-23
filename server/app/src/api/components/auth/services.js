@@ -79,7 +79,7 @@ class UserService {
     // Register user and return login info with token and user
     static async create(data) {
         // Hash password string and create user
-        data.password = await hashString(data.password)
+        data.newPassword = await hashString(data.newPassword)
         const possibleEmail = await User.getUserByEmail(data.email)
         
         if(possibleEmail) {

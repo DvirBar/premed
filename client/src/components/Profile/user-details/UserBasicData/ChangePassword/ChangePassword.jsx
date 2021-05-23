@@ -47,6 +47,12 @@ function ChangePassword() {
     }
 
     const loading = useSelector(isLoading(CHANGE_PASSWORD))
+
+    const handlePasswordChange = event => {
+        if(!event.target.value || event.target.value.length <= 64) {
+            handleChange(event)
+        }
+    }
     
     return (
         <form 
@@ -61,13 +67,13 @@ function ChangePassword() {
             label="סיסמה נוכחית"
             name="oldPassword"
             value={values.oldPassword}
-            onChange={handleChange}
+            onChange={handlePasswordChange}
             error={errors.oldPassword} />
 
             <ConfirmPassword
             values={values}
             errors={errors}
-            handleChange={handleChange}
+            handleChange={handlePasswordChange}
             matchFail={matchFail}
             passwordName='newPassword'
             passwordLabel='סיסמה חדשה' />

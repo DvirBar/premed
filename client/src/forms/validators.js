@@ -5,6 +5,30 @@ export function isRequired(value, message) {
         return message
 }
 
+export function isTooShortPass(value, message) {
+    if(value.length < 8) {
+        return message
+    }
+}
+
+export function isNotStrongPass(value, message) {
+    const numPattern = new RegExp("[0-9]+")
+    const capitalPattern = new RegExp("[A-Z]+")
+    const letterPattern = new RegExp("[a-z]+")
+
+    if(!numPattern.test(value)) {
+        return message
+    }
+
+    if(!capitalPattern.test(value)) {
+        return message
+    }
+
+    if(!letterPattern.test(value)) {
+        return message
+    }
+}
+
 export function atLeastFour(value, message) {
     if(value.length < 4) {
         return message

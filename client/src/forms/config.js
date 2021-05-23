@@ -9,8 +9,7 @@ export const config = {
         },
         
         password: {
-            isRequired: { message: 'דרושה סיסמה' },
-            // isNotStrongPass: { message: 'הסיסמה חלשה מדי' }
+            isRequired: { message: 'דרושה סיסמה' }
         },
 
         oldPassword: {
@@ -18,7 +17,9 @@ export const config = {
         },
 
         newPassword: {
-            isRequired: { message: 'יש להזין סיסמה חדשה' },
+            isRequired: { message: 'יש להזין סיסמה' },
+            isTooShortPass: { message: 'על הסיסמה להיות באורך 8 תווים לפחות' },
+            isNotStrongPass: { message: 'על הסיסמה לכלול אותיות גדולות וקטנות באנגלית ומספרים' },
         },
 
         confirmPassword: {

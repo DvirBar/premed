@@ -10,12 +10,25 @@
         border-radius: 1rem;
         box-shadow: $default-shadow;
 
+        @media only screen and (max-width: 310px) {
+            width: 100%;
+        }
+
         .no-user-register-link {
             color: $main-color;
             font-weight: 500;
 
             &:hover {
                 opacity: 0.8;
+            }
+        }
+
+        .login-form {
+            width: 100%;
+            @media only screen and (max-width: 570px) {
+                input {
+                    width: 100%;
+                }
             }
         }
 

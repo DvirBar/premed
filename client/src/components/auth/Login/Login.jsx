@@ -27,6 +27,12 @@ const Login = () => {
 
     const location = useLocation()
 
+    const handlePasswordChange = event => {
+        if(!event.target.value || event.target.value.length <= 64) {
+            handleChange(event)
+        }
+    }
+
     if(auth.isAuthenticated) {
         if(location.state?.referrer) {
             return <Redirect to={location.state?.referrer} />
@@ -56,7 +62,7 @@ const Login = () => {
                     label="סיסמה"
                     name="password"
                     value={values.password}
-                    onChange={handleChange}
+                    onChange={handlePasswordChange}
                     error={errors.password} />
 
                     <div className="login-block">

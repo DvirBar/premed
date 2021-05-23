@@ -30,8 +30,14 @@ export const cookieSettings = {
 
 export const hashString = async(string) => {
     try {
-        const salt = await bcrypt.genSalt(10)
-        return bcrypt.hash(string, salt)
+        if(string.length < 64) {
+            const salt = await bcrypt.genSalt(10)
+            return bcrypt.hash(string, salt)
+        }
+
+        else {
+            throw new Error("Ddos attempt! user tried to insert password greater than 64.")
+        }
     }
 
     catch(err) {

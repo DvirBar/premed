@@ -10,10 +10,18 @@
         border-radius: 1rem;
         padding: 2rem 3rem;
 
-        .name-block {
-            display: flex;
+        @media only screen and (max-width: 310px) {
+            width: 100%;
+        }
 
-            column-gap: 1rem;
+        .register-form {
+            width: 100%;
+
+            @media only screen and (max-width: 570px) {
+                input {
+                    width: 100%;
+                }
+            }
         }
 
         .register-block {

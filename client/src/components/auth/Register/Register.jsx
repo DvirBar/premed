@@ -15,7 +15,7 @@ const Register = () => {
         username: '',
         isStudent: false,
         email: '',
-        password: ''
+        newPassword: ''
     });
 
     const {
@@ -28,6 +28,13 @@ const Register = () => {
 
     const loading = useSelector(isLoading(REGISTER))
     const location = useLocation()
+
+    const handlePasswordChange = event => {
+        console.log(event.target.value.length);
+        if(event.target.value.length <= 64) {
+            handleChange(event)
+        }
+    }
 
     if(auth.isAuthenticated) {
         if(location.state?.referrer) {
@@ -43,26 +50,23 @@ const Register = () => {
                 <div className="register-container">
                     <form className="register-form" onSubmit={handleSubmit} noValidate>
                         {auth.loading && <p>Loading...</p>}
+                        <FormInput
+                        type="text"
+                        label="שם"
+                        name="firstName"
+                        value={values.firstName}
+                        onChange={handleChange}
+                        error={errors.firstName}
+                        limit='20' />
 
-                        <div className="name-block">
-                            <FormInput
-                            type="text"
-                            label="שם"
-                            name="firstName"
-                            value={values.firstName}
-                            onChange={handleChange}
-                            error={errors.firstName}
-                            limit='20' />
-
-                            <FormInput
-                            type="text"
-                            label="שם משפחה"
-                            name="lastName"
-                            value={values.lastName}
-                            onChange={handleChange}
-                            error={errors.lastName}
-                            limit='20'/>
-                        </div>
+                        <FormInput
+                        type="text"
+                        label="שם משפחה"
+                        name="lastName"
+                        value={values.lastName}
+                        onChange={handleChange}
+                        error={errors.lastName}
+                        limit='20'/>
 
                         <FormInput
                         type="text"
@@ -84,10 +88,10 @@ const Register = () => {
                         <FormInput
                         type="password"
                         label="סיסמה"
-                        name="password"
-                        value={values.password}
-                        onChange={handleChange}
-                        error={errors.password} />
+                        name="newPassword"
+                        value={values.newPassword}
+                        onChange={handlePasswordChange}
+                        error={errors.newPassword} />
                         
                         <div className="register-block">
                             <button type="submit">הרשמה</button>

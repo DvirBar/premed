@@ -118,7 +118,7 @@ export function isUserBlocked(user) {
 export function createUser(user) {
     const {
         email,
-        password,
+        newPassword,
         username,
         firstName,
         lastName
@@ -126,7 +126,7 @@ export function createUser(user) {
     
     const newUser = new this({
         email,
-        password,
+        password: newPassword,
         username,
         firstName,
         lastName,
