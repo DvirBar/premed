@@ -30,9 +30,10 @@ function CalcItem({ calc, uniColor }) {
     const isSelected = values.calc?._id === calc._id
     
     const handleInfoToggle = () => {
-        if(calc?.versions || 
+        if((calc?.versions || 
            calc?.reverseCalcs || 
-           valueObj?.payload) {
+           valueObj?.payload) && 
+           (valueObj?.value)) {
 
             if(isSelected) {
                 setDisplay(false)            

@@ -1,4 +1,7 @@
 import React, { useContext } from 'react'
+import { Fragment } from 'react'
+import filterSlaves from '../filterSlaves'
+import SlavesList from './slaves/SlavesList'
 import CustomGroup from './CustomGroup'
 import FormFragment from './FormFragment'
 import { GroupsContext } from './GroupsContext'
@@ -26,7 +29,12 @@ function BlockContent({
         optGroups,
         unUsedGroups
     } = useSortGroups(group, groups, stagedGroupsList)
-    
+
+    const {
+        nonSlaves,
+        slaves
+    } = filterSlaves(fields)
+
     return (
         <div className="data-block-content">
             {calcs?.length > 0 &&
@@ -42,16 +50,22 @@ function BlockContent({
             
             
             {(!group || !isSimulated) &&
-                <div className="data-block-fragment">
-                    {fields?.map(field => 
-                        (!field.isType || !isSimulated) &&
-                        <FormFragment
-                        key={field._id}
-                        field={field}
-                        group={group}
-                        isCalc={false} />
-                    )}
-                </div>
+                <Fragment>
+                    <div className="data-block-fragment">
+                        {nonSlaves?.map(field => 
+                            (!field.isType || 
+                            !isSimulated) &&
+                            <FormFragment
+                            key={field._id}
+                            field={field}
+                            group={group}
+                            isCalc={false} />
+                        )}
+                    </div>
+                    <SlavesList
+                    slaves={slaves} />
+                </Fragment>
+               
             }
             
             

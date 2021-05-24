@@ -1,0 +1,21 @@
+.slaves-list__block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__parent {
+        margin-bottom: 0.5rem;
+    }
+
+    &__slaves {
+        padding: 1rem;
+        border-right: 7px $main-color solid;
+        background-color: rgba($main-color, 0.05);
+        display: flex;
+
+        & > * {
+            margin-left: 1rem;
+        }
+    }
+}

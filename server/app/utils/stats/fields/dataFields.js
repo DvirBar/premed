@@ -28,25 +28,6 @@ const fields = [
         ]
     },
     {
-        name: 'מו"ר',
-        _id: 'mor',
-        threshField: {
-            paths: ['six-year'],
-            unis: ['tech']
-        },
-        fractionDigits: 0,
-        dataType: dataTypes.num,
-        fieldType: fieldTypes.textbox,
-        validators: [
-            validationTypes.isPosNum,
-            {
-                ...validationTypes.numRange,
-                min: '150',
-                max: '250'
-            }
-        ]
-    },
-    {
         name: 'מכינה',
         _id: 'prep',
         paths: ['six-year'],
@@ -77,6 +58,87 @@ const fields = [
         dataType: dataTypes.num,
         fieldType: fieldTypes.textbox,
         paths: ['four-year'],
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
+    },
+    {
+        name: 'מו"ר',
+        _id: 'mor',
+        threshField: {
+            paths: ['six-year'],
+            unis: ['tech']
+        },
+        fractionDigits: 0,
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        slaves: [
+            {
+                _id: 'biografic',
+                percent: 0.3
+            },
+            {
+                _id: 'meser',
+                percent: 0.55
+            },
+            {
+                _id: 'shalev',
+                percent: 0.15
+            }
+        ],
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
+    },
+    {
+        name: 'ביוגרפי',
+        _id: 'biografic',
+        isSlave: true,
+        blockOnPaths: ['six-year'],
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
+    },
+    {
+        name: 'מס"ר',
+        _id: 'meser',
+        isSlave: true,
+        blockOnPaths: ['six-year'],
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
+        validators: [
+            validationTypes.isPosNum,
+            {
+                ...validationTypes.numRange,
+                min: '150',
+                max: '250'
+            }
+        ]
+    },
+    {
+        name: 'של"ו',
+        _id: 'shalev',
+        isSlave: true,
+        blockOnPaths: ['six-year'],
+        dataType: dataTypes.num,
+        fieldType: fieldTypes.textbox,
         validators: [
             validationTypes.isPosNum,
             {

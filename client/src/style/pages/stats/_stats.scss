@@ -78,6 +78,7 @@
 .table-data-load-more {
     width: 100%;
     font-size: 1.8rem;
+    height: 48;
 
     & > div {
         position: sticky;
@@ -265,7 +266,12 @@
         overflow-x: hidden;
         overflow-y: auto;
         grid-area: body-scrollable;
-        // height: calc(100vh - 108px);
+        height: calc(100vh - 108px - 48px);
+
+        &.finished {
+            height: calc(100vh - 108px);
+        }
+        transition: height 0.2s ease-in-out;
     }
 }
 

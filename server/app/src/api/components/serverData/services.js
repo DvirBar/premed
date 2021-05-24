@@ -3,7 +3,7 @@ import storedCalcs from "../../../../utils/stats/calcs/storedCalcs"
 import fields from "../../../../utils/stats/fields/dataFields"
 import groups from "../../../../utils/stats/groups/dataGroups"
 import baseData from "../../../staticData/baseData/baseData"
-const { paths, universities } = baseData
+const { paths } = baseData
 
 class ServerDataService {
     getBaseData() {

@@ -8,6 +8,7 @@ const { universities } = baseData
 const getByUniAndPath = (inputs, uniId, pathId) => {
     return inputs.filter(field => 
         field.uni === uniId && 
+        (!field.blockOnPaths || !field.blockOnPaths.includes(pathId)) &&
         (!field.paths || field.paths.includes(pathId))) 
 }
 
