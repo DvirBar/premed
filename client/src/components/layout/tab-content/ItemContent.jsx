@@ -9,7 +9,7 @@ function ItemContent({ item }) {
     return (
         <div 
         style={contentStyle}
-        className="tab-item-content">
+        className="tab-item-content ck-editor">
             {item.content}
         </div>
     )
