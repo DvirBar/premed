@@ -108,7 +108,7 @@ function EditStep({ display, toggleDisplay }) {
                     changeContent(editor.getData())
                 }} />
 
-                {values.uniContent &&
+                {values.uniContent &&  
                     <EditUniContent
                     uniContent={values.uniContent}
                     handleChange={handleChange} />

@@ -4,6 +4,7 @@ import { getInputsByFieldId } from '../../../../../../../../redux/selectors/stat
 import calculateReverse from './calculateReverse'
 
 function ReverseCalcItem({ 
+    isLast,
     calc, 
     year, 
     fieldValue, 
@@ -21,12 +22,19 @@ function ReverseCalcItem({
 
     return (
         <div className="reverse-calcs-list__item">
-            <div className="reverse-calcs-list__item__name">
-                {field?.name}
+            <div className="reverse-calcs-list__item__content">
+                <div className="reverse-calcs-list__item__content__name">
+                    {field?.name}
+                </div>
+                <div className="reverse-calcs-list__item__content__result">
+                    {result}
+                </div>
             </div>
-            <div className="reverse-calcs-list__item__result">
-                {result}
-            </div>
+             {!isLast &&
+                <div className="reverse-calcs-list__item__next">
+                    או
+                </div>
+            }
         </div>
     )
 }

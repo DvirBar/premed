@@ -64,7 +64,7 @@ const storedCalcs = [
     },
     {
         _id: finalHuji._id,
-        name: "סכם סופי",
+        name: "סכם קבלה",
         func: hujiCalcs.hujiFinal,
         versions: [2020, 2019],
         calcRecog: {
@@ -132,7 +132,7 @@ const storedCalcs = [
     },
     {
         _id: finalTau._id,
-        name: "סכם סופי",
+        name: "סכם קבלה",
         func: tauCalcs.tauFinal,
         threshField: true,
         fractionDigits: 2,

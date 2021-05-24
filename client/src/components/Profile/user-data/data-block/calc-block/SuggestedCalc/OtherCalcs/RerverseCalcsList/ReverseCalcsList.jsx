@@ -13,14 +13,19 @@ function ReverseCalcsList({ calc, year, threshold }) {
 
     return (
         <div className="reverse-calcs-list">
+            <div>
+                עם הנתונים שהזנתם ניתן להגיע לסכם עם כל אחת מהאפשרויות הבאות:
+            </div>
             {(calc.calcRecog && fieldsValues) &&
-                fieldsValues.map(fieldValue => 
+                fieldsValues.map((fieldValue, index) => 
                     <ReverseCalcItem 
+                    key={index}
+                    isLast={index === fieldsValues.length -1}
                     fieldValue={fieldValue}
                     threshold={threshold}
                     fieldsValues={fieldsValues}
                     year={year}
-                    calc={calc} />
+                    calc={calc} />                    
                 ) 
             }
         </div>

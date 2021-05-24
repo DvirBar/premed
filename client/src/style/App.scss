@@ -112,9 +112,9 @@ h2 {
         margin: 1rem 0;
         text-decoration: none;
         font-weight: 500;
-        color: #aaa;
+        color: #999;
         font-size: 1.17em;
-        border-right: 5px solid #ccc;
+        border-right: 5px solid #bbb;
     }
 
     a {
@@ -123,6 +123,25 @@ h2 {
 
         &:hover {
             opacity: 0.8;
+        }
+    }
+
+    &[dir="rtl"],
+    &:not([dir="rtl"]) {
+        blockquote {
+            border-color: $main-color;
+            font-style: normal;
+            padding: 1rem;
+            background-color: rgba($main-color, 0.15);
+            border-right: 5px $main-color solid;
+
+            h3 {
+                color: $main-color;
+                padding: 0;
+                border: none;
+                margin-top: 0;
+                text-decoration: underline;
+            }
         }
     }
 }

@@ -3,29 +3,45 @@
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    align-items: flex-start;
 
     &__item {
-        font-weight: 500;
-        margin-left: 3rem;
-        margin-bottom: 3rem;
-        width: 14rem;
+        display: flex;
+        align-items: center;
 
-        &__name {
-            color: #fff;
-            background-color: $main-color;
-            padding: 0.3rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 1.5rem;
-            text-align: center;
+        @media only screen and(max-width: 379px) {
+            flex-direction: column;
         }
 
-        &__result {
+        &__content {
+            font-weight: 500;
+            margin: 1.5rem 1rem;
+            width: 14rem;
+
+            &__name {
+                color: #fff;
+                background-color: $main-color;
+                padding: 0.3rem 1rem;
+                border-radius: 0.5rem;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            &__result {
+                color: $main-color;
+                padding: 0.3rem;
+                margin-right: 0.5rem;
+                text-align: center;
+                font-size: 1.7rem;
+                border-bottom: 3px #aaa solid;
+            }
+        }
+
+        &__next {
+            width: 2rem;
+            font-size: 1.8;
             color: $main-color;
-            padding: 0.3rem;
-            margin-right: 0.5rem;
-            text-align: center;
-            font-size: 1.7rem;
-            border-bottom: 3px #aaa solid;
+            font-weight: 500;
         }
     }
 }

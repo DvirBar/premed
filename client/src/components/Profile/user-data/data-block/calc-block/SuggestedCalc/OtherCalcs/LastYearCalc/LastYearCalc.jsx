@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { getTableYear } from '../../../../../../../../redux/selectors/userdata'
 import { GroupsContext } from '../../../../GroupsContext'
@@ -7,7 +8,8 @@ import calculateLastYear from './calculateLastYear'
 function LastYearCalc({ calc, year }) {
     const {
         selectFieldValues,
-        selectFieldValue
+        selectFieldValue,
+        isSimulated
     } = useContext(GroupsContext)
 
     const tableYear = useSelector(getTableYear)
@@ -34,17 +36,20 @@ function LastYearCalc({ calc, year }) {
         )
     }
 
+    if(!isSimulated) {
+        return (
+            <div className="year-calc">
+                <div className="year-calc__name">
+                    סכם בשנה זו:
+                </div>
+                <div className="year-calc__value">
+                    {calcCurrentValue}
+                </div>
+            </div>
+        )
+    }
     
-    return (
-        <div className="year-calc">
-            <div className="year-calc__name">
-                סכם בשנה זו:
-            </div>
-            <div className="year-calc__value">
-                {calcCurrentValue}
-            </div>
-        </div>
-    )
+    return <Fragment></Fragment>
     
 }
 
