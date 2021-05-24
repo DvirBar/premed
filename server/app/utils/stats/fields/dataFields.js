@@ -62,8 +62,8 @@ const fields = [
             validationTypes.isPosNum,
             {
                 ...validationTypes.numRange,
-                min: '150',
-                max: '250'
+                min: '250',
+                max: '350'
             }
         ]
     },
