@@ -2,8 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import useOnClickOutside from './useOnClickOutside';
 
-const Dropdown = ({ options, defaultOption, name, title, 
-    onChange, placeholder, uniqueListKey, width }) => {
+const Dropdown = ({ 
+    options, 
+    defaultOption, 
+    name, 
+    title, 
+    onChange, 
+    placeholder, 
+    uniqueListKey, 
+    width,
+    disabled 
+}) => {
     const [display, setDisplay] = useState(false);
     const [selected, setSelected] = useState({})
     const toggleDrop = () => {
@@ -47,13 +56,17 @@ const Dropdown = ({ options, defaultOption, name, title,
     const widthStyle = {
         width
     }
+
     return (
         <div 
         className="dropdown" 
         ref={ref}
         style={width ? widthStyle : {}}>
             <fieldset
-            className={`dropdown-main ${display ? 'focus' : ''}`}
+            className={`dropdown-main 
+            ${display && !disabled ? 'focus' : ''} 
+            ${disabled ? 'disabled': ''}
+            `}
             onClick={() => toggleDrop()}>
                 <legend className="dropdown-title">{title}</legend>
                 <p className="dropdown-selected">
@@ -64,7 +77,7 @@ const Dropdown = ({ options, defaultOption, name, title,
                 </p>
                 
             </fieldset>
-            {display &&
+            {!disabled && display &&
                 <ul 
                 style={selectStyle}
                 className="dropdown-select" 

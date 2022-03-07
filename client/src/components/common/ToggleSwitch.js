@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function ToggleSwitch({ options, onChange, value, className }) {
+function ToggleSwitch({ 
+    options, 
+    onChange, 
+    value, 
+    className,
+    disabled 
+}) {
     const [selectedOption, setSelectedOption] = useState(value)
 
     const handleChange = () => {
+        if(disabled) {
+            return
+        }
+
         let changeTo
 
         if(value === options[0].value) {
@@ -30,9 +40,10 @@ function ToggleSwitch({ options, onChange, value, className }) {
             :   "toggle-switch"}>
             <span>{options[1].name}</span>
             <span 
-            className={isValueMissing()
-            ?   "toggle-button no-value"
-            :   "toggle-button"} 
+            className={`toggle-button 
+                ${isValueMissing() ? 'no-value' : ''}
+                ${disabled ? 'disabled' : ''}
+            `} 
             onClick={() => handleChange()}>
                 <span className={!isValueMissing()
                 ? selectedOption === options[1].value

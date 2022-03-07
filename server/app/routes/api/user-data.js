@@ -53,7 +53,7 @@ router.post('/user', auth, (req, res, next) => {
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg);
                 
-                let tableData
+                let tableData;
                 
                 if(tableId)
                     tableData = data.tables.find(tableObj =>
@@ -62,16 +62,17 @@ router.post('/user', auth, (req, res, next) => {
                 else {
                     tableData = data.tables.find(tableObj => 
                         tableObj.enabled)
-                    
+
                     if(!tableData)
                         tableData = findLatestTable(data.tables)
                 }
+
     
                 const obj = {
-                    tableData: {
+                    tableData: tableData ? {
                         ...tableData.toObject(),
                         paths: populatePaths(tableData.paths)
-                    },
+                    } : {},
                     transfer_suggested: data.transfer_suggested,
                     tables: data.tables.map(tableObj => tableObj.table)
                 }
@@ -83,7 +84,7 @@ router.post('/user', auth, (req, res, next) => {
 import * as UserDataControllers from '../../src/api/components/stats/userData/controllers'
  
 // @route   POST api/userdata
-// @desc    Create user data entry
+// @desc    Create user data entry (if no table created yet)
 // @access  Private
 router.post('/', auth, (req, res, next) => {
     const { 
@@ -149,6 +150,74 @@ router.post('/', auth, (req, res, next) => {
             // Check that user data entry doesn't already exist
             .catch(next); 
 })
+
+// @route   POST api/userdata
+// @desc    Add new table
+// @access  Private
+router.post('/newTable/:tableId', auth, (req, res, next) => {
+    const { 
+        pathIds,
+        enabled,
+        defaults
+    } = req.body;
+
+    const userId = res.locals.user.id;
+    const tableId = req.params.tableId;
+
+    res.locals.model = modelName;
+
+    UserData.findOne({ user: userId})
+            .then(user => {
+                if(!user)
+                    return res.status(UserDataNotInTable.status)
+                              .send(UserDataNotInTable.msg);
+
+                DataTable.findById(tableId)
+                         .then(table => {
+                            if(!table)
+                                return res.status(DataTableNotExist.status)
+                                        .send(DataTableNotExist.msg)
+
+                            const newTableEntry = {
+                                table: table._id,
+                                paths: pathIds,
+                                enabled,
+                                ...defaults
+                            }
+                            
+                            user.tables.push(newTableEntry); 
+
+                            user.save()
+                                .then(data => {
+                                    const tables_length = data.tables.length;
+                                    console.log(data.tables);
+                                    async function populateData() {
+                                        await data.populate('tables.table')
+                                        .execPopulate();
+                                        const obj = {
+                                            data: {
+                                                tableData: {
+                                                    ...data.tables[tables_length-1].toObject(),
+                                                    paths: populatePaths(data.tables[tables_length-1].paths)
+                                                },
+                                                transfer_suggested: false,
+                                                tables: data.tables.map(tableObj => tableObj.table)
+                                            },
+                                            selTable: table._id
+                                        }
+            
+                                        return res.send(obj); 
+                                    }
+                                    populateData();       
+                                })
+                                .catch(next); // Save data entry
+                        }) 
+                        .catch(next) // Find enabled data table 
+                    })
+            // Check that user data entry doesn't already exist
+            .catch(next); 
+})
+
 
 
 // @route   POST api/userdata/simulateCalcs
@@ -226,17 +295,24 @@ router.put('/editpaths/:tableId', auth, (req, res, next) => {
     const userId = res.locals.user.id;
 
     UserData.findOne({ user: userId })
-            .then(data => {
+            .then(async(data) => {
             // Check that group exists
                 if(!data) 
                     return res.status(DataNotExist.status)
                               .send(DataNotExist.msg)
 
-                // Find the enabled table             
-                const dataTable = data.tables.find(tableObj => 
-                    tableObj.table.equals(tableId))     
+                const dataTable = await DataTable.findById(tableId);
 
-                dataTable.paths = pathIds
+                if(!dataTable.enabled) {
+                    return res.status(NoEnabledTable.status)
+                            .send(NoEnabledTable.msg)
+                }
+
+                // Find the enabled table             
+                const userTable = data.tables.find(tableObj => 
+                    tableObj.table.equals(tableId))   
+                
+                userTable.paths = pathIds
 
                 data.save()
                     .then(data => {

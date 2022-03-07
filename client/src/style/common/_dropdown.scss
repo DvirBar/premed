@@ -37,6 +37,10 @@ $unfocus_color: #999;
             }
         }
 
+        &.disabled {
+            cursor: default;
+        }
+
         & > span:not(.dropdown-top) {
             position: relative;
             height: 100%;

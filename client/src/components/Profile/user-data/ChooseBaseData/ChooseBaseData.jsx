@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import useForm from '../../../../forms/useForm'
 import { addUserData } from '../../../../redux/actions/userdata'
-import ChoosePaths from '../TopBar/ChoosePaths/ChoosePaths'
-import DisplayInTable from '../TopBar/DisplayInTable/DisplayInTable'
+import ChooseBaseDataForm from './ChooseBaseDataForm'
 
 function ChooseBaseData() {
     const [defaultValues] = useState({
@@ -53,26 +52,12 @@ function ChooseBaseData() {
                     </div>
                 </div>
             </div>
-            <form 
-            className="choose-base-data__form"
-            onSubmit={handleSubmit} 
-            noValidate>
-                <div className="choose-base-data__form__options">
-                    <ChoosePaths 
-                    name="pathIds"
-                    selPaths={values.pathIds}
-                    onChange={handleChange} />
-
-                    <DisplayInTable 
-                    value={values.enabled}
-                    onChange={changeEnabled} />
-                </div>
-                <button 
-                disabled={!isSubmitEnabled}
-                type="submit">
-                    סיום
-                </button>
-            </form>
+            <ChooseBaseDataForm
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            values={values}
+            changeEnabled={changeEnabled}
+            isSubmitEnabled={isSubmitEnabled} />
             
         </div>
     )

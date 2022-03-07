@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getPriorityTable } from './datatables';
 
 export const userdataSelector = state => state.userdata
 
@@ -133,3 +134,8 @@ export const hasCalcForYear = calcVersions => createSelector(
     getTableYear,
     tableYear => !calcVersions || calcVersions.includes(tableYear)
 ) 
+
+export const getTransferSuggested = tableId => createSelector(
+    userdataSelector,
+    userdata => userdata.table
+)

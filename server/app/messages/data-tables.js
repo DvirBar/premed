@@ -30,7 +30,7 @@ const dataTableMessages = {
     InvalidRejectValue: {
         msg: {
             en: `Rejection threshold cannot be lower than previous 
-                or greater than n`,
+                or greater than next`,
             he: 'סף הדחייה לא יכול להיות נמוך מהקודם לו או גבוה מהבא אחריו'
         },
         status: 400
@@ -52,7 +52,7 @@ const dataTableMessages = {
     ThresholdNotExist: {
         msg: {
             en: 'Threshold does not exist',
-            he: 'הסף לא קיימת'
+            he: 'הסף לא קיים'
         },
         status: 404
     }

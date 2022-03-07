@@ -43,6 +43,16 @@ import axios from 'axios';
 import { getMessage, getError } from './messages';
 import { setLoader } from '../loader/utils';
 
+const userdataDefaults = { 
+    groupVals: [{
+        field: "sector",
+        group: "bagrut",
+        isCalc: "false",
+        isType: true,
+        value: "jew"
+    }]
+}
+
 // Basic types
 export const dataLoad = () => {
     return {
@@ -161,17 +171,9 @@ export const getUsersDataByPathTable = (tableId, pathId, filters, lastId) => dis
 export const addUserData = data => dispatch => {
     const finalDataObj = {
         ...data,
-        defaults: { 
-            groupVals: [{
-                field: "sector",
-                group: "bagrut",
-                isCalc: "false",
-                isType: true,
-                value: "jew"
-            }]
-        }
+        defaults: userdataDefaults
     }
-    
+
     // Request body
     const body = JSON.stringify(finalDataObj);
 
@@ -185,6 +187,25 @@ export const addUserData = data => dispatch => {
              dispatch(dataError())
              dispatch(getError(err))
             })
+}
+
+// Add existing userdata to a new table
+export const newUserTable = (tableId, data) => dispatch => {
+    const finalDataObj = {
+        ...data,
+        defaults: userdataDefaults
+    }
+
+    // Request body 
+    const body = JSON.stringify(finalDataObj);
+
+    axios.post(`api/userdata/newTable/${tableId}`, body)
+         .then(res => {
+             dispatch({
+                 type: USER_DATA_ADD,
+                 payload: res.data
+             })
+         })
 }
 
 export const validError = errors => dispatch => {

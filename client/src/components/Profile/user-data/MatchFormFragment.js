@@ -114,6 +114,7 @@ function MatchFormFragment({
                         options={fieldOptions}
                         defaultOption={fieldOptions.find(option => 
                             option.value === defValue)}
+                        disabled={disabled}
                         placeholder="בחירה"
                         name={_id}
                         width='10rem'
@@ -142,6 +143,7 @@ function MatchFormFragment({
                         options={fieldOptions}
                         onChange={changeData}
                         value={defValue}
+                        disabled={disabled}
                         className="indent" />
                    </div>  
                    

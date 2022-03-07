@@ -4,6 +4,11 @@ export const getAllTables = state => {
     return state.datatables.tables
 }
 
+export const getInternalTables = () => createSelector(
+    getAllTables,
+    tables => tables.filter(table => !table.url)
+)
+
 export const getTableById = tableId => createSelector(
     getAllTables,
     tables => tables.find(table => table._id === tableId)

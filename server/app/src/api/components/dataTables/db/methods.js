@@ -59,8 +59,8 @@ export async function toggleEnabled(tableId) {
             await tableToDisable.save()
         }
 
-        // Then enabled the requested table
-        table.enabled = true
+        // Then enable the requested table
+        table.enabled = true 
     }
     // If table is enabled, disable it
     else {

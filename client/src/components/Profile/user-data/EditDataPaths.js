@@ -4,8 +4,6 @@ import Modal from '../../layout/Modal'
 
 
 function EditDataPaths() {
-   
-
     return (
         <Modal
         display={display}
