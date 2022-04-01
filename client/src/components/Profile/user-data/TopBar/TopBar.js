@@ -7,7 +7,6 @@ import CardContent from '../../../layout/Containers/CardContainer/CardContent';
 import CardContainer from '../../../layout/Containers/CardContainer/CardContainer';
 import SelectPaths from './SelectPaths/SelectPaths';
 import DisplayInTable from './DisplayInTable/DisplayInTable';
-import SuggestTable from './SuggestTable/SuggestTable';
 
 function TopBar({ data, tableId, changeTable, paths }) {
     const dispatch = useDispatch()
@@ -32,8 +31,6 @@ function TopBar({ data, tableId, changeTable, paths }) {
                 </div>
             </CardContent>
             <SelectPaths paths={paths} />
-
-            <SuggestTable />
         
         </CardContainer>
     )

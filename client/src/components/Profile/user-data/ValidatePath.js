@@ -23,11 +23,10 @@ function ValidatePath() {
         loading, 
         selTable } = useSelector(state => 
         state.userdata);
-
-    const [displayCalc, setDisplayCalc] = useState(false)
-
+        
     console.log(data);
-
+    const [displayCalc, setDisplayCalc] = useState(false)
+    
     if(loading)
         return <Loadbar />
 
@@ -47,7 +46,7 @@ function ValidatePath() {
         )
     }
 
-    else if(data) {
+    else if(!isObjEmpty(data)) {
         return <NewTable />
     }
 

@@ -208,6 +208,22 @@ export const newUserTable = (tableId, data) => dispatch => {
          })
 }
 
+// Copy data from an existing table to another
+export const copyData = tableId => dispatch => {
+    dispatch(dataLoad());
+    
+    axios.post(`api/userdata/copyData/${tableId}`)
+         .then(res => {
+             dispatch({
+                 type: USER_DATA_ADD,
+                 payload: res.data
+             })
+
+             console.log(res);
+             dispatch(getMessage(res.data.message))
+         })
+}
+
 export const validError = errors => dispatch => {
     dispatch({
         type: VALID_ERROR,

@@ -1,3 +1,5 @@
+import { getAllTables } from "../../../selectors/datatables"
+
 const { createSelector } = require("reselect")
 
 const userdataSelector = state => state.userdata
@@ -10,6 +12,13 @@ const selectUserTableData = createSelector(
 export const selectTableData = createSelector(
     userdataSelector,
     userdata => userdata.tableData.dataVals
+)
+
+export const getRelevantUserTables = createSelector(
+    userdataSelector,
+    getAllTables,
+    (userdata, tables) => tables.filter(table => table.enabled || 
+                    userdata.data.tables.find(userTable => userTable._id === table._id))
 )
 
 export const selectTableFilters = createSelector(

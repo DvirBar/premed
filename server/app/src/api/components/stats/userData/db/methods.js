@@ -30,5 +30,5 @@ export function getTableDataVals(
     return this
     .find({ ...queries })
     .limit(limit)
-    .select('tables.dataVals.field tables.dataVals.value')
+    .select('tables.dataVals.field tables.dataVals.value tables.table')
 } 

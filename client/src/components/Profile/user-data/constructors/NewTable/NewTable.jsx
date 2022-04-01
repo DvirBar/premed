@@ -9,7 +9,7 @@ function NewTable() {
     const selTableId = useSelector(selTableSelector);
     const table = useSelector(getTableById(selTableId));
     const [displayAddNewTable, setDisplayAddNewTable] = useState(false);
-    // console.log(table);
+    
     return (
         <div>
             <h1>נתונים לשנת {table?.name}</h1>

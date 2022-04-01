@@ -6,6 +6,7 @@ import Loadbar from '../../layout/Loadbar';
 import DataSections from './DataSections';
 import TopBar from './TopBar/TopBar';
 import StatsExplanation from './StatsExplanation'
+import TableDisabled from './Informatives/TableDisabled';
 
 function UserStats({ 
     data, 
@@ -16,8 +17,8 @@ function UserStats({
 
     const dispatch = useDispatch()
 
-    const changeTable = table => {
-        dispatch(getOneUserData(table.value))
+    const changeTable = tableId => {
+        dispatch(getOneUserData(tableId))
     }
 
     // Get table paths
@@ -30,6 +31,7 @@ function UserStats({
     
     return (
         <ListLayout className="user-data">
+            <TableDisabled changeTable={changeTable} />
             <TopBar 
             data={data} 
             changeTable={changeTable} 

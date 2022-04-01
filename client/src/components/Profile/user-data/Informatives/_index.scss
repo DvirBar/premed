@@ -1,0 +1,17 @@
+.informative_yellow {
+    padding: 1rem;
+    background-color: #f7e72f;
+    font-size: 1.4rem;
+    border-radius: 0.5rem;
+    box-shadow: $default_shadow;
+
+    a {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $main-color;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}

@@ -21,7 +21,7 @@ import storedCalcs from '../../utils/stats/calcs/storedCalcs';
 import { populatePaths } from '../../utils/internalData';
 
 
-const { SuccessDelete, ValuesDeleteSuccess, UserDataAlreadyExist, 
+const { SuccessDelete, ValuesDeleteSuccess, DataCopiedSuccessfully, UserDataAlreadyExist, 
     DataNotExist, NoEnabledTable, UserDataNotInTable, 
     ReqDataNotExist, CustomGroupNotExist } = dataMessages;
 const { DataTableNotExist, EnabledAlreadySwitched } = dataTablesMessages;    
@@ -61,10 +61,10 @@ router.post('/user', auth, (req, res, next) => {
                 
                 else {
                     tableData = data.tables.find(tableObj => 
-                        tableObj.enabled)
+                        tableObj.table.enabled);
 
                     if(!tableData)
-                        tableData = findLatestTable(data.tables)
+                        tableData = findLatestTable(data.tables);
                 }
 
     
@@ -190,7 +190,7 @@ router.post('/newTable/:tableId', auth, (req, res, next) => {
                             user.save()
                                 .then(data => {
                                     const tables_length = data.tables.length;
-                                    console.log(data.tables);
+ 
                                     async function populateData() {
                                         await data.populate('tables.table')
                                         .execPopulate();
@@ -217,6 +217,74 @@ router.post('/newTable/:tableId', auth, (req, res, next) => {
             // Check that user data entry doesn't already exist
             .catch(next); 
 })
+
+// @route   POST api/userdata
+// @desc    Copy data
+// @access  Private
+router.post('/copyData/:tableId', auth, (req, res, next) => {
+    const userId = res.locals.user.id;
+    const tableId = req.params.tableId;
+
+    res.locals.model = modelName;
+
+    UserData.findOne({ user: userId})
+            .then(user => {
+                if(!user)
+                    return res.status(UserDataNotInTable.status)
+                              .send(UserDataNotInTable.msg); 
+
+                DataTable.findById(tableId)
+                         .then(table => {
+                            if(!table)
+                                return res.status(DataTableNotExist.status)
+                                        .send(DataTableNotExist.msg)
+
+                            if(!table.enabled)
+                                return res.status(NoEnabledTable.status)
+                                          .send(NoEnabledTable.msg)
+
+                            const lastestTable = findLatestTable(user.tables)
+
+                            const newTableEntry = {
+                                ...lastestTable.toObject(),
+                                table: table._id,
+                                last_updated: new Date()
+                            }
+                            
+                            user.tables.push(newTableEntry); 
+
+                            user.save()
+                                .then(data => {
+                                    const tables_length = data.tables.length;
+        
+                                    async function populateData() {
+                                        await data.populate('tables.table')
+                                        .execPopulate();
+                                        const obj = {
+                                           data: {
+                                                tableData: {
+                                                    ...data.tables[tables_length-1].toObject(),
+                                                    paths: populatePaths(data.tables[tables_length-1].paths)
+                                                },
+                                                transfer_suggested: false,
+                                                tables: data.tables.map(tableObj => tableObj.table)
+                                            },
+                                            selTable: table._id,
+                                            message: DataCopiedSuccessfully.msg
+                                        }
+            
+                                        return res.send(obj); 
+                                    }
+                                    populateData();       
+                                })
+                                .catch(next); // Save data entry
+                        }) 
+                        .catch(next) // Find enabled data table 
+                    })
+            // Check that user data entry doesn't already exist
+            .catch(next); 
+})
+
 
 
 

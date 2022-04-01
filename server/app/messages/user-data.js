@@ -13,6 +13,13 @@ const userDataMessages = {
         },
         status: 200
     },
+    DataCopiedSuccessfully: {
+        msg: {
+            en: 'Data copied successfully',
+            he: 'הנתונים הועתקו בהצלחה!'
+        },
+        status: 200
+    },
     UserDataAlreadyExist: {
         msg: {
             en: 'User data already exists',
