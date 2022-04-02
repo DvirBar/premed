@@ -389,7 +389,7 @@ export const toggleEnabled = tableId => dispatch => {
 }
 
 // Execute calculation
-export const executeCalc = calcsToExec => dispatch => {
+export const executeCalc = (calcsToExec, selTableId) => dispatch => {
     for(let calcLevel of calcsToExec) {
         for(let calc of calcLevel) {
             const instance = setLoader(EXEC_CALC_LOADING, null, calc)
@@ -399,7 +399,8 @@ export const executeCalc = calcsToExec => dispatch => {
     
 
     const data = {
-        calcsToExec: calcsToExec
+        calcsToExec: calcsToExec,
+        selTableId
     }
 
     const body = JSON.stringify(data)

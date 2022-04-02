@@ -29,7 +29,6 @@ export const hujiFinal = ({ params, year }) => {
         'mor': mor
     } = params
 
-
     const result = hujiFinalCalc({ bagrut, psycho, mor, year})
 
     // Return result rounded to 3 decimals

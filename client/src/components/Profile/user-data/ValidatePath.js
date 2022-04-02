@@ -24,7 +24,7 @@ function ValidatePath() {
         selTable } = useSelector(state => 
         state.userdata);
         
-    console.log(data);
+
     const [displayCalc, setDisplayCalc] = useState(false)
     
     if(loading)

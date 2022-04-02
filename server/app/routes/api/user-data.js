@@ -644,7 +644,8 @@ router.put('/removedata/:tableId', auth, (req, res, next) => {
 // @access  Private
 router.put('/execCalc', auth, (req, res, next) => {
     const {
-        calcsToExec
+        calcsToExec,
+        selTableId
     } = req.body
 
     const userId = res.locals.user.id;
@@ -657,7 +658,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                       .send(DataNotExist.msg)
         
         const enabledTable = data.tables.find(curTable => 
-            curTable.table.enabled) 
+            curTable.table._id) 
         let values = enabledTable.dataVals
         const year = enabledTable.table.year
     
@@ -667,19 +668,20 @@ router.put('/execCalc', auth, (req, res, next) => {
                 // Find stored calc
                 const storCalc = storedCalcs.find(calc => 
                     calc._id === storCalcId)
-
+                    
                 const calcVersions = storCalc.versions
-                
+                console.log(year);
                 if(!calcVersions || calcVersions.includes(year)) {
-                        let calcObj = {}
-
+                    let calcObj = {}
+      
                     try {
                         calcObj = await executeCalc(
                             storCalc, 
                             [...values, ...enabledTable.groupVals],  
                             enabledTable.customGroups,
                             year)
-
+                        
+                        console.log(calcObj);
                         calcObj.value = Number(calcObj.value)
                     }
             
@@ -691,7 +693,8 @@ router.put('/execCalc', auth, (req, res, next) => {
                     
                     const dataVal = values.find(val => 
                         val.field === storCalcId)
-
+                    
+                    
                     // If the user already has a value for the field
                     if(dataVal) {
                         if(!storCalc.isSuggestion) {
@@ -704,7 +707,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                             Number(calcObj.value)) {
                                 dataVal.suggestedAccepted = false
                             }
-
+                       
                             dataVal.suggestValue = calcObj.value;    
                         }
 
@@ -737,7 +740,7 @@ router.put('/execCalc', auth, (req, res, next) => {
                                     .populate("tables.table")
                                     .execPopulate();
                                 values = data.tables.find(curTable => 
-                                    curTable.table.enabled).dataVals
+                                    curTable.table._id).dataVals
                                 const newValue = values.find(val => 
                                     val.field === storCalcId)
                 

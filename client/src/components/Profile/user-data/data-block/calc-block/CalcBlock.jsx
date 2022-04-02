@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { EXEC_CALC } from '../../../../../redux/actions/types'
+import { executeCalc } from '../../../../../redux/actions/userdata'
 import { isLoading } from '../../../../../redux/loader/selectors'
-import { getTableYear } from '../../../../../redux/selectors/userdata'
+import { getTableYear, selTableSelector } from '../../../../../redux/selectors/userdata'
+import { selectTableById } from '../../../../../redux/stats/datatables/selectors'
 import Loadbar from '../../../../layout/Loadbar'
 import { GroupsContext } from '../GroupsContext'
 import NoCalc from './NoCalc/NoCalc'
@@ -18,6 +20,20 @@ function CalcBlock({ calc, value, suggestedValue, payload }) {
     const tableYear = useSelector(getTableYear)
     const calcVersions = calc.versions
     const loading = useSelector(isLoading(EXEC_CALC, calc._id))
+
+    const [retry, setRetry] = useState(false);
+
+    const selTableId = useSelector(selTableSelector);
+    const selTable = (useSelector(selectTableById(selTableId))); 
+    
+    const dispatch = useDispatch();
+
+    if(!retry && !suggestedValue && !selTable.enabled && !validError) {
+        console.log(selTable);
+        setRetry(true);
+        dispatch(executeCalc([[calc._id]]));
+    }
+
     return (
         <div className="calc-block-new">
             {!calcVersions || calcVersions.includes(tableYear)

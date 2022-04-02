@@ -1,4 +1,9 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { executeCalc } from '../../../../../../redux/actions/userdata'
+import { getPriorityTable } from '../../../../../../redux/selectors/datatables'
+import { selTableSelector } from '../../../../../../redux/selectors/userdata'
+import { selectTableById } from '../../../../../../redux/stats/datatables/selectors'
 import AcceptCalc from './AcceptCalc'
 import CalcDetails from './CalcDetails/CalcDetails'
 import OtherCalcs from './OtherCalcs/OtherCalcs'
@@ -6,7 +11,7 @@ import OtherCalcs from './OtherCalcs/OtherCalcs'
 function SuggestedCalc({ value, suggestedValue, calc, payload }) {
     const [displayInfo, setDisplayInfo] = useState(false)
     const [displayOther, setDisplayOther] = useState(false)
-    
+
     return (
         <div className="suggested-calc">
             <div className="suggested-calc__info">

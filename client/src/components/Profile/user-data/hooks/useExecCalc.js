@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearChangedField, executeCalc } from '../../../../redux/actions/userdata';
 import { getAllStoredCalcs, getGroupById } from '../../../../redux/selectors/statsinputs';
-import { selectGroupValsByIdReal } from '../../../../redux/selectors/userdata';
+import { selectGroupValsByIdReal, selTableSelector } from '../../../../redux/selectors/userdata';
 import { GroupsContext } from '../data-block/GroupsContext';
 
 /* This function finds(recusively) calcs that are dependent on other calcs, and 
@@ -78,6 +78,7 @@ function useExecCalc() {
         state.userdata)
 
     const storedCalcs = useSelector(getAllStoredCalcs)
+    const selTableId = useSelector(selTableSelector);
 
     const groupId = changedField?.cusGroupParent || changedField?.group 
     const fieldId = changedField?.field
@@ -115,7 +116,7 @@ function useExecCalc() {
                     storedCalcs, 
                     validErrors)]
                  
-                dispatch(executeCalc(calcSequence))
+                dispatch(executeCalc(calcSequence, selTableId))
             }
 
             dispatch(clearChangedField())

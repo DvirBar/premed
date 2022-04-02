@@ -20,7 +20,7 @@ function TableDisabled({ changeTable }) {
       </p>
       <p>
         מתמיינים גם השנה ? 
-        <Link onClick={() => changeTable(priorityTableId)}> לחצו להזנת נתונים</Link>
+        <Link to="#" onClick={() => changeTable(priorityTableId)}> לחצו להזנת נתונים</Link>
       </p>
     </div>
   )
