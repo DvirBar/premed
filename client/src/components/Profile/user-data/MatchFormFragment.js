@@ -68,13 +68,14 @@ function MatchFormFragment({
     }
 
     useEffect(() => {
+        
         if(fieldType !== 'textbox') {
             addData()
         }
     }, [value])
  
     const addData = () => {
-        if(value && value.length !== 0 && value !== defValue) {
+        if((value || typeof(value) === 'boolean') && value.length !== 0 && value !== defValue) {
             setIsSubmitting(true)
             if(validators && validators.length !== 0) {
                 setError(validateForm(value, validators))
@@ -129,7 +130,8 @@ function MatchFormFragment({
                         label={name}
                         onChange={changeData}
                         value={{on: true, off: false}}
-                        checked={defValue ? true : false} />
+                        checked={defValue ? true : false}
+                        sendRaw={true} />
                    </div>
                     
         case 'toggle':

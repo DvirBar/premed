@@ -506,6 +506,7 @@ router.put('/insertdata/:tableId', auth, async(req, res, next) => {
             }
         }
 
+
         // If the field is yet to have a value
         if(!found) {
             let isType
@@ -527,7 +528,7 @@ router.put('/insertdata/:tableId', auth, async(req, res, next) => {
                 isCalc,
                 cusGroupParent,
                 isType,
-                value: isNaN(value) ? value : Number(value)
+                value: (typeof(value) !== 'boolean' && !isNaN(value)) ? value : Number(value)
             }
 
             values.push(newVal)
@@ -670,7 +671,6 @@ router.put('/execCalc', auth, (req, res, next) => {
                     calc._id === storCalcId)
                     
                 const calcVersions = storCalc.versions
-                console.log(year);
                 if(!calcVersions || calcVersions.includes(year)) {
                     let calcObj = {}
       
@@ -681,7 +681,6 @@ router.put('/execCalc', auth, (req, res, next) => {
                             enabledTable.customGroups,
                             year)
                         
-                        console.log(calcObj);
                         calcObj.value = Number(calcObj.value)
                     }
             

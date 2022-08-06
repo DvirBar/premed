@@ -9,10 +9,11 @@ function Checkbox({
     checked, 
     isMulti,
     disabled,
-    style }) {
+    style,
+    sendRaw }) {
     const check = () => {
         if(!disabled) {
-            if(name) {
+            if(name && !sendRaw) {
                 let dataObj = {}
     
                 if(isMulti) {

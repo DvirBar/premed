@@ -15,13 +15,21 @@ export function getTableDataVals(
         queries._id = {$gt: lastId}
     }
 
+
+
     if(filters?.length > 0) {
         queries.$and = []
         for(let filter of filters) {
+            let filterVal = filter.value
+
+            if(typeof(filter.value) === 'boolean') {
+                filterVal = filter.value ? 1 : 0;
+            }
+
             queries.$and.push({ "tables.dataVals": {
                 $elemMatch: {
                     field: filter.field,
-                    value: filter.value
+                    value: filterVal
                 }
             }})
         }

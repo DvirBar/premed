@@ -100,10 +100,15 @@ function useDataOrdering(toggleModal) {
         }   
     }
 
+    const getFieldFilterValue = fieldId => {
+        return filters.find(filter => filter.field === fieldId);
+    }
+
     return {
         addFilter,
         clearFilter,
-        clearAllFilters
+        clearAllFilters,
+        getFieldFilterValue
     }
 }
 

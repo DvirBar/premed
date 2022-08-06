@@ -35,6 +35,10 @@ export const staticDataTypes = {
             name: 'תאריך',
             value: 'date',
             defVal: 'isDate'
+        },
+        boolVal: {
+            name: 'בוליאני',
+            value: 'boolVal'
         }
     },
     validationTypes: {

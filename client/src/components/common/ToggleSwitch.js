@@ -9,7 +9,7 @@ function ToggleSwitch({
     disabled 
 }) {
     const [selectedOption, setSelectedOption] = useState(value)
-
+    console.log(value);
     const handleChange = () => {
         if(disabled) {
             return

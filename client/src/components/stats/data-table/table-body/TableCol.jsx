@@ -18,6 +18,11 @@ function TableCol({
 
             return optionName || '-'
         }
+        
+        if(fieldType.value === "checkbox") {
+            if(dataVal === 1)
+                return 'כן'
+        }
 
         return dataVal || '-'
     }

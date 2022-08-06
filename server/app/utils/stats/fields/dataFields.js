@@ -148,6 +148,12 @@ const fields = [
             }
         ]
     },
+    {
+        name: 'ראוי לקידום',
+        _id: 'kidum',
+        dataType: dataTypes.boolVal,
+        fieldType: fieldTypes.checkbox,
+    },
     ...taufields,
     ...bgufields,
     ...hujifields,

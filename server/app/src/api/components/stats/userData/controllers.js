@@ -6,7 +6,7 @@ export const getTableDataVals = async(req, res, next) => {
         filters,
         lastId
     } = req.body
-    
+    console.log(filters);
     try {
         const dataVals = await UserDataServices.getTableDataVals(pathId, tableId, filters, lastId)
 

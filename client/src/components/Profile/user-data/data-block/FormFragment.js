@@ -18,6 +18,7 @@ function FormFragment({ field, isCalc, group }) {
     
     const dataVal = useSelector(
         getFieldVal(field._id, group?._id))
+
     const loaderIds = [USER_DATA_INSERT, field?._id, group?._id]
 
     const selTableId = useSelector(selTableSelector);
