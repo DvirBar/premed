@@ -2,12 +2,14 @@ import User from './db/model'
 import { 
     compareBcrypt, 
     createAccessToken, 
+    createPasswordResetToken, 
     createRefreshToken, 
     hashString, 
     userWithoutPassword, 
     verifyRefreshToken} from './utils';
 
 import messages from './messages';
+import { sendEmail } from '../../../services/email/service';
 
 const { 
     InvalidCredentials, 
@@ -16,9 +18,13 @@ const {
     UserAlreadyExists,
     UsernameAvailable,
     PasswordIncorrect,
-    PasswordAlreadyUsed } = messages
+    PasswordAlreadyUsed,
+    NoMatchingUserForEmail,
+    PasswordResetFailed,
+    MaxDailyResetAttemptsReached } = messages
 
 class UserService {
+
     static async getUsers(filters) {
         let count
 
@@ -166,20 +172,27 @@ class UserService {
         return userWithoutPassword(editedUser)
     }
 
-    static async changePassword(userId, oldPassword, newPassword) {
+    static async changePassword(userId, newPassword, isReset, oldPassword) {
         const user = await User.getByIdOrFail(userId)
 
-        // Check that current password is correct
-        const isOldMatch = await compareBcrypt(oldPassword, user.password)
-
-        if(!isOldMatch) {
-            throw PasswordIncorrect
+        if(!oldPassword && !isReset) {
+            throw PasswordResetFailed;
         }
+        
+        if(oldPassword) {
+            // Check that current password is correct
+            const isOldMatch = await compareBcrypt(oldPassword, user.password)
 
-        // Check that new password wasn't in use before
-        if(oldPassword === newPassword) {
-            throw PasswordAlreadyUsed
+            if(!isOldMatch) {
+                throw PasswordIncorrect
+            }
+
+            // Check that new password wasn't in use before
+            if(oldPassword === newPassword) {
+                throw PasswordAlreadyUsed
+            }
         }
+       
 
         for(let formerPass of user.formerPasswords) {
             const isMatch = await compareBcrypt(newPassword, formerPass)
@@ -203,6 +216,49 @@ class UserService {
         }
 
         return User.deleteUser(delUserId)
+    }
+    
+    static async sendResetPasswordEmail(email) {
+        const user = await this.getUserByEmail(email);
+        
+        if (!user) {
+            throw NoMatchingUserForEmail;
+        }
+
+        if(!(await User.isPasswordResetAllowed(user))) {
+            throw MaxDailyResetAttemptsReached;
+        } 
+        
+        await User.addPasswordResetAttempt(user);
+
+        const payload = { id: user.id };
+        const token = createPasswordResetToken(payload);
+        const emailOptions= {
+            from: "מועמדים לרפואה <info@refuah.org.il>",
+            to: email,
+            subject: "איפוס סיסמה באתר המועמדים",
+            html: `<p>
+            בחרת לאפס את הסיסמה. לאיפוס   
+            <a href="${process.env.CLIENT_URI}/resetPassword/${token}">לחצ/י כאן</a>.</br>
+            תוקף הקישור יפוג בתוך 10 דקות. אם לא ביקשת לאפס את הסיסמה, ניתן להתעלם ממייל זה.
+            </p>`,
+        };
+    
+        const info = await sendEmail(emailOptions);
+    
+        let success = false;
+        if (info.accepted.includes(email)) {
+            success = true;
+        }
+    
+        return success;
+    }
+
+    static async resetPassword(token, newPassword) {
+        const decoded = verifyPasswordToken(token);
+        await findUserByIdOrFail(User, decoded.id);
+    
+        await this.changePassword(decoded.id, newPassword, true);
     }
 }
 

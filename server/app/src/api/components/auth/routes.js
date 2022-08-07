@@ -34,6 +34,16 @@ router.post('/login', UserController.login)
 // @access  Private
 router.post('/refreshToken', UserController.refreshToken)
 
+// @route   POST api/auth/forgotPassword
+// @desc    Request a reset password email
+// @access  Public
+router.post("/forgotPassword", UserController.sendResetPasswordEmail);
+
+// @route   POST api/auth/resetPassword/:token
+// @desc    Execute password reset
+// @access  Public
+router.post("/resetPassword/:token", UserController.resetPassword);
+
 // @route   POST api/auth/logout
 // @desc    Log user out
 // @access  Private
@@ -48,6 +58,7 @@ router.put('/user', auth, UserController.editUser)
 // @desc    Update user details
 // @access  Private
 router.put('/changePassword', auth, UserController.changePassword)
+
 
 // @route   DELETE api/auth/user/:id
 // @desc    Delete user

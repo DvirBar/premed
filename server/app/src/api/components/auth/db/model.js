@@ -59,6 +59,15 @@ export const UserSchema = new Schema({
     date_created: {
         type: Date,
         default: Date.now
+    },
+    passwordReset: {
+        count: {
+            type: Number,
+            default: 0
+        },
+        date: {
+            type: Date
+        }
     }
 })
 

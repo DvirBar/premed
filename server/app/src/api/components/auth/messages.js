@@ -98,7 +98,56 @@ const messages = {
             he: 'משתמשים אינם רשאים למחוק את עצמם'
         },
         status: 403
-    }
+    },
+    NoMatchingUserForEmail: {
+        msg: { 
+            he: "לא קיים משתמש התואם כתובת מייל זו",
+            en: "A user matching this email address doens't exist"
+        }, 
+        status: 404
+    },
+    EmailIsRequiredForPasswordReset: {
+        msg: {
+            he: "דרושה כתובת מייל על מנת לאפס את הסיסמה",
+            en: "Email is required to reset password"
+        },
+        status: 400
+    },
+    PasswordResetEmailSentSuccessfully: {
+        msg: {
+            he: "קישור לאיפוס הסיסמה נשלח בהצלחה",
+            en: "A link to reset your password has been sent to your email"
+        }, 
+        status: 200
+    },
+    PasswordResetEmailNotSent: {
+        msg: {
+            he: "לא הצלחנו לשלוח מייל לאיפוס הסיסמה",
+            en: "We couldn't send a reset password email"
+        }, 
+        status: 500
+    }, 
+    PasswordResetFailed: {
+        msg: {
+            he: "כשלון בשינוי סיסמה",
+            en: "Password change failed"
+        }, 
+        status: 500
+    }, 
+    PasswordResetSuccessfully: {
+        msg: {
+            he: "הסיסמה אופסה בהצלחה",
+            en: "Password reset successfuolly"
+        },
+        status: 200
+    },
+    MaxDailyResetAttemptsReached: {
+        msg: {
+            he: "הגעת לגבול היומי לניסיונות איפוס סיסמה",
+            en: "You've reached the daily password reset attempts quota"
+        },
+        status: 400
+    },
 }
 
 export default messages

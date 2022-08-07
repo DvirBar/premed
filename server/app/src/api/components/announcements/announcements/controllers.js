@@ -29,7 +29,7 @@ export async function getAncsList(req, res, next) {
 export async function create(req, res, next) {
     try {
         const userId = res.locals.user.id
-        const anc = await AncServices.create(req.body, userId, req.body.shouldEmail)
+        const anc = await AncServices.create(req.body, userId)
         return res.status(201).send(anc)
     }
 
@@ -40,7 +40,7 @@ export async function create(req, res, next) {
 
 export async function edit(req, res, next) {
     try {
-        const anc = await AncServices.edit(req.params.id, req.body.anc, req.body.shouldEmail)
+        const anc = await AncServices.edit(req.params.id, req.body.anc)
 
         return res.status(200).send(anc)
     }

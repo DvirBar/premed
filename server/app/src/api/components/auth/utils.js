@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 
 const refreshTokenExp = 31536000 // 1 year
 const accessTokenExp = 900 // 15 minutes
+const resetPasswordTokenExp = 600 // 10 minutes
 
 const refreshCookieSettings = {
     name: '_rt',
@@ -36,7 +37,7 @@ export const hashString = async(string) => {
         }
 
         else {
-            throw new Error("Ddos attempt! user tried to insert password greater than 64.")
+            throw new Error("Dos attempt! user tried to insert password greater than 64.")
         }
     }
 
@@ -53,6 +54,9 @@ export const verifyRefreshToken = token => {
     return jwt.verify(token, process.env.JWT_SECRET_REFRESH)
 }
 
+export const verifyPasswordToken = token => jwt.verify(token, process.env.JWT_SECRET_RESET);
+
+
 export const createAccessToken = payload => {
     return jwt.sign(
         payload,
@@ -66,6 +70,12 @@ export const createRefreshToken = payload => {
         process.env.JWT_SECRET_REFRESH,
         { expiresIn: refreshTokenExp })
 }
+
+export const createPasswordResetToken = (payload) => jwt.sign(
+	payload,
+        process.env.JWT_SECRET_RESET,
+        { expiresIn: resetPasswordTokenExp },
+);
 
 export const createAccessCookie = (res, token) => {
     return res.cookie(

@@ -1,10 +1,12 @@
-import { dateInPast } from '../../../../utils/dates'
+import { dateInPast, isToday } from '../../../../utils/dates'
 import messages from '../messages'
 import { hashString } from '../utils'
 const { 
     UserDoesNotExist, 
     UserAlreadyExists, 
     UsernameUnavailable } = messages
+
+const MAX_DAILY_RESET = 3;
 
 export function getUsers(filters, limit) {
     const {
@@ -49,7 +51,17 @@ export function getUsers(filters, limit) {
       ]})
         .limit(limit) 
         .sort({ date_created: -1 })
-        .select("-password -formerPasswords -email -failedAttempts")
+        .select("-password -formerPasswords -email -failedAttempts -resetPassword")
+}
+
+export async function findUserByIdOrFail(userId) {
+	const user = await this.findById(userId);
+
+	if (!user) {
+		throw new Error(`Couldn't find user with id ${userId}`);
+	}
+
+	return user;
 }
 
 export function getUserByEmail(email) {
@@ -90,6 +102,28 @@ export function addToFormerPasswords(user, password) {
     user.formerPasswords.push(password)
 
     return user.save()
+}
+
+export function addPasswordResetAttempt(user) {
+    user.passwordReset.count = user.passwordReset.count + 1;
+    user.passwordReset.date = Date.now();
+    return user.save();
+}
+
+export async function isPasswordResetAllowed(user) {
+    const resetPassDetails = user.passwordReset;
+    
+    if(resetPassDetails?.date && isToday(resetPassDetails?.date)) {
+        if(resetPassDetails.count === MAX_DAILY_RESET) {
+            return false;
+        }
+        console.log("here");
+        return true;
+    }
+
+    resetPassDetails.count = 0;
+    await user.save();
+    return true
 }
 
 export function isUserBlocked(user) {

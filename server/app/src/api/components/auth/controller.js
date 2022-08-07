@@ -8,7 +8,11 @@ const {
     SuccessDelete, 
     UsernameAvailable, 
     SuccessEdit,
-    PasswordChangedSuccessfully } = messages
+    PasswordChangedSuccessfully,
+    PasswordResetEmailNotSent,
+    PasswordResetEmailSentSuccessfully,
+    EmailIsRequiredForPasswordReset,
+    PasswordResetSuccessfully } = messages
 
 
 class UserController {
@@ -167,6 +171,47 @@ class UserController {
         }
         catch(err) {
             next(err)
+        }
+    }
+
+    static async sendResetPasswordEmail(req, res, next) {
+        const { email } = req.body;
+        if (!email) {
+            return res
+                .status(EmailIsRequiredForPasswordReset.status)
+                .send(EmailIsRequiredForPasswordReset);
+        }
+        try {
+            const success = await UserService.sendResetPasswordEmail(email);
+    
+            if (success) {
+                return res
+                    .status(PasswordResetEmailSentSuccessfully.status)
+                    .send(PasswordResetEmailSentSuccessfully);
+            }
+    
+            return res
+                .status(PasswordResetEmailNotSent.status)
+                .send(PasswordResetEmailNotSent);
+        } catch (err) {
+            return next(err);
+        }
+    }
+
+    static async resetPassword(req, res, next) {
+        const { token } = req.params;
+    
+        const { password } = req.body;
+
+        if (!token) {
+            return res.status(400).send("No token provided");
+        }
+
+        try {
+            await UserService.resetPassword(token, password);
+            return res.send(PasswordResetSuccessfully);
+        } catch (err) {
+            return next(err);
         }
     }
 }
