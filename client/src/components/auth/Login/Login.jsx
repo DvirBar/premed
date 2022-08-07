@@ -9,12 +9,16 @@ import { authSelector } from '../../../redux/selectors/auth';
 import { isLoading } from '../../../redux/loader/selectors';
 import { LOGIN } from '../../../redux/auth/types';
 import Loadbar from '../../layout/Loadbar';
+import SendFPEmail from '../ForgotPassword/SendFPEmail';
 
 const Login = () => {
     const [defaultValues] = useState({
         email: '',
         password: ''
     });
+
+
+    const [displayForgot, setDisplayForgot] = useState(false);
 
     const {
         handleChange,
@@ -65,6 +69,10 @@ const Login = () => {
                     onChange={handlePasswordChange}
                     error={errors.password} />
 
+                    <div 
+                    className="forgot-password-link"
+                    onClick={() => setDisplayForgot(true)}>שכחתי את הסיסמה</div>
+
                     <div className="login-block">
                         <button type="submit">התחברות</button>
                         {loading &&
@@ -86,6 +94,9 @@ const Login = () => {
                     </p>
                 </form>
             </div>
+            <SendFPEmail 
+            toggleModal={setDisplayForgot}
+            display={displayForgot} />
         </div>
     )
 }

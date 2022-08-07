@@ -23,6 +23,16 @@ import {
     CHANGE_PASSWORD_LOADING,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE,
+
+    REQUEST_FORGOT_PASSWORD_LOADING,
+    REQUEST_FORGOT_PASSWORD_SUCCESS,
+    REQUEST_FORGOT_PASSWORD_FAILURE,
+
+    RESET_PASSWORD,
+    RESET_PASSWORD_LOADING,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAILURE,
+
     LOGOUT
 } from '../auth/types';
 import { getError, getMessage } from './messages';
@@ -173,5 +183,38 @@ export const changePassword = data => async(dispatch) => {
     catch(err) {
         dispatch({ type: CHANGE_PASSWORD_FAILURE })
         dispatch(getError(err))
+    }
+}
+
+export const requestForgotPasswordEmail = email => async(dispatch) => {
+    dispatch({ type: REQUEST_FORGOT_PASSWORD_LOADING });
+    const body = JSON.stringify(email);
+
+    try {
+        const res = await axios.post('/api/auth/forgotPassword', body);
+        dispatch({ type: REQUEST_FORGOT_PASSWORD_SUCCESS });
+        dispatch(getMessage(res.data));
+    }
+    catch(err) {
+        dispatch({ type: REQUEST_FORGOT_PASSWORD_FAILURE });
+        dispatch(getError(err));
+    }
+}
+
+
+export const resetPassword = (token, data) => async(dispatch) => {
+    dispatch({ type: RESET_PASSWORD_LOADING });
+    const body = JSON.stringify({
+        password: data.newPassword
+    });
+
+    try {
+        const res = await axios.post(`/api/auth/resetPassword/${token}`, body);
+        dispatch({ type: RESET_PASSWORD_SUCCESS });
+        dispatch(getMessage(res.data));
+    }
+    catch(err) {
+        dispatch({ type: RESET_PASSWORD_FAILURE });
+        dispatch(getError(err));
     }
 }

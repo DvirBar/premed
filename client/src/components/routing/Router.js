@@ -15,6 +15,7 @@ import LibrariesClient from '../libraries/LibrariesClient';
 import ViewAncs from '../announcements/ViewAncs/ViewAncs';
 import Admin from '../admin/Admin';
 import Profile from '../Profile/Profile';
+import ResetPassword from '../auth/ResetPassword/ResetPassword';
 
 const Router = () => {
     const location = useLocation();
@@ -30,6 +31,7 @@ const Router = () => {
                 <Route exact path="/" component={Default} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/resetPassword/:token" component={ResetPassword} />
                 <Route path="/steps/:pathId" component={Steps} />
                 <Route path="/qna/:pathId" component={Questions} />
                 <ProtectedRoute path="/profile" component={Profile} />

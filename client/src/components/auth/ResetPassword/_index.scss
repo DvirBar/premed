@@ -30,16 +30,6 @@
                     width: 100%;
                 }
             }
-
-            .forgot-password-link {
-                color: $main-color;
-                font-size: 1.4rem;
-                cursor: pointer;
-                
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
         }
 
         .login-block {

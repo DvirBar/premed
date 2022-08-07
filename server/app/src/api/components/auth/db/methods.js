@@ -54,8 +54,8 @@ export function getUsers(filters, limit) {
         .select("-password -formerPasswords -email -failedAttempts -resetPassword")
 }
 
-export async function findUserByIdOrFail(userId) {
-	const user = await this.findById(userId);
+export async function findUserByIdOrFail(userModel, userId) {
+	const user = await userModel.findById(userId);
 
 	if (!user) {
 		throw new Error(`Couldn't find user with id ${userId}`);
@@ -117,7 +117,7 @@ export async function isPasswordResetAllowed(user) {
         if(resetPassDetails.count === MAX_DAILY_RESET) {
             return false;
         }
-        console.log("here");
+
         return true;
     }
 

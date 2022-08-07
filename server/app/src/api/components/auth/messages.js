@@ -148,6 +148,13 @@ const messages = {
         },
         status: 400
     },
+    LinkInvalidOrExpired: {
+        msg: {
+            he: "הקישור שגוי או שפג תוקפו",
+            en: "Link is invlid or has been expired"
+        },
+        status: 400
+    }
 }
 
 export default messages

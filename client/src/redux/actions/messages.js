@@ -12,7 +12,7 @@ export const initMessage = () => {
 }
 
 export const getMessage = msgObj => dispatch => {
-    
+    console.log(msgObj);
     if(msgObj?.he) {
         dispatch({
             type: GET_MESSAGE,

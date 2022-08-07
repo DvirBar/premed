@@ -6,10 +6,12 @@ import {
     createRefreshToken, 
     hashString, 
     userWithoutPassword, 
+    verifyPasswordToken, 
     verifyRefreshToken} from './utils';
 
 import messages from './messages';
 import { sendEmail } from '../../../services/email/service';
+import { findUserByIdOrFail } from './db/methods';
 
 const { 
     InvalidCredentials, 
@@ -21,6 +23,7 @@ const {
     PasswordAlreadyUsed,
     NoMatchingUserForEmail,
     PasswordResetFailed,
+    LinkInvalidOrExpired,
     MaxDailyResetAttemptsReached } = messages
 
 class UserService {
@@ -243,7 +246,7 @@ class UserService {
             תוקף הקישור יפוג בתוך 10 דקות. אם לא ביקשת לאפס את הסיסמה, ניתן להתעלם ממייל זה.
             </p>`,
         };
-    
+
         const info = await sendEmail(emailOptions);
     
         let success = false;
@@ -255,7 +258,14 @@ class UserService {
     }
 
     static async resetPassword(token, newPassword) {
-        const decoded = verifyPasswordToken(token);
+        let decoded = ''
+        try {
+            decoded = verifyPasswordToken(token);
+        }
+        catch(err) {
+            throw LinkInvalidOrExpired;
+        }
+  
         await findUserByIdOrFail(User, decoded.id);
     
         await this.changePassword(decoded.id, newPassword, true);

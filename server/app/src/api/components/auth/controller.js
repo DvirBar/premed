@@ -176,23 +176,23 @@ class UserController {
 
     static async sendResetPasswordEmail(req, res, next) {
         const { email } = req.body;
+
         if (!email) {
             return res
                 .status(EmailIsRequiredForPasswordReset.status)
-                .send(EmailIsRequiredForPasswordReset);
+                .send(EmailIsRequiredForPasswordReset.msg);
         }
         try {
             const success = await UserService.sendResetPasswordEmail(email);
-    
+            
             if (success) {
                 return res
                     .status(PasswordResetEmailSentSuccessfully.status)
-                    .send(PasswordResetEmailSentSuccessfully);
+                    .send(PasswordResetEmailSentSuccessfully.msg);
             }
-    
             return res
                 .status(PasswordResetEmailNotSent.status)
-                .send(PasswordResetEmailNotSent);
+                .send(PasswordResetEmailNotSent.msg);
         } catch (err) {
             return next(err);
         }
@@ -202,14 +202,13 @@ class UserController {
         const { token } = req.params;
     
         const { password } = req.body;
-
         if (!token) {
             return res.status(400).send("No token provided");
         }
 
         try {
             await UserService.resetPassword(token, password);
-            return res.send(PasswordResetSuccessfully);
+            return res.send(PasswordResetSuccessfully.msg);
         } catch (err) {
             return next(err);
         }
