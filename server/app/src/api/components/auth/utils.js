@@ -37,7 +37,7 @@ export const hashString = async(string) => {
         }
 
         else {
-            throw new Error("Dos attempt! user tried to insert password greater than 64.")
+            throw new Error("User tried to insert password greater than 64.")
         }
     }
 

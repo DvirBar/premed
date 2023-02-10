@@ -1,5 +1,22 @@
 {
-  "dependencies": {
-    "query-string": "^7.1.1"
-  }
+  "name": "premed",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "build-client": "cd client && npm install && npm run build",
+    "build-server": "cd server && npm install && npm run bulld && npm start",
+    "start": "npm run build-client && npm run build-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DvirBar/premed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DvirBar/premed/issues"
+  },
+  "homepage": "https://github.com/DvirBar/premed#readme",
+  "description": ""
 }
