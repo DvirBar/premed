@@ -8,6 +8,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
+import enforce from 'express-sslify';
+
 const helmet = require('helmet')
 
 // Init app
@@ -68,6 +70,10 @@ app.use('/api/service', viewIndex)
 // Exit middlewares
 app.use(errorHandler);
 
+if(process.env.NODE_ENV === 'production') {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+    app.use(express.static('client/build'))
+}
 
 // Create connection
 const port = process.env.PORT;
