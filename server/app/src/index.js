@@ -19,20 +19,17 @@ app.use(helmet())
 app.use(helmet.hidePoweredBy())
 
 // Environment variables
-dotenv.config({
-    path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
-})
+// dotenv.config({
+//     path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
+// })
+
+dotenv.config();
 
 // Middlewares
 // Entry middlewares
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieParser());
-
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
-}
-
 
 // App routes
 
@@ -75,6 +72,8 @@ if(process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
 }
 
+console.log(process.env.NODE_ENV);
+
 // Create connection
 const port = process.env.PORT;
 app.listen(port, () => console.log(`Server started on port ${port}`));
@@ -89,8 +88,7 @@ const {
 } = process.env
 
 // Database config
-const db = 
-MONGO_URI 
+const db = MONGO_URI;   
 // `mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
 
 
