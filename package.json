@@ -5,8 +5,9 @@
   "devDependencies": {},
   "scripts": {
     "build-client": "cd client && npm install && npm run build",
-    "build-server": "cd server && npm install && npm run bulld && npm start",
-    "start": "npm run build-client && npm run build-server"
+    "build-server": "cd server && npm install && npm run bulld",
+    "build": "npm run build-client && npm run build-server",
+    "start": "cd server && npm run build"
   },
   "repository": {
     "type": "git",
