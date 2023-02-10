@@ -4,7 +4,7 @@
   "description": "Api for premed apps",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node build/src/index.js ",
+    "start": "node build/src/index.js",
     "build": "babel app -d build",
     "dev": "NODE_ENV=development nodemon --exec babel-node app/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
