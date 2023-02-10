@@ -18,7 +18,7 @@ app.use(helmet.hidePoweredBy())
 
 // Environment variables
 dotenv.config({
-    path: path.resolve("env",`.env.${process.env.NODE_ENV}`)
+    path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
 })
 
 // Middlewares
@@ -75,17 +75,17 @@ app.listen(port, () => console.log(`Server started on port ${port}`));
 
 const {
     MONGO_URI,
-    DB_NAME,
-    DB_USER,
-    DB_PASS,
-    DB_PORT,
-    DB_SERVICE
+    // DB_NAME,
+    // DB_USER,
+    // DB_PASS,
+    // DB_PORT,
+    // DB_SERVICE
 } = process.env
 
 // Database config
 const db = 
-MONGO_URI ||
-`mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
+MONGO_URI 
+// `mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
 
 
 // Connect to MongoDB
