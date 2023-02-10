@@ -19,9 +19,9 @@ app.use(helmet())
 app.use(helmet.hidePoweredBy())
 
 // Environment variables
-// dotenv.config({
-//     path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
-// })
+dotenv.config({
+    path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
+})
 
 dotenv.config();
 
@@ -30,6 +30,12 @@ dotenv.config();
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieParser());
+
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+    app.use(express.static('client/build'))
+}
 
 // App routes
 
@@ -67,11 +73,6 @@ app.use('/api/service', viewIndex)
 // Exit middlewares
 app.use(errorHandler);
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('client/build'))
-}
-
 console.log(process.env.NODE_ENV);
 
 // Create connection
@@ -90,7 +91,7 @@ const {
 // Database config
 const db = MONGO_URI;   
 // `mongodb://${DB_USER}:${DB_PASS}@${DB_SERVICE}:${DB_PORT}/${DB_NAME}?authSource=admin` 
-
+console.log(process.env.NODE_ENV);
 
 // Connect to MongoDB
 mongoose
