@@ -23,7 +23,7 @@ dotenv.config({
     path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
 })
 
-dotenv.config();
+// dotenv.config();
 
 // Middlewares
 // Entry middlewares
@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 if(process.env.NODE_ENV === 'production') {
     app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('client/build'))
+    app.use(express.static('../client/build'))
 }
 
 // App routes
