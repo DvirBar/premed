@@ -31,12 +31,6 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cookieParser());
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('../client/build'))
-}
-
-
 // App routes
 
 import auth from './api/components/auth/routes';
@@ -65,12 +59,16 @@ app.use('/api/comments', comments);
 app.use('/api/announcements', announcements)
 app.use('/api/announcements/groups', ancGroups)
 
+if(process.env.NODE_ENV === 'production') {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+    app.use(express.static('../client/build'))
+}
+
+
 app.set('view engine', 'hjs')
 app.set('views', path.join(__dirname, 'views'))
 app.engine('hjs', require('hogan-express'))
 app.use('/api/service', viewIndex)
-
-
 
 
 // Exit middlewares
