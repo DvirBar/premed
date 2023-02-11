@@ -32,10 +32,7 @@ app.use(morgan('tiny'));
 app.use(cookieParser());
 
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('../client/build'))
-}
+
 
 // App routes
 
@@ -69,6 +66,12 @@ app.set('view engine', 'hjs')
 app.set('views', path.join(__dirname, 'views'))
 app.engine('hjs', require('hogan-express'))
 app.use('/api/service', viewIndex)
+
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+    app.use("*", express.static('../client/build'))
+}
 
 // Exit middlewares
 app.use(errorHandler);
