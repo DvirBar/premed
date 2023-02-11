@@ -24,6 +24,10 @@ dotenv.config({
 })
 
 // dotenv.config();
+if(process.env.NODE_ENV === 'production') {
+    app.use(enforce.HTTPS({ trustProtoHeader: true }))
+    app.use(express.static('../client/build'))
+}
 
 // Middlewares
 // Entry middlewares
@@ -59,10 +63,6 @@ app.use('/api/comments', comments);
 app.use('/api/announcements', announcements)
 app.use('/api/announcements/groups', ancGroups)
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('../client/build'))
-}
 
 
 app.set('view engine', 'hjs')
