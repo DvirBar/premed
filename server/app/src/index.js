@@ -7,8 +7,7 @@ import errorHandler from  '../middleware/errorHandler';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import path from 'path';
-import enforce from 'express-sslify';
+import path from 'path';;
 
 const helmet = require('helmet')
 
@@ -20,12 +19,11 @@ app.use(helmet.hidePoweredBy())
 
 // Environment variables
 dotenv.config({
-    path: path.resolve("../env",`.env.${process.env.NODE_ENV}`)
+    path: path.resolve("env",`.env.${process.env.NODE_ENV}`)
 })
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(enforce.HTTPS({ trustProtoHeader: true }))
-    app.use(express.static('../client/build'))
+    app.use(express.static('client/build'))
 }
 // dotenv.config();
 
@@ -62,9 +60,6 @@ app.use('/api/steps', steps);
 app.use('/api/comments', comments);
 app.use('/api/announcements', announcements)
 app.use('/api/announcements/groups', ancGroups)
-
-
-
 
 
 app.set('view engine', 'hjs')
