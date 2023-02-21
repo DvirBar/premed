@@ -22,9 +22,7 @@ dotenv.config({
     path: path.resolve("env",`.env.${process.env.NODE_ENV}`)
 })
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('../client/build'))
-}
+
 // dotenv.config();
 
 // Middlewares
@@ -66,6 +64,10 @@ app.set('view engine', 'hjs')
 app.set('views', path.join(__dirname, 'views'))
 app.engine('hjs', require('hogan-express'))
 app.use('/api/service', viewIndex)
+
+if(process.env.NODE_ENV === 'production') {
+    app.use("*" ,express.static('../client/build'))
+}
 
 
 // Exit middlewares
