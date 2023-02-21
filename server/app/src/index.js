@@ -23,7 +23,7 @@ dotenv.config({
 })
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(/^(?!\/api\/).+/ ,express.static('../client/build'))
+    // app.use(/^(?!\/api\/).+/ ,express.static('../client/build'))
     app.use(express.static('../client/build'))
 } 
 
